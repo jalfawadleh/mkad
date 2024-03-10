@@ -30,14 +30,10 @@ const MapNav = () => {
         </Nav>
       </Navbar>
       <div style={{ position: "absolute", bottom: 0, width: "100%" }}>
-        <Navbar
-          bg='dark'
-          className='p-0 m-0 d-block d-sm-none justify-content-between'
-          variant='dark'
-        >
-          <Nav bg='dark' variant='dark' className='p-0 m-0'>
+        <Navbar bg='dark' className='p-0 m-0 d-block d-sm-none ' variant='dark'>
+          <Nav justify bg='dark' variant='dark' className='p-0 m-0'>
             <LinkContainer to='/'>
-              <Nav.Link>Search b</Nav.Link>
+              <Nav.Link>Search</Nav.Link>
             </LinkContainer>
             <LinkContainer to='/activities'>
               <Nav.Link>Activities</Nav.Link>
