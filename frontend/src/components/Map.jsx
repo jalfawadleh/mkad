@@ -37,7 +37,6 @@ export default function Map() {
   return (
     <>
       <MapNav />
-
       <Outlet />
 
       <MapContainer
