@@ -3,6 +3,7 @@ import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
 
 import Button from "react-bootstrap/esm/Button";
+import Container from "react-bootstrap/esm/Container";
 
 const SearchComponent = () => {
   const { innerHeight } = window;
@@ -10,7 +11,12 @@ const SearchComponent = () => {
     <>
       <div
         className='p-2 m-1 bg-dark'
-        style={{ maxWidth: 400, minWidth: "50%", height: 45, borderRadius: 10 }}
+        style={{
+          float: "relative",
+          maxWidth: 400,
+          height: 45,
+          borderRadius: 10,
+        }}
       >
         <InputGroup size='sm'>
           <Form.Control
@@ -24,12 +30,11 @@ const SearchComponent = () => {
         </InputGroup>
       </div>
 
-      <div
+      <Container
         className='p-1 m-0'
         style={{
           maxHeight: innerHeight - 100,
           maxWidth: 400,
-          minWidth: "50%",
           overflow: "scroll",
         }}
       >
@@ -88,7 +93,7 @@ const SearchComponent = () => {
             <Card.Link href='#'>Another Link</Card.Link>
           </Card.Body>
         </Card>
-      </div>
+      </Container>
     </>
   );
 };
