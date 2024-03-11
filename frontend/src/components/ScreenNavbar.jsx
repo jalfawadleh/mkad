@@ -48,7 +48,7 @@ const ScreenNavbar = () => {
               <FaEnvelope />
             </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/'>
+          <LinkContainer to='/search'>
             <Nav.Link>
               <FaSearch />
             </Nav.Link>

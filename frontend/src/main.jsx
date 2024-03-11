@@ -21,7 +21,7 @@ import ActivitiesNew from "./components/ActivitiesNew.jsx";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
-      <Route path='/search' element={<SearchScreen />} index>
+      <Route path='/search' element={<SearchScreen />}>
         <Route
           path='/search/activity/:id'
           element={<h1>Search Activity View</h1>}
@@ -51,9 +51,12 @@ const router = createBrowserRouter(
         <Route path='/activities/del/:id' element={<h1>Activity Del ID</h1>} />
       </Route>
       <Route path='/organisations' element={<h1>Organisation</h1>}>
-        <Route path='/organisation/join' element={<h1>Organisation Join</h1>} />
         <Route
-          path='/organisation/leave'
+          path='/organisations/join/:id'
+          element={<h1>Organisation Join</h1>}
+        />
+        <Route
+          path='/organisations/leave/:id'
           element={<h1>Organisation Leave</h1>}
         />
       </Route>
