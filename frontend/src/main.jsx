@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 import SearchScreen from "./screens/SearchScreen.jsx";
+import MembersScreen from "./screens/MembersScreen.jsx";
 import ActivitiesScreen from "./screens/ActivitiesScreen.jsx";
 import MessagesScreen from "./screens/MessagesScreen.jsx";
 import UpdatesScreen from "./screens/UpdatesScreen.jsx";
@@ -20,6 +21,9 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='/' element={<SearchScreen />} />
+      <Route path='/members' element={<MembersScreen />}>
+        <Route path='/members/member/:id' element={<h1>Member ID</h1>} />
+      </Route>
       <Route path='/activities' element={<ActivitiesScreen />}>
         <Route path='/activities/activity/:id' element={<h1>Activity ID</h1>} />
       </Route>

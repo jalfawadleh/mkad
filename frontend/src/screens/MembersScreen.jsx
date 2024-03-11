@@ -1,24 +1,13 @@
-import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
-import Button from "react-bootstrap/esm/Button";
+import Navbar from "react-bootstrap/esm/Navbar";
 import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
 
-const SearchScreen = () => {
+const MembersScreen = () => {
   const { innerHeight } = window;
   return (
     <>
       <ScreenHeaderContainer>
-        <Form className='d-flex'>
-          <Form.Control
-            type='search'
-            placeholder='Search'
-            aria-label='Search'
-            size='sm'
-          />
-          <Button variant='outline-success' size='sm'>
-            Search
-          </Button>
-        </Form>
+        <Navbar.Brand className='h3 p-0 m-0'>Members</Navbar.Brand>
       </ScreenHeaderContainer>
       <div
         className='p-1 ms-1'
@@ -79,4 +68,4 @@ const SearchScreen = () => {
   );
 };
 
-export default SearchScreen;
+export default MembersScreen;

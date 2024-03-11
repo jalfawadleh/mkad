@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import PureCounter from "@srexi/purecounterjs";
 
-import Header from "../components/Header";
+import LandingScreenNavbar from "../components/LandingScreenNavbar";
 import LoginForm from "../components/LoginForm";
 
-const HomeScreen = () => {
+const LandingScreen = () => {
   useEffect(() => {
     new PureCounter();
   }, []);
 
   return (
     <>
-      <Header />
+      <LandingScreenNavbar />
 
       {/* <!-- ======= aboutUs Section ======= --> */}
       <section id='login' className='container'>
@@ -269,4 +269,4 @@ const HomeScreen = () => {
     </>
   );
 };
-export default HomeScreen;
+export default LandingScreen;

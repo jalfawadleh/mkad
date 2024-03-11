@@ -1,8 +1,8 @@
-import Container from "react-bootstrap/Container";
+import { Container } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-function Header() {
+function LandingScreenNavbar() {
   return (
     <>
       <Navbar
@@ -10,6 +10,8 @@ function Header() {
         fixed='top'
         expand='sm'
         className='bg-body-tertiary'
+        bg='dark'
+        variant='dark'
       >
         <Container>
           <Navbar.Brand href='#'>MKaDifference</Navbar.Brand>
@@ -30,4 +32,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default LandingScreenNavbar;

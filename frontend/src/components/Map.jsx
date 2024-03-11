@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import MapNav from "./MapNav";
+import ScreenNavbar from "./ScreenNavbar";
 
 import {
   MapContainer,
@@ -36,7 +36,7 @@ export default function Map() {
 
   return (
     <>
-      <MapNav />
+      <ScreenNavbar />
       <Outlet />
 
       <MapContainer
