@@ -5,11 +5,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 import Form from "react-bootstrap/esm/Form";
-import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
 import { ActivitiesContext } from "../../store.js";
+import { Col, Row } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ActivitiesDelete = () => {
   const navigate = useNavigate();
@@ -24,8 +25,6 @@ const ActivitiesDelete = () => {
     try {
       await axios.delete(`activities/${id}`);
       setActivities(activities.filter((a) => a._id !== id));
-
-      // setActivities([...activities, data.activity]);
       navigate("/activities");
     } catch (error) {
       error?.response?.data?.message &&
@@ -34,29 +33,28 @@ const ActivitiesDelete = () => {
     }
   };
 
-  const onCancel = () => {
-    navigate("/activities");
-  };
-
   return (
     <Card className='mb-1' key={0}>
       <Card.Body>
         <Card.Title>Delete Activity</Card.Title>
         <Card.Text>Are you Sure?</Card.Text>
         <Form onSubmit={onSubmit}>
-          <Container className='text-center'>
-            <Button variant='alert' type='submit' className='w-50 '>
-              Delete
-            </Button>
-            <Button
-              variant='sucess'
-              type='button'
-              onClick={onCancel}
-              className='w-50 '
-            >
-              Cancel
-            </Button>
-          </Container>
+          <Row>
+            <Col className='text-center'>
+              <Button variant='danger' type='submit' className='w-50 '>
+                Delete
+              </Button>
+            </Col>
+            <Col className='text-center'>
+              <LinkContainer to={".."}>
+                <Card.Link>
+                  <Button variant='success' type='button' className='w-50 '>
+                    Close
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </Col>
+          </Row>
         </Form>
       </Card.Body>
     </Card>

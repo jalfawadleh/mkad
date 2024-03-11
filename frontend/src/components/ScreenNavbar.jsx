@@ -43,7 +43,7 @@ const ScreenNavbar = () => {
               <FaBell />
             </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/messages'>
+          <LinkContainer to='/members'>
             <Nav.Link>
               <FaEnvelope />
             </Nav.Link>

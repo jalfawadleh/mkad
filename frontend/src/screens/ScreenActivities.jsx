@@ -5,16 +5,17 @@ import { toast } from "react-toastify";
 import { Outlet } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 
-import Navbar from "react-bootstrap/esm/Navbar";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
-import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
+
+import ScreenHeader from "../components/ScreenHeader";
+
 import ActivitiesList from "../components/activities/ActivitiesList";
 import { ActivitiesContext } from "../store";
 
-const ActivitiesScreen = () => {
+const ScreenActivities = () => {
   const { innerHeight } = window;
   const [activities, setActivities] = useState([]);
 
@@ -36,13 +37,7 @@ const ActivitiesScreen = () => {
   return (
     <>
       <ActivitiesContext.Provider value={{ activities, setActivities }}>
-        <Row className='p-0 m-0'>
-          <Col xs={12} sm={4} md={4} className='p-1 m-0'>
-            <ScreenHeaderContainer>
-              <Navbar.Brand className='h3 p-0 m-0'>Activities</Navbar.Brand>
-            </ScreenHeaderContainer>
-          </Col>
-        </Row>
+        <ScreenHeader>Activities</ScreenHeader>
 
         <Row className='p-0 m-0'>
           <Col xs={12} sm={4} md={4} lg={4} className='p-1 m-0'>
@@ -72,4 +67,4 @@ const ActivitiesScreen = () => {
   );
 };
 
-export default ActivitiesScreen;
+export default ScreenActivities;

@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css";
 
 import { UserContext } from "./store.js";
 
-import LandingScreen from "./screens/LandingScreen.jsx";
+import ScreenLanding from "./screens/ScreenLanding.jsx";
 import Map from "./components/Map.jsx";
 
 const App = () => {
@@ -28,7 +28,7 @@ const App = () => {
             <Outlet />
           </Map>
         ) : (
-          <LandingScreen />
+          <ScreenLanding />
         )}
         <ToastContainer />
       </UserContext.Provider>

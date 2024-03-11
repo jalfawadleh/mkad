@@ -1,14 +1,11 @@
 import Card from "react-bootstrap/esm/Card";
-import Navbar from "react-bootstrap/esm/Navbar";
-import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
+import ScreenHeader from "../components/ScreenHeader";
 
-const MessagesScreen = () => {
+const ScreenSettings = () => {
   const { innerHeight } = window;
   return (
     <>
-      <ScreenHeaderContainer>
-        <Navbar.Brand className='h3 p-0 m-0'>Messages</Navbar.Brand>
-      </ScreenHeaderContainer>
+      <ScreenHeader>Settings</ScreenHeader>
       <div
         className='p-1 ms-1'
         style={{
@@ -68,4 +65,4 @@ const MessagesScreen = () => {
   );
 };
 
-export default MessagesScreen;
+export default ScreenSettings;
