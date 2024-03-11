@@ -16,7 +16,10 @@ import ActivitiesScreen from "./screens/ActivitiesScreen.jsx";
 import MessagesScreen from "./screens/MessagesScreen.jsx";
 import UpdatesScreen from "./screens/UpdatesScreen.jsx";
 import SettingsScreen from "./screens/SettingsScreen.jsx";
-import ActivitiesNew from "./components/ActivitiesNew.jsx";
+import ActivitiesNew from "./components/activities/ActivitiesNew.jsx";
+import ActivitiesDelete from "./components/activities/ActivitiesDelete.jsx";
+import ActivitiesView from "./components/activities/ActivitiesView.jsx";
+import ActivitiesEdit from "./components/activities/ActivitiesEdit.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,15 +43,9 @@ const router = createBrowserRouter(
       </Route>
       <Route path='/activities' element={<ActivitiesScreen />}>
         <Route path='/activities/new' element={<ActivitiesNew />} />
-        <Route
-          path='/activities/view/:id'
-          element={<h1>Activity View ID</h1>}
-        />
-        <Route
-          path='/activities/edit/:id'
-          element={<h1>Activity Edit ID</h1>}
-        />
-        <Route path='/activities/del/:id' element={<h1>Activity Del ID</h1>} />
+        <Route path='/activities/view/:id' element={<ActivitiesView />} />
+        <Route path='/activities/edit/:id' element={<ActivitiesEdit />} />
+        <Route path='/activities/delete/:id' element={<ActivitiesDelete />} />
       </Route>
       <Route path='/organisations' element={<h1>Organisation</h1>}>
         <Route

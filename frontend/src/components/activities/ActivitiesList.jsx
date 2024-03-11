@@ -3,7 +3,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import Card from "react-bootstrap/esm/Card";
 
-import { ActivitiesContext } from "../store.js";
+import { ActivitiesContext } from "../../store.js";
 
 const ActivitiesList = () => {
   const { activities } = useContext(ActivitiesContext);
@@ -19,7 +19,7 @@ const ActivitiesList = () => {
           <LinkContainer to={"/activities/view/" + activity._id}>
             <Card.Link>View</Card.Link>
           </LinkContainer>
-          <LinkContainer to={"/activities/del/" + activity._id}>
+          <LinkContainer to={"/activities/delete/" + activity._id}>
             <Card.Link>Delete</Card.Link>
           </LinkContainer>
         </Card.Body>

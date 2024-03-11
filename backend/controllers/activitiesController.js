@@ -33,26 +33,13 @@ const postActivity = asyncHandler(async (req, res) => {
 // @route   PUT /api/activities
 // @access  Private
 const putActivity = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const activity = await Activity.findOneAndUpdate(req.body._id, req.body);
 
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-    });
+  if (activity) {
+    res.json(activity);
   } else {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error("Activity not found");
   }
 });
 
@@ -74,6 +61,20 @@ const getActivity = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Delete Activity
+// @route   Delete /api/activities/:id
+// @access  Private
+const deleteActivity = asyncHandler(async (req, res) => {
+  const activity = await Activity.deleteOne({ _id: req.params.id });
+  console.log(activity);
+  if (activity) {
+    res.res.status(204);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 const activities = express.Router();
 
 activities
@@ -81,6 +82,9 @@ activities
   .get(protect, getActivities)
   .post(protect, postActivity)
   .put(protect, putActivity);
-activities.route("/:id").get(protect, getActivity);
+activities
+  .route("/:id")
+  .get(protect, getActivity)
+  .delete(protect, deleteActivity);
 
 export default activities;

@@ -24,6 +24,9 @@ const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     console.log("req -------- --- --- --- --- -- --- --- -");
     console.log("URL: " + req.url);
+    console.log("method: " + req.method);
+    console.log("params: ");
+    console.log(req.params);
     console.log("Body:");
     console.log(req.body);
   }

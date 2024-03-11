@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,8 +9,11 @@ import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
+import { ActivitiesContext } from "../../store.js";
+
 const ActivitiesNew = () => {
   const navigate = useNavigate();
+  const { activities, setActivities } = useContext(ActivitiesContext);
 
   const [activity, setActivity] = useState({ name: "", description: "" });
   const { name, description } = activity;
@@ -20,7 +23,8 @@ const ActivitiesNew = () => {
     e.preventDefault();
 
     try {
-      await axios.post("activities/", activity);
+      const { data } = await axios.post("activities/", activity);
+      setActivities([...activities, data.activity]);
       navigate("/activities");
     } catch (error) {
       error?.response?.data?.message &&

@@ -11,7 +11,7 @@ import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
-import ActivitiesList from "../components/ActivitiesList";
+import ActivitiesList from "../components/activities/ActivitiesList";
 import { ActivitiesContext } from "../store";
 
 const ActivitiesScreen = () => {
