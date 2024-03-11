@@ -47,14 +47,10 @@ const putActivity = asyncHandler(async (req, res) => {
 // @route   GET /api/activities/:id
 // @access  Private
 const getActivity = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const activity = await Activity.findById({ _id: req.params.id });
 
-  if (user) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-    });
+  if (activity) {
+    res.json(activity);
   } else {
     res.status(404);
     throw new Error("User not found");
