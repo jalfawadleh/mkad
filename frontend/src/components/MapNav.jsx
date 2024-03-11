@@ -1,3 +1,8 @@
+import { FaSearch } from "react-icons/fa";
+import { FaEnvelope } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
+import { FaCog } from "react-icons/fa";
+import { FaFlag } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/esm/Nav";
 import Navbar from "react-bootstrap/esm/Navbar";
@@ -13,19 +18,29 @@ const MapNav = () => {
       >
         <Nav bg='dark' variant='dark' className='p-0 m-0'>
           <LinkContainer to='/'>
-            <Nav.Link>Search</Nav.Link>
+            <Nav.Link>
+              <FaSearch /> Search
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to='/activities'>
-            <Nav.Link>Activities</Nav.Link>
+            <Nav.Link>
+              <FaFlag /> Activities
+            </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/manage'>
-            <Nav.Link>Manage</Nav.Link>
+          <LinkContainer to='/updates'>
+            <Nav.Link>
+              <FaBell /> Updates
+            </Nav.Link>
           </LinkContainer>
           <LinkContainer to='/messages'>
-            <Nav.Link>Messages</Nav.Link>
+            <Nav.Link>
+              <FaEnvelope /> Messages
+            </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/profile'>
-            <Nav.Link>Profile</Nav.Link>
+          <LinkContainer to='/settings'>
+            <Nav.Link>
+              <FaCog /> Settings
+            </Nav.Link>
           </LinkContainer>
         </Nav>
       </Navbar>

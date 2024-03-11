@@ -1,34 +1,15 @@
-import Form from "react-bootstrap/esm/Form";
 import Card from "react-bootstrap/esm/Card";
-
-import Button from "react-bootstrap/esm/Button";
-import Container from "react-bootstrap/esm/Container";
 import Navbar from "react-bootstrap/esm/Navbar";
+import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
 
-const SearchComponent = () => {
+const MessagesScreen = () => {
   const { innerHeight } = window;
   return (
     <>
-      <Navbar
-        bg='dark'
-        className='float-sm-start float-md-start float-lg-start p-1 m-1'
-        variant='dark'
-        style={{ borderRadius: 10 }}
-      >
-        <Form className='d-flex'>
-          <Form.Control
-            type='search'
-            placeholder='Search'
-            aria-label='Search'
-            size='sm'
-          />
-          <Button variant='outline-success' size='sm'>
-            Search
-          </Button>
-        </Form>
-      </Navbar>
-      <hr className='w-100 h-0 m-0' style={{ opacity: 0 }} />
-      <Container
+      <ScreenHeaderContainer>
+        <Navbar.Brand className='h3 p-0 m-0'>Messages</Navbar.Brand>
+      </ScreenHeaderContainer>
+      <div
         className='p-1 ms-1'
         style={{
           maxHeight: innerHeight - 100,
@@ -82,9 +63,9 @@ const SearchComponent = () => {
             <Card.Link href='#'>Another Link</Card.Link>
           </Card.Body>
         </Card>
-      </Container>
+      </div>
     </>
   );
 };
 
-export default SearchComponent;
+export default MessagesScreen;
