@@ -8,10 +8,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 
-import { UserContext } from "../UserContext";
+import { UserContext } from "../store";
 
 function LoginForm() {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [register, setRegister] = useState(false);
 
   const [userData, setUserData] = useState({

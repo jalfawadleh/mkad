@@ -4,10 +4,10 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import { protect } from "../middleware/authMiddleware.js";
 
-// @desc    Auth user & get token
-// @route   POST /api/users/auth
+// @desc    Login user & get token
+// @route   POST /api/users
 // @access  Public
-const loginUser = asyncHandler(async (req, res) => {
+const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
@@ -28,7 +28,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
-const registerUser = asyncHandler(async (req, res) => {
+const post = asyncHandler(async (req, res) => {
   const { username, password, email, name } = req.body;
 
   const userExists = await User.findOne({ username });
@@ -61,7 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @desc    Logout user / clear cookie
 // @route   POST /api/users/logout
 // @access  Public
-const logoutUser = (req, res) => {
+const logout = (req, res) => {
   res.cookie("jwt", "", {
     httpOnly: true,
     expires: new Date(0),
@@ -69,10 +69,10 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-// @desc    Get user profile
-// @route   GET /api/users/profile
+// @desc    Get user
+// @route   GET /api/users
 // @access  Private
-const getUserProfile = asyncHandler(async (req, res) => {
+const get = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -87,10 +87,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update user profile
-// @route   PUT /api/users/profile
+// @desc    Update user
+// @route   PUT /api/users
 // @access  Private
-const updateUserProfile = asyncHandler(async (req, res) => {
+const put = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
@@ -114,15 +114,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const userRouter = express.Router();
+const users = express.Router();
 
-userRouter
-  .post("/", registerUser)
-  .post("/login", loginUser)
-  .post("/logout", logoutUser);
-userRouter
-  .route("/profile")
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile);
+users.route("/").post(post).get(protect, get).put(protect, put);
+users.post("/login", login).post("/logout", logout);
 
-export default userRouter;
+export default users;

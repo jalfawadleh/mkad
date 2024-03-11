@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "leaflet/dist/leaflet.css";
 
-import { UserContext } from "./UserContext";
+import { UserContext } from "./store.js";
 
 import LandingScreen from "./screens/LandingScreen.jsx";
 import Map from "./components/Map.jsx";

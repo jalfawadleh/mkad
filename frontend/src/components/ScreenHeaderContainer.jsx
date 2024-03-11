@@ -1,16 +1,13 @@
-import Navbar from "react-bootstrap/esm/Navbar";
+import Card from "react-bootstrap/esm/Card";
 
 const ScreenHeaderContainer = ({ children }) => {
   return (
     <>
-      <Navbar
-        bg='dark'
-        className='float-sm-start float-md-start float-lg-start p-1 m-1'
-        variant='dark'
-        style={{ borderRadius: 10 }}
-      >
-        {children}
-      </Navbar>
+      <Card>
+        <Card.Body>
+          <Card.Title>{children}</Card.Title>
+        </Card.Body>
+      </Card>
       <hr className='w-100 h-0 m-0' style={{ opacity: 0 }} />
     </>
   );

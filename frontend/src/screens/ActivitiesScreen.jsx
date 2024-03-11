@@ -1,69 +1,73 @@
-import Card from "react-bootstrap/esm/Card";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+import { Outlet } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
+
 import Navbar from "react-bootstrap/esm/Navbar";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
+import Button from "react-bootstrap/esm/Button";
+import Card from "react-bootstrap/esm/Card";
 import ScreenHeaderContainer from "../components/ScreenHeaderContainer";
+import ActivitiesList from "../components/ActivitiesList";
+import { ActivitiesContext } from "../store";
 
 const ActivitiesScreen = () => {
   const { innerHeight } = window;
+  const [activities, setActivities] = useState([]);
+
+  const getActivities = async () => {
+    try {
+      const { data } = await axios.get("/activities");
+      setActivities(data);
+    } catch (error) {
+      error?.response?.data?.message &&
+        toast.error(error?.response.data.message);
+      error?.response?.status > 499 && toast.error("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    getActivities();
+  }, []);
+
   return (
     <>
-      <ScreenHeaderContainer>
-        <Navbar.Brand className='h3 p-0 m-0'>Activities</Navbar.Brand>
-      </ScreenHeaderContainer>
-      <div
-        className='p-1 ms-1'
-        style={{
-          maxHeight: innerHeight - 100,
-          maxWidth: 400,
-          overflow: "scroll",
-          backgroundColor: "black",
-          borderRadius: 10,
-        }}
-      >
-        <Card className='mb-1'>
-          <Card.Body>
-            <Card.Title>Member</Card.Title>
-            <Card.Subtitle className='mb-2'>Card Subtitle</Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-            </Card.Text>
-            <Card.Link href='#'>Card Link</Card.Link>
-            <Card.Link href='#'>Another Link</Card.Link>
-          </Card.Body>
-        </Card>
-        <Card className='mb-1'>
-          <Card.Body>
-            <Card.Title>Organisation</Card.Title>
-            <Card.Subtitle className='mb-2'>Card Subtitle</Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-            </Card.Text>
-            <Card.Link href='#'>Card Link</Card.Link>
-            <Card.Link href='#'>Another Link</Card.Link>
-          </Card.Body>
-        </Card>
-        <Card className='mb-1'>
-          <Card.Body>
-            <Card.Title>Unioin</Card.Title>
-            <Card.Subtitle className='mb-2'>Card Subtitle</Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-            </Card.Text>
-            <Card.Link href='#'>Card Link</Card.Link>
-            <Card.Link href='#'>Another Link</Card.Link>
-          </Card.Body>
-        </Card>
-        <Card className='mb-1'>
-          <Card.Body>
-            <Card.Title>Member 1</Card.Title>
-            <Card.Subtitle className='mb-2'>Card Subtitle</Card.Subtitle>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-            </Card.Text>
-            <Card.Link href='#'>Card Link</Card.Link>
-            <Card.Link href='#'>Another Link</Card.Link>
-          </Card.Body>
-        </Card>
-      </div>
+      <ActivitiesContext.Provider value={{ activities, setActivities }}>
+        <Row className='p-0 m-0'>
+          <Col xs={12} sm={4} md={4} className='p-1 m-0'>
+            <ScreenHeaderContainer>
+              <Navbar.Brand className='h3 p-0 m-0'>Activities</Navbar.Brand>
+            </ScreenHeaderContainer>
+          </Col>
+        </Row>
+
+        <Row className='p-0 m-0'>
+          <Col xs={12} sm={4} md={4} lg={4} className='p-1 m-0'>
+            <div
+              className='p-0 m-0'
+              style={{
+                maxHeight: innerHeight - 100,
+                overflow: "scroll",
+              }}
+            >
+              <ActivitiesList />
+              <LinkContainer to='/activities/new/'>
+                <Card className='mb-1' key={0}>
+                  <Card.Body>
+                    <Button>Create New</Button>
+                  </Card.Body>
+                </Card>
+              </LinkContainer>
+            </div>
+          </Col>
+          <Col xs={12} sm={7} md={7} lg={6} className='p-1 m-0'>
+            <Outlet />
+          </Col>
+        </Row>
+      </ActivitiesContext.Provider>
     </>
   );
 };

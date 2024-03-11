@@ -16,22 +16,52 @@ import ActivitiesScreen from "./screens/ActivitiesScreen.jsx";
 import MessagesScreen from "./screens/MessagesScreen.jsx";
 import UpdatesScreen from "./screens/UpdatesScreen.jsx";
 import SettingsScreen from "./screens/SettingsScreen.jsx";
+import ActivitiesNew from "./components/ActivitiesNew.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
-      <Route path='/' element={<SearchScreen />} />
+      <Route path='/search' element={<SearchScreen />} index>
+        <Route
+          path='/search/activity/:id'
+          element={<h1>Search Activity View</h1>}
+        />
+        <Route
+          path='/search/organisation/:id'
+          element={<h1>Search Organisation View</h1>}
+        />
+        <Route
+          path='/search/member/:id'
+          element={<h1>search Member View</h1>}
+        />
+      </Route>
       <Route path='/members' element={<MembersScreen />}>
-        <Route path='/members/member/:id' element={<h1>Member ID</h1>} />
+        <Route path='/members/view/:id' element={<h1>Member ID</h1>} />
       </Route>
       <Route path='/activities' element={<ActivitiesScreen />}>
-        <Route path='/activities/activity/:id' element={<h1>Activity ID</h1>} />
+        <Route path='/activities/new' element={<ActivitiesNew />} />
+        <Route
+          path='/activities/view/:id'
+          element={<h1>Activity View ID</h1>}
+        />
+        <Route
+          path='/activities/edit/:id'
+          element={<h1>Activity Edit ID</h1>}
+        />
+        <Route path='/activities/del/:id' element={<h1>Activity Del ID</h1>} />
+      </Route>
+      <Route path='/organisations' element={<h1>Organisation</h1>}>
+        <Route path='/organisation/join' element={<h1>Organisation Join</h1>} />
+        <Route
+          path='/organisation/leave'
+          element={<h1>Organisation Leave</h1>}
+        />
       </Route>
       <Route path='/updates' element={<UpdatesScreen />}>
-        <Route path='/updates/update/:id' element={<h1>Update ID</h1>} />
+        <Route path='/updates/:id' element={<h1>Update ID</h1>} />
       </Route>
       <Route path='/messages' element={<MessagesScreen />}>
-        <Route path='/messages/message/:id' element={<h1>Messages ID</h1>} />
+        <Route path='/messages/:id' element={<h1>Messages ID</h1>} />
       </Route>
       <Route path='/settings' element={<SettingsScreen />} />
     </Route>

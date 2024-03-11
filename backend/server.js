@@ -6,7 +6,8 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
-import userRoutes from "./controllers/userController.js";
+import users from "./controllers/usersController.js";
+import activities from "./controllers/activitiesController.js";
 
 const port = process.env.PORT || 3001;
 
@@ -31,17 +32,8 @@ const printRequest = (req, res, next) => {
 
 app.use(printRequest);
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
-app.use("/api/users", userRoutes);
+app.use("/api/users", users);
+app.use("/api/activities", activities);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();

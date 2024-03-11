@@ -6,21 +6,49 @@ const userSchema = mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      minlength: 4,
+      maxlength: 50,
+      trim: true,
+      required: [true, "Please add a username"],
+      unique: "already exist",
     },
     password: {
       type: String,
-      required: true,
+      required: [true, "Please add a password"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Please add an email"],
       unique: true,
     },
-    name: {
-      type: String,
-      required: true,
-    },
+    type: { type: String, default: "member" },
+
+    name: { type: String, required: true },
+    description: String,
+
+    languages: { type: [{ name: String }], default: [] },
+    help: { type: [{ name: String }], default: [] },
+    tags: { type: [{ name: String }], default: [] },
+    location: { type: Array, default: [-122.2683, 37.8243] },
+
+    darkmood: { type: Boolean, default: false },
+    hidden: { type: Boolean, default: false },
+
+    contacts: [
+      {
+        id: { type: mongoose.Schema.Types.ObjectId },
+        name: { type: String },
+        approved: { type: Boolean, default: false },
+      },
+    ],
+
+    organisations: [
+      {
+        id: mongoose.Schema.Types.ObjectId,
+        name: String,
+        approved: { type: Boolean, default: false },
+      },
+    ],
   },
   {
     timestamps: true,
