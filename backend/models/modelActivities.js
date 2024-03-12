@@ -39,6 +39,6 @@ const schema = Schema(
   }
 );
 
-const Activity = mongoose.model("Activity", schema);
+const activities = mongoose.model("Activities", schema);
 
-export default Activity;
+export default activities;

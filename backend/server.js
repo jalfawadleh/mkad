@@ -6,8 +6,8 @@ dotenv.config();
 import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
-import users from "./controllers/usersController.js";
-import activities from "./controllers/activitiesController.js";
+import users from "./modules/moduleUsers.js";
+import activities from "./modules/moduleActivities.js";
 
 const port = process.env.PORT || 3001;
 
@@ -22,7 +22,7 @@ app.use(cors());
 
 const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
-    console.log("req -------- --- --- --- --- -- --- --- -");
+    console.log("\nreq -------- --- --- --- --- -- --- --- -");
     console.log("URL: " + req.url);
     console.log("method: " + req.method);
     console.log("params: ");

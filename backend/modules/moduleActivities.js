@@ -1,13 +1,13 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
-import Activity from "../models/ActivityModel.js";
+import Activities from "../models/modelActivities.js";
 
 // @desc    Get All Activities
 // @route   GET /api/activities
 // @access  Private
 const getActivities = asyncHandler(async (req, res) => {
-  const activities = await Activity.find();
+  const activities = await Activities.find();
   res.status(200).json(activities);
 });
 
@@ -17,7 +17,7 @@ const getActivities = asyncHandler(async (req, res) => {
 const postActivity = asyncHandler(async (req, res) => {
   const { name, description } = req.body;
 
-  const activity = await Activity.create({
+  const activity = await Activities.create({
     name,
     description,
   });
@@ -33,7 +33,7 @@ const postActivity = asyncHandler(async (req, res) => {
 // @route   PUT /api/activities
 // @access  Private
 const putActivity = asyncHandler(async (req, res) => {
-  const activity = await Activity.findOneAndUpdate(req.body._id, req.body);
+  const activity = await Activities.findOneAndUpdate(req.body._id, req.body);
 
   if (activity) {
     res.json(activity);
@@ -47,7 +47,7 @@ const putActivity = asyncHandler(async (req, res) => {
 // @route   GET /api/activities/:id
 // @access  Private
 const getActivity = asyncHandler(async (req, res) => {
-  const activity = await Activity.findById({ _id: req.params.id });
+  const activity = await Activities.findById({ _id: req.params.id });
 
   if (activity) {
     res.json(activity);
@@ -61,7 +61,7 @@ const getActivity = asyncHandler(async (req, res) => {
 // @route   Delete /api/activities/:id
 // @access  Private
 const deleteActivity = asyncHandler(async (req, res) => {
-  const activity = await Activity.deleteOne({ _id: req.params.id });
+  const activity = await Activities.deleteOne({ _id: req.params.id });
   console.log(activity);
   if (activity) {
     res.res.status(204);

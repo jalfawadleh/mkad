@@ -141,7 +141,7 @@ function LoginForm() {
                   onChange={onChange}
                 />
                 <small id='emailHelp' className='text-muted'>
-                  Email will only be used for password reset.
+                  Email will only be used for password reset
                 </small>
               </FloatingLabel>
             </>

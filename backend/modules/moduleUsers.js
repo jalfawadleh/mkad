@@ -1,7 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 
-import User from "../models/userModel.js";
+import User from "../models/modelUsers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 // @desc    Login user & get token
@@ -16,12 +16,11 @@ const login = asyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
-      email: user.email,
       token: await user.generateToken(user._id),
     });
   } else {
     res.status(401);
-    throw new Error("Invalid email or password");
+    throw new Error("Invalid username or password");
   }
 });
 
@@ -58,17 +57,6 @@ const post = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Logout user / clear cookie
-// @route   POST /api/users/logout
-// @access  Public
-const logout = (req, res) => {
-  res.cookie("jwt", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
-  res.status(200).json({ message: "Logged out successfully" });
-};
-
 // @desc    Get user
 // @route   GET /api/users
 // @access  Private
@@ -79,7 +67,7 @@ const get = asyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
-      email: user.email,
+      description: user.description,
     });
   } else {
     res.status(404);
@@ -91,23 +79,27 @@ const get = asyncHandler(async (req, res) => {
 // @route   PUT /api/users
 // @access  Private
 const put = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.body._id);
 
   if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
+    if (
+      req.body.currentPassword ||
+      (await user.matchPassword(req.body.currentPassword))
+    ) {
+      user.username = req.body.username || user.username;
+      if (req.body.password) user.password = req.body.password;
+      user.email = req.body.email || user.email;
 
-    if (req.body.password) {
-      user.password = req.body.password;
+      user.name = req.body.name || user.name;
+      user.description = req.body.description || user.description;
+
+      await user.save();
+
+      res.json("Updated");
+    } else {
+      res.status(400);
+      throw new Error("Invalid current password");
     }
-
-    const updatedUser = await user.save();
-
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      email: updatedUser.email,
-    });
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -117,6 +109,6 @@ const put = asyncHandler(async (req, res) => {
 const users = express.Router();
 
 users.route("/").post(post).get(protect, get).put(protect, put);
-users.post("/login", login).post("/logout", logout);
+users.post("/login", login);
 
 export default users;

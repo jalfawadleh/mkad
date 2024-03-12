@@ -1,56 +1,35 @@
-import { useState, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
+
 import { toast } from "react-toastify";
-
 import axios from "axios";
-import Form from "react-bootstrap/esm/Form";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import Button from "react-bootstrap/esm/Button";
-import Card from "react-bootstrap/esm/Card";
 
-import { ActivitiesContext } from "../../store.js";
-import Loader from "../Loader.jsx";
-import { Col, Row } from "react-bootstrap";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+import { Card, Col, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-const ActivitiesEdit = () => {
-  const navigate = useNavigate();
+import { UserContext } from "../../store.js";
 
-  const { id } = useParams();
+function SettingsProfile() {
+  const { user } = useContext(UserContext);
 
-  const { activities, setActivities } = useContext(ActivitiesContext);
-
-  const [activity, setActivity] = useState({ name: "", description: "" });
-
-  const { name, description } = activity;
-
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getActivity = async (id) => {
-    setIsLoading(true);
-    try {
-      await axios.get(`/activities/${id}`).then((res) => {
-        setIsLoading(false);
-        setActivity(res.data);
-      });
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
-  };
+  const [newDetails, setNewDetails] = useState({
+    _id: user._id,
+    name: user.name,
+    description: "",
+  });
+  const { name, description } = newDetails;
 
   const onSubmit = async (e) => {
     // checking for common required fields
     e.preventDefault();
-    setIsLoading(true);
+
     try {
-      await axios.put("activities/", activity).then((res) => {
-        setIsLoading(false);
-        const tmp = activities.filter((a) => a._id !== id);
-        setActivities([...tmp, activity]);
-        navigate(-1);
-      });
+      await axios
+        .put("/users/", newDetails)
+        .then((res) => res.data && toast("Updated"));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -59,21 +38,17 @@ const ActivitiesEdit = () => {
   };
 
   const onChange = (e) => {
-    setActivity((prevState) => ({
+    setNewDetails((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
-  useEffect(() => {
-    id && getActivity(id);
-  }, [id]);
-
   return (
     <>
-      <Card className='mb-1' key={0}>
+      <Card className='mb-1'>
         <Card.Body>
-          <Card.Title>Update Activity</Card.Title>
+          <Card.Title>Update Profile</Card.Title>
 
           <Form onSubmit={onSubmit}>
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
@@ -85,14 +60,13 @@ const ActivitiesEdit = () => {
                 onChange={onChange}
               />
             </FloatingLabel>
-
             <FloatingLabel
               controlId='description'
               label='Description'
               className='mb-3'
             >
               <Form.Control
-                type='description'
+                type='text'
                 placeholder='Description'
                 name='description'
                 value={description}
@@ -119,9 +93,8 @@ const ActivitiesEdit = () => {
           </Form>
         </Card.Body>
       </Card>
-      {isLoading && <Loader />}
     </>
   );
-};
+}
 
-export default ActivitiesEdit;
+export default SettingsProfile;

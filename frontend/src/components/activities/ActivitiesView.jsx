@@ -32,7 +32,7 @@ const ActivitiesView = () => {
   };
 
   useEffect(() => {
-    getActivity(id);
+    id && getActivity(id);
   }, [id]);
 
   return (

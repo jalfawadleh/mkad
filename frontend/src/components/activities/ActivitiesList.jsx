@@ -4,6 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import Card from "react-bootstrap/esm/Card";
 
 import { ActivitiesContext } from "../../store.js";
+import { Button, Col, Row } from "react-bootstrap";
 
 const ActivitiesList = () => {
   const { activities } = useContext(ActivitiesContext);
@@ -12,16 +13,51 @@ const ActivitiesList = () => {
     activities.map((activity) => (
       <Card className='mb-1' key={activity._id}>
         <Card.Body>
-          <Card.Title>{activity.name}</Card.Title>
-          <LinkContainer to={"/activities/edit/" + activity._id}>
-            <Card.Link>Edit</Card.Link>
-          </LinkContainer>
-          <LinkContainer to={"/activities/view/" + activity._id}>
-            <Card.Link>View</Card.Link>
-          </LinkContainer>
-          <LinkContainer to={"/activities/delete/" + activity._id}>
-            <Card.Link>Delete</Card.Link>
-          </LinkContainer>
+          <Card.Title className='text-center'>{activity.name}</Card.Title>
+          <Row>
+            <Col className='text-center'>
+              <LinkContainer to={"/activities/delete/" + activity._id}>
+                <Card.Link>
+                  <Button
+                    size='sm'
+                    variant='danger'
+                    type='button'
+                    className='w-100'
+                  >
+                    Delete
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </Col>
+            <Col className='text-center'>
+              <LinkContainer to={"/activities/edit/" + activity._id}>
+                <Card.Link>
+                  <Button
+                    size='sm'
+                    variant='success'
+                    type='button'
+                    className='w-100'
+                  >
+                    Edit
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </Col>
+            <Col className='text-center'>
+              <LinkContainer to={"/activities/view/" + activity._id}>
+                <Card.Link>
+                  <Button
+                    size='sm'
+                    variant='primary'
+                    type='button'
+                    className='w-100'
+                  >
+                    View
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
     ))
