@@ -61,7 +61,7 @@ const post = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private
 const get = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.params.id);
 
   if (user) {
     res.json({
@@ -82,24 +82,30 @@ const put = asyncHandler(async (req, res) => {
   const user = await User.findById(req.body._id);
 
   if (user) {
-    if (
-      req.body.currentPassword ||
-      (await user.matchPassword(req.body.currentPassword))
-    ) {
-      user.username = req.body.username || user.username;
-      if (req.body.password) user.password = req.body.password;
-      user.email = req.body.email || user.email;
-
-      user.name = req.body.name || user.name;
-      user.description = req.body.description || user.description;
-
-      await user.save();
-
-      res.json("Updated");
-    } else {
-      res.status(400);
-      throw new Error("Invalid current password");
+    // if account change
+    if (req.body.username || req.body.password || req.body.email) {
+      // check old password and if is valid
+      if (
+        req.body.currentPassword !== "" &&
+        (await user.matchPassword(req.body.currentPassword))
+      ) {
+        user.username = req.body.username || user.username;
+        if (req.body.password) user.password = req.body.password;
+        user.email = req.body.email || user.email;
+      } else {
+        res.status(400);
+        throw new Error("Invalid current password");
+      }
     }
+
+    // Update profile if needed
+    user.name = req.body.name || user.name;
+    user.description = req.body.description || user.description;
+
+    console.log(user);
+
+    await user.save();
+    res.json({ name: user.name, description: user.description });
   } else {
     res.status(404);
     throw new Error("User not found");
@@ -109,6 +115,6 @@ const put = asyncHandler(async (req, res) => {
 const users = express.Router();
 
 users.route("/").post(post).get(protect, get).put(protect, put);
-users.post("/login", login);
+users.post("/login", login).get("/:id", protect, get);
 
 export default users;

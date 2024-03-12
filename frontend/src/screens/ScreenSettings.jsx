@@ -14,14 +14,25 @@ const ScreenSettings = () => {
           <LinkContainer to='/settings/profile/'>
             <Card className='mb-1' key={0}>
               <Card.Body>
-                <Button className='w-100'>Profile</Button>
+                <Button className='w-100'>Update Profile</Button>
               </Card.Body>
             </Card>
           </LinkContainer>
           <LinkContainer to='/settings/account/'>
             <Card className='mb-1' key={0}>
               <Card.Body>
-                <Button className='w-100'>Account</Button>
+                <Button variant='warning' className='w-100'>
+                  Update Account
+                </Button>
+              </Card.Body>
+            </Card>
+          </LinkContainer>
+          <LinkContainer to='/settings/delete/'>
+            <Card className='mb-1' key={0}>
+              <Card.Body>
+                <Button variant='danger' className='w-100'>
+                  Delete Account
+                </Button>
               </Card.Body>
             </Card>
           </LinkContainer>

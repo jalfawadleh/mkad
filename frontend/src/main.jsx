@@ -24,6 +24,7 @@ import ScreenUpdates from "./screens/ScreenUpdates.jsx";
 import ScreenSettings from "./screens/ScreenSettings.jsx";
 import SettingsAccount from "./components/settings/SettingsAccount.jsx";
 import SettingsProfile from "./components/settings/SettingsProfile.jsx";
+import SettingsDelete from "./components/settings/SettingsDelete.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -67,6 +68,7 @@ const router = createBrowserRouter(
       <Route path='/settings' element={<ScreenSettings />}>
         <Route path='/settings/profile' element={<SettingsProfile />} />
         <Route path='/settings/account' element={<SettingsAccount />} />
+        <Route path='/settings/delete' element={<SettingsDelete />} />
       </Route>
     </Route>
   )
