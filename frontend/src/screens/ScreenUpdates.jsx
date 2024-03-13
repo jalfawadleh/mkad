@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/esm/Card";
-import ScreenHeader from "../components/ScreenHeader";
+import ScreenHeader from "../components/Header";
 
 const UpdatesScreen = () => {
   const { innerHeight } = window;

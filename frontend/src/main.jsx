@@ -28,12 +28,13 @@ import SettingsProfile from "./components/settings/SettingsProfile.jsx";
 import SettingsDelete from "./components/settings/SettingsDelete.jsx";
 import ActivitiesRoute from "./components/activities/ActivitiesRoute.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import ScreenLogout from "./screens/ScreenLogout.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<PrivateRoute />}>
-        <Route path='/view' element={<SearchScreen />}>
+        <Route path='/view' element={<>View</>}>
           <Route path='/view/activities/:id' element={<ActivitiesView />} />
           <Route path='/view/organisation/:id' element={<h1>View Org Id</h1>} />
           <Route path='/view/member/:id' element={<h1>View Member Id</h1>} />
@@ -89,6 +90,7 @@ const router = createBrowserRouter(
           <Route path='/settings/delete' element={<SettingsDelete />} />
         </Route>
       </Route>
+      <Route path='/logout' element={<ScreenLogout />} />
     </Route>
   )
 );

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ScreenNavbar from "./ScreenNavbar";
+import ScreenNavbar from "../screens/ScreenNavbar";
 
 import {
   MapContainer,

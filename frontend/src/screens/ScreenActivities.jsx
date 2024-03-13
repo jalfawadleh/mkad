@@ -10,7 +10,7 @@ import Col from "react-bootstrap/esm/Col";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
-import ScreenHeader from "../components/ScreenHeader";
+import ScreenHeader from "../components/Header";
 
 import ActivitiesList from "../components/activities/ActivitiesList";
 import { ActivitiesContext } from "../store";
