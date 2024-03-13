@@ -3,32 +3,33 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
-import { Card, Col, Row } from "react-bootstrap";
+import { Card, Col, Row, Button, Form, FloatingLabel } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { UserContext } from "../../store.js";
+
 import Loader from "../utils/Loader.jsx";
+import Languages from "../common/Languages.jsx";
 
 function SettingsProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
 
-  const [newDetails, setNewDetails] = useState({
+  const [member, setMember] = useState({
     _id: user._id,
-    name: user.name,
+    name: "",
     description: "",
+    languages: [],
   });
-  const { name, description } = newDetails;
 
-  const getProfile = async (id) => {
+  const { name, description, languages } = member;
+
+  const getProfile = async () => {
     setIsLoading(true);
+    const id = user._id;
     try {
-      await axios.get(`/users/${id}`).then((res) => {
-        setNewDetails(res.data);
+      await axios.get(`/members/${id}`).then((res) => {
+        setMember(res.data);
         setIsLoading(false);
       });
     } catch (error) {
@@ -43,15 +44,14 @@ function SettingsProfile() {
     e.preventDefault();
 
     try {
-      await axios.put("/users/", newDetails).then((res) => {
-        res.data && toast("Updated");
+      await axios.put("/members", member).then(() => {
+        toast("Updated");
         setUser((prevState) => ({
           ...prevState,
-          name: res.data.name,
-          description: res.data.description,
+          name,
+          description,
+          languages,
         }));
-
-        console.log(res.data);
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -61,23 +61,22 @@ function SettingsProfile() {
   };
 
   const onChange = (e) => {
-    setNewDetails((prevState) => ({
+    setMember((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
 
-  useEffect(() => {
-    getProfile(user._id);
-  }, [user._id]);
+  useEffect(function () {
+    getProfile();
+  }, []);
 
   return (
     <>
       <Card className='mb-1'>
-        <Card.Body>
-          <Card.Title>Update Profile</Card.Title>
-
-          <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
+          <Card.Body>
+            <Card.Title>Update Profile</Card.Title>
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
               <Form.Control
                 type='text'
@@ -101,6 +100,9 @@ function SettingsProfile() {
               />
             </FloatingLabel>
 
+            <Languages languages={languages} setMember={setMember} />
+          </Card.Body>
+          <Card.Footer className='text-muted'>
             <Row>
               <Col className='text-center'>
                 <Button variant='primary' type='submit' className='w-100'>
@@ -117,8 +119,8 @@ function SettingsProfile() {
                 </LinkContainer>
               </Col>
             </Row>
-          </Form>
-        </Card.Body>
+          </Card.Footer>
+        </Form>
       </Card>
       {isLoading && <Loader />}
     </>

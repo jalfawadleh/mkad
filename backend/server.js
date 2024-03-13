@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import users from "./modules/moduleUsers.js";
+import members from "./modules/moduleMembers.js";
 import activities from "./modules/moduleActivities.js";
 
 const port = process.env.PORT || 3001;
@@ -36,6 +37,7 @@ const printRequest = (req, res, next) => {
 app.use(printRequest);
 
 app.use("/api/users", users);
+app.use("/api/members", members);
 app.use("/api/activities", activities);
 
 if (process.env.NODE_ENV === "production") {

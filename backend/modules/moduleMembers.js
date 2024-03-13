@@ -3,42 +3,24 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
 
-// @desc    Get All Activities
-// @route   GET /api/activities
-// @access  Private
-const getActivities = asyncHandler(async (req, res) => {
-  const activities = await Members.find();
-  res.status(200).json(activities);
-});
-
-// @desc    Add New Activity
-// @route   POST /api/activities
-// @access  Public
-const postActivity = asyncHandler(async (req, res) => {
-  const { name, description } = req.body;
-
-  const activity = await Members.create({
-    name,
-    description,
-  });
-
-  if (activity) res.status(201).json({ activity });
-  else {
-    res.status(400);
-    throw new Error("Invalid activity data");
-  }
-});
-
 // @desc    Update Member
 // @route   PUT /api/members
 // @access  Private
 const putMember = asyncHandler(async (req, res) => {
-  const member = await Members.findOneAndUpdate(req.body._id, req.body);
+  const member = await Members.findById(req.body._id);
 
-  if (member) res.json(member);
-  else {
+  if (member) {
+    // Update profile
+    member.name = req.body.name || member.name;
+    member.description = req.body.description || member.description;
+    member.languages = req.body.languages || member.languages;
+
+    await member.save();
+
+    res.json(true);
+  } else {
     res.status(404);
-    throw new Error("Activity not found");
+    throw new Error("Member not found");
   }
 });
 
@@ -48,7 +30,13 @@ const putMember = asyncHandler(async (req, res) => {
 const getMember = asyncHandler(async (req, res) => {
   const member = await Members.findById({ _id: req.params.id });
 
-  if (member) res.json(member);
+  if (member)
+    res.json({
+      _id: member._id,
+      name: member.name,
+      description: member.description,
+      languages: member.languages,
+    });
   else {
     res.status(404);
     throw new Error("Member not found");
@@ -57,6 +45,6 @@ const getMember = asyncHandler(async (req, res) => {
 
 const members = express.Router();
 
-members.route("/:id").get(protect, getMember).put(protect, putMember);
+members.put("/", protect, putMember).get("/:id", protect, getMember);
 
 export default members;

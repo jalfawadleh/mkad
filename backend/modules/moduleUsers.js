@@ -1,7 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 
-import User from "../models/modelUsers.js";
+import Users from "../models/modelUsers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
 // @desc    Login user & get token
@@ -10,7 +10,7 @@ import { protect } from "../middleware/authMiddleware.js";
 const login = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
+  const user = await Users.findOne({ username });
 
   if (user && (await user.matchPassword(password))) {
     res.json({
@@ -31,14 +31,14 @@ const login = asyncHandler(async (req, res) => {
 const post = asyncHandler(async (req, res) => {
   const { username, password, email, name } = req.body;
 
-  const userExists = await User.findOne({ username });
+  const userExists = await Users.findOne({ username });
 
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
 
-  const user = await User.create({
+  const user = await Users.create({
     username,
     password,
     name,
@@ -62,7 +62,7 @@ const post = asyncHandler(async (req, res) => {
 // @route   GET /api/users
 // @access  Private
 const get = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await Users.findById(req.params.id);
 
   if (user) {
     res.json({
@@ -80,33 +80,25 @@ const get = asyncHandler(async (req, res) => {
 // @route   PUT /api/users
 // @access  Private
 const put = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.body._id);
+  const user = await Users.findById(req.body._id);
 
   if (user) {
-    // if account change
-    if (req.body.username || req.body.password || req.body.email) {
-      // check old password and if is valid
-      if (
-        req.body.currentPassword !== "" &&
-        (await user.matchPassword(req.body.currentPassword))
-      ) {
-        user.username = req.body.username || user.username;
-        if (req.body.password) user.password = req.body.password;
-        user.email = req.body.email || user.email;
-      } else {
-        res.status(400);
-        throw new Error("Invalid current password");
-      }
+    if (
+      // if old password is valid
+      req.body.currentPassword !== "" &&
+      (await user.matchPassword(req.body.currentPassword))
+    ) {
+      user.username = req.body.username || user.username;
+      // password will be hashed as pre function in the users model
+      if (req.body.password) user.password = req.body.password;
+      user.email = req.body.email || user.email;
+    } else {
+      res.status(400);
+      throw new Error("Invalid current password");
     }
 
-    // Update profile if needed
-    user.name = req.body.name || user.name;
-    user.description = req.body.description || user.description;
-
-    console.log(user);
-
     await user.save();
-    res.json({ name: user.name, description: user.description });
+    res.json(true);
   } else {
     res.status(404);
     throw new Error("User not found");
