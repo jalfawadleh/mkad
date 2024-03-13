@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema(
       required: [true, "Please add an email"],
       unique: true,
     },
-    type: { type: String, default: "member" },
+    type: { type: String, default: "member" }, //organisation
 
     name: { type: String, required: true },
     description: String,
@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema(
 
     darkmood: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },
-
+    archived: { type: Boolean, default: false },
     contacts: [
       {
         id: { type: mongoose.Schema.Types.ObjectId },

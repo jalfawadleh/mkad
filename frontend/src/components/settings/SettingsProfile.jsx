@@ -11,7 +11,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { UserContext } from "../../store.js";
-import Loader from "../Loader.jsx";
+import Loader from "../utils/Loader.jsx";
 
 function SettingsProfile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -103,14 +103,14 @@ function SettingsProfile() {
 
             <Row>
               <Col className='text-center'>
-                <Button variant='danger' type='submit' className='w-50 '>
+                <Button variant='primary' type='submit' className='w-100'>
                   Update
                 </Button>
               </Col>
               <Col className='text-center'>
                 <LinkContainer to={".."}>
                   <Card.Link>
-                    <Button variant='success' type='button' className='w-50 '>
+                    <Button variant='success' type='button' className='w-100'>
                       Close
                     </Button>
                   </Card.Link>

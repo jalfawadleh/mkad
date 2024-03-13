@@ -16,6 +16,7 @@ const login = asyncHandler(async (req, res) => {
     res.json({
       _id: user._id,
       name: user.name,
+      type: user.type,
       token: await user.generateToken(user._id),
     });
   } else {
@@ -39,8 +40,8 @@ const post = asyncHandler(async (req, res) => {
 
   const user = await User.create({
     username,
-    name,
     password,
+    name,
     email,
   });
 
@@ -48,7 +49,7 @@ const post = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
-      email: user.email,
+      type: user.type,
       token: user.generateToken(user._id),
     });
   } else {

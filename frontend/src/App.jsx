@@ -9,9 +9,6 @@ import "leaflet/dist/leaflet.css";
 
 import { UserContext } from "./store.js";
 
-import ScreenLanding from "./screens/ScreenLanding.jsx";
-import Map from "./components/Map.jsx";
-
 const App = () => {
   const [user, setUser] = useState([]);
 
@@ -23,13 +20,7 @@ const App = () => {
   return (
     <>
       <UserContext.Provider value={{ user, setUser }}>
-        {user.token ? (
-          <Map>
-            <Outlet />
-          </Map>
-        ) : (
-          <ScreenLanding />
-        )}
+        <Outlet />
         <ToastContainer />
       </UserContext.Provider>
     </>

@@ -9,7 +9,7 @@ import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
 import { ActivitiesContext } from "../../store.js";
-import Loader from "../Loader.jsx";
+import Loader from "../utils/Loader.jsx";
 import { Col, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -102,7 +102,7 @@ const ActivitiesEdit = () => {
 
             <Row>
               <Col className='text-center'>
-                <Button variant='danger' type='submit' className='w-50 '>
+                <Button variant='primary' type='submit' className='w-50 '>
                   Update
                 </Button>
               </Col>

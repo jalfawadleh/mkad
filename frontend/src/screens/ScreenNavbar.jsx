@@ -9,7 +9,12 @@ import { FaCog } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
 
+import { UserContext } from "../store.js";
+import { useContext } from "react";
+
 const ScreenNavbar = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <>
       <Navbar
@@ -33,11 +38,14 @@ const ScreenNavbar = () => {
               <FaCog />
             </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/activities'>
-            <Nav.Link>
-              <FaFlag />
-            </Nav.Link>
-          </LinkContainer>
+
+          {user.type === "organisation" && (
+            <LinkContainer to='/activities'>
+              <Nav.Link>
+                <FaFlag />
+              </Nav.Link>
+            </LinkContainer>
+          )}
           <LinkContainer to='/updates'>
             <Nav.Link>
               <FaBell />

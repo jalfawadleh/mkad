@@ -5,7 +5,7 @@ import axios from "axios";
 
 import Card from "react-bootstrap/esm/Card";
 import { LinkContainer } from "react-router-bootstrap";
-import Loader from "../Loader";
+import Loader from "../utils/Loader";
 import { Button, Col, Row } from "react-bootstrap";
 
 const ActivitiesView = () => {

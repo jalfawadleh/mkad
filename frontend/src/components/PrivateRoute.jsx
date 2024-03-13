@@ -2,11 +2,19 @@ import { useContext } from "react";
 
 import { Outlet } from "react-router-dom";
 
-import { UserContext } from "../UserContext";
+import { UserContext } from "../store";
+import Map from "./Map";
+import ScreenLanding from "../screens/ScreenLanding";
 
 const PrivateRoute = () => {
   const { user } = useContext(UserContext);
 
-  return user.token && <Outlet />;
+  return user.token ? (
+    <Map>
+      <Outlet />
+    </Map>
+  ) : (
+    <ScreenLanding />
+  );
 };
 export default PrivateRoute;
