@@ -15,8 +15,9 @@ const putMember = asyncHandler(async (req, res) => {
     member.description = req.body.description || member.description;
     member.languages = req.body.languages || member.languages;
     member.help = req.body.help || member.help;
-    member.tags = req.body.tags || member.tags;
-
+    member.interests = req.body.interests || member.interests;
+    member.darkmood = req.body.darkmood || member.darkmood;
+    member.hidden = req.body.hidden || member.hidden;
     await member.save();
 
     res.json(true);

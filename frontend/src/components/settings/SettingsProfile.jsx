@@ -82,7 +82,7 @@ function SettingsProfile() {
     <>
       <Card
         className='mb-1 overflow-scroll'
-        style={{ maxHeight: window.innerHeight - 80 }}
+        style={{ maxHeight: window.innerHeight - 100 }}
       >
         <Form>
           <Card.Body>
@@ -142,6 +142,7 @@ function SettingsProfile() {
               type='switch'
               id='hidden'
               label='Hide profile from the map amd search '
+              checked={hidden}
               onChange={() =>
                 setMember((prevState) => ({
                   ...prevState,
@@ -155,6 +156,7 @@ function SettingsProfile() {
               type='switch'
               id='darkmood'
               label='Darkmood'
+              checked={darkmood}
               onChange={() =>
                 setMember((prevState) => ({
                   ...prevState,
