@@ -26,9 +26,9 @@ const usersSchema = mongoose.Schema(
     name: { type: String, required: true },
     description: String,
 
-    languages: { type: [{ name: String }], default: [] },
+    languages: { type: [{ name: String }], default: [{ name: "English" }] },
     help: { type: [{ name: String }], default: [] },
-    tags: { type: [{ name: String }], default: [] },
+    interests: { type: [{ name: String }], default: [] },
     location: { type: Array, default: [-122.2683, 37.8243] },
 
     darkmood: { type: Boolean, default: false },

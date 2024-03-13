@@ -12,17 +12,34 @@ import { ActivitiesContext } from "../../store.js";
 import Loader from "../utils/Loader.jsx";
 import { Col, Row } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import ListItems from "../common/ListItems.jsx";
 
 const ActivitiesEdit = () => {
-  const navigate = useNavigate();
-
   const { id } = useParams();
 
   const { activities, setActivities } = useContext(ActivitiesContext);
 
-  const [activity, setActivity] = useState({ name: "", description: "" });
+  const [activity, setActivity] = useState({
+    name: "",
+    description: "",
+    notes: [],
+    languages: [],
+    help: [],
+    interests: [],
+    darkmood: false,
+    hidden: false,
+  });
 
-  const { name, description } = activity;
+  const {
+    name,
+    description,
+    notes,
+    languages,
+    help,
+    interests,
+    darkmood,
+    hidden,
+  } = activity;
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,13 +60,12 @@ const ActivitiesEdit = () => {
   const onSubmit = async (e) => {
     // checking for common required fields
     e.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
-      await axios.put("activities/", activity).then((res) => {
+      await axios.put("/activities/", activity).then((res) => {
         setIsLoading(false);
-        const tmp = activities.filter((a) => a._id !== id);
-        setActivities([...tmp, activity]);
-        navigate(-1);
+        setActivities(res.data);
+        toast("updated");
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -71,11 +87,14 @@ const ActivitiesEdit = () => {
 
   return (
     <>
-      <Card className='mb-1' key={0}>
+      <Card
+        className='mb-1 overflow-scroll'
+        style={{ maxHeight: window.innerHeight - 80 }}
+      >
         <Card.Body>
           <Card.Title>Update Activity</Card.Title>
 
-          <Form onSubmit={onSubmit}>
+          <Form>
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
               <Form.Control
                 type='text'
@@ -100,9 +119,81 @@ const ActivitiesEdit = () => {
               />
             </FloatingLabel>
 
+            <ListItems
+              edit={true}
+              message='Notes about the activity'
+              type='notes'
+              title='note'
+              items={notes}
+              setParent={setActivity}
+            />
+            <ListItems
+              edit={true}
+              message='Interests or hobbies related to this activity'
+              type='interests'
+              title='interest'
+              items={interests}
+              setParent={setActivity}
+            />
+            <ListItems
+              edit={true}
+              message='Languages spoken by activity admins'
+              type='languages'
+              title='language'
+              items={languages}
+              setParent={setActivity}
+            />
+            <ListItems
+              edit={true}
+              message='Help provided or needed'
+              type='help'
+              title='help'
+              items={help}
+              setParent={setActivity}
+            />
+
+            <Form.Check // prettier-ignore
+              className='mb-3'
+              type='switch'
+              id='hidden'
+              label='Hide activity from the map amd search '
+              checked={hidden}
+              onChange={() =>
+                setActivity((prevState) => ({
+                  ...prevState,
+                  hidden: !hidden,
+                }))
+              }
+            />
+
+            <Form.Check // prettier-ignore
+              className='mb-3'
+              type='switch'
+              id='darkmood'
+              label='Darkmood'
+              checked={darkmood}
+              onChange={() =>
+                setActivity((prevState) => ({
+                  ...prevState,
+                  darkmood: !darkmood,
+                }))
+              }
+            />
+
+            <LinkContainer to={"/activities/edit/location/" + activity._id}>
+              <Card.Body>
+                <Button>Manage Location</Button>
+              </Card.Body>
+            </LinkContainer>
+
             <Row>
               <Col className='text-center'>
-                <Button variant='primary' type='submit' className='w-50 '>
+                <Button
+                  variant='primary'
+                  type='submit'
+                  className='w-50 '
+                  onClick={onSubmit}
+                >
                   Update
                 </Button>
               </Col>

@@ -42,7 +42,7 @@ const ScreenActivities = () => {
         <Row className='p-0 m-0'>
           <Col xs={12} sm={4} md={4} lg={4} className='p-1 m-0'>
             <div
-              className='p-0 m-0'
+              className='p-0 m-0 overflow-scroll'
               style={{
                 maxHeight: innerHeight - 100,
                 overflow: "scroll",

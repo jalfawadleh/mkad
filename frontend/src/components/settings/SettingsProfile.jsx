@@ -9,7 +9,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { UserContext } from "../../store.js";
 
 import Loader from "../utils/Loader.jsx";
-import Languages from "../common/Languages.jsx";
+import ListItems from "../common/ListItems.jsx";
 
 function SettingsProfile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,15 +20,22 @@ function SettingsProfile() {
     name: "",
     description: "",
     languages: [],
+    help: [],
+    interests: [],
+    location: [],
+    darkmood: true,
+    hidden: true,
+    contacts: [],
+    organisations: [],
   });
 
-  const { name, description, languages } = member;
+  const { name, description, languages, help, interests, darkmood, hidden } =
+    member;
 
   const getProfile = async () => {
     setIsLoading(true);
-    const id = user._id;
     try {
-      await axios.get(`/members/${id}`).then((res) => {
+      await axios.get(`/members/${user._id}`).then((res) => {
         setMember(res.data);
         setIsLoading(false);
       });
@@ -73,8 +80,11 @@ function SettingsProfile() {
 
   return (
     <>
-      <Card className='mb-1'>
-        <Form onSubmit={onSubmit}>
+      <Card
+        className='mb-1 overflow-scroll'
+        style={{ maxHeight: window.innerHeight - 80 }}
+      >
+        <Form>
           <Card.Body>
             <Card.Title>Update Profile</Card.Title>
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
@@ -100,12 +110,67 @@ function SettingsProfile() {
               />
             </FloatingLabel>
 
-            <Languages languages={languages} setMember={setMember} />
-          </Card.Body>
-          <Card.Footer className='text-muted'>
+            <ListItems
+              edit={true}
+              message='Languages for people to reach you with'
+              type='languages'
+              title='language'
+              items={languages}
+              setParent={setMember}
+            />
+
+            <ListItems
+              edit={true}
+              message='Help needed or offered'
+              type='help'
+              title='Help'
+              items={help}
+              setParent={setMember}
+            />
+
+            <ListItems
+              edit={true}
+              message='Your interests or hobbies'
+              type='interests'
+              title='interest'
+              items={interests}
+              setParent={setMember}
+            />
+
+            <Form.Check // prettier-ignore
+              className='mb-3'
+              type='switch'
+              id='hidden'
+              label='Hide profile from the map amd search '
+              onChange={() =>
+                setMember((prevState) => ({
+                  ...prevState,
+                  hidden: !hidden,
+                }))
+              }
+            />
+
+            <Form.Check // prettier-ignore
+              className='mb-3'
+              type='switch'
+              id='darkmood'
+              label='Darkmood'
+              onChange={() =>
+                setMember((prevState) => ({
+                  ...prevState,
+                  darkmood: !darkmood,
+                }))
+              }
+            />
+
             <Row>
               <Col className='text-center'>
-                <Button variant='primary' type='submit' className='w-100'>
+                <Button
+                  variant='primary'
+                  type='button'
+                  className='w-100'
+                  onClick={onSubmit}
+                >
                   Update
                 </Button>
               </Col>
@@ -119,7 +184,7 @@ function SettingsProfile() {
                 </LinkContainer>
               </Col>
             </Row>
-          </Card.Footer>
+          </Card.Body>
         </Form>
       </Card>
       {isLoading && <Loader />}

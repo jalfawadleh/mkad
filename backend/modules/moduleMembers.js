@@ -14,6 +14,8 @@ const putMember = asyncHandler(async (req, res) => {
     member.name = req.body.name || member.name;
     member.description = req.body.description || member.description;
     member.languages = req.body.languages || member.languages;
+    member.help = req.body.help || member.help;
+    member.tags = req.body.tags || member.tags;
 
     await member.save();
 
@@ -36,6 +38,13 @@ const getMember = asyncHandler(async (req, res) => {
       name: member.name,
       description: member.description,
       languages: member.languages,
+      help: member.help,
+      interests: member.interests,
+      location: member.location,
+      darkmood: member.darkmood,
+      hidden: member.hidden,
+      contacts: member.contacts,
+      organisations: member.organisations,
     });
   else {
     res.status(404);

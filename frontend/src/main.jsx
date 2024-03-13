@@ -78,6 +78,10 @@ const router = createBrowserRouter(
             <Route path='/activities/view/:id' element={<ActivitiesView />} />
             <Route path='/activities/edit/:id' element={<ActivitiesEdit />} />
             <Route
+              path='/activities/edit/location/:id'
+              element={<>Edit Location</>}
+            />
+            <Route
               path='/activities/delete/:id'
               element={<ActivitiesDelete />}
             />
@@ -86,6 +90,7 @@ const router = createBrowserRouter(
 
         <Route path='/settings' element={<ScreenSettings />}>
           <Route path='/settings/profile' element={<SettingsProfile />} />
+          <Route path='/settings/location' element={<>Location Change</>} />
           <Route path='/settings/account' element={<SettingsAccount />} />
           <Route path='/settings/delete' element={<SettingsDelete />} />
         </Route>

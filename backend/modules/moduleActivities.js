@@ -7,7 +7,7 @@ import Activities from "../models/modelActivities.js";
 // @route   GET /api/activities
 // @access  Private
 const getActivities = asyncHandler(async (req, res) => {
-  const activities = await Activities.find();
+  const activities = await Activities.find().select("name");
   res.status(200).json(activities);
 });
 
@@ -33,10 +33,21 @@ const postActivity = asyncHandler(async (req, res) => {
 // @route   PUT /api/activities
 // @access  Private
 const putActivity = asyncHandler(async (req, res) => {
-  const activity = await Activities.findOneAndUpdate(req.body._id, req.body);
+  const activity = await Activities.findById(req.body._id);
 
   if (activity) {
-    res.json(activity);
+    activity.name = req.body.name || activity.name;
+    activity.description = req.body.description || activity.description;
+    activity.notes = req.body.notes || activity.notes;
+    activity.languages = req.body.languages || activity.languages;
+    activity.help = req.body.help || activity.help;
+    activity.interests = req.body.interests || activity.interests;
+    activity.darkmood = req.body.darkmood || activity.darkmood;
+    activity.hidden = req.body.hidden || activity.hidden;
+
+    await activity.save();
+    const activities = await Activities.find().select("name");
+    res.status(200).json(activities);
   } else {
     res.status(404);
     throw new Error("Activity not found");
@@ -49,9 +60,8 @@ const putActivity = asyncHandler(async (req, res) => {
 const getActivity = asyncHandler(async (req, res) => {
   const activity = await Activities.findById({ _id: req.params.id });
 
-  if (activity) {
-    res.json(activity);
-  } else {
+  if (activity) res.json(activity);
+  else {
     res.status(404);
     throw new Error("User not found");
   }
