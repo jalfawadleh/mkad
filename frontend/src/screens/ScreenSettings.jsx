@@ -1,5 +1,5 @@
 import Card from "react-bootstrap/esm/Card";
-import ScreenHeader from "../components/Header";
+import ScreenHeader from "../components/common/ScreenHeader";
 import { LinkContainer } from "react-router-bootstrap";
 import { Button, Col, Row } from "react-bootstrap";
 import { Outlet } from "react-router-dom";

@@ -28,8 +28,8 @@ import SettingsDelete from "./components/settings/SettingsDelete.jsx";
 
 import ScreenLogout from "./screens/ScreenLogout.jsx";
 
-import RouteOrganisation from "./components/RouteOrganisation.jsx";
-import RoutePrivate from "./components/RoutePrivate.jsx";
+import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
+import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import MemberView from "./components/members/MemberView.jsx";
 
@@ -52,6 +52,8 @@ const router = createBrowserRouter(
           <Route path=':id/block' element={<h1>Member Block ID</h1>} />
           <Route path=':id/messages' element={<h1>Member msg ID</h1>} />
         </Route>
+
+        <Route path='messages' element={<>Messages</>} />
 
         <Route path='search' element={<SearchScreen />}>
           <Route path='activity/:id' element={<ActivitiesView />} />

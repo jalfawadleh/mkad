@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ScreenNavbar from "../screens/ScreenNavbar";
+import Header from "../common/Header";
 
 import {
   MapContainer,
@@ -36,17 +36,13 @@ export default function Map() {
 
   return (
     <>
-      <ScreenNavbar />
+      <Header />
 
       <Outlet />
 
       <MapContainer
         center={[51.505, -0.09]}
-        zoom={13}
-        scrollWheelZoom={false}
-        doubleClickZoom={true}
-        zoomControl={false}
-        attributionControl={false}
+        zoom={10}
         style={{
           position: "absolute",
           top: 0,

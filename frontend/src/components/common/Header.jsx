@@ -9,10 +9,10 @@ import { FaCog } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
 
-import { UserContext } from "../store.js";
+import { UserContext } from "../../store.js";
 import { useContext } from "react";
 
-const ScreenNavbar = () => {
+const Header = () => {
   const { user } = useContext(UserContext);
 
   return (
@@ -51,7 +51,7 @@ const ScreenNavbar = () => {
               <FaBell />
             </Nav.Link>
           </LinkContainer>
-          <LinkContainer to='/members'>
+          <LinkContainer to='/messages'>
             <Nav.Link>
               <FaEnvelope />
             </Nav.Link>
@@ -106,4 +106,4 @@ const ScreenNavbar = () => {
   );
 };
 
-export default ScreenNavbar;
+export default Header;
