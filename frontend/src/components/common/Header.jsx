@@ -21,9 +21,11 @@ const Header = () => {
       variant='dark'
       className='p-0 m-0 w-100 justify-content-around'
     >
-      <Nav.Link href='/'>
-        <FaWindowClose />
-      </Nav.Link>
+      <LinkContainer to='search'>
+        <Nav.Link>
+          <FaSearch />
+        </Nav.Link>
+      </LinkContainer>
       <LinkContainer to='settings'>
         <Nav.Link>
           <FaCog />
@@ -46,11 +48,9 @@ const Header = () => {
           <FaEnvelope />
         </Nav.Link>
       </LinkContainer>
-      <LinkContainer to='search'>
-        <Nav.Link>
-          <FaSearch />
-        </Nav.Link>
-      </LinkContainer>
+      <Nav.Link href='/'>
+        <FaWindowClose />
+      </Nav.Link>
     </Nav>
   );
 
@@ -59,8 +59,8 @@ const Header = () => {
       <Navbar
         bg='dark'
         variant='dark'
-        className='m-1 p-1 d-none d-sm-block'
-        style={{ borderRadius: 10, maxWidth: "300px" }}
+        className='m-1 mb-2 p-0 d-none d-sm-block'
+        style={{ borderRadius: 10, width: "300px" }}
       >
         {headerLinks}
       </Navbar>

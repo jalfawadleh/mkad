@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 
-import { Card, Col, Row, Button, Form, FloatingLabel } from "react-bootstrap";
+import { Card, Col, Row, Button, Form, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import Loader from "../utils/Loader.jsx";
@@ -46,56 +46,67 @@ function MemberView() {
 
   return (
     <>
-      <Card
-        className='mb-1 overflow-scroll'
-        style={{ maxHeight: window.innerHeight - 100 }}
-      >
-        <Form>
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>{description}</Card.Text>
+      <Row className='justify-content-center'>
+        <Col
+          xs={12}
+          sm={8}
+          lg={6}
+          className='overflow-scroll'
+          style={{ maxHeight: window.innerHeight - 100 }}
+        >
+          <Card>
+            <Form>
+              <Card.Body>
+                <Card.Title>{name}</Card.Title>
+                <Card.Text>{description}</Card.Text>
 
-            <ListItems
-              edit={false}
-              message='Languages'
-              type='languages'
-              title='language'
-              items={languages}
-              setParent={setMember}
-            />
+                <ListItems
+                  edit={false}
+                  message='Languages'
+                  type='languages'
+                  title='language'
+                  items={languages}
+                  setParent={setMember}
+                />
 
-            <ListItems
-              edit={false}
-              message='Help needed or offered'
-              type='help'
-              title='Help'
-              items={help}
-              setParent={setMember}
-            />
+                <ListItems
+                  edit={false}
+                  message='Help needed or offered'
+                  type='help'
+                  title='Help'
+                  items={help}
+                  setParent={setMember}
+                />
 
-            <ListItems
-              edit={false}
-              message='Related nterests and hobbies'
-              type='interests'
-              title='interest'
-              items={interests}
-              setParent={setMember}
-            />
+                <ListItems
+                  edit={false}
+                  message='Related nterests and hobbies'
+                  type='interests'
+                  title='interest'
+                  items={interests}
+                  setParent={setMember}
+                />
 
-            <Row>
-              <Col className='text-center'>
-                <LinkContainer to={".."}>
-                  <Card.Link>
-                    <Button variant='success' type='button' className='w-100'>
-                      Close
-                    </Button>
-                  </Card.Link>
-                </LinkContainer>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Form>
-      </Card>
+                <Row>
+                  <Col className='text-center'>
+                    <LinkContainer to={".."}>
+                      <Card.Link>
+                        <Button
+                          variant='success'
+                          type='button'
+                          className='w-100'
+                        >
+                          Close
+                        </Button>
+                      </Card.Link>
+                    </LinkContainer>
+                  </Col>
+                </Row>
+              </Card.Body>
+            </Form>
+          </Card>
+        </Col>
+      </Row>
       {isLoading && <Loader />}
     </>
   );

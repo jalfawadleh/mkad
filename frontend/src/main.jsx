@@ -11,7 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 
-import SearchScreen from "./screens/SearchScreen.jsx";
+import ScreenSearch from "./screens/ScreenSearch.jsx";
 import ScreenMembers from "./screens/ScreenMembers.jsx";
 
 import ScreenActivities from "./screens/ScreenActivities.jsx";
@@ -56,10 +56,10 @@ const router = createBrowserRouter(
 
         <Route path='messages' element={<>Messages</>} />
 
-        <Route path='search' element={<SearchScreen />}>
+        <Route path='search' element={<ScreenSearch />}>
           <Route path='activity/:id' element={<ActivitiesView />} />
-          <Route path='organisation/:id' element={<h1>Org View</h1>} />
-          <Route path='member/:id' element={<h1> Member View</h1>} />
+          <Route path='organisation/:id' element={<MemberView />} />
+          <Route path='member/:id' element={<MemberView />} />
         </Route>
 
         <Route path='updates' element={<ScreenUpdates />}>

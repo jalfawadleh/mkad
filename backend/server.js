@@ -9,6 +9,8 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import users from "./modules/moduleUsers.js";
 import members from "./modules/moduleMembers.js";
 import activities from "./modules/moduleActivities.js";
+import search from "./modules/moduleSearch.js";
+import compression from "compression";
 
 const port = process.env.PORT || 3001;
 
@@ -17,9 +19,12 @@ connectDB();
 const app = express();
 
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
+
+app.use(compression());
 
 const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
@@ -33,12 +38,12 @@ const printRequest = (req, res, next) => {
   }
   next();
 };
-
 app.use(printRequest);
 
 app.use("/api/users", users);
 app.use("/api/members", members);
 app.use("/api/activities", activities);
+app.use("/api/search", search);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
