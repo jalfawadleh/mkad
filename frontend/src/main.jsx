@@ -45,9 +45,10 @@ const router = createBrowserRouter(
         <Route path='organisation:id/join' element={<h1>Orgs Join</h1>} />
         <Route path='organisation:id/leave' element={<h1>Orgs Leave</h1>} />
 
+        <Route path='member/:id' element={<MemberView />} />
+
         <Route path='member' element={<ScreenMembers />}>
-          <Route path=':id' element={<MemberView />} />
-          <Route path=':id/add' element={<h1>Member Add ID</h1>} />
+          <Route path='member/:id/add' element={<h1>Member Add ID</h1>} />
           <Route path=':id/delete' element={<h1>Member Remove ID</h1>} />
           <Route path=':id/block' element={<h1>Member Block ID</h1>} />
           <Route path=':id/messages' element={<h1>Member msg ID</h1>} />

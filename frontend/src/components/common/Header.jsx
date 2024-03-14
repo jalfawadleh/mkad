@@ -19,7 +19,7 @@ const Header = () => {
     <Nav
       bg='dark'
       variant='dark'
-      className='p-0 m-0 w-100 justify-content-between'
+      className='p-0 m-0 w-100 justify-content-around'
     >
       <Nav.Link href='/'>
         <FaWindowClose />
@@ -58,22 +58,20 @@ const Header = () => {
     <>
       <Navbar
         bg='dark'
-        className='d-none d-sm-block m-1 p-1'
         variant='dark'
+        className='m-1 p-1 d-none d-sm-block'
         style={{ borderRadius: 10, maxWidth: "300px" }}
       >
         {headerLinks}
       </Navbar>
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-        }}
+
+      <Navbar
+        bg='dark'
+        variant='dark'
+        className='w-100 position-absolute bottom-0 none d-sm-none'
       >
-        <Navbar bg='dark' className='d.block d-sm-none p-0 m-0' variant='dark'>
-          {headerLinks}
-        </Navbar>
-      </div>
+        {headerLinks}
+      </Navbar>
     </>
   );
 };

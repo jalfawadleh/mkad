@@ -22,15 +22,9 @@ function MemberView() {
     languages: [],
     help: [],
     interests: [],
-    location: [],
-    darkmood: true,
-    hidden: true,
-    contacts: [],
-    organisations: [],
   });
 
-  const { name, description, languages, help, interests, darkmood, hidden } =
-    member;
+  const { name, description, languages, help, interests } = member;
 
   useEffect(() => {
     async function getMember() {

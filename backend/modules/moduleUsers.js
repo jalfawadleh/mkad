@@ -17,6 +17,7 @@ const login = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       type: user.type,
+      location: user.location,
       token: await user.generateToken(user._id),
     });
   } else {
@@ -50,6 +51,7 @@ const post = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       type: user.type,
+      location: user.location,
       token: await user.generateToken(user._id),
     });
   } else {
