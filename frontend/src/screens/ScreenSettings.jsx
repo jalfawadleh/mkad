@@ -11,21 +11,21 @@ const ScreenSettings = () => {
 
       <Row className='p-0 m-0'>
         <Col xs={12} sm={4} md={4} lg={4} className='p-1 m-0'>
-          <LinkContainer to='/settings/profile'>
+          <LinkContainer to='editprofile'>
             <Card className='mb-1' key={0}>
               <Card.Body>
                 <Button className='w-100'>Update Profile</Button>
               </Card.Body>
             </Card>
           </LinkContainer>
-          <LinkContainer to='/settings/location'>
+          <LinkContainer to='editlocation'>
             <Card className='mb-1' key={0}>
               <Card.Body>
                 <Button className='w-100'>Update Location</Button>
               </Card.Body>
             </Card>
           </LinkContainer>
-          <LinkContainer to='/settings/account'>
+          <LinkContainer to='editaccount'>
             <Card className='mb-1' key={0}>
               <Card.Body>
                 <Button variant='warning' className='w-100'>
@@ -34,7 +34,7 @@ const ScreenSettings = () => {
               </Card.Body>
             </Card>
           </LinkContainer>
-          <LinkContainer to='/settings/delete'>
+          <LinkContainer to='deleteaccount'>
             <Card className='mb-1' key={0}>
               <Card.Body>
                 <Button variant='danger' className='w-100'>

@@ -15,8 +15,8 @@ const ActivitiesList = () => {
         <Card.Body>
           <Card.Title className='text-center'>{activity.name}</Card.Title>
           <Row>
-            <Col className='text-center'>
-              <LinkContainer to={"/activities/delete/" + activity._id}>
+            <Col>
+              <LinkContainer to={activity._id + "/delete"}>
                 <Card.Link>
                   <Button
                     size='sm'
@@ -29,8 +29,8 @@ const ActivitiesList = () => {
                 </Card.Link>
               </LinkContainer>
             </Col>
-            <Col className='text-center'>
-              <LinkContainer to={"/activities/edit/" + activity._id}>
+            <Col>
+              <LinkContainer to={activity._id + "/edit"}>
                 <Card.Link>
                   <Button
                     size='sm'
@@ -43,8 +43,8 @@ const ActivitiesList = () => {
                 </Card.Link>
               </LinkContainer>
             </Col>
-            <Col className='text-center'>
-              <LinkContainer to={"/activities/view/" + activity._id}>
+            <Col>
+              <LinkContainer to={activity._id}>
                 <Card.Link>
                   <Button
                     size='sm'

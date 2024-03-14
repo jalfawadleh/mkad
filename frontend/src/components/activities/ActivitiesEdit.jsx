@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import axios from "axios";
@@ -16,8 +16,7 @@ import ListItems from "../common/ListItems.jsx";
 
 const ActivitiesEdit = () => {
   const { id } = useParams();
-
-  const { activities, setActivities } = useContext(ActivitiesContext);
+  const { setActivities } = useContext(ActivitiesContext);
 
   const [activity, setActivity] = useState({
     name: "",
@@ -43,7 +42,7 @@ const ActivitiesEdit = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const getActivity = async (id) => {
+  const getActivity = async () => {
     setIsLoading(true);
     try {
       await axios.get(`/activities/${id}`).then((res) => {

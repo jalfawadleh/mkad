@@ -2,7 +2,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
 
-const ActivitiesRoute = () => {
+const OrganisationRoute = () => {
   const { user } = useContext(UserContext);
 
   return user.type === "organisation" ? (
@@ -11,4 +11,4 @@ const ActivitiesRoute = () => {
     <Navigate to='/' replace />
   );
 };
-export default ActivitiesRoute;
+export default OrganisationRoute;

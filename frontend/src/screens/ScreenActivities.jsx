@@ -49,7 +49,7 @@ const ScreenActivities = () => {
               }}
             >
               <ActivitiesList />
-              <LinkContainer to='/activities/new/'>
+              <LinkContainer to='new'>
                 <Card className='mb-1' key={0}>
                   <Card.Body>
                     <Button>Create New</Button>

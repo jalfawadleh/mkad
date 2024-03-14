@@ -21,81 +21,65 @@ import ActivitiesView from "./components/activities/ActivitiesView.jsx";
 import ActivitiesEdit from "./components/activities/ActivitiesEdit.jsx";
 
 import ScreenUpdates from "./screens/ScreenUpdates.jsx";
-
 import ScreenSettings from "./screens/ScreenSettings.jsx";
 import SettingsAccount from "./components/settings/SettingsAccount.jsx";
 import SettingsProfile from "./components/settings/SettingsProfile.jsx";
 import SettingsDelete from "./components/settings/SettingsDelete.jsx";
-import ActivitiesRoute from "./components/activities/ActivitiesRoute.jsx";
-import PrivateRoute from "./components/PrivateRoute.jsx";
+
 import ScreenLogout from "./screens/ScreenLogout.jsx";
+
+import OrganisationRoute from "./components/activities/OrganisationRoute.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
+import MemberView from "./components/members/MemberView.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<PrivateRoute />}>
-        <Route path='/view' element={<>View</>}>
-          <Route path='/view/activities/:id' element={<ActivitiesView />} />
-          <Route path='/view/organisation/:id' element={<h1>View Org Id</h1>} />
-          <Route path='/view/member/:id' element={<h1>View Member Id</h1>} />
+        <Route path='activity/:id' element={<ActivitiesView />} />
+        <Route path='activity/:id/join' element={<>Activity Join ID</>} />
+        <Route path='activity/:id/leave' element={<>Activity leave ID</>} />
+
+        <Route path='organisation:id' element={<h1>View Org Id</h1>} />
+        <Route path='organisation:id/join' element={<h1>Orgs Join</h1>} />
+        <Route path='organisation:id/leave' element={<h1>Orgs Leave</h1>} />
+
+        <Route path='member' element={<ScreenMembers />}>
+          <Route path=':id' element={<MemberView />} />
+          <Route path=':id/add' element={<h1>Member Add ID</h1>} />
+          <Route path=':id/delete' element={<h1>Member Remove ID</h1>} />
+          <Route path=':id/block' element={<h1>Member Block ID</h1>} />
+          <Route path=':id/messages' element={<h1>Member msg ID</h1>} />
         </Route>
 
-        <Route path='/search' element={<SearchScreen />}>
-          <Route path='/search/activities/:id' element={<ActivitiesView />} />
-          <Route path='/search/organisations/:id' element={<h1>Org View</h1>} />
-          <Route path='/search/members/:id' element={<h1> Member View</h1>} />
+        <Route path='search' element={<SearchScreen />}>
+          <Route path='activity/:id' element={<ActivitiesView />} />
+          <Route path='organisation/:id' element={<h1>Org View</h1>} />
+          <Route path='member/:id' element={<h1> Member View</h1>} />
         </Route>
 
-        <Route path='/members' element={<ScreenMembers />}>
-          <Route path='/members/view/:id' element={<h1>Member View ID</h1>} />
-          <Route path='/members/add/:id' element={<h1>Member Add ID</h1>} />
-          <Route
-            path='/members/remove/:id'
-            element={<h1>Member Remove ID</h1>}
-          />
-          <Route path='/members/block/:id' element={<h1>Member Block ID</h1>} />
-          <Route
-            path='/members/messages/:id'
-            element={<h1>Member msg ID</h1>}
-          />
+        <Route path='updates' element={<ScreenUpdates />}>
+          <Route path=':id' element={<h1>Update ID</h1>} />
         </Route>
 
-        <Route path='/organisations' element={<h1>Orgs</h1>}>
-          <Route path='/organisations/join/:id' element={<h1>Orgs Join</h1>} />
-          <Route
-            path='/organisations/leave/:id'
-            element={<h1>Orgs Leave</h1>}
-          />
-        </Route>
-
-        <Route path='/updates' element={<ScreenUpdates />}>
-          <Route path='/updates/:id' element={<h1>Update ID</h1>} />
-        </Route>
-
-        <Route path='' element={<ActivitiesRoute />}>
-          <Route path='/activities' element={<ScreenActivities />}>
-            <Route path='/activities/new' element={<ActivitiesNew />} />
-            <Route path='/activities/view/:id' element={<ActivitiesView />} />
-            <Route path='/activities/edit/:id' element={<ActivitiesEdit />} />
-            <Route
-              path='/activities/edit/location/:id'
-              element={<>Edit Location</>}
-            />
-            <Route
-              path='/activities/delete/:id'
-              element={<ActivitiesDelete />}
-            />
+        <Route path='' element={<OrganisationRoute />}>
+          <Route path='activities' element={<ScreenActivities />}>
+            <Route path='new' element={<ActivitiesNew />} />
+            <Route path=':id' element={<ActivitiesView />} />
+            <Route path=':id/edit' element={<ActivitiesEdit />} />
+            <Route path=':id/edit/location' element={<>Edit Location</>} />
+            <Route path=':id/delete' element={<ActivitiesDelete />} />
           </Route>
         </Route>
 
-        <Route path='/settings' element={<ScreenSettings />}>
-          <Route path='/settings/profile' element={<SettingsProfile />} />
-          <Route path='/settings/location' element={<>Location Change</>} />
-          <Route path='/settings/account' element={<SettingsAccount />} />
-          <Route path='/settings/delete' element={<SettingsDelete />} />
+        <Route path='settings' element={<ScreenSettings />}>
+          <Route path='editprofile' element={<SettingsProfile />} />
+          <Route path='editlocation' element={<>Location Change</>} />
+          <Route path='editaccount' element={<SettingsAccount />} />
+          <Route path='deleteaccount' element={<SettingsDelete />} />
         </Route>
       </Route>
-      <Route path='/logout' element={<ScreenLogout />} />
+      <Route path='logout' element={<ScreenLogout />} />
     </Route>
   )
 );
