@@ -28,14 +28,15 @@ import SettingsDelete from "./components/settings/SettingsDelete.jsx";
 
 import ScreenLogout from "./screens/ScreenLogout.jsx";
 
-import OrganisationRoute from "./components/activities/OrganisationRoute.jsx";
-import PrivateRoute from "./components/PrivateRoute.jsx";
+import RouteOrganisation from "./components/RouteOrganisation.jsx";
+import RoutePrivate from "./components/RoutePrivate.jsx";
+
 import MemberView from "./components/members/MemberView.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
-      <Route path='' element={<PrivateRoute />}>
+      <Route path='' element={<RoutePrivate />}>
         <Route path='activity/:id' element={<ActivitiesView />} />
         <Route path='activity/:id/join' element={<>Activity Join ID</>} />
         <Route path='activity/:id/leave' element={<>Activity leave ID</>} />
@@ -62,7 +63,7 @@ const router = createBrowserRouter(
           <Route path=':id' element={<h1>Update ID</h1>} />
         </Route>
 
-        <Route path='' element={<OrganisationRoute />}>
+        <Route path='' element={<RouteOrganisation />}>
           <Route path='activities' element={<ScreenActivities />}>
             <Route path='new' element={<ActivitiesNew />} />
             <Route path=':id' element={<ActivitiesView />} />
