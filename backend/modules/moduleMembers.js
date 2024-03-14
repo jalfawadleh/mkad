@@ -11,13 +11,14 @@ const putMember = asyncHandler(async (req, res) => {
 
   if (member) {
     // Update profile
-    member.name = req.body.name || member.name;
-    member.description = req.body.description || member.description;
-    member.languages = req.body.languages || member.languages;
-    member.help = req.body.help || member.help;
-    member.interests = req.body.interests || member.interests;
-    member.darkmood = req.body.darkmood || member.darkmood;
-    member.hidden = req.body.hidden || member.hidden;
+    member.name = req.body.name;
+    member.description = req.body.description;
+    member.languages = req.body.languages;
+    member.help = req.body.help;
+    member.interests = req.body.interests;
+    member.darkmood = req.body.darkmood;
+    member.hidden = req.body.hidden;
+
     await member.save();
 
     res.json(true);

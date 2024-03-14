@@ -22,43 +22,21 @@ function SettingsProfile() {
     languages: [],
     help: [],
     interests: [],
-    location: [],
     darkmood: true,
     hidden: true,
-    contacts: [],
-    organisations: [],
   });
 
   const { name, description, languages, help, interests, darkmood, hidden } =
     member;
 
-  const getProfile = async () => {
-    setIsLoading(true);
-    try {
-      await axios.get(`/members/${user._id}`).then((res) => {
-        setMember(res.data);
-        setIsLoading(false);
-      });
-    } catch (error) {
-      setIsLoading(false);
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
-  };
-
-  const onSubmit = async (e) => {
+  const onPut = async (e) => {
     e.preventDefault();
 
     try {
       await axios.put("/members", member).then(() => {
         toast("Updated");
-        setUser((prevState) => ({
-          ...prevState,
-          name,
-          description,
-          languages,
-        }));
+        // in case name changed
+        setUser((prevState) => ({ ...prevState, name }));
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -74,9 +52,24 @@ function SettingsProfile() {
     }));
   };
 
-  useEffect(function () {
+  useEffect(() => {
+    const getProfile = async () => {
+      setIsLoading(true);
+      try {
+        await axios.get(`/members/${user._id}`).then((res) => {
+          setMember(res.data);
+          setIsLoading(false);
+        });
+      } catch (error) {
+        setIsLoading(false);
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      }
+    };
+
     getProfile();
-  }, []);
+  }, [user._id]);
 
   return (
     <>
@@ -171,7 +164,7 @@ function SettingsProfile() {
                   variant='primary'
                   type='button'
                   className='w-100'
-                  onClick={onSubmit}
+                  onClick={onPut}
                 >
                   Update
                 </Button>

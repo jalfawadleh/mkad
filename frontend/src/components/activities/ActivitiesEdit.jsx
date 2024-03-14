@@ -25,24 +25,15 @@ const ActivitiesEdit = () => {
     languages: [],
     help: [],
     interests: [],
-    darkmood: false,
     hidden: false,
   });
 
-  const {
-    name,
-    description,
-    notes,
-    languages,
-    help,
-    interests,
-    darkmood,
-    hidden,
-  } = activity;
+  const { name, description, notes, languages, help, interests, hidden } =
+    activity;
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const getActivity = async () => {
+  const getActivity = async (id) => {
     setIsLoading(true);
     try {
       await axios.get(`/activities/${id}`).then((res) => {
@@ -81,7 +72,7 @@ const ActivitiesEdit = () => {
   };
 
   useEffect(() => {
-    id && getActivity(id);
+    getActivity(id);
   }, [id]);
 
   return (
@@ -153,30 +144,17 @@ const ActivitiesEdit = () => {
 
             <Form.Check // prettier-ignore
               className='mb-3'
-              type='switch'
+              type='checkbox'
               id='hidden'
               label='Hide activity from the map amd search '
+              name='hidden'
               checked={hidden}
-              onChange={() =>
+              onChange={() => {
                 setActivity((prevState) => ({
                   ...prevState,
                   hidden: !hidden,
-                }))
-              }
-            />
-
-            <Form.Check // prettier-ignore
-              className='mb-3'
-              type='switch'
-              id='darkmood'
-              label='Darkmood'
-              checked={darkmood}
-              onChange={() =>
-                setActivity((prevState) => ({
-                  ...prevState,
-                  darkmood: !darkmood,
-                }))
-              }
+                }));
+              }}
             />
 
             <LinkContainer to={"/activities/edit/location/" + activity._id}>

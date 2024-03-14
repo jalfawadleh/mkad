@@ -36,14 +36,13 @@ const putActivity = asyncHandler(async (req, res) => {
   const activity = await Activities.findById(req.body._id);
 
   if (activity) {
-    activity.name = req.body.name || activity.name;
-    activity.description = req.body.description || activity.description;
-    activity.notes = req.body.notes || activity.notes;
-    activity.languages = req.body.languages || activity.languages;
-    activity.help = req.body.help || activity.help;
-    activity.interests = req.body.interests || activity.interests;
-    activity.darkmood = req.body.darkmood || activity.darkmood;
-    activity.hidden = req.body.hidden || activity.hidden;
+    activity.name = req.body.name;
+    activity.description = req.body.description;
+    activity.notes = req.body.notes;
+    activity.languages = req.body.languages;
+    activity.help = req.body.help;
+    activity.interests = req.body.interests;
+    activity.hidden = req.body.hidden;
 
     await activity.save();
     const activities = await Activities.find().select("name");

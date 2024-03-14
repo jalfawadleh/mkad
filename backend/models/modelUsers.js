@@ -34,6 +34,7 @@ const usersSchema = mongoose.Schema(
     darkmood: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
+
     contacts: [
       {
         id: { type: mongoose.Schema.Types.ObjectId },

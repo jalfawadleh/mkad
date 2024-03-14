@@ -16,10 +16,9 @@ const schema = Schema(
     help: { type: [{ name: String }], default: [] },
     interests: { type: [{ name: String }], default: [] },
 
-    darkmood: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },
-
     location: { type: Array, default: [-122.2683, 37.8243] },
+    archived: { type: Boolean, default: false },
 
     members: [
       {

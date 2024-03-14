@@ -50,7 +50,7 @@ const post = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       type: user.type,
-      token: user.generateToken(user._id),
+      token: await user.generateToken(user._id),
     });
   } else {
     res.status(400);
