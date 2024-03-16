@@ -17,12 +17,8 @@ export default function Map() {
 
   const { user } = useContext(UserContext);
 
-  const [center, setCenter] = useState(user.location);
-
-  useEffect(() => {
-    setCenter(user.location);
-  }, [user.location]);
-
+  const position = { lng: -122.2683, lat: 37.8243 };
+  // const position = [122, 37];
   return (
     <>
       <Header />
@@ -30,37 +26,28 @@ export default function Map() {
       <Outlet />
 
       <MapContainer
-        center={center}
-        zoom={10}
+        center={{ lng: -122.2683, lat: 37.8243 }}
+        zoom={13}
         zoomControl={false}
         style={{
           position: "absolute",
           top: 0,
-          bottom: 0,
           left: 0,
           right: 0,
+          bottom: 0,
           zIndex: -1,
         }}
       >
+        {/* <ZoomControl position='topright' /> */}
+
+        <Marker position={position}>
+          <Popup>I am here.</Popup>
+        </Marker>
+
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-
-        <Marker
-          position={center}
-          eventHandlers={{
-            click: () => {
-              navigate("member/" + user._id);
-            },
-          }}
-        >
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-
-        <ZoomControl position='topright' />
       </MapContainer>
     </>
   );
