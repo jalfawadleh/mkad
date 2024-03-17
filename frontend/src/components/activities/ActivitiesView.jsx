@@ -8,7 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import Loader from "../utils/Loader";
 import { Button, Col, Row } from "react-bootstrap";
 
-const ActivitiesView = () => {
+const ActivitiesView = (aId) => {
   const { id } = useParams();
 
   const [activity, setActivity] = useState([]);

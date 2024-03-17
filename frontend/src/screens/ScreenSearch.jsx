@@ -29,12 +29,9 @@ const ScreenSearch = () => {
   return (
     <>
       <div style={{ width: "300px" }}>
-        <Card
-          className='p-0 m-1 mb-2 border-0'
-          style={{ borderRadius: 10, width: "300px" }}
-        >
+        <Card className='p-1 m-1' style={{ borderRadius: 10 }}>
           <Form onSubmit={onSubmit}>
-            <Stack direction='horizontal' gap={2} className='py-1 m-0'>
+            <Stack direction='horizontal' gap={2} className='p-1 m-0'>
               <Form.Control
                 className='me-auto'
                 placeholder='Search'
@@ -57,14 +54,13 @@ const ScreenSearch = () => {
             <Card
               key={result._id}
               className='p-1 m-1'
-              style={{ borderRadius: 10, width: "300px" }}
+              style={{ borderRadius: 10 }}
               onClick={() => navigate(result.type + "/" + result._id)}
             >
               <span role='button'>{result.name}</span>
             </Card>
           ))}
       </div>
-
       <Outlet />
     </>
   );

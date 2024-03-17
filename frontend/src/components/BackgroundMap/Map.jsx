@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+// import { useContext } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   MapContainer,
@@ -6,19 +6,22 @@ import {
   Marker,
   Popup,
   ZoomControl,
+  LayersControl,
+  LayerGroup,
+  Circle,
 } from "react-leaflet";
 
 import Header from "../common/Header";
 
-import { UserContext } from "../../store";
+// import { UserContext } from "../../store";
 
-export default function Map() {
-  const navigate = useNavigate();
+const Map = () => {
+  // const navigate = useNavigate();
 
-  const { user } = useContext(UserContext);
+  // const { user } = useContext(UserContext);
 
   const position = { lng: -122.2683, lat: 37.8243 };
-  // const position = [122, 37];
+
   return (
     <>
       <Header />
@@ -26,7 +29,7 @@ export default function Map() {
       <Outlet />
 
       <MapContainer
-        center={{ lng: -122.2683, lat: 37.8243 }}
+        center={position}
         zoom={13}
         zoomControl={false}
         style={{
@@ -38,12 +41,22 @@ export default function Map() {
           zIndex: -1,
         }}
       >
-        {/* <ZoomControl position='topright' /> */}
-
+        <ZoomControl position='topright' />
+        <Marker position={{ lng: -122.269, lat: 37.82 }}>
+          <Popup>I am here.</Popup>
+        </Marker>
+        <Marker position={{ lng: -122.27, lat: 37.83 }}>
+          <Popup>I am here.</Popup>
+        </Marker>
+        <Marker position={{ lng: -122.25, lat: 37.84 }}>
+          <Popup>I am here.</Popup>
+        </Marker>
         <Marker position={position}>
           <Popup>I am here.</Popup>
         </Marker>
-
+        <Marker position={position}>
+          <Popup>I am here.</Popup>
+        </Marker>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -51,4 +64,6 @@ export default function Map() {
       </MapContainer>
     </>
   );
-}
+};
+
+export default Map;

@@ -12,8 +12,11 @@ import Loader from "../utils/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 
 function SettingsProfile() {
-  const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(UserContext);
+
+  const [editing, setEditing] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [member, setMember] = useState({
     _id: user._id,
@@ -79,33 +82,42 @@ function SettingsProfile() {
       >
         <Form>
           <Card.Body>
-            <Card.Title>Update Profile</Card.Title>
-            <FloatingLabel controlId='name' label='Name' className='mb-3'>
-              <Form.Control
-                type='text'
-                placeholder='Name'
-                name='name'
-                value={name}
-                onChange={onChange}
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId='description'
-              label='Description'
-              className='mb-3'
-            >
-              <Form.Control
-                type='text'
-                placeholder='Description'
-                name='description'
-                value={description}
-                onChange={onChange}
-              />
-            </FloatingLabel>
+            {editing ? (
+              <>
+                <Card.Title>Update Profile</Card.Title>
+                <FloatingLabel controlId='name' label='Name' className='mb-3'>
+                  <Form.Control
+                    type='text'
+                    placeholder='Name'
+                    name='name'
+                    value={name}
+                    onChange={onChange}
+                  />
+                </FloatingLabel>
+                <FloatingLabel
+                  controlId='description'
+                  label='Description'
+                  className='mb-3'
+                >
+                  <Form.Control
+                    type='text'
+                    placeholder='Description'
+                    name='description'
+                    value={description}
+                    onChange={onChange}
+                  />
+                </FloatingLabel>
+              </>
+            ) : (
+              <>
+                <Card.Title className='text-center'>{name}</Card.Title>
+                <Card.Text>{description}</Card.Text>
+              </>
+            )}
 
             <ListItems
-              edit={true}
-              message='Languages for people to reach you with'
+              edit={editing}
+              message='Languages'
               type='languages'
               title='language'
               items={languages}
@@ -113,7 +125,7 @@ function SettingsProfile() {
             />
 
             <ListItems
-              edit={true}
+              edit={editing}
               message='Help needed or offered'
               type='help'
               title='Help'
@@ -122,53 +134,82 @@ function SettingsProfile() {
             />
 
             <ListItems
-              edit={true}
+              edit={editing}
               message='Your interests or hobbies'
               type='interests'
               title='interest'
               items={interests}
               setParent={setMember}
             />
-
-            <Form.Check // prettier-ignore
-              className='mb-3'
-              type='switch'
-              id='hidden'
-              label='Hide profile from the map amd search '
-              checked={hidden}
-              onChange={() =>
-                setMember((prevState) => ({
-                  ...prevState,
-                  hidden: !hidden,
-                }))
-              }
-            />
-
-            <Form.Check // prettier-ignore
-              className='mb-3'
-              type='switch'
-              id='darkmood'
-              label='Darkmood'
-              checked={darkmood}
-              onChange={() =>
-                setMember((prevState) => ({
-                  ...prevState,
-                  darkmood: !darkmood,
-                }))
-              }
-            />
+            {editing && (
+              <>
+                <Form.Check // prettier-ignore
+                  className='mb-3'
+                  type='switch'
+                  id='hidden'
+                  label='Hide profile'
+                  checked={hidden}
+                  onChange={() =>
+                    setMember((prevState) => ({
+                      ...prevState,
+                      hidden: !hidden,
+                    }))
+                  }
+                />
+                <Form.Check // prettier-ignore
+                  className='mb-3'
+                  type='switch'
+                  id='darkmood'
+                  label='Darkmood'
+                  checked={darkmood}
+                  onChange={() =>
+                    setMember((prevState) => ({
+                      ...prevState,
+                      darkmood: !darkmood,
+                    }))
+                  }
+                />
+              </>
+            )}
 
             <Row>
-              <Col className='text-center'>
-                <Button
-                  variant='primary'
-                  type='button'
-                  className='w-100'
-                  onClick={onPut}
-                >
-                  Update
-                </Button>
-              </Col>
+              {editing && (
+                <Col className='text-center'>
+                  <Button
+                    variant='primary'
+                    type='button'
+                    className='w-100'
+                    onClick={onPut}
+                  >
+                    Update
+                  </Button>
+                </Col>
+              )}
+
+              {editing ? (
+                <Col className='text-center'>
+                  <Button
+                    variant='primary'
+                    type='button'
+                    className='w-100'
+                    onClick={() => setEditing(false)}
+                  >
+                    View
+                  </Button>
+                </Col>
+              ) : (
+                <Col className='text-center'>
+                  <Button
+                    variant='primary'
+                    type='button'
+                    className='w-100'
+                    onClick={() => setEditing(true)}
+                  >
+                    Edit
+                  </Button>
+                </Col>
+              )}
+
               <Col className='text-center'>
                 <LinkContainer to={".."}>
                   <Card.Link>

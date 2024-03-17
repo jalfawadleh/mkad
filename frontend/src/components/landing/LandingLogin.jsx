@@ -76,8 +76,8 @@ function LoginForm() {
             className='col-lg-6 '
             style={{ margin: "0 auto", position: "relative" }}
           >
-            <Container className='p-3 needs-validation border'>
-              <Container className='h4 text-center'>
+            <Container className='p-2 needs-validation border'>
+              <Container className='h4 mb-3 text-center'>
                 {!register ? "Welcome Back" : "Create Account"}
                 <Button
                   variant='success'
@@ -87,6 +87,9 @@ function LoginForm() {
                 >
                   or {!register ? "Join " : "Login"}
                 </Button>
+              </Container>
+              <Container className='text-center mb-3'>
+                <img height='100px' src='/logo.png' alt='Profile Photo' />
               </Container>
 
               <Form onSubmit={onSubmit}>

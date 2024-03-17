@@ -5,9 +5,9 @@ import Navbar from "react-bootstrap/esm/Navbar";
 import { FaSearch } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
-import { FaCog } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
-import { FaWindowClose } from "react-icons/fa";
+// import { FaWindowClose } from "react-icons/fa";
+// import { IoLogOut } from "react-icons/io5";
 
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
@@ -23,34 +23,38 @@ const Header = () => {
     >
       <LinkContainer to='search'>
         <Nav.Link>
-          <FaSearch />
+          <FaSearch size={20} />
         </Nav.Link>
       </LinkContainer>
-      <LinkContainer to='settings'>
-        <Nav.Link>
-          <FaCog />
-        </Nav.Link>
-      </LinkContainer>
+
       {user.type === "organisation" && (
         <LinkContainer to='activities'>
           <Nav.Link>
-            <FaFlag />
+            <FaFlag size={20} />
           </Nav.Link>
         </LinkContainer>
       )}
       <LinkContainer to='updates'>
         <Nav.Link>
-          <FaBell />
+          <FaBell size={20} />
         </Nav.Link>
       </LinkContainer>
       <LinkContainer to='messages'>
         <Nav.Link>
-          <FaEnvelope />
+          <FaEnvelope size={20} />
         </Nav.Link>
       </LinkContainer>
-      <Nav.Link href='/'>
-        <FaWindowClose />
-      </Nav.Link>
+
+      <LinkContainer to='settings'>
+        <Nav.Link>
+          <img
+            height='25px'
+            width='25px'
+            src={"https://api.multiavatar.com/" + user.name + ".png"}
+            alt='Profile Photo'
+          />
+        </Nav.Link>
+      </LinkContainer>
     </Nav>
   );
 

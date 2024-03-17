@@ -32,6 +32,7 @@ import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import MemberView from "./components/members/MemberView.jsx";
+import ScreenMessages from "./screens/ScreenMessages.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,7 +55,9 @@ const router = createBrowserRouter(
           <Route path=':id/messages' element={<h1>Member msg ID</h1>} />
         </Route>
 
-        <Route path='messages' element={<>Messages</>} />
+        <Route path='messages' element={<ScreenMessages />}>
+          <Route path=':id' element={<>Messages ID</>} />
+        </Route>
 
         <Route path='search' element={<ScreenSearch />}>
           <Route path='activity/:id' element={<ActivitiesView />} />

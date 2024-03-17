@@ -71,7 +71,7 @@ function MemberView() {
 
                 <ListItems
                   edit={false}
-                  message='Help needed or offered'
+                  message='Help offered or needed '
                   type='help'
                   title='Help'
                   items={help}
@@ -80,7 +80,7 @@ function MemberView() {
 
                 <ListItems
                   edit={false}
-                  message='Related nterests and hobbies'
+                  message='Related interests and hobbies'
                   type='interests'
                   title='interest'
                   items={interests}

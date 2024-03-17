@@ -29,7 +29,10 @@ const usersSchema = mongoose.Schema(
     languages: { type: [{ name: String }], default: [{ name: "English" }] },
     help: { type: [{ name: String }], default: [] },
     interests: { type: [{ name: String }], default: [] },
-    location: { type: Array, default: [-122.2683, 37.8243] },
+    location: {
+      type: { lng: Number, lat: Number },
+      default: { lng: -122.2683, lat: 37.8243 },
+    },
 
     darkmood: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },

@@ -1,28 +1,28 @@
 import Card from "react-bootstrap/esm/Card";
 import { LinkContainer } from "react-router-bootstrap";
 
-const UpdatesScreen = () => {
+const ScreenMessages = () => {
   return (
     <>
       <div style={{ width: "300px" }}>
         <Card className='p-1 m-1 text-center h4' style={{ borderRadius: 10 }}>
-          <span role='button'>Updates</span>
+          <span role='button'>Messages</span>
         </Card>
         <LinkContainer to=''>
           <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
-            <span role='button'>Update 1</span>
+            <span role='button'>Member 1</span>
           </Card>
         </LinkContainer>
 
         <LinkContainer to=''>
           <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
-            <span role='button'>Update 2</span>
+            <span role='button'>Member 2</span>
           </Card>
         </LinkContainer>
 
         <LinkContainer to=''>
           <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
-            <span role='button'>Update 3</span>
+            <span role='button'>Member 3</span>
           </Card>
         </LinkContainer>
       </div>
@@ -30,4 +30,4 @@ const UpdatesScreen = () => {
   );
 };
 
-export default UpdatesScreen;
+export default ScreenMessages;

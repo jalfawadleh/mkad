@@ -1,53 +1,39 @@
 import Card from "react-bootstrap/esm/Card";
-import ScreenHeader from "../components/common/ScreenHeader";
 import { LinkContainer } from "react-router-bootstrap";
-import { Button, Col, Row } from "react-bootstrap";
 import { Outlet } from "react-router-dom";
 
 const ScreenSettings = () => {
   return (
     <>
-      <ScreenHeader>Settings</ScreenHeader>
+      <div style={{ width: "300px" }}>
+        <Card className='p-1 m-1 text-center h4' style={{ borderRadius: 10 }}>
+          <span role='button'>Settings</span>
+        </Card>
+        <LinkContainer to='editprofile'>
+          <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
+            <span role='button'>Update Profile</span>
+          </Card>
+        </LinkContainer>
 
-      <Row className='p-0 m-0'>
-        <Col xs={12} sm={4} md={4} lg={4} className='p-1 m-0'>
-          <LinkContainer to='editprofile'>
-            <Card className='mb-1' key={0}>
-              <Card.Body>
-                <Button className='w-100'>Update Profile</Button>
-              </Card.Body>
-            </Card>
-          </LinkContainer>
-          <LinkContainer to='editlocation'>
-            <Card className='mb-1' key={0}>
-              <Card.Body>
-                <Button className='w-100'>Update Location</Button>
-              </Card.Body>
-            </Card>
-          </LinkContainer>
-          <LinkContainer to='editaccount'>
-            <Card className='mb-1' key={0}>
-              <Card.Body>
-                <Button variant='warning' className='w-100'>
-                  Update Account
-                </Button>
-              </Card.Body>
-            </Card>
-          </LinkContainer>
-          <LinkContainer to='deleteaccount'>
-            <Card className='mb-1' key={0}>
-              <Card.Body>
-                <Button variant='danger' className='w-100'>
-                  Delete Account
-                </Button>
-              </Card.Body>
-            </Card>
-          </LinkContainer>
-        </Col>
-        <Col xs={12} sm={7} md={7} lg={6} className='p-1 m-0'>
-          <Outlet />
-        </Col>
-      </Row>
+        <LinkContainer to='editlocation'>
+          <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
+            <span role='button'>Update Location</span>
+          </Card>
+        </LinkContainer>
+
+        <LinkContainer to='editaccount'>
+          <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
+            <span role='button'>Update Account</span>
+          </Card>
+        </LinkContainer>
+        <LinkContainer to='deleteaccount'>
+          <Card className='p-1 m-1 text-center' style={{ borderRadius: 10 }}>
+            <span role='button'>Delete Account</span>
+          </Card>
+        </LinkContainer>
+      </div>
+
+      <Outlet />
     </>
   );
 };

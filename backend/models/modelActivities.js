@@ -2,23 +2,47 @@ import mongoose, { Schema } from "mongoose";
 
 const schema = Schema(
   {
-    createdBy: { _id: Schema.Types.ObjectId, name: String },
-    managedBy: [{ _id: Schema.Types.ObjectId, name: String }],
-
     type: { type: String, default: "activity" },
 
     name: { type: String, required: true },
     description: String,
 
-    notes: [],
+    startOn: { type: Date },
+    endOn: { type: Date },
+    locations: {
+      type: [{ lng: Number, lat: Number }],
+      default: [{ lng: -122.2683, lat: 37.8243 }],
+    },
 
+    notes: { type: [{ name: String }], default: [] },
     languages: { type: [{ name: String }], default: [] },
-    help: { type: [{ name: String }], default: [] },
     interests: { type: [{ name: String }], default: [] },
 
+    helpOffered: {
+      type: [
+        {
+          name: String,
+          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
+    },
+    helpNeeded: {
+      type: [
+        {
+          name: String,
+          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
+    },
+
     hidden: { type: Boolean, default: false },
-    location: { type: Array, default: [-122.2683, 37.8243] },
+
     archived: { type: Boolean, default: false },
+
+    createdBy: { _id: Schema.Types.ObjectId, name: String },
+    managedBy: [{ _id: Schema.Types.ObjectId, name: String }],
 
     members: [
       {
