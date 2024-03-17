@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 import { Outlet } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
 
 import Card from "react-bootstrap/esm/Card";
 
-import { ActivitiesContext } from "../store";
+import { ActivitiesContext, UserContext } from "../store";
+
 import { Modal, Stack } from "react-bootstrap";
 
 import { FaPlusCircle } from "react-icons/fa";
@@ -16,6 +16,7 @@ import { FaLocationCrosshairs } from "react-icons/fa6";
 import Activity from "../components/activities/Activity";
 
 const ScreenActivities = () => {
+  const { user } = useContext(UserContext);
   const [activities, setActivities] = useState([]);
 
   const [activity, setActivity] = useState({ _id: "", name: "" });
@@ -48,7 +49,7 @@ const ScreenActivities = () => {
   };
 
   const addActivity = () => {
-    setActivity({ _id: -1 });
+    setActivity({ _id: 0 });
     setModalShow(true);
   };
 
@@ -69,13 +70,13 @@ const ScreenActivities = () => {
           {activities.length ? (
             activities.map((activity) => (
               <Card
-                className='p-1 m-1'
+                className='p-1 m-1 button'
                 style={{ borderRadius: 10 }}
                 key={activity._id}
               >
                 <Stack direction='horizontal' gap={1}>
                   <span
-                    className='p-1 w-100 text-center cursor-pointer'
+                    className='p-1 w-100 text-center button'
                     onClick={() => showActivity(activity)}
                   >
                     {activity.name}
@@ -96,9 +97,11 @@ const ScreenActivities = () => {
         </div>
 
         <Modal animation={false} show={modalShow} onHide={closeActivity}>
-          {activity._id && (
-            <Activity id={activity._id} closeActivity={closeActivity} />
-          )}
+          <Activity
+            id={activity._id}
+            closeActivity={closeActivity}
+            user={user}
+          />
         </Modal>
 
         <Outlet />

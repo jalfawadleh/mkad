@@ -14,22 +14,19 @@ import Card from "react-bootstrap/esm/Card";
 import { Col, Modal, Row } from "react-bootstrap";
 import ListItems from "../common/ListItems.jsx";
 
-const Activity = ({ id, closeActivity }) => {
+const Activity = ({ id, user, closeActivity }) => {
   const { setActivities } = useContext(ActivitiesContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isEditing, setIsEditing] = useState(id < 0 ? true : false);
-  const [isCreating, setIsCreating] = useState(id < 0 ? true : false);
 
   const [activity, setActivity] = useState({
-    _id: id,
+    _id: id ? id : "",
     name: "",
     description: "",
     notes: [],
     languages: [],
-    help: [],
     interests: [],
     helpOffered: [],
     helpNeeded: [],
+    createdBy: [],
     hidden: false,
   });
 
@@ -42,31 +39,35 @@ const Activity = ({ id, closeActivity }) => {
     helpOffered,
     helpNeeded,
     hidden,
+    createdBy,
   } = activity;
 
-  const getActivity = async (id) => {
-    setIsLoading(true);
-    try {
-      await axios.get(`/activities/${id}`).then((res) => {
-        setIsLoading(false);
-        setActivity(res.data);
-      });
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
-  };
+  const [isLoading, setIsLoading] = useState(false);
+  const isCreating = activity._id ? false : true;
+  const [isEditing, setIsEditing] = useState(isCreating);
+  const isOwner = createdBy?._id === user._id;
 
   const onPut = async (e) => {
     // checking for common required fields
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.put("/activities/", activity).then((res) => {
+      if (activity._id)
+        await axios.put("/activities/", activity).then((res) => {
+          closeActivity();
+          setActivity(res.data);
+          toast("updated");
+        });
+      else
+        await axios.post("/activities/", activity).then((res) => {
+          closeActivity();
+          setActivity(res.data);
+          toast("created");
+        });
+
+      await axios.get("/activities").then((res) => {
         setIsLoading(false);
         setActivities(res.data);
-        toast("updated");
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -82,18 +83,29 @@ const Activity = ({ id, closeActivity }) => {
     }));
   };
 
+  const getActivity = async (id) => {
+    setIsLoading(true);
+    try {
+      await axios.get(`/activities/${id}`).then((res) => {
+        setIsLoading(false);
+        setActivity(res.data);
+      });
+    } catch (error) {
+      error?.response?.data?.message &&
+        toast.error(error?.response.data.message);
+      error?.response?.status > 499 && toast.error("Something went wrong");
+    }
+  };
+
   useEffect(() => {
-    getActivity(id);
-  }, [id]);
+    activity._id && getActivity(activity._id);
+  }, [activity._id]);
 
   return (
     <>
-      <Modal.Header closeButton>
-        <Modal.Title>{name}</Modal.Title>
-      </Modal.Header>
       <Modal.Body>
         <Form>
-          {isEditing && (
+          {isEditing ? (
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
               <Form.Control
                 type='text'
@@ -104,7 +116,13 @@ const Activity = ({ id, closeActivity }) => {
                 className='mt-1'
               />
             </FloatingLabel>
+          ) : (
+            <div className='p-2 mb-3 h5'>{name}</div>
           )}
+          {createdBy?.name && (
+            <div className='p-2 mb-3 bold'>Created By: {createdBy.name}</div>
+          )}
+
           {isEditing ? (
             <FloatingLabel
               controlId='description'
@@ -124,7 +142,7 @@ const Activity = ({ id, closeActivity }) => {
           )}
           <ListItems
             edit={isEditing}
-            message='Notes about the activity'
+            message='Notes'
             type='notes'
             title='note'
             items={notes}
@@ -132,7 +150,7 @@ const Activity = ({ id, closeActivity }) => {
           />
           <ListItems
             edit={isEditing}
-            message='Interests or hobbies related to this activity'
+            message='Related Interests and hobbies'
             type='interests'
             title='interest'
             items={interests}
@@ -140,7 +158,7 @@ const Activity = ({ id, closeActivity }) => {
           />
           <ListItems
             edit={isEditing}
-            message='Languages spoken by activity admins'
+            message='Languages'
             type='languages'
             title='language'
             items={languages}
@@ -179,9 +197,9 @@ const Activity = ({ id, closeActivity }) => {
               }}
             />
           )}
-          {isEditing && <div>Location</div>}
+          {isEditing ? <div>Location</div> : <div>Show on the map</div>}
           <Row>
-            {isEditing && !isCreating && (
+            {isOwner && isEditing && !isCreating && (
               <>
                 <Col className='text-center'>
                   <Button
@@ -206,7 +224,7 @@ const Activity = ({ id, closeActivity }) => {
               </>
             )}
 
-            {!isEditing && !isCreating && (
+            {isOwner && !isEditing && (
               <Col className='text-center'>
                 <Button
                   variant='primary'
