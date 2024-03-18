@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
-
 import { toast } from "react-toastify";
-import Loader from "../utils/Loader.jsx";
 
+import Loader from "../common/Loader.jsx";
 import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+
 import ListItems from "../common/ListItems.jsx";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ActivityView = () => {
   const { id } = useParams();
@@ -114,16 +115,13 @@ const ActivityView = () => {
 
           <Row>
             <Col className='text-center'>
-              <Card.Link>
-                <Button
-                  variant='success'
-                  type='button'
-                  className='w-100'
-                  onClick={closeActivity}
-                >
-                  Close
-                </Button>
-              </Card.Link>
+              <LinkContainer to={".."}>
+                <Card.Link>
+                  <Button variant='success' type='button' className='w-100'>
+                    Close
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
             </Col>
           </Row>
         </Modal.Body>

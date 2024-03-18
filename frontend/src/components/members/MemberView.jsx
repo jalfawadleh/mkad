@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useNavigate, useParams } from "react-router-dom";
 
 import axios from "axios";
+import { toast } from "react-toastify";
 
-import { Card, Col, Row, Button, Form, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import { Card, Col, Row, Button, Modal } from "react-bootstrap";
+import Loader from "../common/Loader.jsx";
 
-import Loader from "../utils/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 
 function MemberView() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,63 +45,58 @@ function MemberView() {
     getMember();
   }, [id]);
 
+  const closeActivity = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <Row className='justify-content-center'>
-        <Col
-          xs={12}
-          sm={8}
-          lg={6}
-          className='overflow-scroll'
-          style={{ maxHeight: window.innerHeight - 100 }}
-        >
-          <Card>
-            <Card.Body>
-              <Card.Title>{name}</Card.Title>
-              <Card.Text>{description}</Card.Text>
+      <Modal animation={false} show={true} onHide={closeActivity}>
+        <Modal.Header closeButton>
+          <Modal.Title className='text-center w-100'>{name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className='p-2 mb-3'>{description}</div>
+          <ListItems
+            edit={false}
+            message='Languages'
+            type='languages'
+            title='language'
+            items={languages}
+            setParent={setMember}
+          />
 
-              <ListItems
-                edit={false}
-                message='Languages'
-                type='languages'
-                title='language'
-                items={languages}
-                setParent={setMember}
-              />
+          <ListItems
+            edit={false}
+            message='Help offered or needed '
+            type='help'
+            title='Help'
+            items={help}
+            setParent={setMember}
+          />
 
-              <ListItems
-                edit={false}
-                message='Help offered or needed '
-                type='help'
-                title='Help'
-                items={help}
-                setParent={setMember}
-              />
+          <ListItems
+            edit={false}
+            message='Related interests and hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setMember}
+          />
 
-              <ListItems
-                edit={false}
-                message='Related interests and hobbies'
-                type='interests'
-                title='interest'
-                items={interests}
-                setParent={setMember}
-              />
-
-              <Row>
-                <Col className='text-center'>
-                  <LinkContainer to={".."}>
-                    <Card.Link>
-                      <Button variant='success' type='button' className='w-100'>
-                        Close
-                      </Button>
-                    </Card.Link>
-                  </LinkContainer>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+          <Row>
+            <Col className='text-center'>
+              <LinkContainer to={".."}>
+                <Card.Link>
+                  <Button variant='success' type='button' className='w-100'>
+                    Close
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </Col>
+          </Row>
+        </Modal.Body>
+      </Modal>
       {isLoading && <Loader />}
     </>
   );

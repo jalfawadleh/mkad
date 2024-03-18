@@ -56,8 +56,13 @@ const Header = () => {
   return (
     <>
       <Navbar
-        className='m-2 d-none d-sm-block position-absolute end-0 translate-middle-y'
-        style={{ top: "200px" }}
+        bg='dark'
+        variant='dark'
+        className='m-2 p-0 d-none d-sm-block position-absolute end-0 translate-middle-y'
+        style={{
+          top: "200px",
+          borderRadius: 25,
+        }}
       >
         <Nav variant='pills' className='p-0 m-0 d-flex flex-column'>
           {headerLinks}

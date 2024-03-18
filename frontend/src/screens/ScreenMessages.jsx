@@ -4,7 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 const ScreenMessages = () => {
   return (
     <>
-      <div style={{ width: "300px" }}>
+      <div style={{ maxWidth: "300px", maxHeight: window.innerHeight }}>
         <Card className='p-1 m-1 text-center h4' style={{ borderRadius: 10 }}>
           <span role='button'>Messages</span>
         </Card>

@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 import { UserContext } from "../../store.js";
-import Loader from "../utils/Loader.jsx";
+import Loader from "../common/Loader.jsx";
 
 import { LinkContainer } from "react-router-bootstrap";
 import {

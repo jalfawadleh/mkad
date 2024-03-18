@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 import { ActivitiesContext, UserContext } from "../../store.js";
-import Loader from "../utils/Loader.jsx";
+import Loader from "../common/Loader.jsx";
 
 import Form from "react-bootstrap/esm/Form";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";

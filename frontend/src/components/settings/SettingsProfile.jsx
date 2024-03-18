@@ -18,7 +18,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 import { UserContext } from "../../store.js";
 
-import Loader from "../utils/Loader.jsx";
+import Loader from "../common/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 
 function SettingsProfile() {
@@ -86,7 +86,7 @@ function SettingsProfile() {
   }, [user._id]);
 
   const closeActivity = () => {
-    navigate(-1);
+    navigate("/search");
   };
 
   return (

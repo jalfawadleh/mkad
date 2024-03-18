@@ -39,7 +39,7 @@ const ScreenActivities = () => {
 
   return (
     <>
-      <div style={{ width: "300px", maxHeight: window.innerHeight }}>
+      <div style={{ maxWidth: "300px", maxHeight: window.innerHeight }}>
         <Card className='p-1 m-1' style={{ borderRadius: 10 }}>
           <Stack direction='horizontal' gap={1}>
             <div className='p-1 m-0 h5 w-100 text-center'>Activities </div>

@@ -1,8 +1,10 @@
-import axios from "axios";
 import { useState } from "react";
-import { Button, Card, Form, Stack } from "react-bootstrap";
 import { Outlet, useNavigate } from "react-router-dom";
+
+import axios from "axios";
 import { toast } from "react-toastify";
+
+import { Button, Card, Form, Stack } from "react-bootstrap";
 
 const ScreenSearch = () => {
   const navigate = useNavigate();
@@ -28,20 +30,27 @@ const ScreenSearch = () => {
 
   return (
     <>
-      <div style={{ width: "300px" }}>
-        <Card className='p-1 m-1' style={{ borderRadius: 10 }}>
+      <div style={{ maxWidth: "400px", maxHeight: window.innerHeight }}>
+        <Card
+          className='p-1 mb-2'
+          style={{
+            borderRadius: 15,
+            borderWidth: 1,
+            borderColor: "whitesmoke",
+          }}
+        >
           <Form onSubmit={onSubmit}>
             <Stack direction='horizontal' gap={2} className='p-1 m-0'>
               <Form.Control
-                className='me-auto'
+                autoFocus={true}
+                className='me-auto border-0'
                 placeholder='Search'
-                size='sm'
                 onChange={(e) => setSearchText(e.target.value)}
               />
               <Button
-                size='sm'
                 disabled={!searchText}
                 type='submit'
+                size={"sm"}
                 variant='primary'
               >
                 Search
@@ -54,7 +63,7 @@ const ScreenSearch = () => {
             <Card
               key={result._id}
               className='p-1 m-1'
-              style={{ borderRadius: 10 }}
+              style={{ borderRadius: 15 }}
               onClick={() => navigate(result.type + "/" + result._id)}
             >
               <span role='button'>{result.name}</span>

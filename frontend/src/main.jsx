@@ -40,7 +40,7 @@ const router = createBrowserRouter(
         <Route path='account' element={<SettingsAccount />} />
 
         <Route path='activity/:id' element={<ActivityView />} />
-        <Route path='organisation:id' element={<MemberView />} />
+        <Route path='organisation/:id' element={<MemberView />} />
         <Route path='member/:id' element={<MemberView />} />
 
         <Route path='messages' element={<ScreenMessages />}>
