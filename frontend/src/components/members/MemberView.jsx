@@ -55,55 +55,49 @@ function MemberView() {
           style={{ maxHeight: window.innerHeight - 100 }}
         >
           <Card>
-            <Form>
-              <Card.Body>
-                <Card.Title>{name}</Card.Title>
-                <Card.Text>{description}</Card.Text>
+            <Card.Body>
+              <Card.Title>{name}</Card.Title>
+              <Card.Text>{description}</Card.Text>
 
-                <ListItems
-                  edit={false}
-                  message='Languages'
-                  type='languages'
-                  title='language'
-                  items={languages}
-                  setParent={setMember}
-                />
+              <ListItems
+                edit={false}
+                message='Languages'
+                type='languages'
+                title='language'
+                items={languages}
+                setParent={setMember}
+              />
 
-                <ListItems
-                  edit={false}
-                  message='Help offered or needed '
-                  type='help'
-                  title='Help'
-                  items={help}
-                  setParent={setMember}
-                />
+              <ListItems
+                edit={false}
+                message='Help offered or needed '
+                type='help'
+                title='Help'
+                items={help}
+                setParent={setMember}
+              />
 
-                <ListItems
-                  edit={false}
-                  message='Related interests and hobbies'
-                  type='interests'
-                  title='interest'
-                  items={interests}
-                  setParent={setMember}
-                />
+              <ListItems
+                edit={false}
+                message='Related interests and hobbies'
+                type='interests'
+                title='interest'
+                items={interests}
+                setParent={setMember}
+              />
 
-                <Row>
-                  <Col className='text-center'>
-                    <LinkContainer to={".."}>
-                      <Card.Link>
-                        <Button
-                          variant='success'
-                          type='button'
-                          className='w-100'
-                        >
-                          Close
-                        </Button>
-                      </Card.Link>
-                    </LinkContainer>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Form>
+              <Row>
+                <Col className='text-center'>
+                  <LinkContainer to={".."}>
+                    <Card.Link>
+                      <Button variant='success' type='button' className='w-100'>
+                        Close
+                      </Button>
+                    </Card.Link>
+                  </LinkContainer>
+                </Col>
+              </Row>
+            </Card.Body>
           </Card>
         </Col>
       </Row>

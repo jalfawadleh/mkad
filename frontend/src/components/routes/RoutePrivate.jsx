@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 
 import { UserContext } from "../../store";
-import Map from "../BackgroundMap/Map";
+import Map from "../common/Map";
 import ScreenLanding from "../../screens/ScreenLanding";
 
 const PrivateRoute = () => {

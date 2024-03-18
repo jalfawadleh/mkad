@@ -45,7 +45,7 @@ const Header = () => {
         </Nav.Link>
       </LinkContainer>
 
-      <LinkContainer to='settings'>
+      <LinkContainer to='/me'>
         <Nav.Link>
           <img
             height='25px'
