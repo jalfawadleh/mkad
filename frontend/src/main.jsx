@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
+        <Route path='' element={<Navigate to='search' replace={true} />} />
         <Route path='me' element={<SettingsProfile />} />
         <Route path='location' element={<>Location Change</>} />
         <Route path='account' element={<SettingsAccount />} />
@@ -62,6 +64,7 @@ const router = createBrowserRouter(
           </Route>
         </Route>
       </Route>
+
       <Route path='logout' element={<ScreenLogout />} />
     </Route>
   )

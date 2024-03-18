@@ -16,57 +16,52 @@ const Header = () => {
   const { user } = useContext(UserContext);
 
   const headerLinks = (
-    <Nav
-      bg='dark'
-      variant='dark'
-      className='p-0 m-0 w-100 justify-content-around'
-    >
-      <LinkContainer to='search'>
-        <Nav.Link>
-          <FaSearch size={20} />
-        </Nav.Link>
-      </LinkContainer>
-
-      {user.type === "organisation" && (
-        <LinkContainer to='activities'>
-          <Nav.Link>
-            <FaFlag size={20} />
-          </Nav.Link>
-        </LinkContainer>
-      )}
-      <LinkContainer to='updates'>
-        <Nav.Link>
-          <FaBell size={20} />
-        </Nav.Link>
-      </LinkContainer>
-      <LinkContainer to='messages'>
-        <Nav.Link>
-          <FaEnvelope size={20} />
-        </Nav.Link>
-      </LinkContainer>
-
+    <>
       <LinkContainer to='/me'>
-        <Nav.Link>
+        <Nav.Link className='rounded-circle'>
           <img
-            height='25px'
-            width='25px'
+            height='24px'
+            width='24px'
             src={"https://api.multiavatar.com/" + user.name + ".png"}
             alt='Profile Photo'
           />
         </Nav.Link>
       </LinkContainer>
-    </Nav>
+
+      {user.type === "organisation" && (
+        <LinkContainer to='activities'>
+          <Nav.Link className='rounded-circle'>
+            <FaFlag size={24} />
+          </Nav.Link>
+        </LinkContainer>
+      )}
+      <LinkContainer to='updates'>
+        <Nav.Link className='rounded-circle'>
+          <FaBell size={24} />
+        </Nav.Link>
+      </LinkContainer>
+      <LinkContainer to='messages'>
+        <Nav.Link className='rounded-circle'>
+          <FaEnvelope size={24} />
+        </Nav.Link>
+      </LinkContainer>
+      <LinkContainer to='search'>
+        <Nav.Link className='rounded-circle'>
+          <FaSearch size={24} />
+        </Nav.Link>
+      </LinkContainer>
+    </>
   );
 
   return (
     <>
       <Navbar
-        bg='dark'
-        variant='dark'
-        className='m-1 mb-2 p-0 d-none d-sm-block'
-        style={{ borderRadius: 10, width: "300px" }}
+        className='m-2 d-none d-sm-block position-absolute end-0 translate-middle-y'
+        style={{ top: "200px" }}
       >
-        {headerLinks}
+        <Nav variant='pills' className='p-0 m-0 d-flex flex-column'>
+          {headerLinks}
+        </Nav>
       </Navbar>
 
       <Navbar
@@ -74,7 +69,9 @@ const Header = () => {
         variant='dark'
         className='w-100 position-absolute bottom-0 none d-sm-none'
       >
-        {headerLinks}
+        <Nav className='w-100 p-0 m-0 justify-content-around'>
+          {headerLinks}
+        </Nav>
       </Navbar>
     </>
   );
