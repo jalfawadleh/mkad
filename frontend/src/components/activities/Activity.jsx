@@ -43,9 +43,9 @@ const Activity = ({ id, user, closeActivity }) => {
   } = activity;
 
   const [isLoading, setIsLoading] = useState(false);
+  const isOwner = createdBy?._id === user._id;
   const isCreating = activity._id ? false : true;
   const [isEditing, setIsEditing] = useState(isCreating);
-  const isOwner = createdBy?._id === user._id;
 
   const onPut = async (e) => {
     // checking for common required fields
@@ -81,6 +81,27 @@ const Activity = ({ id, user, closeActivity }) => {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const onDelete = async () => {
+    var result = confirm("Are you sure?");
+    if (result) {
+      setIsLoading(true);
+      try {
+        await axios.delete(`/activities/${id}`).then(() => {
+          setIsLoading(false);
+          closeActivity();
+        });
+        await axios.get("/activities").then((res) => {
+          setIsLoading(false);
+          setActivities(res.data);
+        });
+      } catch (error) {
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      }
+    }
   };
 
   const getActivity = async (id) => {
@@ -198,19 +219,10 @@ const Activity = ({ id, user, closeActivity }) => {
             />
           )}
           {isEditing ? <div>Location</div> : <div>Show on the map</div>}
+
           <Row>
             {isOwner && isEditing && !isCreating && (
               <>
-                <Col className='text-center'>
-                  <Button
-                    variant='primary'
-                    type='button'
-                    className='w-100 '
-                    onClick={onPut}
-                  >
-                    Update
-                  </Button>
-                </Col>
                 <Col className='text-center'>
                   <Button
                     variant='primary'
@@ -221,13 +233,33 @@ const Activity = ({ id, user, closeActivity }) => {
                     View
                   </Button>
                 </Col>
+                <Col className='text-center'>
+                  <Button
+                    variant='warning'
+                    type='button'
+                    className='w-100 '
+                    onClick={onPut}
+                  >
+                    Update
+                  </Button>
+                </Col>
+                <Col className='text-center'>
+                  <Button
+                    variant='danger'
+                    type='button'
+                    className='w-100 '
+                    onClick={onDelete}
+                  >
+                    Delete
+                  </Button>
+                </Col>
               </>
             )}
 
             {isOwner && !isEditing && (
               <Col className='text-center'>
                 <Button
-                  variant='primary'
+                  variant='warning'
                   type='button'
                   className='w-100 '
                   onClick={() => setIsEditing(true)}
