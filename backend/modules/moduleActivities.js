@@ -68,7 +68,7 @@ const getActivity = asyncHandler(async (req, res) => {
   if (activity) res.json(activity);
   else {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error("Activity not found");
   }
 });
 
@@ -82,7 +82,7 @@ const deleteActivity = asyncHandler(async (req, res) => {
     res.res.status(204);
   } else {
     res.status(404);
-    throw new Error("User not found");
+    throw new Error("Activity not found");
   }
 });
 
