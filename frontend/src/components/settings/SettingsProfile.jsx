@@ -1,9 +1,19 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { Card, Col, Row, Button, Form, FloatingLabel } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Row,
+  Button,
+  Form,
+  FloatingLabel,
+  Modal,
+  Stack,
+} from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
 import { UserContext } from "../../store.js";
@@ -12,6 +22,7 @@ import Loader from "../utils/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 
 function SettingsProfile() {
+  const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
   const [editing, setEditing] = useState(false);
@@ -74,13 +85,14 @@ function SettingsProfile() {
     getProfile();
   }, [user._id]);
 
+  const closeActivity = () => {
+    navigate(-1);
+  };
+
   return (
     <>
-      <Card
-        className='mb-1 overflow-scroll'
-        style={{ maxHeight: window.innerHeight - 100 }}
-      >
-        <Form>
+      <Modal animation={false} show={true} onHide={closeActivity}>
+        <Modal.Body>
           <Card.Body>
             {editing ? (
               <>
@@ -110,7 +122,18 @@ function SettingsProfile() {
               </>
             ) : (
               <>
-                <Card.Title className='text-center'>{name}</Card.Title>
+                <Stack direction='horizontal' gap={1}>
+                  {name && (
+                    <img
+                      height='30px'
+                      width='30px'
+                      src={"https://api.multiavatar.com/" + name + ".png"}
+                      alt='Profile Photo'
+                    />
+                  )}
+
+                  <div className='h4 p-2 text-center w-100 pe-5'>{name}</div>
+                </Stack>
                 <Card.Text>{description}</Card.Text>
               </>
             )}
@@ -171,6 +194,22 @@ function SettingsProfile() {
                 />
               </>
             )}
+            <div>
+              <LinkContainer to={"/location"}>
+                <Button variant='primary' type='button' className='mb-3'>
+                  Manage Location
+                </Button>
+              </LinkContainer>
+            </div>
+            <div>
+              <LinkContainer to={"/account"}>
+                <Card.Link>
+                  <Button variant='warning' type='button' className='mb-3'>
+                    Manage Account
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
+            </div>
 
             <Row>
               {editing && (
@@ -209,7 +248,6 @@ function SettingsProfile() {
                   </Button>
                 </Col>
               )}
-
               <Col className='text-center'>
                 <LinkContainer to={".."}>
                   <Card.Link>
@@ -221,8 +259,8 @@ function SettingsProfile() {
               </Col>
             </Row>
           </Card.Body>
-        </Form>
-      </Card>
+        </Modal.Body>
+      </Modal>
       {isLoading && <Loader />}
     </>
   );
