@@ -7,7 +7,7 @@ import { protect } from "../middleware/authMiddleware.js";
 // @desc    Login user & get token
 // @route   POST /api/users
 // @access  Public
-const login = asyncHandler(async (req, res) => {
+const loginUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
 
   const user = await Users.findOne({ username });
@@ -29,7 +29,7 @@ const login = asyncHandler(async (req, res) => {
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
-const post = asyncHandler(async (req, res) => {
+const postUser = asyncHandler(async (req, res) => {
   const { username, password, email, name } = req.body;
 
   const userExists = await Users.findOne({ username });
@@ -63,14 +63,13 @@ const post = asyncHandler(async (req, res) => {
 // @desc    Get user
 // @route   GET /api/users
 // @access  Private
-const get = asyncHandler(async (req, res) => {
-  const user = await Users.findById(req.params.id);
+const getUser = asyncHandler(async (req, res) => {
+  const user = await Users.findById(req.user._id);
 
   if (user) {
     res.json({
       _id: user._id,
       name: user.name,
-      description: user.description,
     });
   } else {
     res.status(404);
@@ -81,7 +80,7 @@ const get = asyncHandler(async (req, res) => {
 // @desc    Update user
 // @route   PUT /api/users
 // @access  Private
-const put = asyncHandler(async (req, res) => {
+const putUser = asyncHandler(async (req, res) => {
   const user = await Users.findById(req.body._id);
 
   if (user) {
@@ -107,9 +106,27 @@ const put = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Delete User
+// @route   Delete /api/users
+// @access  Private
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await Users.deleteOne({ _id: req.user._id });
+  if (user) {
+    res.res.status(204);
+  } else {
+    res.status(404);
+    throw new Error("User not found");
+  }
+});
+
 const users = express.Router();
 
-users.route("/").post(post).get(protect, get).put(protect, put);
-users.post("/login", login).get("/:id", protect, get);
+users
+  .route("/")
+  .get(protect, getUser)
+  .post(postUser)
+  .put(protect, putUser)
+  .delete(protect, deleteUser);
+users.post("/login", loginUser);
 
 export default users;
