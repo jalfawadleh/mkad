@@ -12,6 +12,7 @@ import { Modal, Stack } from "react-bootstrap";
 
 import { FaPlusCircle } from "react-icons/fa";
 import { FaLocationCrosshairs } from "react-icons/fa6";
+import { FaFlag } from "react-icons/fa";
 
 import Activity from "../components/activities/Activity";
 
@@ -53,6 +54,10 @@ const ScreenActivities = () => {
     setModalShow(true);
   };
 
+  const locateActivity = (activity) => {
+    alert("Locate Activity " + JSON.stringify(activity.locations[0]));
+  };
+
   return (
     <>
       <ActivitiesContext.Provider value={{ activities, setActivities }}>
@@ -75,17 +80,24 @@ const ScreenActivities = () => {
                 key={activity._id}
               >
                 <Stack direction='horizontal' gap={1}>
+                  <span role='button' className='p-2 ms-auto'>
+                    <FaFlag size={20} />
+                  </span>
                   <span
-                    className='p-1 w-100 text-center button'
+                    role='button'
+                    className='p-1 w-100 text-center'
                     onClick={() => showActivity(activity)}
                   >
                     {activity.name}
                   </span>
-                  <div className='p-2 ms-auto'>
-                    <span role='button'>
-                      <FaLocationCrosshairs size={20} />
-                    </span>
-                  </div>
+
+                  <span
+                    role='button'
+                    className='p-2 ms-auto'
+                    onClick={() => locateActivity(activity)}
+                  >
+                    <FaLocationCrosshairs size={20} />
+                  </span>
                 </Stack>
               </Card>
             ))

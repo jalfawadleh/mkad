@@ -7,7 +7,9 @@ import Activities from "../models/modelActivities.js";
 // @route   GET /api/activities
 // @access  Private
 const getActivities = asyncHandler(async (req, res) => {
-  const activities = await Activities.find().select("name");
+  const activities = await Activities.find({
+    "createdBy._id": req.user._id,
+  }).select("name locations");
   res.status(200).json(activities);
 });
 
