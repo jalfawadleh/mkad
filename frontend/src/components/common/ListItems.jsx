@@ -11,7 +11,8 @@ const ListItems = ({
 }) => {
   const [item, setItem] = useState("");
 
-  const addItem = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     items.push({ name: item });
 
     setParent((prevState) => ({
@@ -31,18 +32,19 @@ const ListItems = ({
   };
 
   return (
-    <div className='border mb-3 p-2'>
-      <Card.Text className='text-center'>{message}</Card.Text>
-      <Stack direction='horizontal' gap={2} className='mb-1'>
+    <div className='border mb-3 p-1'>
+      <div className='p-0 m-0 inline-block'>
+        <span className='font-weight-bold m-2'>{message}</span>
         {items &&
           items.map((i, index) => (
-            <Badge key={index} pill bg='secondary'>
-              {i.name}
+            <Badge key={index} pill bg='secondary' className='m-1 p-1'>
+              <span className='p-1 m-2 font-weight-bold'>{i.name}</span>
+
               {edit && (
                 <Badge
                   pill
                   bg='danger'
-                  className='ms-1'
+                  className='p-2 m-0'
                   onClick={() => delItem(i)}
                   style={{ cursor: "pointer" }}
                 >
@@ -51,20 +53,22 @@ const ListItems = ({
               )}
             </Badge>
           ))}
-      </Stack>
+      </div>
       {edit && (
-        <Stack direction='horizontal' gap={2}>
-          <Form.Control
-            type='text'
-            placeholder={"Enter " + title}
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-          />
+        <Form onSubmit={onSubmit}>
+          <Stack direction='horizontal' gap={2}>
+            <Form.Control
+              type='text'
+              placeholder={"Enter " + title}
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+            />
 
-          <Button disabled={!item} onClick={() => addItem()}>
-            +
-          </Button>
-        </Stack>
+            <Button disabled={!item} type='submit'>
+              +
+            </Button>
+          </Stack>
+        </Form>
       )}
     </div>
   );

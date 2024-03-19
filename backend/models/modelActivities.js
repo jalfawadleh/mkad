@@ -9,9 +9,9 @@ const schema = Schema(
 
     startOn: { type: Date },
     endOn: { type: Date },
-    locations: {
-      type: [{ lng: Number, lat: Number }],
-      default: [{ lng: -122.2683, lat: 37.8243 }],
+    location: {
+      type: { lng: Number, lat: Number },
+      default: { lng: -122.2683, lat: 37.8243 },
     },
 
     notes: { type: [{ name: String }], default: [] },

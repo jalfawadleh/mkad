@@ -33,9 +33,12 @@ const ScreenSearch = () => {
 
   return (
     <>
-      <div style={{ maxWidth: "320px", maxHeight: window.innerHeight }}>
+      <div
+        className='m-2'
+        style={{ maxWidth: "320px", maxHeight: window.innerHeight }}
+      >
         <Card
-          className='p-0 mb-2 border border-primary'
+          className='mb-3 border border-primary'
           style={{
             borderRadius: 25,
           }}
@@ -54,7 +57,7 @@ const ScreenSearch = () => {
                 variant='dark'
                 className='rounded-circle pe-2'
               >
-                <FaSearch size={28} />
+                <FaSearch size={24} />
               </Button>
             </Stack>
           </Form>
@@ -86,8 +89,8 @@ const ScreenSearch = () => {
                   </span>
                 </LinkContainer>
 
-                <span role='button' className='p-1 m-0 ms-auto'>
-                  <FaLocationCrosshairs size={30} />
+                <span role='button' className='pe-1 m-0 ms-auto'>
+                  <FaLocationCrosshairs size={24} />
                 </span>
               </Stack>
             </Card>

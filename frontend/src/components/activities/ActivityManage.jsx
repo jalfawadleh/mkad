@@ -14,6 +14,7 @@ import Card from "react-bootstrap/esm/Card";
 import { Col, Modal, Row } from "react-bootstrap";
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import Location from "../common/Location.jsx";
 
 const ActivityManage = () => {
   const { id } = useParams();
@@ -33,6 +34,7 @@ const ActivityManage = () => {
     helpNeeded: [],
     createdBy: [],
     hidden: false,
+    location: { lng: -122.2683, lat: 37.8243 },
   });
 
   const {
@@ -45,6 +47,7 @@ const ActivityManage = () => {
     helpNeeded,
     hidden,
     createdBy,
+    location,
   } = activity;
 
   const isOwner = createdBy?._id === user._id;
@@ -130,7 +133,7 @@ const ActivityManage = () => {
         animation={false}
         show={true}
         onHide={closeActivity}
-        className='p-2'
+        className='p-1'
       >
         <Modal.Body>
           <Modal.Header closeButton className='p-1'>
@@ -149,12 +152,11 @@ const ActivityManage = () => {
               />
             </FloatingLabel>
           )}
-          {createdBy?.name && (
-            <div className='p-2 mb-3 text-right'>
+          {!isEditing && createdBy?.name && (
+            <div className='p-2 m-0 float-right'>
               Created By: {createdBy.name}
             </div>
           )}
-
           {isEditing ? (
             <FloatingLabel
               controlId='description'
@@ -170,7 +172,7 @@ const ActivityManage = () => {
               />
             </FloatingLabel>
           ) : (
-            <div className='p-2 mb-3'>{description}</div>
+            <div className='p-2 m-0'>{description}</div>
           )}
           <ListItems
             edit={isEditing}
@@ -229,7 +231,15 @@ const ActivityManage = () => {
               }}
             />
           )}
-          {isEditing ? <div>Location</div> : <div>Show on the map</div>}
+          {isEditing ? (
+            <Location
+              editing={isEditing}
+              location={location}
+              setParent={setActivity}
+            />
+          ) : (
+            <div>Show on the map</div>
+          )}
 
           <Row>
             {isOwner && isEditing && !isCreating && (
@@ -283,6 +293,7 @@ const ActivityManage = () => {
             {isCreating && (
               <Col className='text-center'>
                 <Button
+                  disabled={!name}
                   variant='primary'
                   type='button'
                   className='w-100 '

@@ -20,6 +20,7 @@ import { UserContext } from "../../store.js";
 
 import Loader from "../common/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
+import Location from "../common/Location.jsx";
 
 function SettingsProfile() {
   const navigate = useNavigate();
@@ -38,10 +39,19 @@ function SettingsProfile() {
     interests: [],
     darkmood: true,
     hidden: true,
+    location: "",
   });
 
-  const { name, description, languages, help, interests, darkmood, hidden } =
-    member;
+  const {
+    name,
+    description,
+    languages,
+    help,
+    interests,
+    darkmood,
+    hidden,
+    location,
+  } = member;
 
   const onPut = async (e) => {
     e.preventDefault();
@@ -50,7 +60,7 @@ function SettingsProfile() {
       await axios.put("/members", member).then(() => {
         toast("Updated");
         // in case name changed
-        setUser((prevState) => ({ ...prevState, name }));
+        setUser((prevState) => ({ ...prevState, name, location }));
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -106,6 +116,7 @@ function SettingsProfile() {
                     onChange={onChange}
                   />
                 </FloatingLabel>
+
                 <FloatingLabel
                   controlId='description'
                   label='Description'
@@ -123,16 +134,18 @@ function SettingsProfile() {
             ) : (
               <>
                 <Stack direction='horizontal' gap={1}>
-                  {name && (
-                    <img
-                      height='30px'
-                      width='30px'
-                      src={"https://api.multiavatar.com/" + name + ".png"}
-                      alt='Profile Photo'
-                    />
-                  )}
-
-                  <div className='h4 p-2 text-center w-100 pe-5'>{name}</div>
+                  <div className='h3'>
+                    {name && (
+                      <img
+                        className='p-0 m-1'
+                        height='35px'
+                        width='35px'
+                        src={"https://api.multiavatar.com/" + name + ".png"}
+                        alt='Profile Photo'
+                      />
+                    )}
+                    <span className='m-0 ps-1'>{name}</span>
+                  </div>
                 </Stack>
                 <Card.Text>{description}</Card.Text>
               </>
@@ -194,13 +207,11 @@ function SettingsProfile() {
                 />
               </>
             )}
-            <div>
-              <LinkContainer to={"/location"}>
-                <Button variant='primary' type='button' className='mb-3'>
-                  Manage Location
-                </Button>
-              </LinkContainer>
-            </div>
+            <Location
+              location={location}
+              setParent={setMember}
+              editing={editing}
+            />
             <div>
               <LinkContainer to={"/account"}>
                 <Card.Link>

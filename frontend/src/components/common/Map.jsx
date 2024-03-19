@@ -20,9 +20,9 @@ import { UserContext } from "../../store";
 
 const activityIcon = new L.icon({
   iconUrl: "./flag.svg",
-  iconSize: new L.Point(35, 35), // size of the icon
-  iconAnchor: new L.Point(10, 35), // point of the icon which will correspond to marker's location
-  popupAnchor: new L.Point(0, -25), // point from which the popup should open relative to the iconAnchor
+  iconSize: new L.Point(35, 35),
+  iconAnchor: new L.Point(10, 35),
+  popupAnchor: new L.Point(0, -25),
   className: "border rounded border-danger ",
 });
 
@@ -31,21 +31,22 @@ const Map = () => {
 
   const [items, setItems] = useState([]);
 
-  useEffect(
-    () => async () => {
-      try {
-        await axios
-          .get(`/map`)
-          .then((res) => setItems(res.data))
-          .then(() => console.log(items));
-      } catch (error) {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      }
-    },
-    []
-  );
+  const getItems = async () => {
+    try {
+      await axios
+        .get(`/map`)
+        .then((res) => setItems(res.data))
+        .then(() => console.log(items));
+    } catch (error) {
+      error?.response?.data?.message &&
+        toast.error(error?.response.data.message);
+      error?.response?.status > 499 && toast.error("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    getItems();
+  }, [user.location]);
 
   return (
     <>
@@ -70,19 +71,19 @@ const Map = () => {
                 item.type !== "activity" && (
                   <Marker
                     key={item._id}
+                    position={item.location}
+                    title={item.name}
                     icon={
                       new L.icon({
                         iconUrl: [
                           "https://api.multiavatar.com/" + item.name + ".png",
                         ],
-                        iconSize: new L.Point(35, 35), // size of the icon
-                        iconAnchor: new L.Point(18, 18), // point of the icon which will correspond to marker's location
-                        popupAnchor: new L.Point(0, -18), // point from which the popup should open relative to the iconAnchor
+                        iconSize: new L.Point(35, 35),
+                        iconAnchor: new L.Point(18, 18),
+                        popupAnchor: new L.Point(0, -18),
                         className: "border rounded-circle border-light ",
                       })
                     }
-                    position={item.location}
-                    title={item.name}
                   >
                     <Popup>
                       <LinkContainer to={"/" + item.type + "/" + item._id}>
@@ -101,7 +102,7 @@ const Map = () => {
                   <Marker
                     key={item._id}
                     icon={activityIcon}
-                    position={item.locations[0]}
+                    position={item.location}
                     title={item.name}
                   >
                     <Popup>
@@ -115,17 +116,6 @@ const Map = () => {
         </MarkerClusterGroup>
 
         <ZoomControl position='topright' />
-        {/* <Marker
-          position={{ lng: -122.269, lat: 37.82 }}
-          eventHandlers={{
-            click: (e) => {
-              console.log("marker clicked", e);
-              navigate("/activity/65f77d1b1fea4eae8241ced7");
-            },
-          }}
-        >
-          <Popup>I am here.</Popup>
-        </Marker> */}
 
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
