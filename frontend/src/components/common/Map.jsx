@@ -18,14 +18,6 @@ import Header from "./Header";
 
 import { UserContext } from "../../store";
 
-const memberIcon = new L.icon({
-  iconUrl: ["https://api.multiavatar.com/" + "sdfsdf" + ".png"],
-  iconSize: new L.Point(35, 35), // size of the icon
-  iconAnchor: new L.Point(18, 18), // point of the icon which will correspond to marker's location
-  popupAnchor: new L.Point(0, -18), // point from which the popup should open relative to the iconAnchor
-  className: "border rounded-circle border-light ",
-});
-
 const activityIcon = new L.icon({
   iconUrl: "./flag.svg",
   iconSize: new L.Point(35, 35), // size of the icon
@@ -73,58 +65,53 @@ const Map = () => {
       >
         <MarkerClusterGroup chunkedLoading>
           {items &&
-            items.map((item) => (
-              <Marker
-                key={item._id}
-                icon={item.type === "activity" ? activityIcon : memberIcon}
-                position={
-                  item.type === "activity" ? item.locations[0] : item.location
-                }
-                title={item.name}
-                eventHandlers={{
-                  click: (e) => {
-                    console.log("marker clicked", e);
-                  },
-                }}
-              >
-                <Popup>
-                  <LinkContainer to={"/" + item.type + "/" + item._id}>
-                    <Link className='rounded-circle'>{item.name}</Link>
-                  </LinkContainer>
-                </Popup>
-              </Marker>
-            ))}
-          {/* 
-          <Marker
-            icon={activityIcon}
-            position={user.location}
-            title={"Hello"}
-            eventHandlers={{
-              click: (e) => {
-                console.log("marker clicked", e);
-                navigate("/activity/65f77d1b1fea4eae8241ced7");
-              },
-            }}
-          >
-            <Popup>I am an Avtivity.</Popup>
-          </Marker>
-          <Marker
-            icon={memberIcon}
-            position={user.location}
-            title={"Hello"}
-            eventHandlers={{
-              click: (e) => {
-                console.log("marker clicked", e);
-              },
-            }}
-          >
-            <Popup>
-              I am a Member.
-              <LinkContainer to='/activity/65f77d1b1fea4eae8241ced7'>
-                <Link className='rounded-circle'>Open My profile</Link>
-              </LinkContainer>
-            </Popup>
-          </Marker> */}
+            items.map(
+              (item) =>
+                item.type !== "activity" && (
+                  <Marker
+                    key={item._id}
+                    icon={
+                      new L.icon({
+                        iconUrl: [
+                          "https://api.multiavatar.com/" + item.name + ".png",
+                        ],
+                        iconSize: new L.Point(35, 35), // size of the icon
+                        iconAnchor: new L.Point(18, 18), // point of the icon which will correspond to marker's location
+                        popupAnchor: new L.Point(0, -18), // point from which the popup should open relative to the iconAnchor
+                        className: "border rounded-circle border-light ",
+                      })
+                    }
+                    position={item.location}
+                    title={item.name}
+                  >
+                    <Popup>
+                      <LinkContainer to={"/" + item.type + "/" + item._id}>
+                        <Link className='rounded-circle'>{item.name}</Link>
+                      </LinkContainer>
+                    </Popup>
+                  </Marker>
+                )
+            )}
+        </MarkerClusterGroup>
+        <MarkerClusterGroup chunkedLoading>
+          {items &&
+            items.map(
+              (item) =>
+                item.type === "activity" && (
+                  <Marker
+                    key={item._id}
+                    icon={activityIcon}
+                    position={item.locations[0]}
+                    title={item.name}
+                  >
+                    <Popup>
+                      <LinkContainer to={"/activity/" + item._id}>
+                        <Link className='rounded-circle'>{item.name}</Link>
+                      </LinkContainer>
+                    </Popup>
+                  </Marker>
+                )
+            )}
         </MarkerClusterGroup>
 
         <ZoomControl position='topright' />

@@ -6,6 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
+import { FaQuestionCircle } from "react-icons/fa";
 // import { FaWindowClose } from "react-icons/fa";
 // import { IoLogOut } from "react-icons/io5";
 
@@ -17,6 +18,11 @@ const Header = () => {
 
   const headerLinks = (
     <>
+      <LinkContainer to='help'>
+        <Nav.Link className='rounded-circle'>
+          <FaQuestionCircle size={24} />
+        </Nav.Link>
+      </LinkContainer>
       <LinkContainer to='/me'>
         <Nav.Link className='rounded-circle'>
           <img

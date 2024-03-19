@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 
 import { LinkContainer } from "react-router-bootstrap";
 import { Card, Col, Row, Button, Modal } from "react-bootstrap";
-import Loader from "../common/Loader.jsx";
+import Loader from "./common/Loader.jsx";
 
-import ListItems from "../common/ListItems.jsx";
+import ListItems from "./common/ListItems.jsx";
 
-function MemberView() {
+function Member() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -102,4 +102,4 @@ function MemberView() {
   );
 }
 
-export default MemberView;
+export default Member;

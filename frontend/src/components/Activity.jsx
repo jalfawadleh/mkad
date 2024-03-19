@@ -4,13 +4,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import Loader from "../common/Loader.jsx";
+import Loader from "./common/Loader.jsx";
 import { Button, Card, Col, Modal, Row } from "react-bootstrap";
 
-import ListItems from "../common/ListItems.jsx";
+import ListItems from "./common/ListItems.jsx";
 import { LinkContainer } from "react-router-bootstrap";
 
-const ActivityView = () => {
+const Activity = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -131,4 +131,4 @@ const ActivityView = () => {
   );
 };
 
-export default ActivityView;
+export default Activity;

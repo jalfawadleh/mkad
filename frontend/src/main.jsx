@@ -16,7 +16,7 @@ import ScreenSearch from "./screens/ScreenSearch.jsx";
 
 import ScreenActivities from "./screens/ScreenActivities.jsx";
 import ActivityManage from "./components/activities/ActivityManage.jsx";
-import ActivityView from "./components/activities/ActivityView.jsx";
+import Activity from "./components/Activity.jsx";
 
 import ScreenUpdates from "./screens/ScreenUpdates.jsx";
 import SettingsAccount from "./components/settings/SettingsAccount.jsx";
@@ -27,8 +27,9 @@ import ScreenLogout from "./screens/ScreenLogout.jsx";
 import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
-import MemberView from "./components/members/MemberView.jsx";
+import Member from "./components/Member.jsx";
 import ScreenMessages from "./screens/ScreenMessages.jsx";
+import Help from "./components/Help.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -38,19 +39,20 @@ const router = createBrowserRouter(
         <Route path='me' element={<SettingsProfile />} />
         <Route path='location' element={<>Location Change</>} />
         <Route path='account' element={<SettingsAccount />} />
+        <Route path='help' element={<Help />} />
 
-        <Route path='activity/:id' element={<ActivityView />} />
-        <Route path='organisation/:id' element={<MemberView />} />
-        <Route path='member/:id' element={<MemberView />} />
+        <Route path='activity/:id' element={<Activity />} />
+        <Route path='organisation/:id' element={<Member />} />
+        <Route path='member/:id' element={<Member />} />
 
         <Route path='messages' element={<ScreenMessages />}>
           <Route path=':id' element={<>Messages ID</>} />
         </Route>
 
         <Route path='search' element={<ScreenSearch />}>
-          <Route path='activity/:id' element={<ActivityView />} />
-          <Route path='organisation/:id' element={<MemberView />} />
-          <Route path='member/:id' element={<MemberView />} />
+          <Route path='activity/:id' element={<Activity />} />
+          <Route path='organisation/:id' element={<Member />} />
+          <Route path='member/:id' element={<Member />} />
         </Route>
 
         <Route path='updates' element={<ScreenUpdates />}>
