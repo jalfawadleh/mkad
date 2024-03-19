@@ -65,7 +65,7 @@ const ScreenSearch = () => {
         {results ? (
           results.map((result) => (
             <Card
-              className='p-0 m-1 button'
+              className='p-0 mb-2 button'
               style={{ borderRadius: 25 }}
               key={result._id}
             >
