@@ -23,7 +23,6 @@ const activityIcon = new L.icon({
   iconSize: new L.Point(35, 35),
   iconAnchor: new L.Point(10, 35),
   popupAnchor: new L.Point(0, -25),
-  className: "border rounded border-danger ",
 });
 
 const Map = () => {
@@ -87,7 +86,9 @@ const Map = () => {
                   >
                     <Popup>
                       <LinkContainer to={"/" + item.type + "/" + item._id}>
-                        <Link className='rounded-circle'>{item.name}</Link>
+                        <span role='button' className='fw-bold fs-6'>
+                          {item.name}
+                        </span>
                       </LinkContainer>
                     </Popup>
                   </Marker>
@@ -107,7 +108,9 @@ const Map = () => {
                   >
                     <Popup>
                       <LinkContainer to={"/activity/" + item._id}>
-                        <Link className='rounded-circle'>{item.name}</Link>
+                        <span role='button' className='fw-bold fs-6'>
+                          {item.name}
+                        </span>
                       </LinkContainer>
                     </Popup>
                   </Marker>

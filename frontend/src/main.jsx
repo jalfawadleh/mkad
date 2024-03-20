@@ -35,9 +35,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
-        <Route path='' element={<Navigate to='search' replace={true} />} />
+        <Route path='' element={<ScreenSearch />}>
+          <Route path='activity/:id' element={<Activity />} />
+          <Route path='organisation/:id' element={<Member />} />
+          <Route path='member/:id' element={<Member />} />
+        </Route>
+
         <Route path='me' element={<SettingsProfile />} />
-        <Route path='location' element={<>Location Change</>} />
         <Route path='account' element={<SettingsAccount />} />
         <Route path='help' element={<Help />} />
 
@@ -47,12 +51,6 @@ const router = createBrowserRouter(
 
         <Route path='messages' element={<ScreenMessages />}>
           <Route path=':id' element={<>Messages ID</>} />
-        </Route>
-
-        <Route path='search' element={<ScreenSearch />}>
-          <Route path='activity/:id' element={<Activity />} />
-          <Route path='organisation/:id' element={<Member />} />
-          <Route path='member/:id' element={<Member />} />
         </Route>
 
         <Route path='updates' element={<ScreenUpdates />}>

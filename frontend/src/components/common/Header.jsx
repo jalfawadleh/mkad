@@ -8,7 +8,6 @@ import { FaBell } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { FaQuestionCircle } from "react-icons/fa";
 // import { FaWindowClose } from "react-icons/fa";
-// import { IoLogOut } from "react-icons/io5";
 
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
@@ -23,7 +22,7 @@ const Header = () => {
           <FaQuestionCircle size={30} />
         </span>
       </LinkContainer>
-      <LinkContainer to='/me'>
+      <LinkContainer to='me'>
         <span role='button' className='p-1'>
           <img
             height='30px'
@@ -51,7 +50,7 @@ const Header = () => {
           <FaEnvelope size={24} />
         </Nav.Link>
       </LinkContainer>
-      <LinkContainer to='search'>
+      <LinkContainer to='/'>
         <Nav.Link className='rounded-circle'>
           <FaSearch size={24} />
         </Nav.Link>

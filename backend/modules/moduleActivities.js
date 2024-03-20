@@ -9,7 +9,7 @@ import Activities from "../models/modelActivities.js";
 const getActivities = asyncHandler(async (req, res) => {
   const activities = await Activities.find({
     "createdBy._id": req.user._id,
-  }).select("name locations");
+  }).select("name locations type");
   res.status(200).json(activities);
 });
 
