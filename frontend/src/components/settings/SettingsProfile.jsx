@@ -100,7 +100,7 @@ function SettingsProfile() {
   }, [user._id]);
 
   const closeActivity = () => {
-    navigate("/search");
+    navigate(-1);
   };
 
   return (
