@@ -76,10 +76,7 @@ const ScreenSearch = () => {
         className='m-2'
         style={{ maxWidth: "320px", maxHeight: window.innerHeight }}
       >
-        <Card
-          className='mb-2 border border-gray bg-black'
-          style={{ borderRadius: 25 }}
-        >
+        <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 25 }}>
           <Form onSubmit={onSubmit}>
             <Stack direction='horizontal' gap={0} className='p-0 m-0'>
               <Form.Control
