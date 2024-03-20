@@ -19,6 +19,8 @@ const getActivities = asyncHandler(async (req, res) => {
 const postActivity = asyncHandler(async (req, res) => {
   const activity = await Activities.create({
     name: req.body.name,
+    startOn: req.body.startOn,
+    endOn: req.body.endOn,
     description: req.body.description,
     notes: req.body.notes,
     languages: req.body.languages,
@@ -44,6 +46,8 @@ const putActivity = asyncHandler(async (req, res) => {
 
   if (activity) {
     activity.name = req.body.name;
+    activity.startOn = req.body.startOn;
+    activity.endOn = req.body.endOn;
     activity.description = req.body.description;
     activity.notes = req.body.notes;
     activity.languages = req.body.languages;

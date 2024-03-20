@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-
+import Datetime from "react-datetime";
 import { ActivitiesContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
@@ -11,10 +11,11 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
-import { Col, Modal, Row } from "react-bootstrap";
+import { Col, Modal, Row, Stack } from "react-bootstrap";
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
+import moment from "moment";
 
 const ActivityManage = () => {
   const { id } = useParams();
@@ -26,6 +27,8 @@ const ActivityManage = () => {
   const [activity, setActivity] = useState({
     _id: id ? id : "",
     name: "",
+    startOn: "",
+    endOn: "",
     description: "",
     notes: [],
     languages: [],
@@ -39,6 +42,8 @@ const ActivityManage = () => {
 
   const {
     name,
+    startOn,
+    endOn,
     description,
     languages,
     interests,
@@ -157,6 +162,48 @@ const ActivityManage = () => {
               Created By: {createdBy.name}
             </div>
           )}
+
+          <Stack direction='horizontal' gap={1} className='m-2'>
+            <span className='p-0 '>Start:</span>
+            <span className='ms-auto text-center'>
+              {isEditing ? (
+                <Datetime
+                  value={startOn}
+                  onChange={(e) => {
+                    setActivity((prevState) => ({
+                      ...prevState,
+                      startOn: e,
+                    }));
+                  }}
+                />
+              ) : (
+                <>
+                  <div>{moment(startOn).format("DD MMMM YYYY")}</div>
+                  <div>{moment(startOn).format("h:mm:ss a")}</div>
+                </>
+              )}
+            </span>
+            <span className='p-0 ms-auto'>End:</span>
+            <span className='p-1 ms-auto text-center'>
+              {isEditing ? (
+                <Datetime
+                  value={endOn}
+                  onChange={(e) => {
+                    setActivity((prevState) => ({
+                      ...prevState,
+                      endOn: e,
+                    }));
+                  }}
+                />
+              ) : (
+                <>
+                  <div>{moment(endOn).format("MMMM DD YYYY")}</div>
+                  <div>{moment(endOn).format("h:mm:ss a")}</div>
+                </>
+              )}
+            </span>
+          </Stack>
+
           {isEditing ? (
             <FloatingLabel
               controlId='description'
@@ -172,11 +219,11 @@ const ActivityManage = () => {
               />
             </FloatingLabel>
           ) : (
-            <div className='p-2 m-0'>{description}</div>
+            description && <div className='p-2 m-0'>{description}</div>
           )}
 
           <ListItems
-            edit={false}
+            edit={isEditing}
             message='Languages'
             type='languages'
             title='language'
@@ -185,7 +232,7 @@ const ActivityManage = () => {
           />
 
           <ListItems
-            edit={false}
+            edit={isEditing}
             message='Related Interests and hobbies'
             type='interests'
             title='interest'
@@ -194,7 +241,7 @@ const ActivityManage = () => {
           />
 
           <ListItems
-            edit={false}
+            edit={isEditing}
             message='Notes'
             type='notes'
             title='note'
@@ -203,7 +250,7 @@ const ActivityManage = () => {
           />
 
           <ListItems
-            edit={false}
+            edit={isEditing}
             message='Offering Help With'
             type='helpOffered'
             title='Help Offered'
@@ -212,7 +259,7 @@ const ActivityManage = () => {
           />
 
           <ListItems
-            edit={false}
+            edit={isEditing}
             message='Need Help With'
             type='helpNeeded'
             title='Help Needed'
@@ -225,7 +272,7 @@ const ActivityManage = () => {
               className='mb-3'
               type='checkbox'
               id='hidden'
-              label='Hide activity from the map amd search '
+              label='Hide activity from search and map'
               name='hidden'
               checked={hidden}
               onChange={() => {
@@ -236,14 +283,12 @@ const ActivityManage = () => {
               }}
             />
           )}
-          {isEditing ? (
+          {isEditing && (
             <Location
               editing={isEditing}
               location={location}
               setParent={setActivity}
             />
-          ) : (
-            <div>Show on the map</div>
           )}
 
           <Row>

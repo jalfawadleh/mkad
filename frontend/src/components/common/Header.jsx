@@ -19,19 +19,19 @@ const Header = () => {
   const headerLinks = (
     <>
       <LinkContainer to='help'>
-        <Nav.Link className='rounded-circle'>
-          <FaQuestionCircle size={24} />
-        </Nav.Link>
+        <span role='button' className='p-1 m-0'>
+          <FaQuestionCircle size={30} />
+        </span>
       </LinkContainer>
       <LinkContainer to='/me'>
-        <Nav.Link className='rounded-circle'>
+        <span role='button' className='p-1'>
           <img
-            height='24px'
-            width='24px'
+            height='30px'
+            width='30px'
             src={"https://api.multiavatar.com/" + user.name + ".png"}
             alt='Profile Photo'
           />
-        </Nav.Link>
+        </span>
       </LinkContainer>
 
       {user.type === "organisation" && (
@@ -70,9 +70,7 @@ const Header = () => {
           borderRadius: 25,
         }}
       >
-        <Nav variant='pills' className='p-0 m-0 d-flex flex-column'>
-          {headerLinks}
-        </Nav>
+        <Nav className='p-0 m-0 d-flex flex-column'>{headerLinks}</Nav>
       </Navbar>
 
       <Navbar

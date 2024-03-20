@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import "react-datetime/css/react-datetime.css";
 import "leaflet/dist/leaflet.css";
 
 import { UserContext } from "./store.js";
