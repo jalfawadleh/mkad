@@ -16,6 +16,7 @@ import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
 import moment from "moment";
+import { LinkContainer } from "react-router-bootstrap";
 
 const ActivityManage = () => {
   const { id } = useParams();
@@ -355,16 +356,13 @@ const ActivityManage = () => {
             )}
 
             <Col className='text-center'>
-              <Card.Link>
-                <Button
-                  variant='success'
-                  type='button'
-                  className='w-100'
-                  onClick={closeActivity}
-                >
-                  Close
-                </Button>
-              </Card.Link>
+              <LinkContainer to={".."}>
+                <Card.Link>
+                  <Button variant='success' type='button' className='w-100'>
+                    Close
+                  </Button>
+                </Card.Link>
+              </LinkContainer>
             </Col>
           </Row>
         </Modal.Body>

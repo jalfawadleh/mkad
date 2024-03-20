@@ -60,7 +60,7 @@ const router = createBrowserRouter(
         <Route path='' element={<RouteOrganisation />}>
           <Route path='activities' element={<ScreenActivities />}>
             <Route path='new' element={<ActivityManage />} />
-            <Route path=':id' element={<ActivityManage />} />
+            <Route path='activity/:id' element={<ActivityManage />} />
           </Route>
         </Route>
       </Route>
