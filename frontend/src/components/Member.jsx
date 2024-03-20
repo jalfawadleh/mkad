@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import { LinkContainer } from "react-router-bootstrap";
-import { Card, Col, Row, Button, Modal } from "react-bootstrap";
+import { Card, Col, Row, Button, Modal, Stack } from "react-bootstrap";
 import Loader from "./common/Loader.jsx";
 
 import ListItems from "./common/ListItems.jsx";
@@ -55,7 +55,22 @@ function Member() {
     <>
       <Modal animation={false} show={true} onHide={closeActivity}>
         <Modal.Header closeButton>
-          <Modal.Title className='text-center w-100'>{name}</Modal.Title>
+          <Modal.Title className='text-center w-100'>
+            <Stack direction='horizontal' gap={1}>
+              <div className='h3'>
+                {name && (
+                  <img
+                    className='p-0 m-1'
+                    height='35px'
+                    width='35px'
+                    src={"https://api.multiavatar.com/" + name + ".png"}
+                    alt='Profile Photo'
+                  />
+                )}
+                <span className='m-0 ps-1'>{name}</span>
+              </div>
+            </Stack>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className='p-2 mb-3'>{description}</div>
