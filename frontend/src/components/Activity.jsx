@@ -73,22 +73,6 @@ const Activity = () => {
 
           <ListItems
             edit={false}
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
-            setParent={setActivity}
-          />
-          <ListItems
-            edit={false}
-            message='Related Interests and hobbies'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setActivity}
-          />
-          <ListItems
-            edit={false}
             message='Languages'
             type='languages'
             title='language'
@@ -98,15 +82,34 @@ const Activity = () => {
 
           <ListItems
             edit={false}
-            message='Help Offered'
+            message='Related Interests and hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={false}
+            message='Notes'
+            type='notes'
+            title='note'
+            items={notes}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={false}
+            message='Offering Help With'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
             setParent={setActivity}
           />
+
           <ListItems
             edit={false}
-            message='Help Needed'
+            message='Need Help With'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}

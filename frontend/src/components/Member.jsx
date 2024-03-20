@@ -21,11 +21,13 @@ function Member() {
     name: "",
     description: "",
     languages: [],
-    help: [],
     interests: [],
+    helpOffered: [],
+    helpNeeded: [],
   });
 
-  const { name, description, languages, help, interests } = member;
+  const { name, description, languages, interests, helpOffered, helpNeeded } =
+    member;
 
   useEffect(() => {
     async function getMember() {
@@ -68,19 +70,28 @@ function Member() {
 
           <ListItems
             edit={false}
-            message='Help offered or needed '
-            type='help'
-            title='Help'
-            items={help}
+            message='Interests and Hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
             setParent={setMember}
           />
 
           <ListItems
             edit={false}
-            message='Related interests and hobbies'
-            type='interests'
-            title='interest'
-            items={interests}
+            message='Offering Help With'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={false}
+            message='Need Help With'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
             setParent={setMember}
           />
 

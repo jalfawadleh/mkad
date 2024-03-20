@@ -35,8 +35,10 @@ function SettingsProfile() {
     name: "",
     description: "",
     languages: [],
-    help: [],
     interests: [],
+    helpOffered: [],
+    helpNeeded: [],
+
     darkmood: true,
     hidden: true,
     location: "",
@@ -46,8 +48,10 @@ function SettingsProfile() {
     name,
     description,
     languages,
-    help,
     interests,
+    helpOffered,
+    helpNeeded,
+
     darkmood,
     hidden,
     location,
@@ -162,21 +166,31 @@ function SettingsProfile() {
 
             <ListItems
               edit={editing}
-              message='Help needed or offered'
-              type='help'
-              title='Help'
-              items={help}
-              setParent={setMember}
-            />
-
-            <ListItems
-              edit={editing}
-              message='Your interests or hobbies'
+              message='Interests and Hobbies'
               type='interests'
               title='interest'
               items={interests}
               setParent={setMember}
             />
+
+            <ListItems
+              edit={editing}
+              message='Offering Help With'
+              type='helpOffered'
+              title='Help Offered'
+              items={helpOffered}
+              setParent={setMember}
+            />
+
+            <ListItems
+              edit={editing}
+              message='Need Help With'
+              type='helpNeeded'
+              title='Help Needed'
+              items={helpNeeded}
+              setParent={setMember}
+            />
+
             {editing && (
               <>
                 <Form.Check // prettier-ignore

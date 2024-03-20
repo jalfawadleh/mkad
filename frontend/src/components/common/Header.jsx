@@ -62,7 +62,7 @@ const Header = () => {
   return (
     <>
       <Navbar
-        bg='dark'
+        bg='black'
         variant='dark'
         className='m-2 p-0 d-none d-sm-block position-absolute end-0 translate-middle-y'
         style={{

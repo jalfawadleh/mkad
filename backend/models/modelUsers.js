@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
-const usersSchema = mongoose.Schema(
+const usersSchema = Schema(
   {
     username: {
       type: String,
@@ -27,7 +27,24 @@ const usersSchema = mongoose.Schema(
     description: String,
 
     languages: { type: [{ name: String }], default: [{ name: "English" }] },
-    help: { type: [{ name: String }], default: [] },
+    helpOffered: {
+      type: [
+        {
+          name: String,
+          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
+    },
+    helpNeeded: {
+      type: [
+        {
+          name: String,
+          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
+    },
     interests: { type: [{ name: String }], default: [] },
     location: {
       type: { lng: Number, lat: Number },
@@ -40,7 +57,7 @@ const usersSchema = mongoose.Schema(
 
     contacts: [
       {
-        id: { type: mongoose.Schema.Types.ObjectId },
+        id: { type: Schema.Types.ObjectId },
         name: { type: String },
         approved: { type: Boolean, default: false },
       },
@@ -48,7 +65,7 @@ const usersSchema = mongoose.Schema(
 
     organisations: [
       {
-        id: mongoose.Schema.Types.ObjectId,
+        id: Schema.Types.ObjectId,
         name: String,
         approved: { type: Boolean, default: false },
       },

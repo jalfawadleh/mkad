@@ -40,9 +40,9 @@ const ActivityManage = () => {
   const {
     name,
     description,
-    notes,
     languages,
     interests,
+    notes,
     helpOffered,
     helpNeeded,
     hidden,
@@ -174,24 +174,9 @@ const ActivityManage = () => {
           ) : (
             <div className='p-2 m-0'>{description}</div>
           )}
+
           <ListItems
-            edit={isEditing}
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
-            setParent={setActivity}
-          />
-          <ListItems
-            edit={isEditing}
-            message='Related Interests and hobbies'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setActivity}
-          />
-          <ListItems
-            edit={isEditing}
+            edit={false}
             message='Languages'
             type='languages'
             title='language'
@@ -200,21 +185,41 @@ const ActivityManage = () => {
           />
 
           <ListItems
-            edit={isEditing}
-            message='Help Offered'
+            edit={false}
+            message='Related Interests and hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={false}
+            message='Notes'
+            type='notes'
+            title='note'
+            items={notes}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={false}
+            message='Offering Help With'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
             setParent={setActivity}
           />
+
           <ListItems
-            edit={isEditing}
-            message='Help Needed'
+            edit={false}
+            message='Need Help With'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}
             setParent={setActivity}
           />
+
           {isEditing && (
             <Form.Check // prettier-ignore
               className='mb-3'
