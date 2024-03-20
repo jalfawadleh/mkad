@@ -11,9 +11,9 @@ import { ActivitiesContext } from "../store";
 import { Stack } from "react-bootstrap";
 
 import { FaPlusCircle } from "react-icons/fa";
-import { FaLocationCrosshairs } from "react-icons/fa6";
-import { FaFlag } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+
+import ListLinks from "../components/common/ListLinks";
 
 const ScreenActivities = () => {
   const [activities, setActivities] = useState([]);
@@ -33,54 +33,30 @@ const ScreenActivities = () => {
     getActivities();
   }, []);
 
-  const locateActivity = (activity) => {
-    alert("Locate Activity " + JSON.stringify(activity.locations[0]));
-  };
-
   return (
     <>
-      <div style={{ maxWidth: "300px", maxHeight: window.innerHeight }}>
-        <Card className='p-1 m-1' style={{ borderRadius: 10 }}>
-          <Stack direction='horizontal' gap={1}>
-            <div className='p-1 m-0 h5 w-100 text-center'>Activities </div>
+      <div
+        className='m-2'
+        style={{ maxWidth: "320px", maxHeight: window.innerHeight }}
+      >
+        <Card className='mb-2 bg-black' style={{ borderRadius: 25 }}>
+          <Stack direction='horizontal' gap={1} className='p-0 m-0'>
+            <div className='ps-5 m-0 h5 w-100 text-center'>Activities </div>
             <LinkContainer to='new/'>
               <span role='button' className='p-2 ms-auto'>
-                <FaPlusCircle size={20} />
+                <FaPlusCircle size={24} />
               </span>
             </LinkContainer>
           </Stack>
         </Card>
+
         {activities.length ? (
-          activities.map((activity) => (
-            <Card
-              className='p-1 m-1 button'
-              style={{ borderRadius: 10 }}
-              key={activity._id}
-            >
-              <Stack direction='horizontal' gap={1}>
-                <span role='button' className='p-2 ms-auto'>
-                  <FaFlag size={20} />
-                </span>
-
-                <LinkContainer to={activity._id}>
-                  <span role='button' className='p-1 w-100 text-center fw-bold'>
-                    {activity.name}
-                  </span>
-                </LinkContainer>
-
-                <span
-                  role='button'
-                  className='p-2 ms-auto'
-                  onClick={() => locateActivity(activity)}
-                >
-                  <FaLocationCrosshairs size={20} />
-                </span>
-              </Stack>
-            </Card>
-          ))
+          <ListLinks items={activities} />
         ) : (
-          <Card className='mb-1'>
-            <span role='button'>No Activities created</span>
+          <Card className='ps-2 m-0 bg-black' style={{ borderRadius: 15 }}>
+            <span role='button' className='p-1 m-0 bg-black rounded-circle'>
+              No Activities Created
+            </span>
           </Card>
         )}
       </div>
