@@ -5,10 +5,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import Loader from "./common/Loader.jsx";
-import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+import { Button, Card, Col, Modal, Row, Stack } from "react-bootstrap";
 
 import ListItems from "./common/ListItems.jsx";
 import { LinkContainer } from "react-router-bootstrap";
+import moment from "moment";
+import { FaFlag } from "react-icons/fa";
 
 const Activity = () => {
   const { id } = useParams();
@@ -27,6 +29,8 @@ const Activity = () => {
 
   const {
     name,
+    startOn,
+    endOn,
     description,
     notes,
     languages,
@@ -64,12 +68,32 @@ const Activity = () => {
     <>
       <Modal animation={false} show={true} onHide={closeActivity}>
         <Modal.Header closeButton>
-          <Modal.Title className='text-center w-100'>{name}</Modal.Title>
+          <Modal.Title className='text-center w-100'>
+            <Stack direction='horizontal' gap={1}>
+              <div className='h3'>
+                {name && <FaFlag />}
+                <span className='m-0 ps-1'>{name}</span>
+              </div>
+            </Stack>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className='p-2 mb-3 bold'>Created By: {createdBy?.name}</div>
-          <div>Show on the map</div>
-          <div className='p-2 mb-3'>{description}</div>
+          <div className='p-2 mb-3 bold'>{createdBy?.name}</div>
+
+          <Stack direction='horizontal' gap={1} className='p-0 m-2'>
+            <span className='p-0 '>Start:</span>
+            <span className='ms-auto text-center'>
+              <div>{moment(startOn).format("DD MMMM YYYY")}</div>
+              <div>{moment(startOn).format("h:mm:ss a")}</div>
+            </span>
+            <span className='p-0 ms-auto'>End:</span>
+            <span className='p-1 ms-auto text-center'>
+              <div>{moment(endOn).format("MMMM DD YYYY")}</div>
+              <div>{moment(endOn).format("h:mm:ss a")}</div>
+            </span>
+          </Stack>
+
+          {description && <div className='p-2 mb-3 bold'>{description}</div>}
 
           <ListItems
             edit={false}
