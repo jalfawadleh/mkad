@@ -18,7 +18,10 @@ const Header = () => {
   const headerLinks = (
     <>
       <LinkContainer to='me'>
-        <span role='button' className='p-0 m-1 bg-black rounded-pill'>
+        <span
+          role='button'
+          className='p-0 m-1 bg-black rounded-pill border border-light-subtle'
+        >
           <img
             height='44px'
             width='44px'
@@ -29,30 +32,45 @@ const Header = () => {
       </LinkContainer>
 
       <LinkContainer to='help'>
-        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+        <span
+          role='button'
+          className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+        >
           <FaQuestion size={28} />
         </span>
       </LinkContainer>
 
       {user.type === "organisation" && (
         <LinkContainer to='activities'>
-          <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+          <span
+            role='button'
+            className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+          >
             <FaFlag size={28} />
           </span>
         </LinkContainer>
       )}
       <LinkContainer to='updates'>
-        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+        <span
+          role='button'
+          className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+        >
           <FaBell size={28} />
         </span>
       </LinkContainer>
       <LinkContainer to='messages'>
-        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+        <span
+          role='button'
+          className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+        >
           <FaEnvelope size={28} />
         </span>
       </LinkContainer>
       <LinkContainer to='/'>
-        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+        <span
+          role='button'
+          className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+        >
           <FaSearch size={28} />
         </span>
       </LinkContainer>
