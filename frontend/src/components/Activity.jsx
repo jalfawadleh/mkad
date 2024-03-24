@@ -67,18 +67,33 @@ const Activity = () => {
   return (
     <>
       <Modal animation={false} show={true} onHide={closeActivity}>
-        <Modal.Header closeButton>
-          <Modal.Title className='text-center w-100'>
-            <Stack direction='horizontal' gap={1}>
-              <div className='h3'>
-                {name && <FaFlag />}
-                <span className='m-0 ps-1'>{name}</span>
-              </div>
-            </Stack>
-          </Modal.Title>
-        </Modal.Header>
         <Modal.Body>
-          <div className='p-2 mb-3 bold'>{createdBy?.name}</div>
+          <Stack direction='horizontal' gap={1} className='p-0 m-1'>
+            <div className='h3'>
+              {name && <FaFlag />}
+              <span className='m-0 ps-1'>{name}</span>
+            </div>
+            <div className='h4 ms-auto'>
+              {createdBy?.name && (
+                <LinkContainer to={"/member/" + createdBy?._id}>
+                  <span role='button'>
+                    <img
+                      className='p-0 m-1'
+                      height='35px'
+                      width='35px'
+                      src={
+                        "https://api.multiavatar.com/" +
+                        createdBy?.name +
+                        ".png"
+                      }
+                      alt='Profile Photo'
+                    />
+                    <span className='m-0 ps-1'>{createdBy?.name}</span>
+                  </span>
+                </LinkContainer>
+              )}
+            </div>
+          </Stack>
 
           <Stack direction='horizontal' gap={1} className='p-0 m-2'>
             <span className='p-0 '>Start:</span>
