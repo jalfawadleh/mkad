@@ -6,7 +6,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaQuestion } from "react-icons/fa";
 // import { FaWindowClose } from "react-icons/fa";
 
 import { UserContext } from "../../store.js";
@@ -17,43 +17,44 @@ const Header = () => {
 
   const headerLinks = (
     <>
-      <LinkContainer to='help'>
-        <span role='button' className='p-1 m-0'>
-          <FaQuestionCircle size={30} />
-        </span>
-      </LinkContainer>
       <LinkContainer to='me'>
-        <span role='button' className='p-1'>
+        <span role='button' className='p-0 m-1 bg-black rounded-pill'>
           <img
-            height='30px'
-            width='30px'
+            height='44px'
+            width='44px'
             src={"https://api.multiavatar.com/" + user.name + ".png"}
             alt='Profile Photo'
           />
         </span>
       </LinkContainer>
 
+      <LinkContainer to='help'>
+        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+          <FaQuestion size={28} />
+        </span>
+      </LinkContainer>
+
       {user.type === "organisation" && (
         <LinkContainer to='activities'>
-          <Nav.Link className='rounded-circle'>
-            <FaFlag size={24} />
-          </Nav.Link>
+          <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+            <FaFlag size={28} />
+          </span>
         </LinkContainer>
       )}
       <LinkContainer to='updates'>
-        <Nav.Link className='rounded-circle'>
-          <FaBell size={24} />
-        </Nav.Link>
+        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+          <FaBell size={28} />
+        </span>
       </LinkContainer>
       <LinkContainer to='messages'>
-        <Nav.Link className='rounded-circle'>
-          <FaEnvelope size={24} />
-        </Nav.Link>
+        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+          <FaEnvelope size={28} />
+        </span>
       </LinkContainer>
       <LinkContainer to='/'>
-        <Nav.Link className='rounded-circle'>
-          <FaSearch size={24} />
-        </Nav.Link>
+        <span role='button' className='p-2 m-1 bg-black rounded-pill'>
+          <FaSearch size={28} />
+        </span>
       </LinkContainer>
     </>
   );
@@ -61,22 +62,13 @@ const Header = () => {
   return (
     <>
       <Navbar
-        bg='black'
-        variant='dark'
-        className='m-2 p-0 d-none d-sm-block position-absolute end-0 translate-middle-y'
-        style={{
-          top: "200px",
-          borderRadius: 25,
-        }}
+        className='d-none d-sm-block position-absolute end-0 translate-middle-y p-0 m-0 '
+        style={{ top: "250px" }}
       >
-        <Nav className='p-0 m-0 d-flex flex-column'>{headerLinks}</Nav>
+        <Nav className='d-flex flex-column'>{headerLinks}</Nav>
       </Navbar>
 
-      <Navbar
-        bg='dark'
-        variant='dark'
-        className='w-100 position-absolute bottom-0 none d-sm-none'
-      >
+      <Navbar className='w-100 position-absolute bottom-0 none d-sm-none'>
         <Nav className='w-100 p-0 m-0 justify-content-around'>
           {headerLinks}
         </Nav>
