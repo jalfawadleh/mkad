@@ -20,11 +20,11 @@ const Header = () => {
       <LinkContainer to='me'>
         <span
           role='button'
-          className='p-0 m-1 bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
         >
           <img
-            height='44px'
-            width='44px'
+            height='38px'
+            width='38px'
             src={"https://api.multiavatar.com/" + user.name + ".png"}
             alt='Profile Photo'
           />
@@ -36,7 +36,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaQuestion size={28} />
+          <FaQuestion size={30} />
         </span>
       </LinkContainer>
 
@@ -46,7 +46,7 @@ const Header = () => {
             role='button'
             className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
           >
-            <FaFlag size={28} />
+            <FaFlag size={30} />
           </span>
         </LinkContainer>
       )}
@@ -55,7 +55,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaBell size={28} />
+          <FaBell size={30} />
         </span>
       </LinkContainer>
       <LinkContainer to='messages'>
@@ -63,7 +63,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaEnvelope size={28} />
+          <FaEnvelope size={30} />
         </span>
       </LinkContainer>
       <LinkContainer to='/'>
@@ -71,7 +71,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaSearch size={28} />
+          <FaSearch size={30} />
         </span>
       </LinkContainer>
     </>
