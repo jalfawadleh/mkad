@@ -142,9 +142,7 @@ const ActivityManage = () => {
         className='p-1'
       >
         <Modal.Body>
-          <Modal.Header closeButton className='p-1'>
-            <Modal.Title className='w-100 text-center'>{name}</Modal.Title>
-          </Modal.Header>
+          <Modal.Title className='w-100 text-center'>{name}</Modal.Title>
 
           {isEditing && (
             <FloatingLabel controlId='name' label='Name' className='mb-3'>
