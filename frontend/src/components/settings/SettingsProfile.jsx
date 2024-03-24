@@ -108,51 +108,49 @@ function SettingsProfile() {
       <Modal animation={false} show={true} onHide={closeActivity}>
         <Modal.Body>
           <Card.Body>
-            {editing ? (
-              <>
-                <Card.Title>Update Profile</Card.Title>
-                <FloatingLabel controlId='name' label='Name' className='mb-3'>
-                  <Form.Control
-                    type='text'
-                    placeholder='Name'
-                    name='name'
-                    value={name}
-                    onChange={onChange}
+            <Stack direction='horizontal' gap={1} className='mb-2'>
+              <div className='h3'>
+                {name && (
+                  <img
+                    className='p-0 m-1'
+                    height='35px'
+                    width='35px'
+                    src={"https://api.multiavatar.com/" + name + ".png"}
+                    alt='Profile Photo'
                   />
-                </FloatingLabel>
+                )}
+                <span className='m-0 ps-1'>{name}</span>
+              </div>
+            </Stack>
+            {editing && (
+              <FloatingLabel controlId='name' label='Name' className='mb-3'>
+                <Form.Control
+                  type='text'
+                  placeholder='Name'
+                  name='name'
+                  value={name}
+                  onChange={onChange}
+                />
+                <Form.Text>Avatar depends on the name you chose</Form.Text>
+              </FloatingLabel>
+            )}
 
-                <FloatingLabel
-                  controlId='description'
-                  label='Description'
-                  className='mb-3'
-                >
-                  <Form.Control
-                    type='text'
-                    placeholder='Description'
-                    name='description'
-                    value={description}
-                    onChange={onChange}
-                  />
-                </FloatingLabel>
-              </>
+            {editing ? (
+              <FloatingLabel
+                controlId='description'
+                label='Description'
+                className='mb-3'
+              >
+                <Form.Control
+                  type='text'
+                  placeholder='Description'
+                  name='description'
+                  value={description}
+                  onChange={onChange}
+                />
+              </FloatingLabel>
             ) : (
-              <>
-                <Stack direction='horizontal' gap={1}>
-                  <div className='h3'>
-                    {name && (
-                      <img
-                        className='p-0 m-1'
-                        height='35px'
-                        width='35px'
-                        src={"https://api.multiavatar.com/" + name + ".png"}
-                        alt='Profile Photo'
-                      />
-                    )}
-                    <span className='m-0 ps-1'>{name}</span>
-                  </div>
-                </Stack>
-                <Card.Text>{description}</Card.Text>
-              </>
+              <Card.Text>{description}</Card.Text>
             )}
 
             <ListItems
