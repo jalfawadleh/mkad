@@ -8,8 +8,11 @@ import Activities from "../models/modelActivities.js";
 // @route   GET /api/map/
 // @access  Private
 const getItems = asyncHandler(async (req, res) => {
-  const members = await Members.find({}, "name type location");
-  const activities = await Activities.find({}, "name type location");
+  const members = await Members.find({ hidden: false }, "name type location");
+  const activities = await Activities.find(
+    { hidden: false },
+    "name type location"
+  );
 
   res.json([...members, ...activities]);
   // res.json([...members]);
