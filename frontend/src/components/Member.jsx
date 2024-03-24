@@ -112,13 +112,11 @@ function Member() {
 
           <Row>
             <Col className='text-center'>
-              <LinkContainer to={".."}>
-                <Card.Link>
-                  <Button variant='success' type='button' className='w-100'>
-                    Close
-                  </Button>
-                </Card.Link>
-              </LinkContainer>
+              <Card.Link onClick={() => navigate(-1)}>
+                <Button variant='success' type='button' className='w-100'>
+                  Close
+                </Button>
+              </Card.Link>
             </Col>
           </Row>
         </Modal.Body>
