@@ -9,11 +9,12 @@ import Activities from "../models/modelActivities.js";
 // @access  Private
 const getResults = asyncHandler(async (req, res) => {
   const members = await Members.find(
-    { name: { $regex: ".*" + req.params.q + ".*" }, hidden: false },
+    { name: { $regex: ".*" + req.body.text + ".*" }, hidden: false },
     "name type"
   ).limit(5);
+
   const activities = await Activities.find(
-    { name: { $regex: ".*" + req.params.q + ".*" }, hidden: false },
+    { name: { $regex: ".*" + req.body.text + ".*" }, hidden: false },
     "name type"
   ).limit(5);
 
@@ -25,6 +26,6 @@ const getResults = asyncHandler(async (req, res) => {
 
 const search = express.Router();
 
-search.get("/:q", protect, getResults);
+search.post("/", protect, getResults);
 
 export default search;
