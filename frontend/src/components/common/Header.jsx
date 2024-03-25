@@ -25,7 +25,7 @@ const Header = () => {
         className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         onClick={() => setMapCenter(user.location)}
       >
-        <FaLocationCrosshairs size={30} />
+        <FaLocationCrosshairs size={24} />
       </span>
 
       <LinkContainer to='me'>
@@ -34,8 +34,8 @@ const Header = () => {
           className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
         >
           <img
-            height='38px'
-            width='38px'
+            height='32px'
+            width='32px'
             src={"https://api.multiavatar.com/" + user.name + ".png"}
             alt='Profile Photo'
           />
@@ -47,7 +47,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaQuestion size={30} />
+          <FaQuestion size={24} />
         </span>
       </LinkContainer>
 
@@ -57,7 +57,7 @@ const Header = () => {
             role='button'
             className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
           >
-            <FaFlag size={30} />
+            <FaFlag size={24} />
           </span>
         </LinkContainer>
       )}
@@ -66,7 +66,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaBell size={30} />
+          <FaBell size={24} />
         </span>
       </LinkContainer>
       <LinkContainer to='messages'>
@@ -74,7 +74,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaEnvelope size={30} />
+          <FaEnvelope size={24} />
         </span>
       </LinkContainer>
       <LinkContainer to='/'>
@@ -82,7 +82,7 @@ const Header = () => {
           role='button'
           className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
         >
-          <FaSearch size={30} />
+          <FaSearch size={24} />
         </span>
       </LinkContainer>
     </>
@@ -91,8 +91,8 @@ const Header = () => {
   return (
     <>
       <Navbar
-        className='d-none d-sm-block position-absolute end-0 p-0 m-0 '
-        style={{ top: "80px" }}
+        className='d-none d-sm-block position-absolute end-0 p-0 '
+        style={{ top: "80px", margin: "1px" }}
       >
         <Nav className='d-flex flex-column'>{headerLinks}</Nav>
       </Navbar>
