@@ -98,7 +98,7 @@ const ScreenSearch = () => {
 
             <div
               className={
-                filter ? "d-flex justify-content-between w-100 pt-2" : "d-none"
+                filter ? "d-flex justify-content-around w-100 pt-2" : "d-none"
               }
             >
               <span
