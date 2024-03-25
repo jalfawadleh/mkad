@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 import Datetime from "react-datetime";
-import { ActivitiesContext, UserContext } from "../../store.js";
+import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
 import Form from "react-bootstrap/esm/Form";
@@ -23,6 +23,7 @@ const ActivityManage = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
+  const { getMapItems } = useContext(MapContext);
   const { setActivities } = useContext(ActivitiesContext);
 
   const [activity, setActivity] = useState({
@@ -70,6 +71,7 @@ const ActivityManage = () => {
         await axios
           .put("/activities/", activity)
           .then(() => setIsLoading(false))
+          .then(() => getMapItems())
           .then(() => toast("Updated"));
       else
         await axios
@@ -95,6 +97,7 @@ const ActivityManage = () => {
         await axios
           .delete(`/activities/${id}`)
           .then(() => setIsLoading(false))
+          .then(() => getMapItems())
           .then(() => navigate(-1));
       } catch (error) {
         error?.response?.data?.message &&

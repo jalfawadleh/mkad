@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { toast } from "react-toastify";
-import { UserContext } from "../../store.js";
+import { MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
 import { LinkContainer } from "react-router-bootstrap";
@@ -22,6 +22,7 @@ function SettingsAccount() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
+  const { getMapItems } = useContext(MapContext);
 
   const [newDetails, setNewDetails] = useState({
     _id: user._id,
@@ -67,6 +68,7 @@ function SettingsAccount() {
       try {
         await axios
           .delete(`/users`)
+          .then(() => getMapItems())
           .then(() => setIsLoading(false))
           .then(() => navigate(-1));
       } catch (error) {

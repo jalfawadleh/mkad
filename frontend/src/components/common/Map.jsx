@@ -42,10 +42,7 @@ const Map = () => {
 
   const getMapItems = async () => {
     try {
-      await axios
-        .get(`/map`)
-        .then((res) => setItems(res.data))
-        .then(() => console.log(items));
+      await axios.get(`/map`).then((res) => setItems(res.data));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);

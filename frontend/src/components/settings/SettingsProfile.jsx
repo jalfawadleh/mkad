@@ -16,7 +16,7 @@ import {
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 
-import { UserContext } from "../../store.js";
+import { MapContext, UserContext } from "../../store.js";
 
 import Loader from "../common/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
@@ -25,6 +25,7 @@ import Location from "../common/Location.jsx";
 function SettingsProfile() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const { getMapItems } = useContext(MapContext);
 
   const [editing, setEditing] = useState(false);
 
@@ -61,11 +62,12 @@ function SettingsProfile() {
     e.preventDefault();
 
     try {
-      await axios.put("/members", member).then(() => {
-        toast("Updated");
-        // in case name changed
-        setUser((prevState) => ({ ...prevState, name, location }));
-      });
+      await axios
+        .put("/members", member)
+        .then(() => getMapItems())
+        .then(() => toast("Updated"))
+        // in case name or location changed
+        .then(() => setUser((prevState) => ({ ...prevState, name, location })));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
