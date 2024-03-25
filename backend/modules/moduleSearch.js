@@ -13,7 +13,10 @@ const getResults = asyncHandler(async (req, res) => {
   if (req.body.text) {
     if (req.body.activities === "true") {
       const activities = await Activities.find(
-        { name: { $regex: ".*" + req.body.text + ".*" }, hidden: false },
+        {
+          name: { $regex: ".*" + req.body.text + ".*", $options: "i" },
+          hidden: false,
+        },
         "name type"
       ).limit(10);
       results.push(...activities);
@@ -21,7 +24,7 @@ const getResults = asyncHandler(async (req, res) => {
     if (req.body.members === "true") {
       const members = await Members.find(
         {
-          name: { $regex: ".*" + req.body.text + ".*" },
+          name: { $regex: ".*" + req.body.text + ".*", $options: "i" },
           type: "member",
           hidden: false,
         },
@@ -33,7 +36,7 @@ const getResults = asyncHandler(async (req, res) => {
     if (req.body.organisations === "true") {
       const members = await Members.find(
         {
-          name: { $regex: ".*" + req.body.text + ".*" },
+          name: { $regex: ".*" + req.body.text + ".*", $options: "i" },
           type: "organisation",
           hidden: false,
         },
