@@ -5,8 +5,12 @@ import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FaFlag } from "react-icons/fa";
 import { GiGreekTemple } from "react-icons/gi";
 import { LinkContainer } from "react-router-bootstrap";
+import { useContext } from "react";
+import { MapContext } from "../../store";
 
 const ListLinks = ({ items }) => {
+  const { setMapCenter } = useContext(MapContext);
+
   return items.map((item) => (
     <Card
       className='p-0 mb-2 button bg-black'
@@ -48,6 +52,7 @@ const ListLinks = ({ items }) => {
         <span
           role='button'
           className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+          onClick={() => setMapCenter(item.location)}
         >
           <FaLocationCrosshairs size={24} />
         </span>

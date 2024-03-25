@@ -7,16 +7,27 @@ import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { FaQuestion } from "react-icons/fa";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+
 // import { FaWindowClose } from "react-icons/fa";
 
-import { UserContext } from "../../store.js";
+import { MapContext, UserContext } from "../../store.js";
 import { useContext } from "react";
 
 const Header = () => {
   const { user } = useContext(UserContext);
+  const { setMapCenter } = useContext(MapContext);
 
   const headerLinks = (
     <>
+      <span
+        role='button'
+        className='p-2 m-1 bg-black rounded-pill border border-light-subtle'
+        onClick={() => setMapCenter(user.location)}
+      >
+        <FaLocationCrosshairs size={30} />
+      </span>
+
       <LinkContainer to='me'>
         <span
           role='button'
@@ -80,8 +91,8 @@ const Header = () => {
   return (
     <>
       <Navbar
-        className='d-none d-sm-block position-absolute end-0 translate-middle-y p-0 m-0 '
-        style={{ top: "250px" }}
+        className='d-none d-sm-block position-absolute end-0 p-0 m-0 '
+        style={{ top: "80px" }}
       >
         <Nav className='d-flex flex-column'>{headerLinks}</Nav>
       </Navbar>

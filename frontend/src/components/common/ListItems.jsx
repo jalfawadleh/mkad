@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Stack, Badge, Button, Card } from "react-bootstrap";
+import { Form, Stack, Badge, Button } from "react-bootstrap";
 
 const ListItems = ({
   message = "",
@@ -39,7 +39,6 @@ const ListItems = ({
           items.map((i, index) => (
             <Badge key={index} pill bg='secondary' className='m-1 p-1'>
               <span className='p-1 m-2 font-weight-bold'>{i.name}</span>
-
               {edit && (
                 <Badge
                   pill

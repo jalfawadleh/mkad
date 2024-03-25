@@ -1,29 +1,46 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import MarkerClusterGroup from "react-leaflet-cluster";
-import { LinkContainer } from "react-router-bootstrap";
+import { Outlet } from "react-router-dom";
+import axios from "axios";
+
+import L from "leaflet";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
   ZoomControl,
+  useMap,
 } from "react-leaflet";
-import L from "leaflet";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
-import axios from "axios";
 import { toast } from "react-toastify";
+import { LinkContainer } from "react-router-bootstrap";
+
+import { UserContext } from "../../store";
+import { MapContext } from "../../store";
 
 import Header from "./Header";
 
-import { UserContext } from "../../store";
+const Recenter = () => {
+  const { mapCenter } = useContext(MapContext);
+  const map = useMap();
+
+  useEffect(() => {
+    mapCenter?.lat && map.flyTo(mapCenter, 15);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapCenter]);
+
+  return null;
+};
 
 const Map = () => {
   const { user } = useContext(UserContext);
 
+  const [mapCenter, setMapCenter] = useState(user.location);
+
   const [items, setItems] = useState([]);
 
-  const getItems = async () => {
+  const getMapItems = async () => {
     try {
       await axios
         .get(`/map`)
@@ -37,13 +54,13 @@ const Map = () => {
   };
 
   useEffect(() => {
-    getItems();
-  }, [user.location]);
+    getMapItems();
+  }, []);
 
   const ItemPopup = ({ item }) => (
     <Popup>
       <LinkContainer to={"/" + item.type + "/" + item._id}>
-        <span role='button' className='fw-bold fs-6'>
+        <span role='button' className='h5 p-0 m-0'>
           {item.name}
         </span>
       </LinkContainer>
@@ -107,57 +124,63 @@ const Map = () => {
     </Marker>
   );
 
+  useEffect(() => {
+    console.log("center changed" + JSON.stringify(mapCenter));
+  }, [mapCenter]);
+
   return (
     <>
-      <Header />
+      <MapContext.Provider value={{ mapCenter, setMapCenter, getMapItems }}>
+        <Header />
+        <Outlet />
 
-      <Outlet />
+        <MapContainer
+          center={mapCenter}
+          zoom={13}
+          maxZoom={18}
+          minZoom={1}
+          zoomControl={false}
+          scrollWheelZoom={true}
+          className='position-absolute top-0 start-0 end-0 bottom-0'
+          style={{ zIndex: -1 }}
+        >
+          <Recenter location={user.location} />
+          <MarkerClusterGroup chunkedLoading>
+            {items &&
+              items.map(
+                (item) =>
+                  item.type === "member" && (
+                    <MarkerMember key={item._id} item={item} />
+                  )
+              )}
+          </MarkerClusterGroup>
+          <MarkerClusterGroup chunkedLoading>
+            {items &&
+              items.map(
+                (item) =>
+                  item.type === "organisation" && (
+                    <MarkerOrganisation key={item._id} item={item} />
+                  )
+              )}
+          </MarkerClusterGroup>
+          <MarkerClusterGroup chunkedLoading>
+            {items &&
+              items.map(
+                (item) =>
+                  item.type === "activity" && (
+                    <MarkerActivity key={item._id} item={item} />
+                  )
+              )}
+          </MarkerClusterGroup>
 
-      <MapContainer
-        center={user.location}
-        zoom={13}
-        maxZoom={18}
-        minZoom={1}
-        zoomControl={false}
-        scrollWheelZoom={true}
-        className='position-absolute top-0 start-0 end-0 bottom-0'
-        style={{ zIndex: -1 }}
-      >
-        <MarkerClusterGroup chunkedLoading>
-          {items &&
-            items.map(
-              (item) =>
-                item.type === "member" && (
-                  <MarkerMember key={item._id} item={item} />
-                )
-            )}
-        </MarkerClusterGroup>
-        <MarkerClusterGroup chunkedLoading>
-          {items &&
-            items.map(
-              (item) =>
-                item.type === "organisation" && (
-                  <MarkerOrganisation key={item._id} item={item} />
-                )
-            )}
-        </MarkerClusterGroup>
-        <MarkerClusterGroup chunkedLoading>
-          {items &&
-            items.map(
-              (item) =>
-                item.type === "activity" && (
-                  <MarkerActivity key={item._id} item={item} />
-                )
-            )}
-        </MarkerClusterGroup>
+          <ZoomControl position='topright' />
 
-        <ZoomControl position='topright' />
-
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        />
-      </MapContainer>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          />
+        </MapContainer>
+      </MapContext.Provider>
     </>
   );
 };
