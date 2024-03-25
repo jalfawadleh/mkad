@@ -9,13 +9,10 @@ import {
   Popup,
   ZoomControl,
 } from "react-leaflet";
-import L, { divIcon } from "leaflet";
-import { renderToStaticMarkup } from "react-dom/server";
+import L from "leaflet";
 
 import axios from "axios";
 import { toast } from "react-toastify";
-
-import { GiGreekTemple } from "react-icons/gi";
 
 import Header from "./Header";
 
@@ -64,7 +61,7 @@ const Map = () => {
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(18, 18),
           popupAnchor: new L.Point(0, -18),
-          className: "border rounded-circle border-light ",
+          className: "border rounded-circle border-light bg-black",
         })
       }
     >
@@ -80,9 +77,10 @@ const Map = () => {
       icon={
         new L.icon({
           iconUrl: "./organisation.svg",
-          iconSize: new L.Point(32, 32),
+          iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(10, 35),
           popupAnchor: new L.Point(8, -30),
+          className: "p-1 border rounded-circle border-light bg-black",
         })
       }
     >
@@ -99,6 +97,7 @@ const Map = () => {
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(10, 35),
           popupAnchor: new L.Point(8, -27),
+          className: "p-1 border rounded-circle border-light bg-black",
         })
       }
       position={item.location}

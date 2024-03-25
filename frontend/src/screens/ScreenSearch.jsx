@@ -13,6 +13,7 @@ import { FaFlag } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
 import ListLinks from "../components/common/ListLinks";
 
 const ScreenSearch = () => {
@@ -76,7 +77,7 @@ const ScreenSearch = () => {
                 <MdTune
                   size={28}
                   className='p-0 m-1'
-                  color={filter ? "orange" : "white"}
+                  color={filter ? "white" : "gray"}
                 />
               </span>
               <Form.Control
@@ -111,7 +112,7 @@ const ScreenSearch = () => {
                 <FaFlag
                   size={24}
                   className='p-0 m-1'
-                  color={activities ? "Orange" : "white"}
+                  color={activities ? "white" : "gray"}
                 />
               </span>
               <span
@@ -127,7 +128,7 @@ const ScreenSearch = () => {
                 <GiGreekTemple
                   size={24}
                   className='p-0 m-1'
-                  color={organisations ? "Orange" : "white"}
+                  color={organisations ? "white" : "gray"}
                 />
               </span>
 
@@ -141,7 +142,7 @@ const ScreenSearch = () => {
                 <IoPerson
                   size={24}
                   className='p-0 m-1'
-                  color={members ? "Orange" : "white"}
+                  color={members ? "white" : "gray"}
                 />
               </span>
               {/* <span
@@ -176,10 +177,19 @@ const ScreenSearch = () => {
         {results.length ? (
           <ListLinks items={results} />
         ) : (
-          <Card className='ps-2 m-0 bg-black' style={{ borderRadius: 15 }}>
-            <span role='button' className='p-1 m-0 bg-black rounded-circle'>
-              {text ? "No results" : "Enter search query"}
-            </span>
+          <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 25 }}>
+            <div className={"d-flex justify-content-between w-100"}>
+              <span
+                role='button'
+                className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+              >
+                <FaExclamationCircle size={24} />
+              </span>
+
+              <span role='button' className='p-1 w-100 text-center fw-bold'>
+                {text ? "No results" : "Enter search query"}
+              </span>
+            </div>
           </Card>
         )}
       </div>

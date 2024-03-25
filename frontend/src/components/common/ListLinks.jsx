@@ -21,7 +21,7 @@ const ListLinks = ({ items }) => {
           >
             <FaFlag size={24} />
           </span>
-        )}{" "}
+        )}
         {item.type === "member" && (
           <span role='button' className='p-0 m-0 ms-auto'>
             <img
