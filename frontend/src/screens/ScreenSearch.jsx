@@ -8,7 +8,7 @@ import { Button, Card, Form } from "react-bootstrap";
 
 import { FaSearch } from "react-icons/fa";
 import { MdTune } from "react-icons/md";
-import { FaPeopleRoof } from "react-icons/fa6";
+import { GiGreekTemple } from "react-icons/gi";
 import { FaFlag } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
@@ -81,7 +81,7 @@ const ScreenSearch = () => {
               </span>
               <Form.Control
                 autoFocus={true}
-                className='bg-black p-1 m-1' //border-0 shadow-none
+                className='bg-black p-1 m-1'
                 placeholder='Search'
                 onChange={(e) =>
                   setQuery((prev) => ({ ...prev, text: e.target.value }))
@@ -92,7 +92,7 @@ const ScreenSearch = () => {
                 type='submit'
                 className='p-2 m-0 bg-black rounded-pill'
               >
-                <FaSearch size={24} />
+                <FaSearch size={28} />
               </Button>
             </div>
 
@@ -101,22 +101,6 @@ const ScreenSearch = () => {
                 filter ? "d-flex justify-content-between w-100 pt-2" : "d-none"
               }
             >
-              <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({
-                    ...prev,
-                    organisations: !organisations,
-                  }))
-                }
-              >
-                <FaPeopleRoof
-                  size={24}
-                  className='p-0 m-1'
-                  color={organisations ? "orange" : "white"}
-                />
-              </span>
               <span
                 className='p-1 badge rounded-pill border'
                 role='button'
@@ -134,6 +118,23 @@ const ScreenSearch = () => {
                 className='p-1 badge rounded-pill border'
                 role='button'
                 onClick={() =>
+                  setQuery((prev) => ({
+                    ...prev,
+                    organisations: !organisations,
+                  }))
+                }
+              >
+                <GiGreekTemple
+                  size={24}
+                  className='p-0 m-1'
+                  color={organisations ? "Orange" : "white"}
+                />
+              </span>
+
+              <span
+                className='p-1 badge rounded-pill border'
+                role='button'
+                onClick={() =>
                   setQuery((prev) => ({ ...prev, members: !members }))
                 }
               >
@@ -143,7 +144,7 @@ const ScreenSearch = () => {
                   color={members ? "Orange" : "white"}
                 />
               </span>
-              <span
+              {/* <span
                 className='p-1 badge rounded-pill border'
                 role='button'
                 onClick={() =>
@@ -168,7 +169,7 @@ const ScreenSearch = () => {
                   className='p-0 m-1'
                   color={updates ? "Orange" : "white"}
                 />
-              </span>
+              </span> */}
             </div>
           </Form>
         </Card>

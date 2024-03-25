@@ -9,21 +9,17 @@ import {
   Popup,
   ZoomControl,
 } from "react-leaflet";
-import L from "leaflet";
+import L, { divIcon } from "leaflet";
+import { renderToStaticMarkup } from "react-dom/server";
 
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import { GiGreekTemple } from "react-icons/gi";
+
 import Header from "./Header";
 
 import { UserContext } from "../../store";
-
-const activityIcon = new L.icon({
-  iconUrl: "./flag.svg",
-  iconSize: new L.Point(35, 35),
-  iconAnchor: new L.Point(10, 35),
-  popupAnchor: new L.Point(0, -25),
-});
 
 const Map = () => {
   const { user } = useContext(UserContext);
@@ -47,6 +43,71 @@ const Map = () => {
     getItems();
   }, [user.location]);
 
+  const ItemPopup = ({ item }) => (
+    <Popup>
+      <LinkContainer to={"/" + item.type + "/" + item._id}>
+        <span role='button' className='fw-bold fs-6'>
+          {item.name}
+        </span>
+      </LinkContainer>
+    </Popup>
+  );
+
+  const MarkerMember = ({ item }) => (
+    <Marker
+      key={item._id}
+      position={item.location}
+      title={item.name}
+      icon={
+        new L.icon({
+          iconUrl: ["https://api.multiavatar.com/" + item.name + ".png"],
+          iconSize: new L.Point(35, 35),
+          iconAnchor: new L.Point(18, 18),
+          popupAnchor: new L.Point(0, -18),
+          className: "border rounded-circle border-light ",
+        })
+      }
+    >
+      <ItemPopup item={item} />
+    </Marker>
+  );
+
+  const MarkerOrganisation = ({ item }) => (
+    <Marker
+      key={item._id}
+      position={item.location}
+      title={item.name}
+      icon={
+        new L.icon({
+          iconUrl: "./organisation.svg",
+          iconSize: new L.Point(32, 32),
+          iconAnchor: new L.Point(10, 35),
+          popupAnchor: new L.Point(8, -30),
+        })
+      }
+    >
+      <ItemPopup item={item} />
+    </Marker>
+  );
+
+  const MarkerActivity = ({ item }) => (
+    <Marker
+      key={item._id}
+      icon={
+        new L.icon({
+          iconUrl: "./flag.svg",
+          iconSize: new L.Point(35, 35),
+          iconAnchor: new L.Point(10, 35),
+          popupAnchor: new L.Point(8, -27),
+        })
+      }
+      position={item.location}
+      title={item.name}
+    >
+      <ItemPopup item={item} />
+    </Marker>
+  );
+
   return (
     <>
       <Header />
@@ -67,31 +128,17 @@ const Map = () => {
           {items &&
             items.map(
               (item) =>
-                item.type !== "activity" && (
-                  <Marker
-                    key={item._id}
-                    position={item.location}
-                    title={item.name}
-                    icon={
-                      new L.icon({
-                        iconUrl: [
-                          "https://api.multiavatar.com/" + item.name + ".png",
-                        ],
-                        iconSize: new L.Point(35, 35),
-                        iconAnchor: new L.Point(18, 18),
-                        popupAnchor: new L.Point(0, -18),
-                        className: "border rounded-circle border-light ",
-                      })
-                    }
-                  >
-                    <Popup>
-                      <LinkContainer to={"/" + item.type + "/" + item._id}>
-                        <span role='button' className='fw-bold fs-6'>
-                          {item.name}
-                        </span>
-                      </LinkContainer>
-                    </Popup>
-                  </Marker>
+                item.type === "member" && (
+                  <MarkerMember key={item._id} item={item} />
+                )
+            )}
+        </MarkerClusterGroup>
+        <MarkerClusterGroup chunkedLoading>
+          {items &&
+            items.map(
+              (item) =>
+                item.type === "organisation" && (
+                  <MarkerOrganisation key={item._id} item={item} />
                 )
             )}
         </MarkerClusterGroup>
@@ -100,20 +147,7 @@ const Map = () => {
             items.map(
               (item) =>
                 item.type === "activity" && (
-                  <Marker
-                    key={item._id}
-                    icon={activityIcon}
-                    position={item.location}
-                    title={item.name}
-                  >
-                    <Popup>
-                      <LinkContainer to={"/activity/" + item._id}>
-                        <span role='button' className='fw-bold fs-6'>
-                          {item.name}
-                        </span>
-                      </LinkContainer>
-                    </Popup>
-                  </Marker>
+                  <MarkerActivity key={item._id} item={item} />
                 )
             )}
         </MarkerClusterGroup>

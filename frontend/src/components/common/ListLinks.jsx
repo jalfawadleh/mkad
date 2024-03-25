@@ -3,6 +3,7 @@ import Stack from "react-bootstrap/esm/Stack";
 
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FaFlag } from "react-icons/fa";
+import { GiGreekTemple } from "react-icons/gi";
 import { LinkContainer } from "react-router-bootstrap";
 
 const ListLinks = ({ items }) => {
@@ -13,14 +14,15 @@ const ListLinks = ({ items }) => {
       key={item._id}
     >
       <Stack direction='horizontal' gap={1}>
-        {item.type == "activity" ? (
+        {item.type === "activity" && (
           <span
             role='button'
             className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
           >
             <FaFlag size={24} />
           </span>
-        ) : (
+        )}{" "}
+        {item.type === "member" && (
           <span role='button' className='p-0 m-0 ms-auto'>
             <img
               height='34px'
@@ -30,13 +32,19 @@ const ListLinks = ({ items }) => {
             />
           </span>
         )}
-
+        {item.type === "organisation" && (
+          <span
+            role='button'
+            className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+          >
+            <GiGreekTemple size={24} />
+          </span>
+        )}
         <LinkContainer to={item.type + "/" + item._id}>
           <span role='button' className='p-1 w-100 text-center fw-bold'>
             {item.name}
           </span>
         </LinkContainer>
-
         <span
           role='button'
           className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
