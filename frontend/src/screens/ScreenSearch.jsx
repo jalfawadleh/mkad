@@ -14,10 +14,12 @@ import { IoPerson } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaExclamationCircle } from "react-icons/fa";
+import { RiArrowUpDownFill } from "react-icons/ri";
 import ListLinks from "../components/common/ListLinks";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
+  const [showResults, setShowResults] = useState(true);
 
   const [query, setQuery] = useState({
     text: "",
@@ -55,141 +57,154 @@ const ScreenSearch = () => {
     getResults();
   };
 
+  const topLayer = (
+    <div className='d-flex m-0 p-0'>
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() => setShowResults(!showResults)}
+      >
+        <RiArrowUpDownFill
+          size={24}
+          className='p-0 m-0'
+          color={results?.length ? "white" : "gray"}
+        />
+      </span>
+      <Form.Control
+        autoFocus={true}
+        className='bg-black ps-2 m-1'
+        placeholder='Search'
+        size='sm'
+        onChange={(e) =>
+          setQuery((prev) => ({ ...prev, text: e.target.value }))
+        }
+      />
+      {/* <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() => setQuery((prev) => ({ ...prev, filter: !filter }))}
+      >
+        <MdTune
+          size={24}
+          className='p-0 m-0'
+          color={filter ? "white" : "gray"}
+        />
+      </span> */}
+      <Button
+        disabled={!text}
+        type='submit'
+        className='p-1 m-1 badge rounded-pill border bg-black'
+      >
+        <FaSearch size={24} className='p-0 m-0' />
+      </Button>
+    </div>
+  );
+
+  const filtersLayer = (
+    <div className='d-flex justify-content-between w-100 '>
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() =>
+          setQuery((prev) => ({ ...prev, activities: !activities }))
+        }
+      >
+        <FaFlag
+          size={24}
+          className='p-0 m-0'
+          color={activities ? "white" : "gray"}
+        />
+      </span>
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() =>
+          setQuery((prev) => ({ ...prev, organisations: !organisations }))
+        }
+      >
+        <GiGreekTemple
+          size={24}
+          className='p-0 m-0'
+          color={organisations ? "white" : "gray"}
+        />
+      </span>
+
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() => setQuery((prev) => ({ ...prev, members: !members }))}
+      >
+        <IoPerson
+          size={24}
+          className='p-0 m-0'
+          color={members ? "white" : "gray"}
+        />
+      </span>
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() => setQuery((prev) => ({ ...prev, messages: !messages }))}
+      >
+        <FaEnvelope
+          size={24}
+          className='p-0 m-0'
+          color={messages ? "white" : "gray"}
+        />
+      </span>
+      <span
+        className='p-1 m-1 badge rounded-pill border'
+        role='button'
+        onClick={() => setQuery((prev) => ({ ...prev, updates: !updates }))}
+      >
+        <FaBell
+          size={24}
+          className='p-0 m-0'
+          color={updates ? "white" : "gray"}
+        />
+      </span>
+    </div>
+  );
+
   return (
     <>
       <div
         className='m-2'
-        style={{ maxWidth: "320px", maxHeight: window.innerHeight }}
+        style={{
+          maxWidth: "320px",
+          maxHeight: window.innerHeight,
+          position: "absolute",
+        }}
       >
         <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 25 }}>
           <Form onSubmit={onSubmit}>
-            <div className='d-flex p-0 m-0'>
-              <span
-                className='p-1 m-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({ ...prev, filter: !filter }))
-                }
-              >
-                <MdTune
-                  size={24}
-                  className='p-0 m-0'
-                  color={filter ? "white" : "gray"}
-                />
-              </span>
-              <Form.Control
-                autoFocus={true}
-                className='bg-black p-1 m-1'
-                placeholder='Search'
-                size='sm'
-                onChange={(e) =>
-                  setQuery((prev) => ({ ...prev, text: e.target.value }))
-                }
-              />
-              <Button
-                disabled={!text}
-                type='submit'
-                className='p-1 m-1 badge rounded-pill border bg-black'
-              >
-                <FaSearch size={24} className='p-0 m-0' />
-              </Button>
-            </div>
-
-            <div
-              className={
-                filter ? "d-flex justify-content-around w-100 pt-2" : "d-none"
-              }
-            >
-              <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({ ...prev, activities: !activities }))
-                }
-              >
-                <FaFlag
-                  size={24}
-                  className='p-0 m-1'
-                  color={activities ? "white" : "gray"}
-                />
-              </span>
-              <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({
-                    ...prev,
-                    organisations: !organisations,
-                  }))
-                }
-              >
-                <GiGreekTemple
-                  size={24}
-                  className='p-0 m-1'
-                  color={organisations ? "white" : "gray"}
-                />
-              </span>
-
-              <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({ ...prev, members: !members }))
-                }
-              >
-                <IoPerson
-                  size={24}
-                  className='p-0 m-1'
-                  color={members ? "white" : "gray"}
-                />
-              </span>
-              {/* <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({ ...prev, messages: !messages }))
-                }
-              >
-                <FaEnvelope
-                  size={24}
-                  className='p-0 m-1'
-                  color={messages ? "Orange" : "white"}
-                />
-              </span>
-              <span
-                className='p-1 badge rounded-pill border'
-                role='button'
-                onClick={() =>
-                  setQuery((prev) => ({ ...prev, updates: !updates }))
-                }
-              >
-                <FaBell
-                  size={24}
-                  className='p-0 m-1'
-                  color={updates ? "Orange" : "white"}
-                />
-              </span> */}
-            </div>
+            {topLayer}
+            {filtersLayer}
           </Form>
         </Card>
-        {results.length ? (
-          <ListLinks items={results} />
-        ) : (
-          <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 25 }}>
-            <div className={"d-flex justify-content-between w-100"}>
-              <span
-                role='button'
-                className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+        {results.length
+          ? showResults && <ListLinks items={results} />
+          : !text && (
+              <Card
+                className='mb-2 border-0 bg-black'
+                style={{ borderRadius: 25 }}
               >
-                <FaExclamationCircle size={24} />
-              </span>
+                <div className={"d-flex justify-content-between w-100"}>
+                  <span
+                    role='button'
+                    className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+                  >
+                    <FaExclamationCircle size={24} className='p-0 m-0' />
+                  </span>
 
-              <span role='button' className='p-1 w-100 text-center fw-bold'>
-                {text ? "No results" : "Enter search query"}
-              </span>
-            </div>
-          </Card>
-        )}
+                  <span
+                    role='button'
+                    className='p-1 w-100 text-center p-auto m-auto'
+                  >
+                    Enter search query and press enter
+                  </span>
+                </div>
+              </Card>
+            )}
       </div>
       <Outlet />
     </>

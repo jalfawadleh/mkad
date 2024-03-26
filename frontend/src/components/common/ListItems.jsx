@@ -32,7 +32,7 @@ const ListItems = ({
   };
 
   return (
-    <div className='border mb-3 p-1'>
+    <div className='mb-3 p-1'>
       <div className='p-0 m-0 inline-block'>
         <span className='font-weight-bold m-2'>{message}</span>
         {items &&

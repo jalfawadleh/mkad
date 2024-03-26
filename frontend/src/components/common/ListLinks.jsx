@@ -47,7 +47,10 @@ const ListLinks = ({ items }) => {
           </span>
         )}
         <LinkContainer to={item.type + "/" + item._id}>
-          <span role='button' className='p-1 w-100 text-center fw-bold'>
+          <span
+            role='button'
+            className='p-auto m-auto w-100 text-center fw-bold'
+          >
             {item.name}
           </span>
         </LinkContainer>
