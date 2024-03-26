@@ -65,18 +65,15 @@ const ScreenSearch = () => {
           <Form onSubmit={onSubmit}>
             <div className='d-flex p-0 m-0'>
               <span
-                className='p-1 badge rounded-pill border'
+                className='p-1 m-1 badge rounded-pill border'
                 role='button'
                 onClick={() =>
-                  setQuery((prevState) => ({
-                    ...prevState,
-                    filter: !filter,
-                  }))
+                  setQuery((prev) => ({ ...prev, filter: !filter }))
                 }
               >
                 <MdTune
-                  size={28}
-                  className='p-0 m-1'
+                  size={24}
+                  className='p-0 m-0'
                   color={filter ? "white" : "gray"}
                 />
               </span>
@@ -84,6 +81,7 @@ const ScreenSearch = () => {
                 autoFocus={true}
                 className='bg-black p-1 m-1'
                 placeholder='Search'
+                size='sm'
                 onChange={(e) =>
                   setQuery((prev) => ({ ...prev, text: e.target.value }))
                 }
@@ -91,9 +89,9 @@ const ScreenSearch = () => {
               <Button
                 disabled={!text}
                 type='submit'
-                className='p-2 m-0 bg-black rounded-pill'
+                className='p-1 m-1 badge rounded-pill border bg-black'
               >
-                <FaSearch size={28} />
+                <FaSearch size={24} className='p-0 m-0' />
               </Button>
             </div>
 

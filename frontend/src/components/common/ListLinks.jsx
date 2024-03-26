@@ -14,32 +14,34 @@ const ListLinks = ({ items }) => {
   return items.map((item) => (
     <Card
       className='p-0 mb-2 button bg-black'
-      style={{ borderRadius: 25 }}
+      style={{ borderRadius: 24 }}
       key={item._id}
     >
-      <Stack direction='horizontal' gap={1}>
+      <div className='d-flex p-0 m-0'>
         {item.type === "activity" && (
           <span
             role='button'
-            className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+            className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
           >
             <FaFlag size={24} />
           </span>
         )}
+
         {item.type === "member" && (
-          <span role='button' className='p-0 m-0 ms-auto'>
+          <span role='button' className='p-1 m-0'>
             <img
               height='34px'
               width='34px'
               src={"https://api.multiavatar.com/" + item.name + ".png"}
               alt='Profile Photo'
+              className='p-0 m-0'
             />
           </span>
         )}
         {item.type === "organisation" && (
           <span
             role='button'
-            className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+            className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
           >
             <GiGreekTemple size={24} />
           </span>
@@ -51,12 +53,12 @@ const ListLinks = ({ items }) => {
         </LinkContainer>
         <span
           role='button'
-          className='p-1 m-0 ms-auto bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 ms-auto bg-black rounded-pill border border-light-subtle'
           onClick={() => setMapCenter(item.location)}
         >
           <FaLocationCrosshairs size={24} />
         </span>
-      </Stack>
+      </div>
     </Card>
   ));
 };
