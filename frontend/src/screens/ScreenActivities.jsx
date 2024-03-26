@@ -11,12 +11,15 @@ import { ActivitiesContext } from "../store";
 import { Stack } from "react-bootstrap";
 
 import { FaPlusCircle } from "react-icons/fa";
+import { RiArrowUpDownFill } from "react-icons/ri";
+
 import { LinkContainer } from "react-router-bootstrap";
 
 import ListLinks from "../components/common/ListLinks";
 
 const ScreenActivities = () => {
   const [activities, setActivities] = useState([]);
+  const [showResults, setShowResults] = useState(true);
 
   const getActivities = async () => {
     try {
@@ -41,7 +44,18 @@ const ScreenActivities = () => {
       >
         <Card className='mb-2 bg-black' style={{ borderRadius: 25 }}>
           <Stack direction='horizontal' gap={1} className='p-0 m-0'>
-            <div className='ps-5 m-0 h5 w-100 text-center'>Activities </div>
+            <span
+              className='p-1 m-1 badge rounded-pill border'
+              role='button'
+              onClick={() => setShowResults(!showResults)}
+            >
+              <RiArrowUpDownFill
+                size={24}
+                className='p-0 m-0'
+                color={activities?.length ? "white" : "gray"}
+              />
+            </span>
+            <div className='p-1 m-0 h5 w-100 text-center'>Activities </div>
             <LinkContainer to='new/'>
               <span role='button' className='p-2 ms-auto'>
                 <FaPlusCircle size={24} />
@@ -51,7 +65,7 @@ const ScreenActivities = () => {
         </Card>
 
         {activities.length ? (
-          <ListLinks items={activities} />
+          showResults && <ListLinks items={activities} />
         ) : (
           <Card className='ps-2 m-0 bg-black' style={{ borderRadius: 15 }}>
             <span role='button' className='p-1 m-0 bg-black rounded-circle'>

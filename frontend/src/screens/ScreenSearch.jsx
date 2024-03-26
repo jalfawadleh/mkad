@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import { Button, Card, Form } from "react-bootstrap";
 
 import { FaSearch } from "react-icons/fa";
-import { MdTune } from "react-icons/md";
-import { GiGreekTemple } from "react-icons/gi";
+// import { MdTune } from "react-icons/md";
+import { FaHouseUser } from "react-icons/fa";
 import { FaFlag } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
@@ -32,7 +32,7 @@ const ScreenSearch = () => {
   });
   const {
     text,
-    filter,
+    // filter,
     organisations,
     members,
     activities,
@@ -43,7 +43,7 @@ const ScreenSearch = () => {
   const getResults = async () => {
     try {
       await axios.post("/search", query).then((res) => {
-        setResults(res.data);
+        setResults(res.data).then(setShowResults(true));
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -122,7 +122,7 @@ const ScreenSearch = () => {
           setQuery((prev) => ({ ...prev, organisations: !organisations }))
         }
       >
-        <GiGreekTemple
+        <FaHouseUser
           size={24}
           className='p-0 m-0'
           color={organisations ? "white" : "gray"}
