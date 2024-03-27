@@ -6,20 +6,25 @@ import { toast } from "react-toastify";
 
 import { Card, Form } from "react-bootstrap";
 
-import { FaSearch } from "react-icons/fa";
-// import { MdTune } from "react-icons/md";
-import { FaHouseUser } from "react-icons/fa";
-import { FaFlag } from "react-icons/fa";
-import { IoPerson } from "react-icons/io5";
-import { FaEnvelope } from "react-icons/fa";
-import { FaBell } from "react-icons/fa";
-import { FaExclamationCircle } from "react-icons/fa";
-import { RiArrowUpDownFill } from "react-icons/ri";
-import { ListLinks } from "../components/common/Wrapers";
+import {
+  ListLinks,
+  ChocolateBar,
+  IconActivity,
+  IconOrganisation,
+  iconWrapperClass,
+  IconMember,
+  IconMessage,
+  IconUpdate,
+  IconFold,
+  IconFilter,
+  IconSearch,
+  IconExclamation,
+  Icon,
+} from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
-  const [showResults, setShowResults] = useState(true);
+  const [folded, setFolded] = useState(false);
 
   const [query, setQuery] = useState({
     text: "",
@@ -32,7 +37,7 @@ const ScreenSearch = () => {
   });
   const {
     text,
-    // filter,
+    filter,
     organisations,
     members,
     activities,
@@ -43,7 +48,7 @@ const ScreenSearch = () => {
   const getResults = async () => {
     try {
       await axios.post("/search", query).then((res) => {
-        setResults(res.data).then(setShowResults(true));
+        setResults(res.data).then(setFolded(false));
       });
     } catch (error) {
       error?.response?.data?.message &&
@@ -58,150 +63,104 @@ const ScreenSearch = () => {
   };
 
   const topLayer = (
-    <div className='d-flex m-0 p-0'>
-      <span
-        className='p-1 m-1 badge rounded-pill border'
-        role='button'
-        onClick={() => setShowResults(!showResults)}
-      >
-        <RiArrowUpDownFill
-          size={24}
-          className='p-0 m-0'
-          color={!showResults ? "white" : "gray"}
+    <Form onSubmit={onSubmit}>
+      <ChocolateBar>
+        <span
+          className='p-1 m-1 badge rounded-pill border'
+          role='button'
+          onClick={() => setFolded(!folded)}
+        >
+          <IconFold color={folded ? "white" : "gray"} />
+        </span>
+        <Form.Control
+          autoFocus={true}
+          className='bg-black p-1 m-1'
+          placeholder='Search'
+          size='sm'
+          onChange={(e) =>
+            setQuery((prev) => ({ ...prev, text: e.target.value }))
+          }
         />
-      </span>
-      <Form.Control
-        autoFocus={true}
-        className='bg-black p-1 m-1'
-        placeholder='Search'
-        size='sm'
-        onChange={(e) =>
-          setQuery((prev) => ({ ...prev, text: e.target.value }))
-        }
-      />
-      {/* <span
-        className='p-1 m-1 badge rounded-pill border'
-        role='button'
-        onClick={() => setQuery((prev) => ({ ...prev, filter: !filter }))}
-      >
-        <MdTune
-          size={24}
-          className='p-0 m-0'
-          color={filter ? "white" : "gray"}
-        />
-      </span> */}
-      <span
-        role='button'
-        disabled={!text}
-        className='p-1 m-1 badge rounded-pill border'
-      >
-        <FaSearch
-          size={24}
-          className='p-0 m-0'
-          color={text ? "white" : "gray"}
-        />
-      </span>
-    </div>
+        <span
+          className='p-1 m-1 badge rounded-pill border'
+          role='button'
+          onClick={() => setQuery((prev) => ({ ...prev, filter: !filter }))}
+        >
+          <IconFilter color={filter ? "white" : "gray"} />
+        </span>
+        <button
+          type='submit'
+          disabled={!text}
+          className='p-1 m-1 badge rounded-pill border'
+        >
+          <IconSearch color={text ? "white" : "gray"} />
+        </button>
+      </ChocolateBar>
+    </Form>
   );
 
   const filtersLayer = (
-    <div className='d-flex justify-content-between w-100 '>
+    <ChocolateBar>
       <span
-        className='p-1 m-1 badge rounded-pill border'
         role='button'
+        className={iconWrapperClass}
         onClick={() =>
           setQuery((prev) => ({ ...prev, activities: !activities }))
         }
       >
-        <FaFlag
-          size={24}
-          className='p-0 m-0'
-          color={activities ? "white" : "gray"}
-        />
+        <IconActivity color={activities ? "white" : "gray"} />
       </span>
       <span
-        className='p-1 m-1 badge rounded-pill border'
+        className={iconWrapperClass}
         role='button'
         onClick={() =>
           setQuery((prev) => ({ ...prev, organisations: !organisations }))
         }
       >
-        <FaHouseUser
-          size={24}
-          className='p-0 m-0'
-          color={organisations ? "white" : "gray"}
-        />
+        <IconOrganisation color={organisations ? "white" : "gray"} />
       </span>
 
       <span
-        className='p-1 m-1 badge rounded-pill border'
+        className='p-1 m-1 rounded-pill border border-primary-settle'
         role='button'
         onClick={() => setQuery((prev) => ({ ...prev, members: !members }))}
       >
-        <IoPerson
-          size={24}
-          className='p-0 m-0'
-          color={members ? "white" : "gray"}
-        />
+        <IconMember color={members ? "white" : "gray"} />
       </span>
       <span
-        className='p-1 m-1 badge rounded-pill border'
+        className={iconWrapperClass}
         role='button'
         onClick={() => setQuery((prev) => ({ ...prev, messages: !messages }))}
       >
-        <FaEnvelope
-          size={24}
-          className='p-0 m-0'
-          color={messages ? "white" : "gray"}
-        />
+        <IconMessage color={messages ? "white" : "gray"} />
       </span>
       <span
-        className='p-1 m-1 badge rounded-pill border'
+        className={iconWrapperClass}
         role='button'
         onClick={() => setQuery((prev) => ({ ...prev, updates: !updates }))}
       >
-        <FaBell
-          size={24}
-          className='p-0 m-0'
-          color={updates ? "white" : "gray"}
-        />
+        <IconUpdate color={updates ? "white" : "gray"} />
       </span>
-    </div>
+    </ChocolateBar>
   );
 
   return (
     <>
-      <div className='mb-2 border-0 bg-black' style={{ borderRadius: 20 }}>
-        <Form onSubmit={onSubmit}>
-          {topLayer}
-          {showResults && filtersLayer}
-        </Form>
-      </div>
-      {showResults &&
+      {topLayer}
+      {!folded && filter && filtersLayer}
+      {!folded &&
         (results.length ? (
           <ListLinks items={results} />
         ) : (
           !text && (
-            <Card
-              className='mb-2 border-0 bg-black'
-              style={{ borderRadius: 20 }}
-            >
-              <div className={"d-flex justify-content-between w-100"}>
-                <span
-                  role='button'
-                  className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
-                >
-                  <FaExclamationCircle size={24} className='p-0 m-0' />
-                </span>
-
-                <span
-                  role='button'
-                  className='p-1 w-100 text-center p-auto m-auto'
-                >
-                  Enter search query
-                </span>
-              </div>
-            </Card>
+            <ChocolateBar>
+              <Icon>
+                <IconExclamation color='white' />
+              </Icon>
+              <span role='button' className='text-center p-auto m-auto'>
+                Enter search query
+              </span>
+            </ChocolateBar>
           )
         ))}
 

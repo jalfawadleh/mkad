@@ -8,7 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import Card from "react-bootstrap/esm/Card";
 
 import { ActivitiesContext } from "../store";
-import { ListLinks } from "../components/common/Wrapers";
+import { ListLinks } from "../components/common/LinkItems";
 
 const ScreenActivities = () => {
   const [activities, setActivities] = useState([]);

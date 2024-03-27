@@ -1,0 +1,138 @@
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { MapContext } from "../../store";
+
+import { FaFlag } from "react-icons/fa";
+import { FaHouseUser } from "react-icons/fa";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+import { FaRegFaceGrinBeam } from "react-icons/fa6";
+import { FaEnvelope } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
+import { RiArrowUpDownFill } from "react-icons/ri";
+import { MdTune } from "react-icons/md";
+import { FaSearch } from "react-icons/fa";
+import { FaExclamationCircle } from "react-icons/fa";
+
+const iconSize = 24;
+const iconClass = "p-0 m-0";
+const iconColor = "#dddddd";
+export const iconWrapperClass =
+  "p-1 m-1 bg-black rounded-pill border border-primary-settle";
+
+export const Icon = ({ children }) => {
+  return (
+    <span
+      role='button'
+      className='p-1 m-1 bg-black rounded-pill border border-primary-settle'
+    >
+      {children}
+    </span>
+  );
+};
+
+export const IconActivity = ({ color = iconColor }) => {
+  return <FaFlag color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconOrganisation = ({ color = iconColor }) => {
+  return <FaHouseUser color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconMessage = ({ color = iconColor }) => {
+  return <FaEnvelope color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconUpdate = ({ color = iconColor }) => {
+  return <FaBell color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconFold = ({ color = iconColor }) => {
+  return (
+    <RiArrowUpDownFill color={color} size={iconSize} className={iconClass} />
+  );
+};
+
+export const IconFilter = ({ color = iconColor }) => {
+  return <MdTune color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconSearch = ({ color = iconColor }) => {
+  return <FaSearch color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconExclamation = ({ color = iconColor }) => {
+  return (
+    <FaExclamationCircle color={color} size={iconSize} className={iconClass} />
+  );
+};
+
+export const IconFlyTo = ({ location, color = iconColor }) => {
+  const { setMapCenter } = useContext(MapContext);
+  return (
+    <FaLocationCrosshairs
+      size={iconSize}
+      className={iconClass}
+      color={color}
+      onClick={() => setMapCenter(location)}
+    />
+  );
+};
+
+export const IconMember = ({ color = iconColor }) => {
+  return (
+    <FaRegFaceGrinBeam color={color} size={iconSize} className={iconClass} />
+  );
+};
+
+export const AvatarMember = ({ name }) => {
+  return (
+    <img
+      height={iconSize + 10}
+      width={iconSize + 10}
+      src={"https://api.multiavatar.com/" + name + ".png"}
+      alt='Profile Photo'
+      className='p-0 m-1'
+    />
+  );
+};
+
+export const ChocolateBar = ({ children }) => {
+  return (
+    <div className='d-flex rounded-pill p-0 m-0 mb-1 bg-black justify-content-between'>
+      {children}
+    </div>
+  );
+};
+
+export const ListLinks = ({ items }) => {
+  return items.map((item) => (
+    <ChocolateBar key={item._id}>
+      {
+        {
+          member: <AvatarMember name={item.name} />,
+          activity: (
+            <Icon>
+              {" "}
+              <IconActivity color={"#bbb"} />
+            </Icon>
+          ),
+          organisation: (
+            <Icon>
+              <IconOrganisation color={"#bbb"} />
+            </Icon>
+          ),
+        }[item.type]
+      }
+
+      <Link
+        to={item.type + "/" + item._id}
+        className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+      >
+        {item.name}
+      </Link>
+      <Icon>
+        <IconFlyTo location={item.location} color={"white"} />
+      </Icon>
+    </ChocolateBar>
+  ));
+};
