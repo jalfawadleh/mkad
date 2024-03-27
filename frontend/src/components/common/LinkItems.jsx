@@ -83,7 +83,7 @@ export const IconFlyTo = ({ location, color = iconColor }) => {
       size={iconSize}
       className={iconClass}
       color={color}
-      onClick={() => setMapCenter(location)}
+      onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
     />
   );
 };
@@ -122,7 +122,6 @@ export const ListLinks = ({ items }) => {
           member: <AvatarMember name={item.name} />,
           activity: (
             <Icon>
-              {" "}
               <IconActivity color={"#bbb"} />
             </Icon>
           ),

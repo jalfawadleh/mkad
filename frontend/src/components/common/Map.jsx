@@ -21,24 +21,23 @@ import { MapContext } from "../../store";
 
 import Header from "./Header";
 
-const Recenter = () => {
-  const { mapCenter } = useContext(MapContext);
-  const map = useMap();
-
-  useEffect(() => {
-    mapCenter?.lat && map.flyTo(mapCenter, 15);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapCenter]);
-
-  return null;
-};
-
 const Map = () => {
   const { user } = useContext(UserContext);
 
   const [mapCenter, setMapCenter] = useState(user.location);
 
   const [items, setItems] = useState([]);
+
+  const Recenter = () => {
+    const map = useMap();
+
+    useEffect(() => {
+      map.flyTo(mapCenter, 14);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [mapCenter]);
+
+    return null;
+  };
 
   const getMapItems = async () => {
     try {
@@ -121,10 +120,6 @@ const Map = () => {
     </Marker>
   );
 
-  useEffect(() => {
-    console.log("center changed" + JSON.stringify(mapCenter));
-  }, [mapCenter]);
-
   return (
     <>
       <MapContext.Provider value={{ mapCenter, setMapCenter, getMapItems }}>
@@ -151,7 +146,7 @@ const Map = () => {
           className='position-absolute top-0 start-0 end-0 bottom-0'
           style={{ zIndex: -1 }}
         >
-          <Recenter location={user.location} />
+          <Recenter />
           <MarkerClusterGroup chunkedLoading>
             {items &&
               items.map(

@@ -11,6 +11,7 @@ import { useContext } from "react";
 
 import {
   AvatarMember,
+  Icon,
   IconActivity,
   IconFlyTo,
   IconHelp,
@@ -21,27 +22,15 @@ import {
 
 const Header = () => {
   const { user } = useContext(UserContext);
-  const { setMapCenter } = useContext(MapContext);
-
   const headerLinks = (
     <>
-      <span
-        role='button'
-        className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
-        onClick={() => setMapCenter(user.location)}
-      >
-        <IconFlyTo />
-      </span>
+      <Icon>
+        <IconFlyTo location={user.location} />
+      </Icon>
 
       <LinkContainer to='me'>
         <span role='button' className='p-0 m-0'>
-          <img
-            height={34}
-            width={34}
-            src={"https://api.multiavatar.com/" + user.name + ".png"}
-            alt='Profile Photo'
-            className='p-0 m-1'
-          />
+          <AvatarMember name={user.name} />
         </span>
       </LinkContainer>
 

@@ -27,7 +27,6 @@ const Location = ({ location, editing, setParent }) => {
             position={location}
             eventHandlers={{
               dragend: (e) => {
-                console.log("marker clicked", e.target._latlng);
                 setParent((prevState) => ({
                   ...prevState,
                   location: {
