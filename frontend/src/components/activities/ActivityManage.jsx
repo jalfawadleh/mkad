@@ -24,7 +24,7 @@ const ActivityManage = () => {
 
   const { user } = useContext(UserContext);
   const { getMapItems } = useContext(MapContext);
-  const { setActivities } = useContext(ActivitiesContext);
+  const { getActivities } = useContext(ActivitiesContext);
 
   const [activity, setActivity] = useState({
     _id: id ? id : "",
@@ -70,18 +70,17 @@ const ActivityManage = () => {
       if (activity._id)
         await axios
           .put("/activities/", activity)
+          .then(() => toast("Updated"))
           .then(() => setIsLoading(false))
-          .then(() => getMapItems())
-          .then(() => toast("Updated"));
+          .then(() => getActivities())
+          .then(() => getMapItems());
       else
         await axios
           .post("/activities/", activity)
+          .then(() => toast("Created"))
           .then(() => setIsLoading(false))
-          .then(() => toast("Created"));
-
-      // Refresh activities
-      await axios.get(`/activities`).then((res) => setActivities(res.data));
-      navigate(-1);
+          .then(() => getActivities())
+          .then(() => getMapItems());
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -97,6 +96,7 @@ const ActivityManage = () => {
         await axios
           .delete(`/activities/${id}`)
           .then(() => setIsLoading(false))
+          .then(() => getActivities())
           .then(() => getMapItems())
           .then(() => navigate(-1));
       } catch (error) {
@@ -285,6 +285,7 @@ const ActivityManage = () => {
               }}
             />
           )}
+
           {isEditing && (
             <Location
               editing={isEditing}

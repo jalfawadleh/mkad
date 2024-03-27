@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-
 import axios from "axios";
 import { toast } from "react-toastify";
-
-import { Card, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 
 import {
   ListLinks,
@@ -91,7 +89,7 @@ const ScreenSearch = () => {
         <button
           type='submit'
           disabled={!text}
-          className='p-1 m-1 badge rounded-pill border'
+          className='p-1 m-1 badge rounded-pill border bg-black'
         >
           <IconSearch color={text ? "white" : "gray"} />
         </button>
@@ -157,9 +155,7 @@ const ScreenSearch = () => {
               <Icon>
                 <IconExclamation color='white' />
               </Icon>
-              <span role='button' className='text-center p-auto m-auto'>
-                Enter search query
-              </span>
+              <span className='ps-0 m-auto'>Enter search query</span>
             </ChocolateBar>
           )
         ))}

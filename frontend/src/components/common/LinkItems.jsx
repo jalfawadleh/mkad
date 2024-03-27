@@ -12,6 +12,8 @@ import { RiArrowUpDownFill } from "react-icons/ri";
 import { MdTune } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
 import { FaExclamationCircle } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
+import { FaQuestion } from "react-icons/fa";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -64,6 +66,14 @@ export const IconExclamation = ({ color = iconColor }) => {
   return (
     <FaExclamationCircle color={color} size={iconSize} className={iconClass} />
   );
+};
+
+export const IconAdd = ({ color = iconColor }) => {
+  return <FaPlus color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconHelp = ({ color = iconColor }) => {
+  return <FaQuestion color={color} size={iconSize} className={iconClass} />;
 };
 
 export const IconFlyTo = ({ location, color = iconColor }) => {

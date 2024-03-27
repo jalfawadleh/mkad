@@ -57,7 +57,7 @@ const Map = () => {
   const ItemPopup = ({ item }) => (
     <Popup>
       <LinkContainer to={"/" + item.type + "/" + item._id}>
-        <span role='button' className='h5 p-0 m-0'>
+        <span role='button' className='h6 p-0 m-0'>
           {item.name}
         </span>
       </LinkContainer>

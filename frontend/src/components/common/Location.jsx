@@ -1,4 +1,3 @@
-import { Card } from "react-bootstrap";
 import {
   MapContainer,
   Marker,
@@ -7,11 +6,11 @@ import {
   ZoomControl,
 } from "react-leaflet";
 
-const Location = ({ location = [], editing = false, setParent }) => {
+const Location = ({ location, editing, setParent }) => {
   return (
     location && (
       <div>
-        <Card.Text>Drag the Marker to change location</Card.Text>
+        <span>Drag the Marker to change location</span>
         <MapContainer
           center={location}
           zoom={13}
