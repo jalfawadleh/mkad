@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { Button, Card, Form } from "react-bootstrap";
+import { Card, Form } from "react-bootstrap";
 
 import { FaSearch } from "react-icons/fa";
 // import { MdTune } from "react-icons/md";
@@ -15,7 +15,7 @@ import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { FaExclamationCircle } from "react-icons/fa";
 import { RiArrowUpDownFill } from "react-icons/ri";
-import ListLinks from "../components/common/ListLinks";
+import { ListLinks } from "../components/common/Wrapers";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
@@ -67,12 +67,12 @@ const ScreenSearch = () => {
         <RiArrowUpDownFill
           size={24}
           className='p-0 m-0'
-          color={results?.length ? "white" : "gray"}
+          color={!showResults ? "white" : "gray"}
         />
       </span>
       <Form.Control
         autoFocus={true}
-        className='bg-black ps-2 m-1'
+        className='bg-black p-1 m-1'
         placeholder='Search'
         size='sm'
         onChange={(e) =>
@@ -90,13 +90,17 @@ const ScreenSearch = () => {
           color={filter ? "white" : "gray"}
         />
       </span> */}
-      <Button
+      <span
+        role='button'
         disabled={!text}
-        type='submit'
-        className='p-1 m-1 badge rounded-pill border bg-black'
+        className='p-1 m-1 badge rounded-pill border'
       >
-        <FaSearch size={24} className='p-0 m-0' />
-      </Button>
+        <FaSearch
+          size={24}
+          className='p-0 m-0'
+          color={text ? "white" : "gray"}
+        />
+      </span>
     </div>
   );
 
@@ -167,45 +171,40 @@ const ScreenSearch = () => {
 
   return (
     <>
-      <div
-        className='m-2'
-        style={{
-          maxWidth: "320px",
-          maxHeight: window.innerHeight,
-          position: "absolute",
-        }}
-      >
-        <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 25 }}>
-          <Form onSubmit={onSubmit}>
-            {topLayer}
-            {filtersLayer}
-          </Form>
-        </Card>
-        {results.length
-          ? showResults && <ListLinks items={results} />
-          : !text && (
-              <Card
-                className='mb-2 border-0 bg-black'
-                style={{ borderRadius: 25 }}
-              >
-                <div className={"d-flex justify-content-between w-100"}>
-                  <span
-                    role='button'
-                    className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
-                  >
-                    <FaExclamationCircle size={24} className='p-0 m-0' />
-                  </span>
-
-                  <span
-                    role='button'
-                    className='p-1 w-100 text-center p-auto m-auto'
-                  >
-                    Enter search query and press enter
-                  </span>
-                </div>
-              </Card>
-            )}
+      <div className='mb-2 border-0 bg-black' style={{ borderRadius: 20 }}>
+        <Form onSubmit={onSubmit}>
+          {topLayer}
+          {showResults && filtersLayer}
+        </Form>
       </div>
+      {showResults &&
+        (results.length ? (
+          <ListLinks items={results} />
+        ) : (
+          !text && (
+            <Card
+              className='mb-2 border-0 bg-black'
+              style={{ borderRadius: 20 }}
+            >
+              <div className={"d-flex justify-content-between w-100"}>
+                <span
+                  role='button'
+                  className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+                >
+                  <FaExclamationCircle size={24} className='p-0 m-0' />
+                </span>
+
+                <span
+                  role='button'
+                  className='p-1 w-100 text-center p-auto m-auto'
+                >
+                  Enter search query
+                </span>
+              </div>
+            </Card>
+          )
+        ))}
+
       <Outlet />
     </>
   );

@@ -1,21 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-
 import { Outlet } from "react-router-dom";
-
+import { toast } from "react-toastify";
+import axios from "axios";
+import { FaPlus } from "react-icons/fa6";
+import { RiArrowUpDownFill } from "react-icons/ri";
+import { LinkContainer } from "react-router-bootstrap";
 import Card from "react-bootstrap/esm/Card";
 
 import { ActivitiesContext } from "../store";
-
-import { Stack } from "react-bootstrap";
-
-import { FaPlusCircle } from "react-icons/fa";
-import { RiArrowUpDownFill } from "react-icons/ri";
-
-import { LinkContainer } from "react-router-bootstrap";
-
-import ListLinks from "../components/common/ListLinks";
+import { ListLinks } from "../components/common/Wrapers";
 
 const ScreenActivities = () => {
   const [activities, setActivities] = useState([]);
@@ -38,42 +31,37 @@ const ScreenActivities = () => {
 
   return (
     <>
-      <div
-        className='m-2'
-        style={{ maxWidth: "320px", maxHeight: window.innerHeight }}
-      >
-        <Card className='mb-2 bg-black' style={{ borderRadius: 25 }}>
-          <Stack direction='horizontal' gap={1} className='p-0 m-0'>
-            <span
-              className='p-1 m-1 badge rounded-pill border'
-              role='button'
-              onClick={() => setShowResults(!showResults)}
-            >
-              <RiArrowUpDownFill
-                size={24}
-                className='p-0 m-0'
-                color={activities?.length ? "white" : "gray"}
-              />
+      <Card className='mb-2 border-0 bg-black' style={{ borderRadius: 20 }}>
+        <div className='d-flex m-0 p-0'>
+          <span
+            className='p-1 m-1 badge rounded-pill border'
+            role='button'
+            onClick={() => setShowResults(!showResults)}
+          >
+            <RiArrowUpDownFill
+              size={24}
+              className='p-0 m-0'
+              color={activities?.length ? "white" : "gray"}
+            />
+          </span>
+          <div className='p-auto m-auto h5 text-center'>Activities </div>
+          <LinkContainer to='new/'>
+            <span role='button' className='p-1 m-1 badge rounded-pill border'>
+              <FaPlus size={24} className='p-0 m-0' />
             </span>
-            <div className='p-1 m-0 h5 w-100 text-center'>Activities </div>
-            <LinkContainer to='new/'>
-              <span role='button' className='p-2 ms-auto'>
-                <FaPlusCircle size={24} />
-              </span>
-            </LinkContainer>
-          </Stack>
-        </Card>
+          </LinkContainer>
+        </div>
+      </Card>
 
-        {activities.length ? (
-          showResults && <ListLinks items={activities} />
-        ) : (
-          <Card className='ps-2 m-0 bg-black' style={{ borderRadius: 15 }}>
-            <span role='button' className='p-1 m-0 bg-black rounded-circle'>
-              No Activities Created
-            </span>
-          </Card>
-        )}
-      </div>
+      {activities.length ? (
+        showResults && <ListLinks items={activities} />
+      ) : (
+        <Card className='ps-2 m-0 bg-black' style={{ borderRadius: 15 }}>
+          <span role='button' className='p-1 m-0 bg-black rounded-circle'>
+            No Activities Created
+          </span>
+        </Card>
+      )}
 
       <ActivitiesContext.Provider value={{ setActivities }}>
         <Outlet />

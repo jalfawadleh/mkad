@@ -128,8 +128,18 @@ const Map = () => {
   return (
     <>
       <MapContext.Provider value={{ mapCenter, setMapCenter, getMapItems }}>
+        <div
+          className='m-2 p-0 w-100'
+          style={{
+            maxWidth: "320px",
+            maxHeight: window.innerHeight,
+            position: "absolute",
+          }}
+        >
+          <Outlet />
+        </div>
+
         <Header />
-        <Outlet />
 
         <MapContainer
           center={mapCenter}
