@@ -36,7 +36,7 @@ const ScreenActivities = () => {
     <>
       <ChocolateBar>
         <span
-          className='p-1 m-1 badge rounded-pill border'
+          className='p-1 m-1 badge rounded-pill border border-primary'
           role='button'
           onClick={() => setFolded(!folded)}
         >
@@ -44,8 +44,11 @@ const ScreenActivities = () => {
         </span>
         <div className='p-auto m-auto h5 text-center'>Activities </div>
         <LinkContainer to='new'>
-          <span className='p-1 m-1 badge rounded-pill border' role='button'>
-            <IconAdd />
+          <span
+            className='p-1 m-1 badge rounded-pill border border-primary'
+            role='button'
+          >
+            <IconAdd color='white' />
           </span>
         </LinkContainer>
       </ChocolateBar>

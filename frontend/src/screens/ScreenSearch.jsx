@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -17,7 +17,6 @@ import {
   IconFilter,
   IconSearch,
   IconExclamation,
-  Icon,
 } from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
@@ -44,15 +43,16 @@ const ScreenSearch = () => {
   } = query;
 
   const getResults = async () => {
-    try {
-      await axios.post("/search", query).then((res) => {
-        setResults(res.data).then(setFolded(false));
-      });
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
+    if (text)
+      try {
+        await axios.post("/search", query).then((res) => {
+          setResults(res.data).then(setFolded(false));
+        });
+      } catch (error) {
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      }
   };
 
   const onSubmit = (e) => {
@@ -60,11 +60,28 @@ const ScreenSearch = () => {
     getResults();
   };
 
+  useEffect(() => {
+    getResults();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+
+  const toggleItem = (item) => {
+    setQuery((prev) => ({
+      ...prev,
+      [Object.keys(item)]: !item[Object.keys(item)],
+    }));
+  };
+
+  const toggleFilter = () => {
+    setFolded(false);
+    setQuery((prev) => ({ ...prev, filter: !filter }));
+  };
+
   const topLayer = (
     <Form onSubmit={onSubmit}>
       <ChocolateBar>
         <span
-          className='p-1 m-1 badge rounded-pill border'
+          className='p-1 m-1 badge rounded-pill border border-primary'
           role='button'
           onClick={() => setFolded(!folded)}
         >
@@ -80,16 +97,16 @@ const ScreenSearch = () => {
           }
         />
         <span
-          className='p-1 m-1 badge rounded-pill border'
+          className='p-1 m-1 badge rounded-pill border border-primary'
           role='button'
-          onClick={() => setQuery((prev) => ({ ...prev, filter: !filter }))}
+          onClick={() => toggleFilter()}
         >
           <IconFilter color={filter ? "white" : "gray"} />
         </span>
         <button
           type='submit'
           disabled={!text}
-          className='p-1 m-1 badge rounded-pill border bg-black'
+          className='p-1 m-1 badge rounded-pill border bg-black border-primary'
         >
           <IconSearch color={text ? "white" : "gray"} />
         </button>
@@ -97,45 +114,41 @@ const ScreenSearch = () => {
     </Form>
   );
 
-  const filtersLayer = (
+  const filtersBar = (
     <ChocolateBar>
       <span
         role='button'
         className={iconWrapperClass}
-        onClick={() =>
-          setQuery((prev) => ({ ...prev, activities: !activities }))
-        }
+        onClick={() => toggleItem({ activities })}
       >
         <IconActivity color={activities ? "white" : "gray"} />
       </span>
       <span
         className={iconWrapperClass}
         role='button'
-        onClick={() =>
-          setQuery((prev) => ({ ...prev, organisations: !organisations }))
-        }
+        onClick={() => toggleItem({ organisations })}
       >
         <IconOrganisation color={organisations ? "white" : "gray"} />
       </span>
 
       <span
-        className='p-1 m-1 rounded-pill border border-primary-settle'
+        className='p-1 m-1 rounded-pill border border-primary'
         role='button'
-        onClick={() => setQuery((prev) => ({ ...prev, members: !members }))}
+        onClick={() => toggleItem({ members })}
       >
         <IconMember color={members ? "white" : "gray"} />
       </span>
       <span
         className={iconWrapperClass}
         role='button'
-        onClick={() => setQuery((prev) => ({ ...prev, messages: !messages }))}
+        onClick={() => toggleItem({ messages })}
       >
         <IconMessage color={messages ? "white" : "gray"} />
       </span>
       <span
         className={iconWrapperClass}
         role='button'
-        onClick={() => setQuery((prev) => ({ ...prev, updates: !updates }))}
+        onClick={() => toggleItem({ updates })}
       >
         <IconUpdate color={updates ? "white" : "gray"} />
       </span>
@@ -145,21 +158,20 @@ const ScreenSearch = () => {
   return (
     <>
       {topLayer}
-      {!folded && filter && filtersLayer}
+      {!folded && filter && filtersBar}
       {!folded &&
         (results.length ? (
           <ListLinks items={results} />
         ) : (
-          !text && (
-            <ChocolateBar>
-              <Icon>
-                <IconExclamation color='white' />
-              </Icon>
-              <span className='ps-0 m-auto'>Enter search query</span>
-            </ChocolateBar>
-          )
+          <ChocolateBar>
+            <span role='button' className={iconWrapperClass}>
+              <IconExclamation color='gray' />
+            </span>
+            <span className='ps-0 m-auto'>
+              {text ? "Nothing Found" : "Enter search query"}
+            </span>
+          </ChocolateBar>
         ))}
-
       <Outlet />
     </>
   );

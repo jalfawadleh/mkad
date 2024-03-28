@@ -2,11 +2,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/esm/Nav";
 import Navbar from "react-bootstrap/esm/Navbar";
 
-import { FaQuestion } from "react-icons/fa";
-
-// import { FaWindowClose } from "react-icons/fa";
-
-import { MapContext, UserContext } from "../../store.js";
+import { UserContext } from "../../store.js";
 import { useContext } from "react";
 
 import {
@@ -24,9 +20,12 @@ const Header = () => {
   const { user } = useContext(UserContext);
   const headerLinks = (
     <>
-      <Icon>
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
         <IconFlyTo location={user.location} />
-      </Icon>
+      </span>
 
       <LinkContainer to='me'>
         <span role='button' className='p-0 m-0'>
@@ -37,7 +36,7 @@ const Header = () => {
       <LinkContainer to='help'>
         <span
           role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 bg-black rounded-pill border border-primary'
         >
           <IconHelp />
         </span>
@@ -47,7 +46,7 @@ const Header = () => {
         <LinkContainer to='activities'>
           <span
             role='button'
-            className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+            className='p-1 m-1 bg-black rounded-pill border border-primary'
           >
             <IconActivity />
           </span>
@@ -56,7 +55,7 @@ const Header = () => {
       <LinkContainer to='updates'>
         <span
           role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 bg-black rounded-pill border border-primary'
         >
           <IconUpdate />
         </span>
@@ -64,7 +63,7 @@ const Header = () => {
       <LinkContainer to='messages'>
         <span
           role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 bg-black rounded-pill border border-primary'
         >
           <IconMessage />
         </span>
@@ -72,7 +71,7 @@ const Header = () => {
       <LinkContainer to='/'>
         <span
           role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-light-subtle'
+          className='p-1 m-1 bg-black rounded-pill border border-primary'
         >
           <IconSearch />
         </span>

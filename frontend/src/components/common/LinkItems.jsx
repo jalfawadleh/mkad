@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MapContext } from "../../store";
 
-import { FaFlag } from "react-icons/fa";
+import { BiSolidFlag } from "react-icons/bi";
 import { FaHouseUser } from "react-icons/fa";
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { FaRegFaceGrinBeam } from "react-icons/fa6";
@@ -19,7 +19,7 @@ const iconSize = 24;
 const iconClass = "p-0 m-0";
 const iconColor = "#dddddd";
 export const iconWrapperClass =
-  "p-1 m-1 bg-black rounded-pill border border-primary-settle";
+  "p-1 m-1 bg-black rounded-pill border border-primary";
 
 export const Icon = ({ children }) => {
   return (
@@ -33,7 +33,7 @@ export const Icon = ({ children }) => {
 };
 
 export const IconActivity = ({ color = iconColor }) => {
-  return <FaFlag color={color} size={iconSize} className={iconClass} />;
+  return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
 };
 
 export const IconOrganisation = ({ color = iconColor }) => {
@@ -139,9 +139,12 @@ export const ListLinks = ({ items }) => {
       >
         {item.name}
       </Link>
-      <Icon>
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
         <IconFlyTo location={item.location} color={"white"} />
-      </Icon>
+      </span>
     </ChocolateBar>
   ));
 };
