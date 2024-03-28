@@ -82,11 +82,7 @@ const ScreenSearch = () => {
   const topLayer = (
     <Form onSubmit={onSubmit}>
       <ChocolateBar>
-        <span
-          className='p-1 m-1 badge rounded-pill border border-primary'
-          role='button'
-          onClick={() => setFolded(!folded)}
-        >
+        <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
         <Form.Control
@@ -167,7 +163,7 @@ const ScreenSearch = () => {
         ) : (
           <ChocolateBar>
             <span role='button' className={iconWrapperClass}>
-              <IconExclamation color='gray' />
+              <IconExclamation color='#dddddd' />
             </span>
             <span className='ps-0 m-auto'>
               {text.length > 2

@@ -14,6 +14,7 @@ import { FaSearch } from "react-icons/fa";
 import { FaExclamationCircle } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
+import { LinkContainer } from "react-router-bootstrap";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -50,7 +51,12 @@ export const IconUpdate = ({ color = iconColor }) => {
 
 export const IconFold = ({ color = iconColor }) => {
   return (
-    <RiArrowUpDownFill color={color} size={iconSize} className={iconClass} />
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <RiArrowUpDownFill color={color} size={iconSize} className={iconClass} />
+    </span>
   );
 };
 
@@ -70,6 +76,19 @@ export const IconExclamation = ({ color = iconColor }) => {
 
 export const IconAdd = ({ color = iconColor }) => {
   return <FaPlus color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconAddLink = ({ color = iconColor }) => {
+  return (
+    <LinkContainer to='new'>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <FaPlus color={color} size={iconSize} className={iconClass} />
+      </span>
+    </LinkContainer>
+  );
 };
 
 export const IconHelp = ({ color = iconColor }) => {

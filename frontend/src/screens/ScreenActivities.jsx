@@ -8,6 +8,7 @@ import {
   ChocolateBar,
   Icon,
   IconAdd,
+  IconAddLink,
   IconExclamation,
   IconFold,
   ListLinks,
@@ -35,22 +36,12 @@ const ScreenActivities = () => {
   return (
     <>
       <ChocolateBar>
-        <span
-          className='p-1 m-1 badge rounded-pill border border-primary'
-          role='button'
-          onClick={() => setFolded(!folded)}
-        >
+        <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
+
         <div className='p-auto m-auto h5 text-center'>Activities </div>
-        <LinkContainer to='new'>
-          <span
-            className='p-1 m-1 badge rounded-pill border border-primary'
-            role='button'
-          >
-            <IconAdd color='white' />
-          </span>
-        </LinkContainer>
+        <IconAddLink />
       </ChocolateBar>
 
       {activities.length ? (

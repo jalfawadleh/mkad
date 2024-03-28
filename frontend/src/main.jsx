@@ -15,12 +15,12 @@ import App from "./App.jsx";
 import ScreenSearch from "./screens/ScreenSearch.jsx";
 
 import ScreenActivities from "./screens/ScreenActivities.jsx";
-import ActivityManage from "./components/activities/ActivityManage.jsx";
+import ActivityManage from "./components/manage/ActivityManage.jsx";
 import Activity from "./components/Activity.jsx";
 
 import ScreenUpdates from "./screens/ScreenUpdates.jsx";
-import SettingsAccount from "./components/settings/SettingsAccount.jsx";
-import SettingsProfile from "./components/settings/SettingsProfile.jsx";
+import Account from "./components/manage/Account.jsx";
+import Profile from "./components/manage/Profile.jsx";
 
 import ScreenLogout from "./screens/ScreenLogout.jsx";
 
@@ -41,8 +41,8 @@ const router = createBrowserRouter(
           <Route path='member/:id' element={<Member />} />
         </Route>
 
-        <Route path='me' element={<SettingsProfile />} />
-        <Route path='account' element={<SettingsAccount />} />
+        <Route path='profile' element={<Profile />} />
+        <Route path='account' element={<Account />} />
         <Route path='help' element={<Help />} />
 
         <Route path='activity/:id' element={<Activity />} />

@@ -26,7 +26,7 @@ const Header = () => {
         <IconFlyTo location={user.location} />
       </span>
 
-      <LinkContainer to='me'>
+      <LinkContainer to='profile'>
         <span role='button' className='p-0 m-0'>
           <AvatarMember name={user.name} />
         </span>
