@@ -18,7 +18,7 @@ import {
   Form,
 } from "react-bootstrap";
 
-function SettingsAccount() {
+function ManageAccount() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
@@ -201,4 +201,4 @@ function SettingsAccount() {
   );
 }
 
-export default SettingsAccount;
+export default ManageAccount;

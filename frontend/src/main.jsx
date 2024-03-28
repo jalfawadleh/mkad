@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -12,23 +11,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 
-import ScreenSearch from "./screens/ScreenSearch.jsx";
-
-import ScreenActivities from "./screens/ScreenActivities.jsx";
-import ActivityManage from "./components/manage/ActivityManage.jsx";
-import Activity from "./components/Activity.jsx";
-
-import ScreenUpdates from "./screens/ScreenUpdates.jsx";
-import Account from "./components/manage/Account.jsx";
-import Profile from "./components/manage/Profile.jsx";
-
-import ScreenLogout from "./screens/ScreenLogout.jsx";
-
 import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
-import Member from "./components/Member.jsx";
+import ScreenSearch from "./screens/ScreenSearch.jsx";
+import ScreenActivities from "./screens/ScreenActivities.jsx";
+import ScreenUpdates from "./screens/ScreenUpdates.jsx";
 import ScreenMessages from "./screens/ScreenMessages.jsx";
+import ScreenLogout from "./screens/ScreenLogout.jsx";
+
+import ManageActivity from "./components/manage/ManageActivity.jsx";
+import ManageAccount from "./components/manage/ManageAccount.jsx";
+import ManageProfile from "./components/manage/ManageProfile.jsx";
+
+import Activity from "./components/Activity.jsx";
+import Member from "./components/Member.jsx";
 import Help from "./components/Help.jsx";
 
 const router = createBrowserRouter(
@@ -41,8 +38,8 @@ const router = createBrowserRouter(
           <Route path='member/:id' element={<Member />} />
         </Route>
 
-        <Route path='profile' element={<Profile />} />
-        <Route path='account' element={<Account />} />
+        <Route path='profile' element={<ManageProfile />} />
+        <Route path='account' element={<ManageAccount />} />
         <Route path='help' element={<Help />} />
 
         <Route path='activity/:id' element={<Activity />} />
@@ -59,8 +56,8 @@ const router = createBrowserRouter(
 
         <Route path='' element={<RouteOrganisation />}>
           <Route path='activities' element={<ScreenActivities />}>
-            <Route path='new' element={<ActivityManage />} />
-            <Route path='activity/:id' element={<ActivityManage />} />
+            <Route path='new' element={<ManageActivity />} />
+            <Route path='activity/:id' element={<ManageActivity />} />
           </Route>
         </Route>
       </Route>

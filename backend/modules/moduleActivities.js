@@ -13,6 +13,19 @@ const getActivities = asyncHandler(async (req, res) => {
   res.status(200).json(activities);
 });
 
+// @desc    Get Activity
+// @route   GET /api/activities/:id
+// @access  Private
+const getActivity = asyncHandler(async (req, res) => {
+  const activity = await Activities.findById({ _id: req.params.id });
+
+  if (activity) res.json(activity);
+  else {
+    res.status(404);
+    throw new Error("Activity not found");
+  }
+});
+
 // @desc    Add New Activity
 // @route   POST /api/activities
 // @access  Public
@@ -65,19 +78,6 @@ const putActivity = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Get Activity
-// @route   GET /api/activities/:id
-// @access  Private
-const getActivity = asyncHandler(async (req, res) => {
-  const activity = await Activities.findById({ _id: req.params.id });
-
-  if (activity) res.json(activity);
-  else {
-    res.status(404);
-    throw new Error("Activity not found");
-  }
-});
-
 // @desc    Delete Activity
 // @route   Delete /api/activities/:id
 // @access  Private
@@ -86,6 +86,35 @@ const deleteActivity = asyncHandler(async (req, res) => {
   console.log(activity);
   if (activity) {
     res.res.status(204);
+  } else {
+    res.status(404);
+    throw new Error("Activity not found");
+  }
+});
+
+// @desc    Update Activity
+// @route   PUT /api/activities
+// @access  Private
+const joinActivity = asyncHandler(async (req, res) => {
+  const activity = await Activities.findOne({ _id: req.params.id });
+  if (activity) {
+    try {
+      if (
+        activity.members.length != 0 &&
+        activity.members.find((m) => m._id.equals(req.user._id))
+      )
+        activity.members = activity.members.filter(
+          (m) => !m._id.equals(req.user._id)
+        );
+      else activity.members.push({ _id: req.user._id, name: req.user.name });
+
+      await activity.save();
+    } catch (e) {
+      console.log(e);
+      // [Error: Uh oh!]
+    }
+
+    res.status(200).json(activity);
   } else {
     res.status(404);
     throw new Error("Activity not found");
@@ -103,5 +132,6 @@ activities
   .route("/:id")
   .get(protect, getActivity)
   .delete(protect, deleteActivity);
+activities.route("/join/:id").get(protect, joinActivity);
 
 export default activities;

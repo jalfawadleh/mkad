@@ -18,7 +18,7 @@ import Location from "../common/Location.jsx";
 import moment from "moment";
 import { LinkContainer } from "react-router-bootstrap";
 
-const ActivityManage = () => {
+const Activity = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -368,4 +368,4 @@ const ActivityManage = () => {
   );
 };
 
-export default ActivityManage;
+export default Activity;

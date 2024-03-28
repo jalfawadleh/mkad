@@ -15,6 +15,7 @@ import { FaExclamationCircle } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
+import { AiOutlineClose } from "react-icons/ai";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -33,8 +34,42 @@ export const Icon = ({ children }) => {
   );
 };
 
+export const IconButton = ({ children }) => {
+  return (
+    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
+      <span role='button' className='link-primary px-3'>
+        {children}
+      </span>
+    </span>
+  );
+};
+
 export const IconActivity = ({ color = iconColor }) => {
   return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
+};
+
+export const IconCircleActivity = ({ color = iconColor }) => {
+  return (
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <BiSolidFlag color={color} size={iconSize} className={iconClass} />
+    </span>
+  );
+};
+
+export const IconCircleClose = ({ color = iconColor }) => {
+  return (
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <Link to='..'>
+        <AiOutlineClose color={color} size={iconSize} className={iconClass} />
+      </Link>
+    </span>
+  );
 };
 
 export const IconOrganisation = ({ color = iconColor }) => {
