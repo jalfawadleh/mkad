@@ -13,6 +13,7 @@ import ListItems from "./common/ListItems.jsx";
 
 import {
   AvatarMember,
+  AvatarMemberLink,
   IconButton,
   IconCircleActivity,
   IconCircleClose,
@@ -102,28 +103,42 @@ const ManageActivity = () => {
     <>
       <Modal show={true} onHide={closeActivity}>
         <div className='bg-black p-1'>
-          <span className='d-flex mb-1 p-0'>
+          {/* icon title join and close */}
+          <div className='d-flex justify-content-between mb-2 p-0'>
             <IconCircleActivity />
+            <span className='p-0 m-1 badge border border-primary w-100'>
+              <span className='h5 text-wrap'>
+                {name}
+                <Link
+                  className='link-underline link-underline-opacity-0 ps-1'
+                  to={"/member/" + createdBy._id}
+                >
+                  <img
+                    height={24}
+                    width={24}
+                    src={
+                      "https://api.multiavatar.com/" + createdBy.name + ".png"
+                    }
+                    alt='Profile Photo'
+                    className='p-0 m-0'
+                  />
+                </Link>
+              </span>
+            </span>
+            <IconCircleClose />
+          </div>
+
+          {/* members */}
+          <div className='d-flex justify-content-wrap mb-2'>
             <IconButton>
               <span onClick={() => toggleJoin()}>
                 {isMember ? "Leave" : "Join"}
               </span>
             </IconButton>
-            <span className='m-auto p-auto fw-bold'>{name}</span>
-            <IconCircleClose />
-          </span>
-          <span className='mb-1 p-0 justify-content-wrap'>
-            <AvatarMember name={createdBy.name} />
-            <span className='m-auto p-auto'>
-              <Link to={"/member/" + createdBy?._id}> {createdBy.name}</Link>
-            </span>
             {members.map((m) => (
-              <span className='m-auto p-auto' key={m._id}>
-                <AvatarMember name={m.name} />
-                <Link to={"/member/" + m._id}> {m.name}</Link>
-              </span>
+              <AvatarMember name={m.name} key={m._id} />
             ))}
-          </span>
+          </div>
 
           <Stack direction='horizontal' gap={1} className='p-0 m-2'>
             <span className='p-0 '>Start:</span>
@@ -137,9 +152,7 @@ const ManageActivity = () => {
               <div>{moment(endOn).format("h:mm:ss a")}</div>
             </span>
           </Stack>
-
           {description && <div className='p-2 mb-3 bold'>{description}</div>}
-
           <ListItems
             edit={false}
             message='Languages'
@@ -148,7 +161,6 @@ const ManageActivity = () => {
             items={languages}
             setParent={setActivity}
           />
-
           <ListItems
             edit={false}
             message='Related Interests and hobbies'
@@ -157,7 +169,6 @@ const ManageActivity = () => {
             items={interests}
             setParent={setActivity}
           />
-
           <ListItems
             edit={false}
             message='Notes'
@@ -166,7 +177,6 @@ const ManageActivity = () => {
             items={notes}
             setParent={setActivity}
           />
-
           <ListItems
             edit={false}
             message='Offering Help With'
@@ -175,7 +185,6 @@ const ManageActivity = () => {
             items={helpOffered}
             setParent={setActivity}
           />
-
           <ListItems
             edit={false}
             message='Need Help With'
@@ -184,7 +193,6 @@ const ManageActivity = () => {
             items={helpNeeded}
             setParent={setActivity}
           />
-
           <Row>
             <Col className='text-center'>
               <Link to={".."}>Back</Link>

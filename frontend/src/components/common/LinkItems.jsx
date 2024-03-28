@@ -160,6 +160,30 @@ export const AvatarMember = ({ name }) => {
   );
 };
 
+export const AvatarMemberLink = ({ member }) => {
+  return (
+    <div
+      className='p-0 m-1 rounded-pill border border-primary'
+      role='button'
+      style={{ height: "36px" }}
+    >
+      <img
+        height={24}
+        width={24}
+        src={"https://api.multiavatar.com/" + member.name + ".png"}
+        alt='Profile Photo'
+        className='p-0 m-1'
+      />
+      <Link
+        className='link-underline link-underline-opacity-0 px-2 m-2'
+        to={"/member/" + member._id}
+      >
+        {member.name}
+      </Link>
+    </div>
+  );
+};
+
 export const ChocolateBar = ({ children }) => {
   return (
     <div className='d-flex rounded-pill p-0 m-0 mb-1 bg-black justify-content-between'>
