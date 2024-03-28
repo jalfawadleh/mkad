@@ -172,10 +172,7 @@ const ActivityManage = () => {
                 <Datetime
                   value={startOn}
                   onChange={(e) => {
-                    setActivity((prevState) => ({
-                      ...prevState,
-                      startOn: e,
-                    }));
+                    setActivity((prev) => ({ ...prev, startOn: e }));
                   }}
                 />
               ) : (
@@ -191,10 +188,7 @@ const ActivityManage = () => {
                 <Datetime
                   value={endOn}
                   onChange={(e) => {
-                    setActivity((prevState) => ({
-                      ...prevState,
-                      endOn: e,
-                    }));
+                    setActivity((prev) => ({ ...prev, endOn: e }));
                   }}
                 />
               ) : (

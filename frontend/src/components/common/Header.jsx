@@ -7,7 +7,6 @@ import { useContext } from "react";
 
 import {
   AvatarMember,
-  Icon,
   IconActivity,
   IconFlyTo,
   IconHelp,
@@ -83,7 +82,7 @@ const Header = () => {
     <>
       <Navbar
         className='d-none d-sm-block position-absolute end-0 p-0 bg-black '
-        style={{ top: "80px", margin: "6px", borderRadius: 25 }}
+        style={{ top: "75px", margin: "6px", borderRadius: 25 }}
       >
         <Nav className='d-flex flex-column'>{headerLinks}</Nav>
       </Navbar>

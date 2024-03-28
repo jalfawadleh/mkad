@@ -43,7 +43,7 @@ const ScreenSearch = () => {
   } = query;
 
   const getResults = async () => {
-    if (text)
+    if (text.length > 2)
       try {
         await axios.post("/search", query).then((res) => {
           setResults(res.data).then(setFolded(false));
@@ -53,6 +53,7 @@ const ScreenSearch = () => {
           toast.error(error?.response.data.message);
         error?.response?.status > 499 && toast.error("Something went wrong");
       }
+    else setResults([]);
   };
 
   const onSubmit = (e) => {
@@ -62,6 +63,7 @@ const ScreenSearch = () => {
 
   useEffect(() => {
     getResults();
+    setFolded(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
@@ -168,7 +170,9 @@ const ScreenSearch = () => {
               <IconExclamation color='gray' />
             </span>
             <span className='ps-0 m-auto'>
-              {text ? "Nothing Found" : "Enter search query"}
+              {text.length > 2
+                ? "Nothing Found"
+                : "Enter search query, min 3 letters"}
             </span>
           </ChocolateBar>
         ))}
