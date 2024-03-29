@@ -63,6 +63,14 @@ const usersSchema = Schema(
       },
     ],
 
+    members: [
+      {
+        _id: Schema.Types.ObjectId,
+        name: String,
+        approved: { type: Boolean, default: false },
+      },
+    ],
+
     organisations: [
       {
         id: Schema.Types.ObjectId,
