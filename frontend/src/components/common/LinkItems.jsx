@@ -76,7 +76,7 @@ export const IconCircleClose = () => {
       className='p-1 m-1 badge rounded-pill border border-primary'
       role='button'
     >
-      <Link to='..'>
+      <Link to='/'>
         <AiOutlineClose color='white' size={iconSize} className={iconClass} />
       </Link>
     </span>
@@ -251,7 +251,7 @@ export const LinkButtoneBack = () => {
   return (
     <Link
       className='text-white link-primary link-underline-opacity-0 p-0 m-0'
-      to='..'
+      to={-1}
     >
       <IconButton>Back</IconButton>
     </Link>
