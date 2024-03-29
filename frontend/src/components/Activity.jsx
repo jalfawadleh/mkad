@@ -115,7 +115,7 @@ const ManageActivity = () => {
           <hr className='m-1' />
 
           {/* members */}
-          <div className='d-flex justify-content-wrap p-1 mb-2'>
+          <div className='d-flex justify-content-wrap p-1 m-1'>
             <IconButton>
               <span onClick={() => toggleJoin()}>
                 {isMember ? "Leave" : "Join"}
@@ -135,14 +135,37 @@ const ManageActivity = () => {
             isEditing={false}
           />
 
-          {description && <div className='p-2 mb-3 bold'>{description}</div>}
+          {description && (
+            <>
+              <div className='d-flex justify-content-wrap p-2 m-1'>
+                {description}
+              </div>
+              <hr className='m-1' />
+            </>
+          )}
 
           <ListItems
             edit={false}
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
+            message='Notes'
+            type='notes'
+            title='note'
+            items={notes}
+            setParent={setActivity}
+          />
+          <ListItems
+            edit={false}
+            message='Offering'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setActivity}
+          />
+          <ListItems
+            edit={false}
+            message='Need'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
             setParent={setActivity}
           />
 
@@ -157,28 +180,14 @@ const ManageActivity = () => {
 
           <ListItems
             edit={false}
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
+            message='Languages'
+            type='languages'
+            title='language'
+            items={languages}
             setParent={setActivity}
           />
-          <ListItems
-            edit={false}
-            message='Offering Help With'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setActivity}
-          />
-          <ListItems
-            edit={false}
-            message='Need Help With'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setActivity}
-          />
+
+          <hr className='m-1' />
           <div className='d-flex justify-content-between m-1 p-0'>
             <IconButtonBack />
           </div>
