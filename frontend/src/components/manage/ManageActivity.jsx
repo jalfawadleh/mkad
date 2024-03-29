@@ -144,7 +144,7 @@ const Activity = () => {
 
   return (
     <>
-      <Modal show={true} onHide={closeActivity}>
+      <Modal show={!isLoading} onHide={closeActivity} centered>
         <div className='bg-black p-1'>
           {/* icon title join and close */}
           <div className='d-flex justify-content-between m-1 p-1'>
@@ -214,7 +214,7 @@ const Activity = () => {
 
           <ListItems
             edit={isEditing}
-            message='Related Interests and hobbies'
+            message='Interests'
             type='interests'
             title='interest'
             items={interests}
@@ -232,7 +232,7 @@ const Activity = () => {
 
           <ListItems
             edit={isEditing}
-            message='Offering Help With'
+            message='Offer'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
@@ -241,7 +241,7 @@ const Activity = () => {
 
           <ListItems
             edit={isEditing}
-            message='Need Help With'
+            message='Want'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}

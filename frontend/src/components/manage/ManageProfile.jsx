@@ -65,12 +65,13 @@ function SettingsProfile() {
 
   const onPut = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
       await axios
         .put("/members", member)
         .then(() => getMapItems())
         .then(() => toast("Updated"))
+        .then(() => setIsLoading(false))
         // in case name or location changed
         .then(() => setUser((prevState) => ({ ...prevState, name, location })));
     } catch (error) {
@@ -112,7 +113,7 @@ function SettingsProfile() {
 
   return (
     <>
-      <Modal show={true} onHide={closeActivity}>
+      <Modal show={!isLoading} onHide={closeActivity} centered>
         <div className='bg-black p-1'>
           {/* icon itemName closeButton */}
           <div className='d-flex justify-content-between m-1 p-1'>
@@ -171,7 +172,7 @@ function SettingsProfile() {
 
           <ListItems
             edit={editing}
-            message='Interests and Hobbies'
+            message='Interests'
             type='interests'
             title='interest'
             items={interests}
@@ -180,7 +181,7 @@ function SettingsProfile() {
 
           <ListItems
             edit={editing}
-            message='Offering Help With'
+            message='Offer'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
@@ -189,7 +190,7 @@ function SettingsProfile() {
 
           <ListItems
             edit={editing}
-            message='Need Help With'
+            message='Want'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}

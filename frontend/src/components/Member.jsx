@@ -58,7 +58,7 @@ function Member() {
 
   return (
     <>
-      <Modal animation={false} show={true} onHide={closeActivity}>
+      <Modal show={!isLoading} onHide={closeActivity} centered>
         <div className='bg-black p-1'>
           {/* icon itemName closeButton */}
           <div className='d-flex justify-content-between m-1 p-1'>
@@ -78,7 +78,7 @@ function Member() {
           )}
 
           <ListItems
-            message='Related Interests and hobbies'
+            message='Interests'
             type='interests'
             title='interest'
             items={interests}
@@ -86,14 +86,14 @@ function Member() {
           />
 
           <ListItems
-            message='Offering'
+            message='Offer'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
             setParent={setItem}
           />
           <ListItems
-            message='Need'
+            message='Want'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}

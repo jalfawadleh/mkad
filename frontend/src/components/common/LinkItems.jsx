@@ -137,8 +137,6 @@ export const IconCirlceAccount = () => {
   );
 };
 
-Icon;
-
 export const IconAddLink = ({ color = iconColor }) => {
   return (
     <LinkContainer to='new'>
@@ -149,6 +147,17 @@ export const IconAddLink = ({ color = iconColor }) => {
         <FaPlus color={color} size={iconSize} className={iconClass} />
       </span>
     </LinkContainer>
+  );
+};
+
+export const IconCircleHelp = ({ color = iconColor }) => {
+  return (
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <FaQuestion color={color} size={iconSize} className={iconClass} />
+    </span>
   );
 };
 

@@ -98,7 +98,7 @@ function ManageAccount() {
 
   return (
     <>
-      <Modal show={true} onHide={closeActivity}>
+      <Modal show={!isLoading} onHide={closeActivity} centered>
         <div className='bg-black p-1'>
           {/* icon title join and close */}
           <div className='d-flex justify-content-between m-1 p-1'>

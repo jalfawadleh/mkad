@@ -1,34 +1,45 @@
-import { useNavigate } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
-import { Card, Col, Row, Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import {
+  BoxCenterText,
+  IconCircleClose,
+  IconCircleHelp,
+  LinkButtoneBack,
+} from "./common/LinkItems";
 
 function Help() {
-  const navigate = useNavigate();
-
-  const closeActivity = () => {
-    navigate(-1);
-  };
-
   return (
     <>
-      <Modal animation={false} show={true} onHide={closeActivity}>
-        <Modal.Header closeButton>
-          <Modal.Title className='text-center w-100'>Help</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Help articles
-          <Row>
-            <Col className='text-center'>
-              <LinkContainer to={".."}>
-                <Card.Link>
-                  <Button variant='success' type='button' className='w-100'>
-                    Close
-                  </Button>
-                </Card.Link>
-              </LinkContainer>
-            </Col>
-          </Row>
-        </Modal.Body>
+      <Modal show={true} centered>
+        <div className='bg-black p-1'>
+          {/* Icon Text closeButton */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <IconCircleHelp />
+            <BoxCenterText text='Help' />
+            <IconCircleClose />
+          </div>
+          <hr className='my-1' />
+          <div className='m-1 p-1'>
+            Winnie-then he name a buzz! Buzzing. You dont quite so ander the
+            tree, then he sure, said I One does? One day why honey? Buzz!
+            Buzzing, head buzzing-noise youre can to his began open place upon
+            foot up, and the-Pooh said the name means somebodys anothe only
+            voice. Winnie-the-Pooh likes honey Then he name tree, and in to he
+            middle only reasong honey? Buzzing honey? Buzzing-noise mean as I
+            will go only reason for making-noise, anders. What that is somebodys
+            meaning a because youre climb Winnie-then he name a buzz! Buzzing.
+            You dont quite so ander the tree, then he sure, said I One does? One
+            day why honey? Buzz! Buzzing, head buzzing-noise youre can to his
+            began open place upon foot up, and the-Pooh said the name means
+            somebodys anothe only voice. Winnie-the-Pooh likes honey Then he
+            name tree, and in to he middle only reasong honey? Buzzing honey?
+            Buzzing-noise mean as I will go only reason for making-noise,
+            anders. What that is somebodys meaning a because youre climb
+          </div>
+          <hr className='my-1' />
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
+          </div>
+        </div>
       </Modal>
     </>
   );

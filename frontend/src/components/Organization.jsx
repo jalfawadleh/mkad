@@ -100,7 +100,7 @@ const Organization = () => {
 
   return (
     <>
-      <Modal show={true} onHide={closeItem}>
+      <Modal show={!isLoading} onHide={closeItem} centered>
         <div className='bg-black p-1'>
           {/* icon itemName closeButton */}
           <div className='d-flex justify-content-between m-1 p-1'>
@@ -146,14 +146,14 @@ const Organization = () => {
             setParent={setItem}
           />
           <ListItems
-            message='Offering'
+            message='Offer'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
             setParent={setItem}
           />
           <ListItems
-            message='Need'
+            message='Want'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}
@@ -161,7 +161,7 @@ const Organization = () => {
           />
 
           <ListItems
-            message='Related Interests and hobbies'
+            message='Interests'
             type='interests'
             title='interest'
             items={interests}
