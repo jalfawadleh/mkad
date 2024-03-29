@@ -73,7 +73,7 @@ function LoginForm() {
       <Container>
         <Row style={{ paddingTop: "80px" }}>
           <Col
-            className='col-lg-6 '
+            className='col-md-12 col-lg-6 '
             style={{ margin: "0 auto", position: "relative" }}
           >
             <Container className='p-2 needs-validation border'>
@@ -176,7 +176,7 @@ function LoginForm() {
               </Form>
             </Container>
           </Col>
-          <Col className='col-lg-6 pt-4 pt-lg-0'>
+          <Col className='col-md-12 col-lg-6 pt-4 pt-lg-0'>
             <p>Example of how the website looks like</p>
           </Col>
         </Row>
