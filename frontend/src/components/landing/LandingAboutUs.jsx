@@ -2,7 +2,11 @@ const LandingAboutUs = () => {
   return (
     <>
       {/* <!-- ======= aboutUs Section ======= --> */}
-      <section id='about' className='container' style={{ paddingTop: "80px" }}>
+      <section
+        id='about'
+        className='container bg-black'
+        style={{ paddingTop: "80px" }}
+      >
         <h2 className='text-center pb-4'>Who We Are</h2>
         <div className='container pb-2'>
           <div className='row justify-content-center'>

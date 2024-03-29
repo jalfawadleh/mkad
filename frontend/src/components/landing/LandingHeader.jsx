@@ -5,17 +5,10 @@ import Navbar from "react-bootstrap/Navbar";
 const LandingHeader = () => {
   return (
     <>
-      <Navbar
-        collapseOnSelect
-        fixed='top'
-        expand='sm'
-        className='bg-body-tertiary'
-        bg='dark'
-        variant='dark'
-      >
-        <Container>
+      <Navbar collapseOnSelect fixed='top' expand='sm' className='bg-black'>
+        <Container className='bg-black border-bottom'>
           <Navbar.Brand href='#'>
-            <h3>
+            <h4>
               <img
                 src='/logo.png'
                 alt='δ'
@@ -25,7 +18,7 @@ const LandingHeader = () => {
                 style={{ marginTop: "-6px" }}
               />
               MKaδifference
-            </h3>
+            </h4>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse
@@ -33,9 +26,9 @@ const LandingHeader = () => {
             className='justify-content-end'
           >
             <Nav>
-              <Nav.Link href='#login'>Login</Nav.Link>
+              <Nav.Link href='#login'>Login or Join</Nav.Link>
               <Nav.Link href='#about'>Who We Are</Nav.Link>
-              <Nav.Link href='#faq'>FAQ</Nav.Link>
+              <Nav.Link href='#faq'>Why Join Us</Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
