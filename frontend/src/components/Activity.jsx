@@ -1,23 +1,23 @@
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import moment from "moment";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { Col, Modal, Row, Stack } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import Loader from "./common/Loader.jsx";
 import ListItems from "./common/ListItems.jsx";
 
 import {
-  AvatarMember,
   AvatarMemberLink,
   IconButton,
+  IconButtonBack,
   IconCircleActivity,
   IconCircleClose,
 } from "./common/LinkItems.jsx";
+import Period from "./common/Period.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();
@@ -104,55 +104,39 @@ const ManageActivity = () => {
       <Modal show={true} onHide={closeActivity}>
         <div className='bg-black p-1'>
           {/* icon title join and close */}
-          <div className='d-flex justify-content-between mb-2 p-0'>
+          <div className='d-flex justify-content-between m-1 p-0'>
             <IconCircleActivity />
-            <span className='p-0 m-1 badge border border-primary w-100'>
-              <span className='h5 text-wrap'>
-                {name}
-                <Link
-                  className='link-underline link-underline-opacity-0 ps-1'
-                  to={"/member/" + createdBy._id}
-                >
-                  <img
-                    height={24}
-                    width={24}
-                    src={
-                      "https://api.multiavatar.com/" + createdBy.name + ".png"
-                    }
-                    alt='Profile Photo'
-                    className='p-0 m-0'
-                  />
-                </Link>
-              </span>
-            </span>
+            <AvatarMemberLink member={createdBy} />
+            <div className='p-1 m-1 badge border border-primary w-100'>
+              <span className='h5'>{name}</span>
+            </div>
             <IconCircleClose />
           </div>
+          <hr className='m-1' />
 
           {/* members */}
-          <div className='d-flex justify-content-wrap mb-2'>
+          <div className='d-flex justify-content-wrap p-1 mb-2'>
             <IconButton>
               <span onClick={() => toggleJoin()}>
                 {isMember ? "Leave" : "Join"}
               </span>
             </IconButton>
             {members.map((m) => (
-              <AvatarMember name={m.name} key={m._id} />
+              <AvatarMemberLink member={m} key={m._id} />
             ))}
           </div>
 
-          <Stack direction='horizontal' gap={1} className='p-0 m-2'>
-            <span className='p-0 '>Start:</span>
-            <span className='ms-auto text-center'>
-              <div>{moment(startOn).format("DD MMMM YYYY")}</div>
-              <div>{moment(startOn).format("h:mm:ss a")}</div>
-            </span>
-            <span className='p-0 ms-auto'>End:</span>
-            <span className='p-1 ms-auto text-center'>
-              <div>{moment(endOn).format("MMMM DD YYYY")}</div>
-              <div>{moment(endOn).format("h:mm:ss a")}</div>
-            </span>
-          </Stack>
+          <hr className='m-1' />
+
+          <Period
+            startOn={startOn}
+            endOn={endOn}
+            setParent={setActivity}
+            isEditing={false}
+          />
+
           {description && <div className='p-2 mb-3 bold'>{description}</div>}
+
           <ListItems
             edit={false}
             message='Languages'
@@ -161,6 +145,7 @@ const ManageActivity = () => {
             items={languages}
             setParent={setActivity}
           />
+
           <ListItems
             edit={false}
             message='Related Interests and hobbies'
@@ -169,6 +154,7 @@ const ManageActivity = () => {
             items={interests}
             setParent={setActivity}
           />
+
           <ListItems
             edit={false}
             message='Notes'
@@ -193,11 +179,9 @@ const ManageActivity = () => {
             items={helpNeeded}
             setParent={setActivity}
           />
-          <Row>
-            <Col className='text-center'>
-              <Link to={".."}>Back</Link>
-            </Col>
-          </Row>
+          <div className='d-flex justify-content-between m-1 p-0'>
+            <IconButtonBack />
+          </div>
         </div>
         {isLoading && <Loader />}
       </Modal>

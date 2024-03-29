@@ -32,11 +32,11 @@ const ListItems = ({
   };
 
   return (
-    <div className='mb-3 p-1'>
-      <div className='p-0 m-0 inline-block'>
-        <span className='font-weight-bold m-2'>{message}</span>
-        {items &&
-          items.map((i, index) => (
+    <>
+      {items.length > 0 && (
+        <div className='p-1 mb-3 inline-block'>
+          <span className='font-weight-bold m-2'>{message}</span>
+          {items.map((i, index) => (
             <Badge key={index} pill bg='secondary' className='m-1 p-1'>
               <span className='p-1 m-2 font-weight-bold'>{i.name}</span>
               {edit && (
@@ -52,24 +52,28 @@ const ListItems = ({
               )}
             </Badge>
           ))}
-      </div>
-      {edit && (
-        <Form onSubmit={onSubmit}>
-          <Stack direction='horizontal' gap={2}>
-            <Form.Control
-              type='text'
-              placeholder={"Enter " + title}
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-            />
-
-            <Button disabled={!item} type='submit'>
-              +
-            </Button>
-          </Stack>
-        </Form>
+        </div>
       )}
-    </div>
+
+      {edit && (
+        <div className='p-0 mb-3 inline-block'>
+          <Form onSubmit={onSubmit}>
+            <Stack direction='horizontal' gap={2}>
+              <Form.Control
+                type='text'
+                placeholder={"Enter " + title}
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
+              />
+
+              <Button disabled={!item} type='submit'>
+                +
+              </Button>
+            </Stack>
+          </Form>
+        </div>
+      )}
+    </>
   );
 };
 

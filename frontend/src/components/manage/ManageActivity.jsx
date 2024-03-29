@@ -17,6 +17,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
 import moment from "moment";
 import { LinkContainer } from "react-router-bootstrap";
+import Period from "../common/Period.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -165,40 +166,12 @@ const Activity = () => {
             </div>
           )}
 
-          <Stack direction='horizontal' gap={1} className='m-2'>
-            <span className='p-0 '>Start:</span>
-            <span className='ms-auto text-center'>
-              {isEditing ? (
-                <Datetime
-                  value={startOn}
-                  onChange={(e) => {
-                    setActivity((prev) => ({ ...prev, startOn: e }));
-                  }}
-                />
-              ) : (
-                <>
-                  <div>{moment(startOn).format("DD MMMM YYYY")}</div>
-                  <div>{moment(startOn).format("h:mm:ss a")}</div>
-                </>
-              )}
-            </span>
-            <span className='p-0 ms-auto'>End:</span>
-            <span className='p-1 ms-auto text-center'>
-              {isEditing ? (
-                <Datetime
-                  value={endOn}
-                  onChange={(e) => {
-                    setActivity((prev) => ({ ...prev, endOn: e }));
-                  }}
-                />
-              ) : (
-                <>
-                  <div>{moment(endOn).format("MMMM DD YYYY")}</div>
-                  <div>{moment(endOn).format("h:mm:ss a")}</div>
-                </>
-              )}
-            </span>
-          </Stack>
+          <Period
+            startOn={startOn}
+            endOn={endOn}
+            setParent={setActivity}
+            isEditing={isEditing}
+          />
 
           {isEditing ? (
             <FloatingLabel
