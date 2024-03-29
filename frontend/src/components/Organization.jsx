@@ -13,9 +13,10 @@ import ListItems from "./common/ListItems.jsx";
 import {
   LinkAvatarMember,
   IconButton,
-  IconButtonBack,
-  IconCircleActivity,
   IconCircleClose,
+  CircleIconOrganisation,
+  BoxCenterText,
+  LinkButtoneBack,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
@@ -34,7 +35,6 @@ const Organization = () => {
     interests: [],
     helpOffered: [],
     helpNeeded: [],
-    createdBy: [],
     members: [],
   });
 
@@ -48,7 +48,6 @@ const Organization = () => {
     interests,
     helpOffered,
     helpNeeded,
-    createdBy,
     members,
   } = item;
 
@@ -56,7 +55,7 @@ const Organization = () => {
     setIsLoading(true);
     try {
       await axios
-        .get(`/activities/${id}`)
+        .get(`/organisations/${id}`)
         .then((res) => setItem(res.data))
         .then(() => setIsLoading(false));
     } catch (error) {
@@ -103,29 +102,24 @@ const Organization = () => {
     <>
       <Modal show={true} onHide={closeItem}>
         <div className='bg-black p-1'>
-          {/* icon title join and close */}
-          <div className='d-flex justify-content-between m-1 p-0'>
-            <IconCircleActivity />
-            <LinkAvatarMember member={createdBy} />
-            <div className='p-1 m-1 badge border border-primary w-100'>
-              <span className='h5'>{name}</span>
-            </div>
+          {/* icon itemName closeButton */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <CircleIconOrganisation />
+            <BoxCenterText text={name} />
             <IconCircleClose />
           </div>
-          <hr className='m-1' />
+          <hr className='my-1' />
 
-          {/* members */}
-          <div className='d-flex justify-content-wrap p-1 m-1'>
-            <IconButton>
-              <span onClick={() => toggleJoin()}>
-                {isMember ? "Leave" : "Join"}
-              </span>
-            </IconButton>
+          {/* Join members list */}
+          <div className='d-flex justify-content-wrap p-0 m-1'>
+            <LinkAvatarMember item={item} />
+            <span onClick={() => toggleJoin()}>
+              <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+            </span>
             {members.map((m) => (
-              <LinkAvatarMember member={m} key={m._id} />
+              <LinkAvatarMember item={m} key={m._id} />
             ))}
           </div>
-
           <hr className='m-1' />
 
           <Period
@@ -182,12 +176,11 @@ const Organization = () => {
             setParent={setItem}
           />
 
-          <hr className='m-1' />
-          <div className='d-flex justify-content-between m-1 p-0'>
-            <IconButtonBack />
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
           </div>
+          {isLoading && <Loader />}
         </div>
-        {isLoading && <Loader />}
       </Modal>
     </>
   );

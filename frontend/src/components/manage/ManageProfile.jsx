@@ -39,7 +39,6 @@ function SettingsProfile() {
     interests: [],
     helpOffered: [],
     helpNeeded: [],
-
     darkmood: true,
     hidden: true,
     location: "",
@@ -52,8 +51,6 @@ function SettingsProfile() {
     interests,
     helpOffered,
     helpNeeded,
-
-    darkmood,
     hidden,
     location,
   } = member;
@@ -206,19 +203,6 @@ function SettingsProfile() {
                     }))
                   }
                 />
-                <Form.Check // prettier-ignore
-                  className='mb-3'
-                  type='switch'
-                  id='darkmood'
-                  label='Darkmood'
-                  checked={darkmood}
-                  onChange={() =>
-                    setMember((prevState) => ({
-                      ...prevState,
-                      darkmood: !darkmood,
-                    }))
-                  }
-                />
               </>
             )}
             <Location
@@ -226,7 +210,7 @@ function SettingsProfile() {
               setParent={setMember}
               editing={editing}
             />
-            <div>
+            <div className='p-0 m-2'>
               <LinkContainer to={"/account"}>
                 <Card.Link>
                   <Button variant='warning' type='button' className='mb-3'>

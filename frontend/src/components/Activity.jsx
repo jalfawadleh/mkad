@@ -13,9 +13,9 @@ import ListItems from "./common/ListItems.jsx";
 import {
   LinkAvatarMember,
   IconButton,
-  IconButtonBack,
   IconCircleActivity,
   IconCircleClose,
+  LinkButtoneBack,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
@@ -104,9 +104,9 @@ const Activity = () => {
       <Modal show={true} onHide={closeActivity}>
         <div className='bg-black p-1'>
           {/* icon title join and close */}
-          <div className='d-flex justify-content-between m-1 p-0'>
+          <div className='d-flex justify-content-between m-1 p-1'>
             <IconCircleActivity />
-            <LinkAvatarMember member={createdBy} />
+
             <div className='p-1 m-1 badge border border-primary w-100'>
               <span className='h5'>{name}</span>
             </div>
@@ -116,16 +116,14 @@ const Activity = () => {
 
           {/* members */}
           <div className='d-flex justify-content-wrap p-1 m-1'>
-            <IconButton>
-              <span onClick={() => toggleJoin()}>
-                {isMember ? "Leave" : "Join"}
-              </span>
-            </IconButton>
+            <LinkAvatarMember item={createdBy} />
+            <span onClick={() => toggleJoin()}>
+              <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+            </span>
             {members.map((m) => (
-              <LinkAvatarMember member={m} key={m._id} />
+              <LinkAvatarMember item={m} key={m._id} />
             ))}
           </div>
-
           <hr className='m-1' />
 
           <Period
@@ -182,12 +180,11 @@ const Activity = () => {
             setParent={setActivity}
           />
 
-          <hr className='m-1' />
-          <div className='d-flex justify-content-between m-1 p-0'>
-            <IconButtonBack />
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
           </div>
+          {isLoading && <Loader />}
         </div>
-        {isLoading && <Loader />}
       </Modal>
     </>
   );

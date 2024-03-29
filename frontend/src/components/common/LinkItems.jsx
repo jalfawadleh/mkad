@@ -24,6 +24,15 @@ const iconColor = "#dddddd";
 export const iconWrapperClass =
   "p-1 m-1 bg-black rounded-pill border border-primary";
 
+export const Section = ({ children }) => {
+  return (
+    <>
+      <div className='d-flex justify-content-between m-1 p-0'>{children}</div>
+      <hr className='my-1' />
+    </>
+  );
+};
+
 export const Icon = ({ children }) => {
   return (
     <span
@@ -43,6 +52,20 @@ export const Circle = ({ children }) => {
     >
       {children}
     </span>
+  );
+};
+
+export const Box = ({ children }) => {
+  return (
+    <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
+  );
+};
+
+export const BoxCenterText = ({ text }) => {
+  return (
+    <Box>
+      <span className='h5'>{text}</span>
+    </Box>
   );
 };
 
@@ -166,16 +189,16 @@ export const AvatarMember = ({ name }) => {
   );
 };
 
-export const LinkAvatarMember = ({ member }) => {
+export const LinkAvatarMember = ({ item }) => {
   return (
     <Link
       className='link-underline link-underline-opacity-0 p-0 m-0'
-      to={"/member/" + member._id}
+      to={"/member/" + item._id}
     >
       <img
         height={34}
         width={34}
-        src={"https://api.multiavatar.com/" + member.name + ".png"}
+        src={"https://api.multiavatar.com/" + item.name + ".png"}
         alt='Profile Photo'
         className='p-0 m-1'
       />
@@ -185,26 +208,22 @@ export const LinkAvatarMember = ({ member }) => {
 
 export const IconButton = ({ children }) => {
   return (
-    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
-      <span role='button' className='link-primary text-white px-3'>
+    <div className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
+      <span role='button' className='link-primary text-white p-1 m-1'>
         {children}
       </span>
-    </span>
+    </div>
   );
 };
 
-export const IconButtonBack = () => {
+export const LinkButtoneBack = () => {
   return (
-    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
-      <span role='button' className='link-primary px-3'>
-        <Link
-          className='text-white link-primary link-underline-opacity-0'
-          to='..'
-        >
-          Back
-        </Link>
-      </span>
-    </span>
+    <Link
+      className='text-white link-primary link-underline-opacity-0 p-0 m-0'
+      to='..'
+    >
+      <IconButton>Back</IconButton>
+    </Link>
   );
 };
 
@@ -305,7 +324,7 @@ export const ListLinks = ({ items }) => {
     <ChocolateBar key={item._id}>
       {
         {
-          member: <LinkAvatarMember name={item.name} />,
+          member: <LinkAvatarMember item={item} />,
           activity: <LinkCircleIconActivity item={item} />,
           organisation: <LinkCircleIconOrganisation item={item} />,
         }[item.type]

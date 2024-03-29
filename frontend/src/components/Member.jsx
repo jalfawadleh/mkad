@@ -4,10 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { Card, Col, Row, Button, Modal, Stack } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import Loader from "./common/Loader.jsx";
 
 import ListItems from "./common/ListItems.jsx";
+import {
+  AvatarMember,
+  BoxCenterText,
+  IconCircleClose,
+  LinkButtoneBack,
+} from "./common/LinkItems.jsx";
 
 function Member() {
   const { id } = useParams();
@@ -15,7 +21,7 @@ function Member() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [member, setMember] = useState({
+  const [item, setItem] = useState({
     _id: id,
     name: "",
     description: "",
@@ -26,14 +32,14 @@ function Member() {
   });
 
   const { name, description, languages, interests, helpOffered, helpNeeded } =
-    member;
+    item;
 
   useEffect(() => {
     async function getMember() {
       setIsLoading(true);
       try {
         await axios.get(`/members/${id}`).then((res) => {
-          setMember(res.data);
+          setItem(res.data);
           setIsLoading(false);
         });
       } catch (error) {
@@ -53,74 +59,61 @@ function Member() {
   return (
     <>
       <Modal animation={false} show={true} onHide={closeActivity}>
-        <Modal.Header closeButton>
-          <Modal.Title className='text-center w-100'>
-            <Stack direction='horizontal' gap={1}>
-              <div className='h3'>
-                {name && (
-                  <img
-                    className='p-0 m-1'
-                    height='35px'
-                    width='35px'
-                    src={"https://api.multiavatar.com/" + name + ".png"}
-                    alt='Profile Photo'
-                  />
-                )}
-                <span className='m-0 ps-1'>{name}</span>
+        <div className='bg-black p-1'>
+          {/* icon itemName closeButton */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <AvatarMember name={name} />
+            <BoxCenterText text={name} />
+            <IconCircleClose />
+          </div>
+          <hr className='my-1' />
+
+          {description && (
+            <>
+              <div className='d-flex justify-content-wrap p-2 m-1'>
+                {description}
               </div>
-            </Stack>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className='p-2 mb-3'>{description}</div>
+              <hr className='m-1' />
+            </>
+          )}
+
           <ListItems
-            edit={false}
+            message='Related Interests and hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setItem}
+          />
+
+          <ListItems
+            message='Offering'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setItem}
+          />
+          <ListItems
+            message='Need'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
+            setParent={setItem}
+          />
+
+          <ListItems
             message='Languages'
             type='languages'
             title='language'
             items={languages}
-            setParent={setMember}
+            setParent={setItem}
           />
 
-          <ListItems
-            edit={false}
-            message='Interests and Hobbies'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setMember}
-          />
-
-          <ListItems
-            edit={false}
-            message='Offering Help With'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setMember}
-          />
-
-          <ListItems
-            edit={false}
-            message='Need Help With'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setMember}
-          />
-
-          <Row>
-            <Col className='text-center'>
-              <Card.Link onClick={() => navigate(-1)}>
-                <Button variant='success' type='button' className='w-100'>
-                  Close
-                </Button>
-              </Card.Link>
-            </Col>
-          </Row>
-        </Modal.Body>
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
+          </div>
+          {isLoading && <Loader />}
+        </div>
       </Modal>
-      {isLoading && <Loader />}
     </>
   );
 }

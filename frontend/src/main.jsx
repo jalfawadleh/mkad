@@ -25,6 +25,7 @@ import ManageAccount from "./components/manage/ManageAccount.jsx";
 import ManageProfile from "./components/manage/ManageProfile.jsx";
 
 import Activity from "./components/Activity.jsx";
+import Organisation from "./components/Organization.jsx";
 import Member from "./components/Member.jsx";
 import Help from "./components/Help.jsx";
 
@@ -34,7 +35,7 @@ const router = createBrowserRouter(
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenSearch />}>
           <Route path='activity/:id' element={<Activity />} />
-          <Route path='organisation/:id' element={<Member />} />
+          <Route path='organisation/:id' element={<Organisation />} />
           <Route path='member/:id' element={<Member />} />
         </Route>
 
