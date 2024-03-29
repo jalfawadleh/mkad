@@ -38,8 +38,8 @@ const ListItems = ({
           <div className='p-1 m-1 inline-block'>
             <span className='font-weight-bold m-2'>{message}</span>
             {items.map((i, index) => (
-              <Badge key={index} pill bg='secondary' className='m-1 p-0'>
-                <span className='p-1 m-1 font-weight-bold'>{i.name}</span>
+              <Badge key={index} pill bg='dark' className='m-1 p-0'>
+                <span className='p-0 m-1 text-light'>{i.name}</span>
                 {edit && (
                   <Badge
                     pill
