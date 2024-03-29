@@ -15,11 +15,13 @@ const putMember = asyncHandler(async (req, res) => {
     member.name = req.body.name;
     member.description = req.body.description;
     member.languages = req.body.languages;
-    member.help = req.body.help;
     member.interests = req.body.interests;
+    member.location = req.body.location;
     member.darkmood = req.body.darkmood;
     member.hidden = req.body.hidden;
-    member.location = req.body.location;
+    member.contacts = req.body.contacts;
+    member.helpOffered = req.body.helpOffered;
+    member.helpNeeded = req.body.helpNeeded;
 
     await member.save();
 
@@ -42,13 +44,13 @@ const getMember = asyncHandler(async (req, res) => {
       name: member.name,
       description: member.description,
       languages: member.languages,
-      help: member.help,
       interests: member.interests,
       location: member.location,
       darkmood: member.darkmood,
       hidden: member.hidden,
       contacts: member.contacts,
-      organisations: member.organisations,
+      helpOffered: member.helpOffered,
+      helpNeeded: member.helpNeeded,
     });
   else {
     res.status(404);
