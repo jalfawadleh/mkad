@@ -34,16 +34,6 @@ export const Icon = ({ children }) => {
   );
 };
 
-export const IconButton = ({ children }) => {
-  return (
-    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
-      <span role='button' className='link-primary px-3'>
-        {children}
-      </span>
-    </span>
-  );
-};
-
 export const IconActivity = ({ color = iconColor }) => {
   return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
 };
@@ -59,14 +49,14 @@ export const IconCircleActivity = ({ color = iconColor }) => {
   );
 };
 
-export const IconCircleClose = ({ color = iconColor }) => {
+export const IconCircleClose = () => {
   return (
     <span
       className='p-1 m-1 badge rounded-pill border border-primary'
       role='button'
     >
       <Link to='..'>
-        <AiOutlineClose color={color} size={iconSize} className={iconClass} />
+        <AiOutlineClose color='white' size={iconSize} className={iconClass} />
       </Link>
     </span>
   );
@@ -162,25 +152,43 @@ export const AvatarMember = ({ name }) => {
 
 export const AvatarMemberLink = ({ member }) => {
   return (
-    <div
-      className='p-0 m-1 rounded-pill border border-primary'
-      role='button'
-      style={{ height: "36px" }}
+    <Link
+      className='link-underline link-underline-opacity-0 p-0 m-0'
+      to={"/member/" + member._id}
     >
       <img
-        height={24}
-        width={24}
+        height={34}
+        width={34}
         src={"https://api.multiavatar.com/" + member.name + ".png"}
         alt='Profile Photo'
         className='p-0 m-1'
       />
-      <Link
-        className='link-underline link-underline-opacity-0 px-2 m-2'
-        to={"/member/" + member._id}
-      >
-        {member.name}
-      </Link>
-    </div>
+    </Link>
+  );
+};
+
+export const IconButton = ({ children }) => {
+  return (
+    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
+      <span role='button' className='link-primary text-white px-3'>
+        {children}
+      </span>
+    </span>
+  );
+};
+
+export const IconButtonBack = () => {
+  return (
+    <span className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
+      <span role='button' className='link-primary px-3'>
+        <Link
+          className='text-white link-primary link-underline-opacity-0'
+          to='..'
+        >
+          Back
+        </Link>
+      </span>
+    </span>
   );
 };
 
