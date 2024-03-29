@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import Loader from "./common/Loader.jsx";
 
 import ListItems from "./common/ListItems.jsx";

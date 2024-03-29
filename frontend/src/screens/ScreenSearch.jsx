@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Form } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 
 import {
   ListLinks,
@@ -80,7 +80,7 @@ const ScreenSearch = () => {
   };
 
   const topLayer = (
-    <Form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}>
       <ChocolateBar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
@@ -109,7 +109,7 @@ const ScreenSearch = () => {
           <IconSearch color={text ? "white" : "gray"} />
         </button>
       </ChocolateBar>
-    </Form>
+    </form>
   );
 
   const filtersBar = (

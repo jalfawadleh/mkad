@@ -14,7 +14,6 @@ import { FaSearch } from "react-icons/fa";
 import { FaExclamationCircle } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
-import { LinkContainer } from "react-router-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdOutlineManageAccounts } from "react-icons/md";
@@ -139,14 +138,14 @@ export const IconCirlceAccount = () => {
 
 export const IconAddLink = ({ color = iconColor }) => {
   return (
-    <LinkContainer to='new'>
+    <Link to='new'>
       <span
         className='p-1 m-1 badge rounded-pill border border-primary'
         role='button'
       >
         <FaPlus color={color} size={iconSize} className={iconClass} />
       </span>
-    </LinkContainer>
+    </Link>
   );
 };
 

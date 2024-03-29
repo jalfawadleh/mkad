@@ -7,20 +7,16 @@ import Loader from "../common/Loader.jsx";
 
 import Form from "react-bootstrap/esm/Form";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-import Button from "react-bootstrap/esm/Button";
-import Card from "react-bootstrap/esm/Card";
+import Modal from "react-bootstrap/Modal";
 
-import { Col, Modal, Row } from "react-bootstrap";
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
-import { LinkContainer } from "react-router-bootstrap";
 import Period from "../common/Period.jsx";
 import {
   IconButton,
   IconCircleActivity,
   IconCircleClose,
-  LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 

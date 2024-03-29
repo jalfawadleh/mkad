@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 
 import L from "leaflet";
@@ -14,7 +14,6 @@ import {
 import MarkerClusterGroup from "react-leaflet-cluster";
 
 import { toast } from "react-toastify";
-import { LinkContainer } from "react-router-bootstrap";
 
 import { UserContext } from "../../store";
 import { MapContext } from "../../store";
@@ -55,11 +54,11 @@ const Map = () => {
 
   const ItemPopup = ({ item }) => (
     <Popup>
-      <LinkContainer to={"/" + item.type + "/" + item._id}>
+      <Link to={"/" + item.type + "/" + item._id}>
         <span role='button' className='h6 p-0 m-0'>
           {item.name}
         </span>
-      </LinkContainer>
+      </Link>
     </Popup>
   );
 

@@ -1,20 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import {
-  Card,
-  Col,
-  Row,
-  Button,
-  Form,
-  FloatingLabel,
-  Modal,
-  Stack,
-} from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
 
 import { MapContext, UserContext } from "../../store.js";
 

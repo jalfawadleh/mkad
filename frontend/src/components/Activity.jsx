@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { Modal } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 
 import Loader from "./common/Loader.jsx";
 import ListItems from "./common/ListItems.jsx";

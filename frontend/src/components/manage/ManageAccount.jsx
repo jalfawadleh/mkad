@@ -7,16 +7,11 @@ import { toast } from "react-toastify";
 import { MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
-import { LinkContainer } from "react-router-bootstrap";
-import {
-  Button,
-  Card,
-  Col,
-  Modal,
-  Row,
-  FloatingLabel,
-  Form,
-} from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+
 import {
   IconButton,
   IconCircleClose,

@@ -1,4 +1,3 @@
-import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/esm/Nav";
 import Navbar from "react-bootstrap/esm/Navbar";
 
@@ -14,6 +13,7 @@ import {
   IconSearch,
   IconUpdate,
 } from "./LinkItems";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user } = useContext(UserContext);
@@ -21,55 +21,58 @@ const Header = () => {
     <>
       <IconFlyTo location={user.location} />
 
-      <LinkContainer to='profile'>
-        <span role='button' className='p-0 m-0'>
+      <span role='button' className='p-0 m-0'>
+        <Link to='profile'>
           <AvatarMember name={user.name} />
-        </span>
-      </LinkContainer>
+        </Link>
+      </span>
 
-      <LinkContainer to='help'>
-        <span
-          role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-primary'
-        >
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
+        <Link to='help'>
           <IconHelp />
-        </span>
-      </LinkContainer>
+        </Link>
+      </span>
 
       {user.type === "organisation" && (
-        <LinkContainer to='activities'>
-          <span
-            role='button'
-            className='p-1 m-1 bg-black rounded-pill border border-primary'
-          >
+        <span
+          role='button'
+          className='p-1 m-1 bg-black rounded-pill border border-primary'
+        >
+          <Link to='activities'>
             <IconActivity />
-          </span>
-        </LinkContainer>
+          </Link>
+        </span>
       )}
-      <LinkContainer to='updates'>
-        <span
-          role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-primary'
-        >
+
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
+        <Link to='updates'>
           <IconUpdate />
-        </span>
-      </LinkContainer>
-      <LinkContainer to='messages'>
-        <span
-          role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-primary'
-        >
+        </Link>
+      </span>
+
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
+        <Link to='messages'>
           <IconMessage />
-        </span>
-      </LinkContainer>
-      <LinkContainer to='/'>
-        <span
-          role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-primary'
-        >
+        </Link>
+      </span>
+
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
+        <Link to='/'>
           <IconSearch />
-        </span>
-      </LinkContainer>
+        </Link>
+      </span>
     </>
   );
 
