@@ -2,16 +2,14 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { LinkContainer } from "react-router-bootstrap";
 import { ActivitiesContext } from "../store";
 import {
   ChocolateBar,
   Icon,
-  IconAdd,
   IconAddLink,
   IconExclamation,
   IconFold,
-  ListLinks,
+  ListManageActivities,
 } from "../components/common/LinkItems";
 
 const ScreenActivities = () => {
@@ -45,7 +43,7 @@ const ScreenActivities = () => {
       </ChocolateBar>
 
       {activities.length ? (
-        !folded && <ListLinks items={activities} />
+        !folded && <ListManageActivities items={activities} />
       ) : (
         <ChocolateBar>
           <Icon>

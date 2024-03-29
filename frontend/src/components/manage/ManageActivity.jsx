@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-import Datetime from "react-datetime";
 import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
@@ -11,11 +10,10 @@ import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/esm/Card";
 
-import { Col, Modal, Row, Stack } from "react-bootstrap";
+import { Col, Modal, Row } from "react-bootstrap";
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
-import moment from "moment";
 import { LinkContainer } from "react-router-bootstrap";
 import Period from "../common/Period.jsx";
 

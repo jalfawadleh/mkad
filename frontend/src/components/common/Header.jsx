@@ -19,12 +19,7 @@ const Header = () => {
   const { user } = useContext(UserContext);
   const headerLinks = (
     <>
-      <span
-        role='button'
-        className='p-1 m-1 bg-black rounded-pill border border-primary'
-      >
-        <IconFlyTo location={user.location} />
-      </span>
+      <IconFlyTo location={user.location} />
 
       <LinkContainer to='profile'>
         <span role='button' className='p-0 m-0'>

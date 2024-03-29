@@ -16,6 +16,7 @@ import { FaPlus } from "react-icons/fa6";
 import { FaQuestion } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -34,17 +35,13 @@ export const Icon = ({ children }) => {
   );
 };
 
-export const IconActivity = ({ color = iconColor }) => {
-  return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
-};
-
-export const IconCircleActivity = ({ color = iconColor }) => {
+export const Circle = ({ children }) => {
   return (
     <span
       className='p-1 m-1 badge rounded-pill border border-primary'
       role='button'
     >
-      <BiSolidFlag color={color} size={iconSize} className={iconClass} />
+      {children}
     </span>
   );
 };
@@ -60,10 +57,6 @@ export const IconCircleClose = () => {
       </Link>
     </span>
   );
-};
-
-export const IconOrganisation = ({ color = iconColor }) => {
-  return <FaHouseUser color={color} size={iconSize} className={iconClass} />;
 };
 
 export const IconMessage = ({ color = iconColor }) => {
@@ -120,15 +113,38 @@ export const IconHelp = ({ color = iconColor }) => {
   return <FaQuestion color={color} size={iconSize} className={iconClass} />;
 };
 
-export const IconFlyTo = ({ location, color = iconColor }) => {
+export const IconFlyTo = ({ location }) => {
   const { setMapCenter } = useContext(MapContext);
   return (
-    <FaLocationCrosshairs
-      size={iconSize}
-      className={iconClass}
-      color={color}
-      onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
-    />
+    <span
+      role='button'
+      className='p-1 m-1 bg-black rounded-pill border border-primary'
+    >
+      <FaLocationCrosshairs
+        size={iconSize}
+        className={iconClass}
+        color={"white"}
+        onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
+      />
+    </span>
+  );
+};
+
+export const IconLinkCircleFlyTo = ({ location }) => {
+  const { setMapCenter } = useContext(MapContext);
+  return (
+    <span className='p-0 m-0'>
+      <span
+        role='button'
+        className='p-1 m-1 badge rounded-pill border border-primary'
+      >
+        <FaLocationCrosshairs
+          size={24}
+          className={iconClass}
+          onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
+        />
+      </span>
+    </span>
   );
 };
 
@@ -150,7 +166,7 @@ export const AvatarMember = ({ name }) => {
   );
 };
 
-export const AvatarMemberLink = ({ member }) => {
+export const LinkAvatarMember = ({ member }) => {
   return (
     <Link
       className='link-underline link-underline-opacity-0 p-0 m-0'
@@ -192,6 +208,79 @@ export const IconButtonBack = () => {
   );
 };
 
+export const IconLinkCenterText = ({ item }) => {
+  return (
+    <Link
+      to={item.type + "/" + item._id}
+      className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+    >
+      {item.name}
+    </Link>
+  );
+};
+
+// Organisation
+
+export const IconOrganisation = () => {
+  return <FaHouseUser color={"white"} size={24} className={iconClass} />;
+};
+
+export const CircleIconOrganisation = () => {
+  return (
+    <Circle>
+      <IconOrganisation />
+    </Circle>
+  );
+};
+
+export const LinkCircleIconOrganisation = ({ item }) => {
+  return (
+    <Link to={"organisation/" + item._id}>
+      <CircleIconOrganisation />
+    </Link>
+  );
+};
+
+// activity
+
+export const IconCircleActivity = ({ color = iconColor }) => {
+  return (
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <BiSolidFlag color={color} size={iconSize} className={iconClass} />
+    </span>
+  );
+};
+
+export const IconActivity = ({ color = iconColor }) => {
+  return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
+};
+
+export const LinkCircleIconActivity = ({ item }) => {
+  return (
+    <Link to={"activity/" + item._id}>
+      <Circle>
+        <BiSolidFlag color={"white"} size={24} className={iconClass} />
+      </Circle>
+    </Link>
+  );
+};
+
+export const IconLinkMembersCircle = ({ item }) => {
+  return (
+    <Link to={item.type + "/" + item._id + "/members"}>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <FaPeopleGroup color={"white"} size={24} className={iconClass} />
+      </span>
+    </Link>
+  );
+};
+
 export const ChocolateBar = ({ children }) => {
   return (
     <div className='d-flex rounded-pill p-0 m-0 mb-1 bg-black justify-content-between'>
@@ -200,37 +289,30 @@ export const ChocolateBar = ({ children }) => {
   );
 };
 
+export const ListManageActivities = ({ items }) => {
+  return items.map((item) => (
+    <ChocolateBar key={item._id}>
+      <LinkCircleIconActivity item={item} />
+      <IconLinkCenterText item={item} />
+      {/* <IconLinkMembersCircle item={item} /> */}
+      <IconLinkCircleFlyTo location={item.location} />
+    </ChocolateBar>
+  ));
+};
+
 export const ListLinks = ({ items }) => {
   return items.map((item) => (
     <ChocolateBar key={item._id}>
       {
         {
-          member: <AvatarMember name={item.name} />,
-          activity: (
-            <Icon>
-              <IconActivity color={"#bbb"} />
-            </Icon>
-          ),
-          organisation: (
-            <Icon>
-              <IconOrganisation color={"#bbb"} />
-            </Icon>
-          ),
+          member: <LinkAvatarMember name={item.name} />,
+          activity: <LinkCircleIconActivity item={item} />,
+          organisation: <LinkCircleIconOrganisation item={item} />,
         }[item.type]
       }
 
-      <Link
-        to={item.type + "/" + item._id}
-        className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
-      >
-        {item.name}
-      </Link>
-      <span
-        role='button'
-        className='p-1 m-1 bg-black rounded-pill border border-primary'
-      >
-        <IconFlyTo location={item.location} color={"white"} />
-      </span>
+      <IconLinkCenterText item={item} />
+      <IconLinkCircleFlyTo location={item.location} />
     </ChocolateBar>
   ));
 };

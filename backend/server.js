@@ -13,6 +13,7 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import users from "./modules/moduleUsers.js";
 import members from "./modules/moduleMembers.js";
 import activities from "./modules/moduleActivities.js";
+import organisations from "./modules/moduleOrganisations.js";
 import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
 
@@ -47,6 +48,7 @@ app.use(printRequest);
 app.use("/api/users", users);
 app.use("/api/members", members);
 app.use("/api/activities", activities);
+app.use("/api/organisations", organisations);
 app.use("/api/search", search);
 app.use("/api/map", map);
 

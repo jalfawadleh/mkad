@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { LinkContainer } from "react-router-bootstrap";
 import { Card, Col, Row, Button, Modal, Stack } from "react-bootstrap";
 import Loader from "./common/Loader.jsx";
 

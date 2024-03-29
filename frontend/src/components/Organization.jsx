@@ -19,14 +19,14 @@ import {
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
-const Activity = () => {
+const Organization = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isMember, setIsMembers] = useState(false);
 
-  const [activity, setActivity] = useState({
+  const [item, setItem] = useState({
     name: "",
     description: "",
     notes: [],
@@ -50,14 +50,14 @@ const Activity = () => {
     helpNeeded,
     createdBy,
     members,
-  } = activity;
+  } = item;
 
-  const getActivity = async (id) => {
+  const getItem = async (id) => {
     setIsLoading(true);
     try {
       await axios
         .get(`/activities/${id}`)
-        .then((res) => setActivity(res.data))
+        .then((res) => setItem(res.data))
         .then(() => setIsLoading(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -66,12 +66,12 @@ const Activity = () => {
     }
   };
 
-  const joinActivity = async () => {
+  const joinItem = async () => {
     setIsLoading(true);
     try {
       await axios
-        .get(`/activities/join/${id}`)
-        .then((res) => setActivity(res.data))
+        .get(`/organisations/join/${id}`)
+        .then((res) => setItem(res.data))
         .then(() => setIsLoading(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -80,17 +80,17 @@ const Activity = () => {
     }
   };
 
-  const closeActivity = () => {
+  const closeItem = () => {
     navigate(-1);
   };
 
   useEffect(() => {
-    getActivity(id);
+    getItem(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const toggleJoin = () => {
-    joinActivity();
+    joinItem();
     // putActivity();
   };
 
@@ -101,7 +101,7 @@ const Activity = () => {
 
   return (
     <>
-      <Modal show={true} onHide={closeActivity}>
+      <Modal show={true} onHide={closeItem}>
         <div className='bg-black p-1'>
           {/* icon title join and close */}
           <div className='d-flex justify-content-between m-1 p-0'>
@@ -131,7 +131,7 @@ const Activity = () => {
           <Period
             startOn={startOn}
             endOn={endOn}
-            setParent={setActivity}
+            setParent={setItem}
             isEditing={false}
           />
 
@@ -149,21 +149,21 @@ const Activity = () => {
             type='notes'
             title='note'
             items={notes}
-            setParent={setActivity}
+            setParent={setItem}
           />
           <ListItems
             message='Offering'
             type='helpOffered'
             title='Help Offered'
             items={helpOffered}
-            setParent={setActivity}
+            setParent={setItem}
           />
           <ListItems
             message='Need'
             type='helpNeeded'
             title='Help Needed'
             items={helpNeeded}
-            setParent={setActivity}
+            setParent={setItem}
           />
 
           <ListItems
@@ -171,7 +171,7 @@ const Activity = () => {
             type='interests'
             title='interest'
             items={interests}
-            setParent={setActivity}
+            setParent={setItem}
           />
 
           <ListItems
@@ -179,7 +179,7 @@ const Activity = () => {
             type='languages'
             title='language'
             items={languages}
-            setParent={setActivity}
+            setParent={setItem}
           />
 
           <hr className='m-1' />
@@ -193,4 +193,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default Organization;
