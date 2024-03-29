@@ -38,13 +38,13 @@ const ListItems = ({
           <div className='p-1 m-1 inline-block'>
             <span className='font-weight-bold m-2'>{message}</span>
             {items.map((i, index) => (
-              <Badge key={index} pill bg='secondary' className='m-1 p-1'>
-                <span className='p-1 m-2 font-weight-bold'>{i.name}</span>
+              <Badge key={index} pill bg='secondary' className='m-1 p-0'>
+                <span className='p-1 m-1 font-weight-bold'>{i.name}</span>
                 {edit && (
                   <Badge
                     pill
                     bg='danger'
-                    className='p-2 m-0'
+                    className='p-1 m-0'
                     onClick={() => delItem(i)}
                     style={{ cursor: "pointer" }}
                   >
@@ -54,12 +54,11 @@ const ListItems = ({
               </Badge>
             ))}
           </div>
-          <hr className='m-1' />
         </>
       )}
       {edit && (
         <>
-          <div className='p-0 mb-3 inline-block'>
+          <div className='p-1 m-1 inline-block'>
             <Form onSubmit={onSubmit}>
               <Stack direction='horizontal' gap={2}>
                 <Form.Control
@@ -67,9 +66,10 @@ const ListItems = ({
                   placeholder={"Enter " + title}
                   value={item}
                   onChange={(e) => setItem(e.target.value)}
+                  size='sm'
                 />
 
-                <Button disabled={!item} type='submit'>
+                <Button disabled={!item} size='sm' type='submit'>
                   +
                 </Button>
               </Stack>
@@ -77,6 +77,7 @@ const ListItems = ({
           </div>
         </>
       )}
+      {items?.length > 0 && <hr className='m-1' />}
     </>
   );
 };

@@ -17,6 +17,7 @@ import { FaQuestion } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaPeopleGroup } from "react-icons/fa6";
+import { MdOutlineManageAccounts } from "react-icons/md";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -119,6 +120,25 @@ export const IconAdd = ({ color = iconColor }) => {
   return <FaPlus color={color} size={iconSize} className={iconClass} />;
 };
 
+export const IconAccount = () => {
+  return (
+    <MdOutlineManageAccounts color='white' size={24} className={iconClass} />
+  );
+};
+
+export const IconCirlceAccount = () => {
+  return (
+    <span
+      className='p-1 m-1 badge rounded-pill border border-primary'
+      role='button'
+    >
+      <MdOutlineManageAccounts color='white' size={24} className={iconClass} />
+    </span>
+  );
+};
+
+Icon;
+
 export const IconAddLink = ({ color = iconColor }) => {
   return (
     <LinkContainer to='new'>
@@ -213,6 +233,17 @@ export const IconButton = ({ children }) => {
         {children}
       </span>
     </div>
+  );
+};
+
+export const LinkButton = ({ to, children }) => {
+  return (
+    <Link
+      className='text-white link-primary link-underline-opacity-0 p-0 m-0'
+      to={to}
+    >
+      <IconButton>{children}</IconButton>
+    </Link>
   );
 };
 

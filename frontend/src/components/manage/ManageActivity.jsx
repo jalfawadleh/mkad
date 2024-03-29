@@ -16,6 +16,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
 import { LinkContainer } from "react-router-bootstrap";
 import Period from "../common/Period.jsx";
+import {
+  IconButton,
+  IconCircleActivity,
+  IconCircleClose,
+  LinkButton,
+  LinkButtoneBack,
+} from "../common/LinkItems.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -137,17 +144,20 @@ const Activity = () => {
 
   return (
     <>
-      <Modal
-        animation={false}
-        show={true}
-        onHide={closeActivity}
-        className='p-1'
-      >
-        <Modal.Body>
-          <Modal.Title className='w-100 text-center'>{name}</Modal.Title>
+      <Modal show={true} onHide={closeActivity}>
+        <div className='bg-black p-1'>
+          {/* icon title join and close */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <IconCircleActivity />
+            <div className='p-1 m-1 badge border border-primary w-100'>
+              <span className='h5'>{name}</span>
+            </div>
+            <IconCircleClose />
+          </div>
+          <hr className='m-1' />
 
           {isEditing && (
-            <FloatingLabel controlId='name' label='Name' className='mb-3'>
+            <FloatingLabel controlId='name' label='Name' className='p-1 m-1'>
               <Form.Control
                 type='text'
                 placeholder='Name'
@@ -155,13 +165,9 @@ const Activity = () => {
                 value={name}
                 onChange={onChange}
                 className='mt-1'
+                size='sm'
               />
             </FloatingLabel>
-          )}
-          {!isEditing && createdBy?.name && (
-            <div className='p-2 m-0 float-right'>
-              Created By: {createdBy.name}
-            </div>
           )}
 
           <Period
@@ -172,21 +178,29 @@ const Activity = () => {
           />
 
           {isEditing ? (
-            <FloatingLabel
-              controlId='description'
-              label='Description'
-              className='mb-3'
-            >
-              <Form.Control
-                type='description'
-                placeholder='Description'
-                name='description'
-                value={description}
-                onChange={onChange}
-              />
-            </FloatingLabel>
+            <>
+              <FloatingLabel
+                controlId='description'
+                label='Description'
+                className='p-1 m-1'
+              >
+                <Form.Control
+                  type='description'
+                  placeholder='Description'
+                  name='description'
+                  value={description}
+                  onChange={onChange}
+                />
+              </FloatingLabel>
+              <hr className='m-1' />
+            </>
           ) : (
-            description && <div className='p-2 m-0'>{description}</div>
+            description && (
+              <>
+                <div className='p-2 m-0'>{description}</div>{" "}
+                <hr className='m-1' />
+              </>
+            )
           )}
 
           <ListItems
@@ -235,20 +249,23 @@ const Activity = () => {
           />
 
           {isEditing && (
-            <Form.Check // prettier-ignore
-              className='mb-3'
-              type='checkbox'
-              id='hidden'
-              label='Hide activity from search and map'
-              name='hidden'
-              checked={hidden}
-              onChange={() => {
-                setActivity((prevState) => ({
-                  ...prevState,
-                  hidden: !hidden,
-                }));
-              }}
-            />
+            <>
+              <Form.Check // prettier-ignore
+                className='mb-3'
+                type='checkbox'
+                id='hidden'
+                label='Hide activity from search and map'
+                name='hidden'
+                checked={hidden}
+                onChange={() => {
+                  setActivity((prevState) => ({
+                    ...prevState,
+                    hidden: !hidden,
+                  }));
+                }}
+              />
+              <hr className='m-1' />
+            </>
           )}
 
           {isEditing && (
@@ -259,80 +276,35 @@ const Activity = () => {
             />
           )}
 
-          <Row>
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
             {isOwner && isEditing && !isCreating && (
               <>
-                <Col className='text-center'>
-                  <Button
-                    variant='primary'
-                    type='button'
-                    className='w-100 '
-                    onClick={() => setIsEditing(false)}
-                  >
-                    View
-                  </Button>
-                </Col>
-                <Col className='text-center'>
-                  <Button
-                    variant='warning'
-                    type='button'
-                    className='w-100 '
-                    onClick={onPut}
-                  >
-                    Update
-                  </Button>
-                </Col>
-                <Col className='text-center'>
-                  <Button
-                    variant='danger'
-                    type='button'
-                    className='w-100 '
-                    onClick={onDelete}
-                  >
-                    Delete
-                  </Button>
-                </Col>
+                <span onClick={() => setIsEditing(false)}>
+                  <IconButton>View</IconButton>
+                </span>
+                <span onClick={onPut}>
+                  <IconButton>Update</IconButton>
+                </span>
+                <span onClick={onDelete}>
+                  <IconButton>Delete</IconButton>
+                </span>
               </>
             )}
 
             {isOwner && !isEditing && (
-              <Col className='text-center'>
-                <Button
-                  variant='warning'
-                  type='button'
-                  className='w-100 '
-                  onClick={() => setIsEditing(true)}
-                >
-                  Edit
-                </Button>
-              </Col>
+              <span onClick={() => setIsEditing(true)}>
+                <IconButton>Edit</IconButton>
+              </span>
             )}
 
             {isCreating && (
-              <Col className='text-center'>
-                <Button
-                  disabled={!name}
-                  variant='primary'
-                  type='button'
-                  className='w-100 '
-                  onClick={onPut}
-                >
-                  Create
-                </Button>
-              </Col>
+              <span onClick={onPut} disabled={!name}>
+                <IconButton>Create</IconButton>
+              </span>
             )}
-
-            <Col className='text-center'>
-              <LinkContainer to={".."}>
-                <Card.Link>
-                  <Button variant='success' type='button' className='w-100'>
-                    Close
-                  </Button>
-                </Card.Link>
-              </LinkContainer>
-            </Col>
-          </Row>
-        </Modal.Body>
+          </div>
+        </div>
       </Modal>
       {isLoading && <Loader />}
     </>

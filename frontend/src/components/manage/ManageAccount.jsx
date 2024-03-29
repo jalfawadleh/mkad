@@ -17,6 +17,12 @@ import {
   FloatingLabel,
   Form,
 } from "react-bootstrap";
+import {
+  IconButton,
+  IconCircleClose,
+  IconCirlceAccount,
+  LinkButtoneBack,
+} from "../common/LinkItems.jsx";
 
 function ManageAccount() {
   const navigate = useNavigate();
@@ -92,109 +98,108 @@ function ManageAccount() {
 
   return (
     <>
-      <Modal animation={false} show={true} onHide={closeActivity}>
-        <Modal.Body>
-          <Card.Title>Update Account</Card.Title>
-
-          <Card.Text>
-            Enter only fields you want to Update and Current Password
-          </Card.Text>
-
-          <FloatingLabel controlId='username' label='Username' className='mb-3'>
-            <Form.Control
-              type='text'
-              placeholder='Username'
-              name='username'
-              value={username}
-              onChange={onChange}
-            />
-          </FloatingLabel>
-          <FloatingLabel controlId='password' label='Password' className='mb-3'>
-            <Form.Control
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={password}
-              onChange={onChange}
-            />
-          </FloatingLabel>
-          <FloatingLabel
-            controlId='confirmPassword'
-            label='Confirm Password'
-            className='mb-3'
-          >
-            <Form.Control
-              type='password'
-              placeholder='Confirm Password'
-              name='confirmPassword'
-              value={confirmPassword}
-              onChange={onChange}
-            />
-          </FloatingLabel>
-          <FloatingLabel
-            controlId='email'
-            label='Email address'
-            className='mb-3'
-          >
-            <Form.Control
-              type='email'
-              placeholder='name@example.com'
-              name='email'
-              value={email}
-              onChange={onChange}
-            />
-            <small id='emailHelp' className='text-muted'>
+      <Modal show={true} onHide={closeActivity}>
+        <div className='bg-black p-1'>
+          {/* icon title join and close */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <IconCirlceAccount />
+            <div className='p-1 m-1 badge border border-primary w-100'>
+              <span className='h5'>Update Account</span>
+            </div>
+            <IconCircleClose />
+          </div>
+          <hr className='m-1' />
+          <div className='m-1 p-1'>
+            <div className='p-0 mb-2 text-center'>
+              Enter only fields you want to Update and Current Password
+            </div>
+            <FloatingLabel
+              controlId='username'
+              label='Username'
+              className='mb-3'
+            >
+              <Form.Control
+                type='text'
+                placeholder='Username'
+                name='username'
+                value={username}
+                size='small'
+                onChange={onChange}
+              />
+            </FloatingLabel>
+            <FloatingLabel
+              controlId='password'
+              label='Password'
+              className='mb-3'
+            >
+              <Form.Control
+                type='password'
+                placeholder='Password'
+                name='password'
+                value={password}
+                size='small'
+                onChange={onChange}
+              />
+            </FloatingLabel>
+            <FloatingLabel
+              controlId='confirmPassword'
+              label='Confirm Password'
+              className='mb-3'
+            >
+              <Form.Control
+                type='password'
+                placeholder='Confirm Password'
+                name='confirmPassword'
+                value={confirmPassword}
+                size='small'
+                onChange={onChange}
+              />
+            </FloatingLabel>
+            <div className='text-center'>
               Email will only be used for password reset
-            </small>
-          </FloatingLabel>
+            </div>
+            <FloatingLabel
+              controlId='email'
+              label='Email address'
+              className='mb-3'
+            >
+              <Form.Control
+                type='email'
+                placeholder='name@example.com'
+                name='email'
+                value={email}
+                size='small'
+                onChange={onChange}
+              />
+            </FloatingLabel>
+            <div className='text-center'>
+              Enter Current password for verification
+            </div>
+            <FloatingLabel
+              controlId='password'
+              label='Current Password'
+              className='mb-3'
+            >
+              <Form.Control
+                type='password'
+                placeholder='Current Password'
+                name='currentPassword'
+                value={currentPassword}
+                onChange={onChange}
+              />
+            </FloatingLabel>
 
-          <Card.Text>Enter Current password for verification</Card.Text>
-          <FloatingLabel
-            controlId='password'
-            label='Current Password'
-            className='mb-3'
-          >
-            <Form.Control
-              type='password'
-              placeholder='Current Password'
-              name='currentPassword'
-              value={currentPassword}
-              onChange={onChange}
-            />
-          </FloatingLabel>
-
-          <Row>
-            <Col className='text-center'>
-              <Button
-                variant='warning'
-                type='submit'
-                className='w-100'
-                onClick={onPut}
-              >
-                Update
-              </Button>
-            </Col>
-            <Col className='text-center'>
-              <Button
-                variant='danger'
-                type='submit'
-                className='w-100'
-                onClick={onDelete}
-              >
-                Delete
-              </Button>
-            </Col>
-            <Col className='text-center'>
-              <LinkContainer to={".."}>
-                <Card.Link>
-                  <Button variant='success' type='button' className='w-100 '>
-                    Close
-                  </Button>
-                </Card.Link>
-              </LinkContainer>
-            </Col>
-          </Row>
-        </Modal.Body>
+            <div className='d-flex justify-content-between m-1 p-1'>
+              <LinkButtoneBack />
+              <span onClick={onPut}>
+                <IconButton>Update</IconButton>
+              </span>
+              <span onClick={onDelete}>
+                <IconButton>Delete</IconButton>
+              </span>
+            </div>
+          </div>
+        </div>
       </Modal>
       {isLoading && <Loader />}
     </>

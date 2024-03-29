@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -21,6 +21,14 @@ import { MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 import Location from "../common/Location.jsx";
+import {
+  AvatarMember,
+  BoxCenterText,
+  IconButton,
+  IconCircleClose,
+  LinkButton,
+  LinkButtoneBack,
+} from "../common/LinkItems.jsx";
 
 function SettingsProfile() {
   const navigate = useNavigate();
@@ -104,171 +112,133 @@ function SettingsProfile() {
 
   return (
     <>
-      <Modal animation={false} show={true} onHide={closeActivity}>
-        <Modal.Body>
-          <Card.Body>
-            <Stack direction='horizontal' gap={1} className='mb-2'>
-              <div className='h3'>
-                {name && (
-                  <img
-                    className='p-0 m-1'
-                    height='35px'
-                    width='35px'
-                    src={"https://api.multiavatar.com/" + name + ".png"}
-                    alt='Profile Photo'
-                  />
-                )}
-                <span className='m-0 ps-1'>{name}</span>
-              </div>
-            </Stack>
-            {editing && (
-              <FloatingLabel controlId='name' label='Name' className='mb-3'>
-                <Form.Control
-                  type='text'
-                  placeholder='Name'
-                  name='name'
-                  value={name}
-                  onChange={onChange}
-                />
-                <Form.Text>Avatar depends on the name you chose</Form.Text>
-              </FloatingLabel>
-            )}
+      <Modal show={true} onHide={closeActivity}>
+        <div className='bg-black p-1'>
+          {/* icon itemName closeButton */}
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <AvatarMember name={name} />
+            <BoxCenterText text={name} />
+            <IconCircleClose />
+          </div>
+          <hr className='my-1' />
 
-            {editing ? (
-              <FloatingLabel
-                controlId='description'
-                label='Description'
-                className='mb-3'
-              >
-                <Form.Control
-                  type='text'
-                  placeholder='Description'
-                  name='description'
-                  value={description}
-                  onChange={onChange}
-                />
-              </FloatingLabel>
-            ) : (
-              <Card.Text>{description}</Card.Text>
-            )}
+          {editing && (
+            <FloatingLabel controlId='name' label='Name' className='mb-3'>
+              <Form.Control
+                type='text'
+                placeholder='Name'
+                name='name'
+                value={name}
+                onChange={onChange}
+              />
+              <Form.Text>Avatar depends on the name</Form.Text>
+            </FloatingLabel>
+          )}
 
-            <ListItems
-              edit={editing}
-              message='Languages'
-              type='languages'
-              title='language'
-              items={languages}
-              setParent={setMember}
-            />
-
-            <ListItems
-              edit={editing}
-              message='Interests and Hobbies'
-              type='interests'
-              title='interest'
-              items={interests}
-              setParent={setMember}
-            />
-
-            <ListItems
-              edit={editing}
-              message='Offering Help With'
-              type='helpOffered'
-              title='Help Offered'
-              items={helpOffered}
-              setParent={setMember}
-            />
-
-            <ListItems
-              edit={editing}
-              message='Need Help With'
-              type='helpNeeded'
-              title='Help Needed'
-              items={helpNeeded}
-              setParent={setMember}
-            />
-
-            {editing && (
+          {editing ? (
+            <FloatingLabel
+              controlId='description'
+              label='Description'
+              className='mb-3'
+            >
+              <Form.Control
+                type='text'
+                placeholder='Description'
+                name='description'
+                value={description}
+                onChange={onChange}
+              />
+            </FloatingLabel>
+          ) : (
+            description && (
               <>
-                <Form.Check // prettier-ignore
-                  className='mb-3'
-                  type='switch'
-                  id='hidden'
-                  label='Hide profile'
-                  checked={hidden}
-                  onChange={() =>
-                    setMember((prevState) => ({
-                      ...prevState,
-                      hidden: !hidden,
-                    }))
-                  }
-                />
+                <div className='d-flex justify-content-wrap p-2 m-1'>
+                  {description}
+                </div>
+                <hr className='m-1' />
               </>
-            )}
+            )
+          )}
+
+          <ListItems
+            edit={editing}
+            message='Languages'
+            type='languages'
+            title='language'
+            items={languages}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={editing}
+            message='Interests and Hobbies'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={editing}
+            message='Offering Help With'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={editing}
+            message='Need Help With'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
+            setParent={setMember}
+          />
+
+          {editing && (
+            <>
+              <Form.Check // prettier-ignore
+                className='mb-3'
+                type='switch'
+                id='hidden'
+                label='Hide profile'
+                checked={hidden}
+                onChange={() =>
+                  setMember((prev) => ({ ...prev, hidden: !hidden }))
+                }
+              />
+              <hr className='my-1' />
+            </>
+          )}
+
+          {editing && (
             <Location
+              editing={editing}
               location={location}
               setParent={setMember}
-              editing={editing}
             />
-            <div className='p-0 m-2'>
-              <LinkContainer to={"/account"}>
-                <Card.Link>
-                  <Button variant='warning' type='button' className='mb-3'>
-                    Manage Account
-                  </Button>
-                </Card.Link>
-              </LinkContainer>
-            </div>
+          )}
 
-            <Row>
-              {editing && (
-                <Col className='text-center'>
-                  <Button
-                    variant='primary'
-                    type='button'
-                    className='w-100'
-                    onClick={onPut}
-                  >
-                    Update
-                  </Button>
-                </Col>
-              )}
-
-              {editing ? (
-                <Col className='text-center'>
-                  <Button
-                    variant='primary'
-                    type='button'
-                    className='w-100'
-                    onClick={() => setEditing(false)}
-                  >
-                    View
-                  </Button>
-                </Col>
-              ) : (
-                <Col className='text-center'>
-                  <Button
-                    variant='primary'
-                    type='button'
-                    className='w-100'
-                    onClick={() => setEditing(true)}
-                  >
-                    Edit
-                  </Button>
-                </Col>
-              )}
-              <Col className='text-center'>
-                <LinkContainer to={".."}>
-                  <Card.Link>
-                    <Button variant='success' type='button' className='w-100'>
-                      Close
-                    </Button>
-                  </Card.Link>
-                </LinkContainer>
-              </Col>
-            </Row>
-          </Card.Body>
-        </Modal.Body>
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
+            {editing ? (
+              <>
+                <span onClick={() => setEditing(false)}>
+                  <IconButton>View</IconButton>
+                </span>
+                <span onClick={onPut}>
+                  <IconButton>Update</IconButton>
+                </span>
+              </>
+            ) : (
+              <span onClick={() => setEditing(true)}>
+                <IconButton>Edit</IconButton>
+              </span>
+            )}
+            <LinkButton to={"/account"}>Manage Account</LinkButton>
+          </div>
+        </div>
       </Modal>
       {isLoading && <Loader />}
     </>
