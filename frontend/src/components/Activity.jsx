@@ -1,11 +1,9 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
-
-import Modal from "react-bootstrap/Modal";
 
 import Loader from "./common/Loader.jsx";
 import ListItems from "./common/ListItems.jsx";
@@ -16,13 +14,13 @@ import {
   IconCircleActivity,
   IconCircleClose,
   LinkButtoneBack,
+  WrapperModal,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
 const Activity = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isMember, setIsMembers] = useState(false);
 
@@ -80,10 +78,6 @@ const Activity = () => {
     }
   };
 
-  const closeActivity = () => {
-    navigate(-1);
-  };
-
   useEffect(() => {
     getActivity(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -101,91 +95,89 @@ const Activity = () => {
 
   return (
     <>
-      <Modal show={!isLoading} onHide={closeActivity} centered>
-        <div className='bg-black p-1'>
-          {/* icon title join and close */}
-          <div className='d-flex justify-content-between m-1 p-1'>
-            <IconCircleActivity />
+      <WrapperModal>
+        {/* icon title join and close */}
+        <div className='d-flex justify-content-between m-1 p-1'>
+          <IconCircleActivity />
 
-            <div className='p-1 m-1 badge border border-primary w-100'>
-              <span className='h5'>{name}</span>
-            </div>
-            <IconCircleClose />
+          <div className='p-1 m-1 badge border border-primary w-100'>
+            <span className='h5'>{name}</span>
           </div>
-          <hr className='m-1' />
-
-          {/* members */}
-          <div className='d-flex justify-content-wrap p-1 m-1'>
-            <LinkAvatarMember item={createdBy} />
-            <span onClick={() => toggleJoin()}>
-              <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
-            </span>
-            {members.map((m) => (
-              <LinkAvatarMember item={m} key={m._id} />
-            ))}
-          </div>
-          <hr className='m-1' />
-
-          <Period
-            startOn={startOn}
-            endOn={endOn}
-            setParent={setActivity}
-            isEditing={false}
-          />
-
-          {description && (
-            <>
-              <div className='d-flex justify-content-wrap p-2 m-1'>
-                {description}
-              </div>
-              <hr className='m-1' />
-            </>
-          )}
-
-          <ListItems
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
-            setParent={setActivity}
-          />
-          <ListItems
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setActivity}
-          />
-          <ListItems
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
-            setParent={setActivity}
-          />
-
-          <div className='d-flex justify-content-between m-1 p-1'>
-            <LinkButtoneBack />
-          </div>
-          {isLoading && <Loader />}
+          <IconCircleClose />
         </div>
-      </Modal>
+        <hr className='m-1' />
+
+        {/* members */}
+        <div className='d-flex justify-content-wrap p-1 m-1'>
+          <LinkAvatarMember item={createdBy} />
+          <span onClick={() => toggleJoin()}>
+            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+          </span>
+          {members.map((m) => (
+            <LinkAvatarMember item={m} key={m._id} />
+          ))}
+        </div>
+        <hr className='m-1' />
+
+        <Period
+          startOn={startOn}
+          endOn={endOn}
+          setParent={setActivity}
+          isEditing={false}
+        />
+
+        {description && (
+          <>
+            <div className='d-flex justify-content-wrap p-2 m-1'>
+              {description}
+            </div>
+            <hr className='m-1' />
+          </>
+        )}
+
+        <ListItems
+          message='Notes'
+          type='notes'
+          title='note'
+          items={notes}
+          setParent={setActivity}
+        />
+        <ListItems
+          message='Offer'
+          type='helpOffered'
+          title='Help Offered'
+          items={helpOffered}
+          setParent={setActivity}
+        />
+        <ListItems
+          message='Want'
+          type='helpNeeded'
+          title='Help Needed'
+          items={helpNeeded}
+          setParent={setActivity}
+        />
+
+        <ListItems
+          message='Interests'
+          type='interests'
+          title='interest'
+          items={interests}
+          setParent={setActivity}
+        />
+
+        <ListItems
+          message='Languages'
+          type='languages'
+          title='language'
+          items={languages}
+          setParent={setActivity}
+        />
+
+        <div className='d-flex justify-content-between m-1 p-1'>
+          <LinkButtoneBack />
+        </div>
+        {isLoading && <Loader />}
+      </WrapperModal>
     </>
   );
 };

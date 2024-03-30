@@ -205,7 +205,7 @@ export const IconMember = ({ color = iconColor }) => {
   );
 };
 
-export const AvatarMember = ({ name }) => {
+export const AvatarMember = ({ name = "na" }) => {
   return (
     <img
       height={iconSize + 10}
@@ -373,4 +373,22 @@ export const ListLinks = ({ items }) => {
       <IconLinkCircleFlyTo location={item.location} />
     </ChocolateBar>
   ));
+};
+
+export const WrapperModal = ({ children }) => {
+  return (
+    <div
+      role='dialog'
+      aria-modal='true'
+      className='fade modal show d-block'
+      tabIndex='-1'
+    >
+      <div
+        className='modal-dialog modal-dialog-centered modal-dialog-scrollable'
+        role='document'
+      >
+        <div className='modal-content bg-black p-1'>{children}</div>
+      </div>
+    </div>
+  );
 };

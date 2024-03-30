@@ -7,8 +7,6 @@ import { toast } from "react-toastify";
 import { MapContext, UserContext } from "../../store.js";
 import Loader from "../common/Loader.jsx";
 
-import Modal from "react-bootstrap/Modal";
-
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
@@ -17,6 +15,7 @@ import {
   IconCircleClose,
   IconCirlceAccount,
   LinkButtoneBack,
+  WrapperModal,
 } from "../common/LinkItems.jsx";
 
 function ManageAccount() {
@@ -87,115 +86,101 @@ function ManageAccount() {
     }));
   };
 
-  const closeActivity = () => {
-    navigate(-1);
-  };
-
   return (
     <>
-      <Modal show={!isLoading} onHide={closeActivity} centered>
-        <div className='bg-black p-1'>
-          {/* icon title join and close */}
-          <div className='d-flex justify-content-between m-1 p-1'>
-            <IconCirlceAccount />
-            <div className='p-1 m-1 badge border border-primary w-100'>
-              <span className='h5'>Update Account</span>
-            </div>
-            <IconCircleClose />
+      <WrapperModal>
+        {/* icon title join and close */}
+        <div className='d-flex justify-content-between m-1 p-1'>
+          <IconCirlceAccount />
+          <div className='p-1 m-1 badge border border-primary w-100'>
+            <span className='h5'>Update Account</span>
           </div>
-          <hr className='m-1' />
-          <div className='m-1 p-1'>
-            <div className='p-0 mb-2 text-center'>
-              Enter only fields you want to Update and Current Password
-            </div>
-            <FloatingLabel
-              controlId='username'
-              label='Username'
-              className='mb-3'
-            >
-              <Form.Control
-                type='text'
-                placeholder='Username'
-                name='username'
-                value={username}
-                size='small'
-                onChange={onChange}
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId='password'
-              label='Password'
-              className='mb-3'
-            >
-              <Form.Control
-                type='password'
-                placeholder='Password'
-                name='password'
-                value={password}
-                size='small'
-                onChange={onChange}
-              />
-            </FloatingLabel>
-            <FloatingLabel
-              controlId='confirmPassword'
-              label='Confirm Password'
-              className='mb-3'
-            >
-              <Form.Control
-                type='password'
-                placeholder='Confirm Password'
-                name='confirmPassword'
-                value={confirmPassword}
-                size='small'
-                onChange={onChange}
-              />
-            </FloatingLabel>
-            <div className='text-center'>
-              Email will only be used for password reset
-            </div>
-            <FloatingLabel
-              controlId='email'
-              label='Email address'
-              className='mb-3'
-            >
-              <Form.Control
-                type='email'
-                placeholder='name@example.com'
-                name='email'
-                value={email}
-                size='small'
-                onChange={onChange}
-              />
-            </FloatingLabel>
-            <div className='text-center'>
-              Enter Current password for verification
-            </div>
-            <FloatingLabel
-              controlId='password'
-              label='Current Password'
-              className='mb-3'
-            >
-              <Form.Control
-                type='password'
-                placeholder='Current Password'
-                name='currentPassword'
-                value={currentPassword}
-                onChange={onChange}
-              />
-            </FloatingLabel>
+          <IconCircleClose />
+        </div>
+        <hr className='m-1' />
+        <div className='m-1 p-1'>
+          <div className='p-0 mb-2 text-center'>
+            Enter only fields you want to Update and Current Password
+          </div>
+          <FloatingLabel controlId='username' label='Username' className='mb-3'>
+            <Form.Control
+              type='text'
+              placeholder='Username'
+              name='username'
+              value={username}
+              size='small'
+              onChange={onChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel controlId='password' label='Password' className='mb-3'>
+            <Form.Control
+              type='password'
+              placeholder='Password'
+              name='password'
+              value={password}
+              size='small'
+              onChange={onChange}
+            />
+          </FloatingLabel>
+          <FloatingLabel
+            controlId='confirmPassword'
+            label='Confirm Password'
+            className='mb-3'
+          >
+            <Form.Control
+              type='password'
+              placeholder='Confirm Password'
+              name='confirmPassword'
+              value={confirmPassword}
+              size='small'
+              onChange={onChange}
+            />
+          </FloatingLabel>
+          <div className='text-center'>
+            Email will only be used for password reset
+          </div>
+          <FloatingLabel
+            controlId='email'
+            label='Email address'
+            className='mb-3'
+          >
+            <Form.Control
+              type='email'
+              placeholder='name@example.com'
+              name='email'
+              value={email}
+              size='small'
+              onChange={onChange}
+            />
+          </FloatingLabel>
+          <div className='text-center'>
+            Enter Current password for verification
+          </div>
+          <FloatingLabel
+            controlId='password'
+            label='Current Password'
+            className='mb-3'
+          >
+            <Form.Control
+              type='password'
+              placeholder='Current Password'
+              name='currentPassword'
+              value={currentPassword}
+              onChange={onChange}
+            />
+          </FloatingLabel>
 
-            <div className='d-flex justify-content-between m-1 p-1'>
-              <LinkButtoneBack />
-              <span onClick={onPut}>
-                <IconButton>Update</IconButton>
-              </span>
-              <span onClick={onDelete}>
-                <IconButton>Delete</IconButton>
-              </span>
-            </div>
+          <div className='d-flex justify-content-between m-1 p-1'>
+            <LinkButtoneBack />
+            <span onClick={onPut}>
+              <IconButton>Update</IconButton>
+            </span>
+            <span onClick={onDelete}>
+              <IconButton>Delete</IconButton>
+            </span>
           </div>
         </div>
-      </Modal>
+      </WrapperModal>
       {isLoading && <Loader />}
     </>
   );

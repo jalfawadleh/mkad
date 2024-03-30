@@ -62,7 +62,7 @@ const ListItems = ({
       {edit && (
         <>
           <div className='p-1 m-1 inline-block'>
-            <Form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
               <Stack direction='horizontal' gap={2}>
                 <Form.Control
                   type='text'
@@ -76,7 +76,7 @@ const ListItems = ({
                   +
                 </Button>
               </Stack>
-            </Form>
+            </form>
           </div>
         </>
       )}

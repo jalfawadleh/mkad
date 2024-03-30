@@ -165,7 +165,8 @@ const ScreenSearch = () => {
             <span role='button' className={iconWrapperClass}>
               <IconExclamation color='#dddddd' />
             </span>
-            <span className='ps-0 m-auto'>
+
+            <span className='m-auto'>
               {text.length > 2
                 ? "Nothing Found"
                 : "Enter search query, min 3 letters"}
