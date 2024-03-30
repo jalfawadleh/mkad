@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
 app.use(compression());
+app.disable("x-powered-by");
 
 const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
