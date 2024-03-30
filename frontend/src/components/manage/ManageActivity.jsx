@@ -147,126 +147,128 @@ const Activity = () => {
         </div>
         <hr className='m-1' />
 
-        {isEditing && (
-          <FloatingLabel controlId='name' label='Name' className='p-1 m-1'>
-            <Form.Control
-              type='text'
-              placeholder='Name'
-              name='name'
-              value={name}
-              onChange={onChange}
-              className='mt-1'
-              size='sm'
-            />
-          </FloatingLabel>
-        )}
-
-        <Period
-          startOn={startOn}
-          endOn={endOn}
-          setParent={setActivity}
-          isEditing={isEditing}
-        />
-
-        {isEditing ? (
-          <>
-            <FloatingLabel
-              controlId='description'
-              label='Description'
-              className='p-1 m-1'
-            >
+        <div className='overflow-y-auto p-1 m-0'>
+          {isEditing && (
+            <FloatingLabel controlId='name' label='Name' className='p-1 m-1'>
               <Form.Control
-                type='description'
-                placeholder='Description'
-                name='description'
-                value={description}
+                type='text'
+                placeholder='Name'
+                name='name'
+                value={name}
                 onChange={onChange}
+                className='mt-1'
+                size='sm'
               />
             </FloatingLabel>
-            <hr className='m-1' />
-          </>
-        ) : (
-          description && (
+          )}
+
+          <Period
+            startOn={startOn}
+            endOn={endOn}
+            setParent={setActivity}
+            isEditing={isEditing}
+          />
+
+          {isEditing ? (
             <>
-              <div className='p-2 m-0'>{description}</div>{" "}
+              <FloatingLabel
+                controlId='description'
+                label='Description'
+                className='p-1 m-1'
+              >
+                <Form.Control
+                  type='description'
+                  placeholder='Description'
+                  name='description'
+                  value={description}
+                  onChange={onChange}
+                />
+              </FloatingLabel>
               <hr className='m-1' />
             </>
-          )
-        )}
+          ) : (
+            description && (
+              <>
+                <div className='p-2 m-0'>{description}</div>{" "}
+                <hr className='m-1' />
+              </>
+            )
+          )}
 
-        <ListItems
-          edit={isEditing}
-          message='Languages'
-          type='languages'
-          title='language'
-          items={languages}
-          setParent={setActivity}
-        />
-
-        <ListItems
-          edit={isEditing}
-          message='Interests'
-          type='interests'
-          title='interest'
-          items={interests}
-          setParent={setActivity}
-        />
-
-        <ListItems
-          edit={isEditing}
-          message='Notes'
-          type='notes'
-          title='note'
-          items={notes}
-          setParent={setActivity}
-        />
-
-        <ListItems
-          edit={isEditing}
-          message='Offer'
-          type='helpOffered'
-          title='Help Offered'
-          items={helpOffered}
-          setParent={setActivity}
-        />
-
-        <ListItems
-          edit={isEditing}
-          message='Want'
-          type='helpNeeded'
-          title='Help Needed'
-          items={helpNeeded}
-          setParent={setActivity}
-        />
-
-        {isEditing && (
-          <>
-            <Form.Check // prettier-ignore
-              className='mb-3'
-              type='checkbox'
-              id='hidden'
-              label='Hide activity from search and map'
-              name='hidden'
-              checked={hidden}
-              onChange={() => {
-                setActivity((prevState) => ({
-                  ...prevState,
-                  hidden: !hidden,
-                }));
-              }}
-            />
-            <hr className='m-1' />
-          </>
-        )}
-
-        {isEditing && (
-          <Location
-            editing={isEditing}
-            location={location}
+          <ListItems
+            edit={isEditing}
+            message='Languages'
+            type='languages'
+            title='language'
+            items={languages}
             setParent={setActivity}
           />
-        )}
 
+          <ListItems
+            edit={isEditing}
+            message='Interests'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={isEditing}
+            message='Notes'
+            type='notes'
+            title='note'
+            items={notes}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={isEditing}
+            message='Offer'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setActivity}
+          />
+
+          <ListItems
+            edit={isEditing}
+            message='Want'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
+            setParent={setActivity}
+          />
+
+          {isEditing && (
+            <>
+              <Form.Check // prettier-ignore
+                className='mb-3'
+                type='checkbox'
+                id='hidden'
+                label='Hide activity from search and map'
+                name='hidden'
+                checked={hidden}
+                onChange={() => {
+                  setActivity((prevState) => ({
+                    ...prevState,
+                    hidden: !hidden,
+                  }));
+                }}
+              />
+              <hr className='m-1' />
+            </>
+          )}
+
+          {isEditing && (
+            <Location
+              editing={isEditing}
+              location={location}
+              setParent={setActivity}
+            />
+          )}
+        </div>
+        <hr className='m-1' />
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
           {isOwner && isEditing && !isCreating && (
