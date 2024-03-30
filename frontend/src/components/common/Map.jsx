@@ -20,6 +20,8 @@ import { MapContext } from "../../store";
 
 import Header from "./Header";
 
+// https://akursat.gitbook.io/marker-cluster/examples/custom-marker-clusters
+
 const Map = () => {
   const { user } = useContext(UserContext);
 
