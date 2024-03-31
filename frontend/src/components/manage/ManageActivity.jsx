@@ -16,6 +16,8 @@ import {
   IconButton,
   IconCircleActivity,
   IconCircleClose,
+  IconLoading,
+  IconSpin,
   LinkButtoneBack,
   WrapperModal,
 } from "../common/LinkItems.jsx";
@@ -27,6 +29,9 @@ const Activity = () => {
   const { user } = useContext(UserContext);
   const { getMapItems } = useContext(MapContext);
   const { getActivities } = useContext(ActivitiesContext);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [activity, setActivity] = useState({
     _id: id ? id : "",
@@ -63,24 +68,22 @@ const Activity = () => {
   const isCreating = activity._id ? false : true;
   const [isEditing, setIsEditing] = useState(isCreating);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   const onPut = async () => {
     // checking for common required fields
-    setIsLoading(true);
+    setIsUpdating(true);
     try {
       if (activity._id)
         await axios
           .put("/activities/", activity)
           .then(() => toast("Updated"))
-          .then(() => setIsLoading(false))
+          .then(() => setIsUpdating(false))
           .then(() => getActivities())
           .then(() => getMapItems());
       else
         await axios
           .post("/activities/", activity)
           .then(() => toast("Created"))
-          .then(() => setIsLoading(false))
+          .then(() => setIsUpdating(false))
           .then(() => getActivities())
           .then(() => getMapItems());
     } catch (error) {
@@ -268,7 +271,7 @@ const Activity = () => {
             />
           )}
         </div>
-        <hr className='m-1' />
+        {isLoading && <IconLoading />}
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
           {isOwner && isEditing && !isCreating && (
@@ -277,7 +280,7 @@ const Activity = () => {
                 <IconButton>View</IconButton>
               </span>
               <span onClick={onPut}>
-                <IconButton>Update</IconButton>
+                <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
               </span>
               <span onClick={onDelete}>
                 <IconButton>Delete</IconButton>
@@ -298,7 +301,6 @@ const Activity = () => {
           )}
         </div>
       </WrapperModal>
-      {isLoading && <Loader />}
     </>
   );
 };

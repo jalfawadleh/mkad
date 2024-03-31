@@ -14,6 +14,8 @@ import {
   IconButton,
   IconCircleClose,
   IconCirlceAccount,
+  IconLoading,
+  IconSpin,
   LinkButtoneBack,
   WrapperModal,
 } from "../common/LinkItems.jsx";
@@ -21,6 +23,7 @@ import {
 function ManageAccount() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const { user } = useContext(UserContext);
   const { getMapItems } = useContext(MapContext);
 
@@ -47,10 +50,10 @@ function ManageAccount() {
       toast.error("Current Password is not valid");
       return;
     }
-    setIsLoading(true);
+    setIsUpdating(true);
     try {
       await axios.put("/users/", newDetails).then((res) => {
-        setIsLoading(false);
+        setIsUpdating(false);
         res.data && toast("Updated");
       });
     } catch (error) {
@@ -170,10 +173,12 @@ function ManageAccount() {
             />
           </FloatingLabel>
 
+          {isLoading && <IconLoading />}
+
           <div className='d-flex justify-content-between m-1 p-1'>
             <LinkButtoneBack />
             <span onClick={onPut}>
-              <IconButton>Update</IconButton>
+              <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
             </span>
             <span onClick={onDelete}>
               <IconButton>Delete</IconButton>
@@ -181,7 +186,6 @@ function ManageAccount() {
           </div>
         </div>
       </WrapperModal>
-      {isLoading && <Loader />}
     </>
   );
 }

@@ -51,6 +51,7 @@ const Location = ({ location, editing, setParent }) => {
             url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           />
         </MapContainer>
+        <hr className='my-1' />
       </div>
     )
   );

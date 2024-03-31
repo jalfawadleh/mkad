@@ -16,6 +16,8 @@ import {
   BoxCenterText,
   IconButton,
   IconCircleClose,
+  IconLoading,
+  IconSpin,
   LinkButton,
   LinkButtoneBack,
   WrapperModal,
@@ -28,6 +30,7 @@ function SettingsProfile() {
   const [editing, setEditing] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const [member, setMember] = useState({
     _id: user._id,
@@ -55,13 +58,13 @@ function SettingsProfile() {
 
   const onPut = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsUpdating(true);
     try {
       await axios
         .put("/members", member)
         .then(() => getMapItems())
         .then(() => toast("Updated"))
-        .then(() => setIsLoading(false))
+        .then(() => setIsUpdating(false))
         // in case name or location changed
         .then(() => setUser((prevState) => ({ ...prevState, name, location })));
     } catch (error) {
@@ -206,7 +209,9 @@ function SettingsProfile() {
             />
           )}
         </div>
-        <hr className='my-1' />
+
+        {isLoading && <IconLoading />}
+
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
           {editing ? (
@@ -215,7 +220,7 @@ function SettingsProfile() {
                 <IconButton>View</IconButton>
               </span>
               <span onClick={onPut}>
-                <IconButton>Update</IconButton>
+                <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
               </span>
             </>
           ) : (
@@ -226,7 +231,6 @@ function SettingsProfile() {
           <LinkButton to={"/account"}>Manage Account</LinkButton>
         </div>
       </WrapperModal>
-      {isLoading && <Loader />}
     </>
   );
 }
