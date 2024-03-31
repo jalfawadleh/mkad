@@ -107,105 +107,106 @@ function SettingsProfile() {
           <IconCircleClose />
         </div>
         <hr className='my-1' />
+        <div className='overflow-y-auto p-1 m-0'>
+          {editing && (
+            <FloatingLabel controlId='name' label='Name' className='mb-3'>
+              <Form.Control
+                type='text'
+                placeholder='Name'
+                name='name'
+                value={name}
+                onChange={onChange}
+              />
+              <Form.Text>Avatar depends on the name</Form.Text>
+            </FloatingLabel>
+          )}
 
-        {editing && (
-          <FloatingLabel controlId='name' label='Name' className='mb-3'>
-            <Form.Control
-              type='text'
-              placeholder='Name'
-              name='name'
-              value={name}
-              onChange={onChange}
-            />
-            <Form.Text>Avatar depends on the name</Form.Text>
-          </FloatingLabel>
-        )}
-
-        {editing ? (
-          <FloatingLabel
-            controlId='description'
-            label='Description'
-            className='mb-3'
-          >
-            <Form.Control
-              type='text'
-              placeholder='Description'
-              name='description'
-              value={description}
-              onChange={onChange}
-            />
-          </FloatingLabel>
-        ) : (
-          description && (
-            <>
-              <div className='d-flex justify-content-wrap p-2 m-1'>
-                {description}
-              </div>
-              <hr className='m-1' />
-            </>
-          )
-        )}
-
-        <ListItems
-          edit={editing}
-          message='Languages'
-          type='languages'
-          title='language'
-          items={languages}
-          setParent={setMember}
-        />
-
-        <ListItems
-          edit={editing}
-          message='Interests'
-          type='interests'
-          title='interest'
-          items={interests}
-          setParent={setMember}
-        />
-
-        <ListItems
-          edit={editing}
-          message='Offer'
-          type='helpOffered'
-          title='Help Offered'
-          items={helpOffered}
-          setParent={setMember}
-        />
-
-        <ListItems
-          edit={editing}
-          message='Want'
-          type='helpNeeded'
-          title='Help Needed'
-          items={helpNeeded}
-          setParent={setMember}
-        />
-
-        {editing && (
-          <>
-            <Form.Check // prettier-ignore
+          {editing ? (
+            <FloatingLabel
+              controlId='description'
+              label='Description'
               className='mb-3'
-              type='switch'
-              id='hidden'
-              label='Hide profile'
-              checked={hidden}
-              onChange={() =>
-                setMember((prev) => ({ ...prev, hidden: !hidden }))
-              }
-            />
-            <hr className='my-1' />
-          </>
-        )}
+            >
+              <Form.Control
+                type='text'
+                placeholder='Description'
+                name='description'
+                value={description}
+                onChange={onChange}
+              />
+            </FloatingLabel>
+          ) : (
+            description && (
+              <>
+                <div className='d-flex justify-content-wrap p-2 m-1'>
+                  {description}
+                </div>
+                <hr className='m-1' />
+              </>
+            )
+          )}
 
-        {editing && (
-          <Location
-            editing={editing}
-            location={location}
+          <ListItems
+            edit={editing}
+            message='Languages'
+            type='languages'
+            title='language'
+            items={languages}
             setParent={setMember}
           />
-        )}
 
+          <ListItems
+            edit={editing}
+            message='Interests'
+            type='interests'
+            title='interest'
+            items={interests}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={editing}
+            message='Offer'
+            type='helpOffered'
+            title='Help Offered'
+            items={helpOffered}
+            setParent={setMember}
+          />
+
+          <ListItems
+            edit={editing}
+            message='Want'
+            type='helpNeeded'
+            title='Help Needed'
+            items={helpNeeded}
+            setParent={setMember}
+          />
+
+          {editing && (
+            <>
+              <Form.Check // prettier-ignore
+                className='mb-3'
+                type='switch'
+                id='hidden'
+                label='Hide profile'
+                checked={hidden}
+                onChange={() =>
+                  setMember((prev) => ({ ...prev, hidden: !hidden }))
+                }
+              />
+              <hr className='my-1' />
+            </>
+          )}
+
+          {editing && (
+            <Location
+              editing={editing}
+              location={location}
+              setParent={setMember}
+            />
+          )}
+        </div>
+        <hr className='my-1' />
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
           {editing ? (
