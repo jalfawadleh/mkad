@@ -21,6 +21,8 @@ import {
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
+  const [places, setPlaces] = useState([]);
+
   const [folded, setFolded] = useState(false);
 
   const [query, setQuery] = useState({
@@ -43,17 +45,41 @@ const ScreenSearch = () => {
   } = query;
 
   const getResults = async () => {
-    if (text.length > 2)
+    if (text.length > 2) {
       try {
-        await axios.post("/search", query).then((res) => {
-          setResults(res.data).then(setFolded(false));
-        });
+        await axios
+          .post("/search", query)
+          .then((res) => setResults(res.data).then(setFolded(false)));
       } catch (error) {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);
         error?.response?.status > 499 && toast.error("Something went wrong");
       }
-    else setResults([]);
+
+      try {
+        await axios
+          .get(
+            `https://nominatim.openstreetmap.org/search?q=${query.text}&format=json&addressdetails=1&limit=5`
+          )
+          .then(({ data }) => {
+            console.log(data);
+            setPlaces(
+              data.map((place) => ({
+                _id: place.place_id,
+                name: place.addresstype + " - " + place.name,
+                type: "location",
+                location: { lat: place.lat, lng: place.lon },
+              }))
+            );
+            console.log(places);
+          })
+          .then(setFolded(false));
+      } catch (error) {
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      }
+    } else setResults([]);
   };
 
   const onSubmit = (e) => {
@@ -65,7 +91,7 @@ const ScreenSearch = () => {
     getResults();
     setFolded(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  }, [organisations, members, activities, messages, updates]);
 
   const toggleItem = (item) => {
     setQuery((prev) => ({
@@ -157,22 +183,27 @@ const ScreenSearch = () => {
     <>
       {topLayer}
       {!folded && filter && filtersBar}
+      {!folded && places.length ? <ListLinks items={places} /> : ""}
+      {!folded && results.length ? <ListLinks items={results} /> : ""}
       {!folded &&
-        (results.length ? (
-          <ListLinks items={results} />
+        !places.length &&
+        !results.length &&
+        (query.text.length < 3 ? (
+          <ChocolateBar>
+            <span role='button' className={iconWrapperClass}>
+              <IconExclamation color='#dddddd' />
+            </span>
+            <span className='m-auto'>Enter search query, min 3 letters</span>
+          </ChocolateBar>
         ) : (
           <ChocolateBar>
             <span role='button' className={iconWrapperClass}>
               <IconExclamation color='#dddddd' />
             </span>
-
-            <span className='m-auto'>
-              {text.length > 2
-                ? "Nothing Found"
-                : "Enter search query, min 3 letters"}
-            </span>
+            <span className='m-auto'>Nothing Found</span>
           </ChocolateBar>
         ))}
+
       <Outlet />
     </>
   );

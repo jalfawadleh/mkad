@@ -199,6 +199,19 @@ export const IconLinkCircleFlyTo = ({ location }) => {
   );
 };
 
+export const IconLocation = () => {
+  return (
+    <span className='p-0 m-0'>
+      <span
+        role='button'
+        className='p-1 m-1 badge rounded-pill border border-primary'
+      >
+        <FaLocationCrosshairs size={24} className={iconClass} />
+      </span>
+    </span>
+  );
+};
+
 export const IconMember = ({ color = iconColor }) => {
   return (
     <FaRegFaceGrinBeam color={color} size={iconSize} className={iconClass} />
@@ -359,20 +372,24 @@ export const ListManageActivities = ({ items }) => {
 };
 
 export const ListLinks = ({ items }) => {
-  return items.map((item) => (
-    <ChocolateBar key={item._id}>
-      {
+  return (
+    items.length &&
+    items.map((item) => (
+      <ChocolateBar key={item._id}>
         {
-          member: <LinkAvatarMember item={item} />,
-          activity: <LinkCircleIconActivity item={item} />,
-          organisation: <LinkCircleIconOrganisation item={item} />,
-        }[item.type]
-      }
+          {
+            location: <IconLinkCircleFlyTo location={item.location} />,
+            member: <LinkAvatarMember item={item} />,
+            activity: <LinkCircleIconActivity item={item} />,
+            organisation: <LinkCircleIconOrganisation item={item} />,
+          }[item.type]
+        }
 
-      <IconLinkCenterText item={item} />
-      <IconLinkCircleFlyTo location={item.location} />
-    </ChocolateBar>
-  ));
+        <IconLinkCenterText item={item} />
+        <IconLinkCircleFlyTo location={item.location} />
+      </ChocolateBar>
+    ))
+  );
 };
 
 export const WrapperModal = ({ children }) => {
