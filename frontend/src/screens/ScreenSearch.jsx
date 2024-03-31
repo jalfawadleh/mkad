@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -18,18 +18,22 @@ import {
   IconSearch,
   IconExclamation,
   IconLocation,
+  IconSpin,
 } from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
   const [places, setPlaces] = useState([]);
 
+  const [isGettingResults, setIsGettingResults] = useState(false);
+  const [isGettingPlaces, setIsGettingPlaces] = useState(false);
+
   const [folded, setFolded] = useState(false);
 
   const [query, setQuery] = useState({
     text: "",
-    filter: false,
-    locations: true,
+    filter: true,
+    locations: false,
     organisations: true,
     members: true,
     activities: true,
@@ -49,56 +53,74 @@ const ScreenSearch = () => {
 
   const getResults = async () => {
     if (text.length > 2) {
-      try {
-        await axios
-          .post("/search", query)
-          .then((res) => setResults(res.data).then(setFolded(false)));
-      } catch (error) {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      }
-      if (locations)
-        try {
-          await axios
-            .get(
-              `https://nominatim.openstreetmap.org/search?q=${query.text}&format=json&addressdetails=1&limit=5`
-            )
-            .then(({ data }) => {
-              console.log(data);
-              setPlaces(
-                data.map((place) => ({
-                  _id: place.place_id,
-                  name: place.name + ", " + place.address.country,
-                  type: "location",
-                  location: { lat: place.lat, lng: place.lon },
-                }))
-              );
-              console.log(places);
-            })
-            .then(setFolded(false));
-        } catch (error) {
-          error?.response?.data?.message &&
+      setIsGettingResults(true);
+      await axios
+        .post("/search", query)
+        .then((res) => setResults(res.data))
+        .then(() => setFolded(false))
+        .then(() => setIsGettingResults(false))
+        .catch((error) => {
+          if (error?.response?.data?.message)
             toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
+          if (error?.response?.status > 499) {
+            toast.error("Something went wrong!");
+            console.log("system down");
+          }
+        });
+    } else setResults([]);
+  };
+
+  const getPlaces = async () => {
+    setIsGettingPlaces(true);
+    await axios
+      .get(
+        `https://nominatim.openstreetmap.org/search?q=${query.text}&format=json&addressdetails=1&limit=5`
+      )
+      .then(({ data }) =>
+        setPlaces(
+          data.map((place) => ({
+            _id: place.place_id,
+            name: place.name + ", " + place.address.country,
+            type: "location",
+            location: { lat: place.lat, lng: place.lon },
+          }))
+        )
+      )
+      .then(() => setFolded(false))
+      .then(() => setIsGettingPlaces(false))
+      .catch((error) => {
+        if (error?.response?.data?.message)
+          toast.error(error?.response.data.message);
+        if (error?.response?.status > 499) {
+          toast.error("Something went wrong!");
+          console.log("system down");
         }
-      else setPlaces([]);
-    } else {
-      setResults([]);
-      setPlaces([]);
-    }
+      });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    setResults([]);
     getResults();
+
+    setPlaces([]);
+    if (locations) getPlaces();
   };
 
-  useEffect(() => {
-    getResults();
-    setFolded(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locations, organisations, members, activities, messages, updates]);
+  // useEffect(() => {
+  //   setPlaces([]);
+  //   getResults();
+  //   setFolded(false);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [organisations, members, activities, messages, updates]);
+
+  // useEffect(() => {
+  //   setPlaces([]);
+  //   getPlaces();
+  //   setFolded(false);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [locations]);
 
   const toggleItem = (item) => {
     setQuery((prev) => ({
@@ -139,7 +161,11 @@ const ScreenSearch = () => {
           disabled={!text}
           className='p-1 m-1 badge rounded-pill border bg-black border-primary'
         >
-          <IconSearch color={text ? "white" : "gray"} />
+          {isGettingPlaces || isGettingResults ? (
+            <IconSpin />
+          ) : (
+            <IconSearch color={text ? "white" : "gray"} />
+          )}
         </button>
       </ChocolateBar>
     </form>
@@ -199,25 +225,14 @@ const ScreenSearch = () => {
       {!folded && filter && filtersBar}
       {!folded && places.length ? <ListLinks items={places} /> : ""}
       {!folded && results.length ? <ListLinks items={results} /> : ""}
-      {!folded &&
-        !places.length &&
-        !results.length &&
-        (query.text.length < 3 ? (
-          <ChocolateBar>
-            <span role='button' className={iconWrapperClass}>
-              <IconExclamation color='#dddddd' />
-            </span>
-            <span className='m-auto'>Enter search query, min 3 letters</span>
-          </ChocolateBar>
-        ) : (
-          <ChocolateBar>
-            <span role='button' className={iconWrapperClass}>
-              <IconExclamation color='#dddddd' />
-            </span>
-            <span className='m-auto'>Nothing Found</span>
-          </ChocolateBar>
-        ))}
-      {JSON.stringify(query)}
+      {!folded && !places.length && !results.length && (
+        <ChocolateBar>
+          <span role='button' className={iconWrapperClass}>
+            <IconExclamation color='#dddddd' />
+          </span>
+          <span className='m-auto'>Enter search query, min 3 letters</span>
+        </ChocolateBar>
+      )}
       <Outlet />
     </>
   );
