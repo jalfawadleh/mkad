@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../store";
+import { IconButton } from "../common/LinkItems";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -66,22 +67,19 @@ function LoginForm() {
   return (
     <>
       <div id='login' className=' container'>
-        <div style={{ paddingTop: "80px" }} className='row'>
-          <div
-            style={{ margin: "0px auto", position: "relative" }}
-            className='col-12 col-md-6  col'
-          >
-            <div className='p-2 needs-validation border container'>
-              <div className='h4 mb-3 text-center container'>
-                {!register ? "Welcome Back" : "Create Account"}
+        <div className='row' style={{ paddingTop: "80px" }}>
+          <div className='col col-12 col-md-6 m-auto position-relative'>
+            <div className='p-2 needs-validation border border-primary-subtle container'>
+              <div className='d-flex justify-content-end m-1 p-1'>
+                <span className='h4 text-center m-auto'>
+                  {!register ? "Welcome Back" : "Create Account"}
+                </span>
                 {/* sdfsdf */}
-                <button
-                  type='submit'
-                  className='ms-3 btn btn-success'
-                  onClick={() => setRegister(!register)}
-                >
-                  {!register ? " or Join Us " : "or Login"}
-                </button>
+                <span role='button' onClick={() => setRegister(!register)}>
+                  <IconButton>
+                    {!register ? " or Join Us " : "or Login"}
+                  </IconButton>
+                </span>
               </div>
               <div className='text-center mb-3 container'>
                 <img height='100px' src='/logo.png' alt='Profile Photo' />
@@ -160,15 +158,35 @@ function LoginForm() {
                 )}
 
                 <div className='text-center container'>
-                  <button type='submit' className='w-50 btn btn-primary'>
-                    {register ? "Join " : "Login"}
+                  <button
+                    type='submit'
+                    role='button'
+                    className='text-center bg-black w-50 btn btn-primary border-0'
+                  >
+                    <IconButton>{register ? "Join " : "Login"}</IconButton>
                   </button>
                 </div>
               </form>
             </div>
           </div>
-          <div className='col-12 col-md-6 pt-4 pt-lg-0 col'>
-            <p>Example of how the website looks like</p>
+          <div className='col col-12 col-md-6 m-auto pt-sm-4 pt-md-0 position-relative'>
+            <div className='p-2 m-auto border container'>
+              <div id='carouselExample' className='carousel slide'>
+                <div className='carousel-inner'>
+                  <div className='carousel-item active'>
+                    <img src='c1.png' className='d-block w-100' alt='...' />
+                  </div>
+
+                  <div className='carousel-item'>
+                    <img src='c1.png' className='d-block w-100' alt='...' />
+                  </div>
+
+                  <div className='carousel-item'>
+                    <img src='c1.png' className='d-block w-100' alt='...' />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

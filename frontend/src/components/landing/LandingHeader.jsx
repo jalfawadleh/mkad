@@ -1,8 +1,8 @@
 const LandingHeader = () => {
   return (
     <>
-      <nav className='bg-black navbar navbar-expand-sm navbar-light fixed-top'>
-        <div className='bg-black border-bottom container'>
+      <nav className='bg-black navbar navbar-expand-sm navbar-light fixed-top border-primary-subtle border-bottom'>
+        <div className='bg-black container'>
           <a href='#' className='navbar-brand'>
             <h4>
               <img
