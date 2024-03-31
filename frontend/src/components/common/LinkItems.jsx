@@ -407,7 +407,7 @@ export const IconSpin = () => {
 
 export const IconLoading = () => {
   return (
-    <div className='d-block p-4 m-auto'>
+    <div className='d-block p-4 m-auto text-center'>
       <div
         className='spinner-border text-primary'
         role='status'

@@ -8,7 +8,6 @@ import Form from "react-bootstrap/Form";
 
 import { MapContext, UserContext } from "../../store.js";
 
-import Loader from "../common/Loader.jsx";
 import ListItems from "../common/ListItems.jsx";
 import Location from "../common/Location.jsx";
 import {
@@ -208,9 +207,9 @@ function SettingsProfile() {
               setParent={setMember}
             />
           )}
-        </div>
 
-        {isLoading && <IconLoading />}
+          {isLoading && <IconLoading />}
+        </div>
 
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />

@@ -5,7 +5,6 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 import { MapContext, UserContext } from "../../store.js";
-import Loader from "../common/Loader.jsx";
 
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
@@ -101,7 +100,7 @@ function ManageAccount() {
           <IconCircleClose />
         </div>
         <hr className='m-1' />
-        <div className='m-1 p-1'>
+        <div className='overflow-y-auto p-1 m-0'>
           <div className='p-0 mb-2 text-center'>
             Enter only fields you want to Update and Current Password
           </div>
@@ -174,16 +173,16 @@ function ManageAccount() {
           </FloatingLabel>
 
           {isLoading && <IconLoading />}
+        </div>
 
-          <div className='d-flex justify-content-between m-1 p-1'>
-            <LinkButtoneBack />
-            <span onClick={onPut}>
-              <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
-            </span>
-            <span onClick={onDelete}>
-              <IconButton>Delete</IconButton>
-            </span>
-          </div>
+        <div className='d-flex justify-content-between m-1 p-1'>
+          <LinkButtoneBack />
+          <span onClick={onPut}>
+            <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
+          </span>
+          <span onClick={onDelete}>
+            <IconButton>Delete</IconButton>
+          </span>
         </div>
       </WrapperModal>
     </>

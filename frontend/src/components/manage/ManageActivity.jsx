@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
-import Loader from "../common/Loader.jsx";
 
 import Form from "react-bootstrap/esm/Form";
 import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
@@ -270,8 +269,9 @@ const Activity = () => {
               setParent={setActivity}
             />
           )}
+          {isLoading && <IconLoading />}
         </div>
-        {isLoading && <IconLoading />}
+
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
           {isOwner && isEditing && !isCreating && (
