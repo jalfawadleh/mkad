@@ -17,6 +17,7 @@ import {
   IconFilter,
   IconSearch,
   IconExclamation,
+  IconLocation,
 } from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
@@ -28,6 +29,7 @@ const ScreenSearch = () => {
   const [query, setQuery] = useState({
     text: "",
     filter: false,
+    locations: true,
     organisations: true,
     members: true,
     activities: true,
@@ -37,6 +39,7 @@ const ScreenSearch = () => {
   const {
     text,
     filter,
+    locations,
     organisations,
     members,
     activities,
@@ -55,31 +58,35 @@ const ScreenSearch = () => {
           toast.error(error?.response.data.message);
         error?.response?.status > 499 && toast.error("Something went wrong");
       }
-
-      try {
-        await axios
-          .get(
-            `https://nominatim.openstreetmap.org/search?q=${query.text}&format=json&addressdetails=1&limit=5`
-          )
-          .then(({ data }) => {
-            console.log(data);
-            setPlaces(
-              data.map((place) => ({
-                _id: place.place_id,
-                name: place.addresstype + " - " + place.name,
-                type: "location",
-                location: { lat: place.lat, lng: place.lon },
-              }))
-            );
-            console.log(places);
-          })
-          .then(setFolded(false));
-      } catch (error) {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      }
-    } else setResults([]);
+      if (locations)
+        try {
+          await axios
+            .get(
+              `https://nominatim.openstreetmap.org/search?q=${query.text}&format=json&addressdetails=1&limit=5`
+            )
+            .then(({ data }) => {
+              console.log(data);
+              setPlaces(
+                data.map((place) => ({
+                  _id: place.place_id,
+                  name: place.name + ", " + place.address.country,
+                  type: "location",
+                  location: { lat: place.lat, lng: place.lon },
+                }))
+              );
+              console.log(places);
+            })
+            .then(setFolded(false));
+        } catch (error) {
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
+        }
+      else setPlaces([]);
+    } else {
+      setResults([]);
+      setPlaces([]);
+    }
   };
 
   const onSubmit = (e) => {
@@ -91,7 +98,7 @@ const ScreenSearch = () => {
     getResults();
     setFolded(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [organisations, members, activities, messages, updates]);
+  }, [locations, organisations, members, activities, messages, updates]);
 
   const toggleItem = (item) => {
     setQuery((prev) => ({
@@ -140,6 +147,13 @@ const ScreenSearch = () => {
 
   const filtersBar = (
     <ChocolateBar>
+      <span
+        role='button'
+        className={iconWrapperClass}
+        onClick={() => toggleItem({ locations })}
+      >
+        <IconLocation color={locations ? "white" : "gray"} />
+      </span>
       <span
         role='button'
         className={iconWrapperClass}
@@ -203,7 +217,7 @@ const ScreenSearch = () => {
             <span className='m-auto'>Nothing Found</span>
           </ChocolateBar>
         ))}
-
+      {JSON.stringify(query)}
       <Outlet />
     </>
   );

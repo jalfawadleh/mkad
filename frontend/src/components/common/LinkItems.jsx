@@ -199,17 +199,8 @@ export const IconLinkCircleFlyTo = ({ location }) => {
   );
 };
 
-export const IconLocation = () => {
-  return (
-    <span className='p-0 m-0'>
-      <span
-        role='button'
-        className='p-1 m-1 badge rounded-pill border border-primary'
-      >
-        <FaLocationCrosshairs size={24} className={iconClass} />
-      </span>
-    </span>
-  );
+export const IconLocation = ({ color }) => {
+  return <FaLocationCrosshairs color={color} size={24} className={iconClass} />;
 };
 
 export const IconMember = ({ color = iconColor }) => {
@@ -292,8 +283,8 @@ export const IconLinkCenterText = ({ item }) => {
 
 // Organisation
 
-export const IconOrganisation = () => {
-  return <FaHouseUser color={"white"} size={24} className={iconClass} />;
+export const IconOrganisation = ({ color = "white" }) => {
+  return <FaHouseUser color={color} size={24} className={iconClass} />;
 };
 
 export const CircleIconOrganisation = () => {
