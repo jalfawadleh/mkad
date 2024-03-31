@@ -6,9 +6,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { MapContext, UserContext } from "../../store.js";
 
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-
 import {
   IconButton,
   IconCircleClose,
@@ -104,18 +101,25 @@ function ManageAccount() {
           <div className='p-0 mb-2 text-center'>
             Enter only fields you want to Update and Current Password
           </div>
-          <FloatingLabel controlId='username' label='Username' className='mb-3'>
-            <Form.Control
+
+          <div className='form-floating mb-3'>
+            <input
               type='text'
+              className='form-control'
               placeholder='Username'
+              id='username'
               name='username'
               value={username}
               size='small'
               onChange={onChange}
             />
-          </FloatingLabel>
-          <FloatingLabel controlId='password' label='Password' className='mb-3'>
-            <Form.Control
+            <label htmlFor='username'>Username</label>
+          </div>
+
+          <div className='form-floating mb-3'>
+            <input
+              className='form-control'
+              id='password'
               type='password'
               placeholder='Password'
               name='password'
@@ -123,13 +127,13 @@ function ManageAccount() {
               size='small'
               onChange={onChange}
             />
-          </FloatingLabel>
-          <FloatingLabel
-            controlId='confirmPassword'
-            label='Confirm Password'
-            className='mb-3'
-          >
-            <Form.Control
+            <label htmlFor='password'>Password</label>
+          </div>
+
+          <div className='form-floating mb-3'>
+            <input
+              className='form-control mb-3'
+              id='confirmPassword'
               type='password'
               placeholder='Confirm Password'
               name='confirmPassword'
@@ -137,40 +141,43 @@ function ManageAccount() {
               size='small'
               onChange={onChange}
             />
-          </FloatingLabel>
+            <label htmlFor='confirmPassword'>Confirm Password</label>
+          </div>
+
           <div className='text-center'>
             Email will only be used for password reset
           </div>
-          <FloatingLabel
-            controlId='email'
-            label='Email address'
-            className='mb-3'
-          >
-            <Form.Control
+
+          <div className='form-floating mb-3'>
+            <input
+              className='form-control mb-3'
+              id='email'
               type='email'
-              placeholder='name@example.com'
+              placeholder='email@proton.me'
               name='email'
               value={email}
               size='small'
               onChange={onChange}
             />
-          </FloatingLabel>
+            <label htmlFor='email'>Email</label>
+          </div>
+
           <div className='text-center'>
             Enter Current password for verification
           </div>
-          <FloatingLabel
-            controlId='password'
-            label='Current Password'
-            className='mb-3'
-          >
-            <Form.Control
+
+          <div className='form-floating mb-3'>
+            <input
+              className='form-control'
+              id='currentPassword'
               type='password'
               placeholder='Current Password'
               name='currentPassword'
               value={currentPassword}
               onChange={onChange}
             />
-          </FloatingLabel>
+            <label htmlFor='currentPassword'>Current Password</label>
+          </div>
 
           {isLoading && <IconLoading />}
         </div>

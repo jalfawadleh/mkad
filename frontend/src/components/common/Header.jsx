@@ -1,6 +1,3 @@
-import Nav from "react-bootstrap/esm/Nav";
-import Navbar from "react-bootstrap/esm/Navbar";
-
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
 
@@ -78,18 +75,18 @@ const Header = () => {
 
   return (
     <>
-      <Navbar
-        className='d-none d-sm-block position-absolute end-0 p-0 bg-black '
-        style={{ top: "75px", margin: "6px", borderRadius: 25 }}
+      <nav
+        style={{ top: "75px", margin: "6px", borderRadius: "25px" }}
+        className='d-none d-sm-block position-absolute end-0 p-0 bg-black  navbar navbar-expand navbar-light'
       >
-        <Nav className='d-flex flex-column'>{headerLinks}</Nav>
-      </Navbar>
+        <div className='d-flex flex-column navbar-nav'>{headerLinks}</div>
+      </nav>
 
-      <Navbar className='w-100 position-absolute bottom-0 none d-sm-none'>
-        <Nav className='w-100 p-0 m-0 justify-content-around'>
+      <nav className='w-100 position-absolute bottom-0 none d-sm-none navbar navbar-expand navbar-light'>
+        <div className='w-100 p-0 m-0 justify-content-around navbar-nav'>
           {headerLinks}
-        </Nav>
-      </Navbar>
+        </div>
+      </nav>
     </>
   );
 };

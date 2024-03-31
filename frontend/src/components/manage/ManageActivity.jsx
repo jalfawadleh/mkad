@@ -4,9 +4,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
 
-import Form from "react-bootstrap/esm/Form";
-import FloatingLabel from "react-bootstrap/esm/FloatingLabel";
-
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
@@ -151,17 +148,40 @@ const Activity = () => {
 
         <div className='overflow-y-auto p-1 m-0'>
           {isEditing && (
-            <FloatingLabel controlId='name' label='Name' className='p-1 m-1'>
-              <Form.Control
-                type='text'
-                placeholder='Name'
-                name='name'
-                value={name}
-                onChange={onChange}
-                className='mt-1'
-                size='sm'
-              />
-            </FloatingLabel>
+            <>
+              <div className='text-center'>
+                Your Profile Avatar is based on your name
+              </div>
+              <div className='form-floating mb-3'>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='name'
+                  placeholder='Name'
+                  name='name'
+                  value={name}
+                  onChange={onChange}
+                />
+                <label htmlFor='name'>Name</label>
+              </div>
+            </>
+          )}
+
+          {isEditing && (
+            <>
+              <div className='form-floating mb-3'>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='description'
+                  placeholder='Description'
+                  name='name'
+                  value={name}
+                  onChange={onChange}
+                />
+                <label htmlFor='description'>Description</label>
+              </div>
+            </>
           )}
 
           <Period
@@ -173,25 +193,25 @@ const Activity = () => {
 
           {isEditing ? (
             <>
-              <FloatingLabel
-                controlId='description'
-                label='Description'
-                className='p-1 m-1'
-              >
-                <Form.Control
-                  type='description'
+              <div className='form-floating mb-3'>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='description'
                   placeholder='Description'
                   name='description'
                   value={description}
                   onChange={onChange}
                 />
-              </FloatingLabel>
-              <hr className='m-1' />
+                <label htmlFor='description'>Description</label>
+              </div>
             </>
           ) : (
             description && (
               <>
-                <div className='p-2 m-0'>{description}</div>{" "}
+                <div className='d-flex justify-content-wrap p-2 m-1'>
+                  {description}
+                </div>
                 <hr className='m-1' />
               </>
             )
@@ -244,21 +264,26 @@ const Activity = () => {
 
           {isEditing && (
             <>
-              <Form.Check // prettier-ignore
-                className='mb-3'
-                type='checkbox'
-                id='hidden'
-                label='Hide activity from search and map'
-                name='hidden'
-                checked={hidden}
-                onChange={() => {
-                  setActivity((prevState) => ({
-                    ...prevState,
-                    hidden: !hidden,
-                  }));
-                }}
-              />
-              <hr className='m-1' />
+              <div className='d-flex p-1 m-1 justify-content-left'>
+                <input
+                  type='checkbox'
+                  className='btn-check mb-3'
+                  id='hidden'
+                  autoComplete='off'
+                  checked={hidden}
+                  onChange={() =>
+                    setActivity((prev) => ({ ...prev, hidden: !hidden }))
+                  }
+                />
+                <label className='btn btn-outline-warning ' htmlFor='hidden'>
+                  Hide Activity
+                </label>
+                <div className='m-auto'>
+                  Your Activity
+                  {hidden ? " is hidden" : " is public"}
+                </div>
+              </div>
+              <hr className='my-1' />
             </>
           )}
 

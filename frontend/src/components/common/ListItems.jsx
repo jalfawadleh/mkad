@@ -1,9 +1,4 @@
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Stack from "react-bootstrap/Stack";
-import Badge from "react-bootstrap/Badge";
-
 const ListItems = ({
   message = "",
   type,
@@ -37,48 +32,45 @@ const ListItems = ({
   return (
     <>
       {items?.length > 0 && (
-        <>
-          <div className='p-1 m-1 inline-block'>
-            <span className='font-weight-bold m-2'>{message}</span>
-            {items.map((i, index) => (
-              <Badge key={index} pill bg='dark' className='m-1 p-0'>
-                <span className='p-0 m-1 text-light'>{i.name}</span>
-                {edit && (
-                  <Badge
-                    pill
-                    bg='danger'
-                    className='p-1 m-0'
-                    onClick={() => delItem(i)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    X
-                  </Badge>
-                )}
-              </Badge>
-            ))}
-          </div>
-        </>
+        <div className='p-1 m-1 inline-block'>
+          <span className='font-weight-bold m-2'>{message}</span>
+          {items.map((i, index) => (
+            <span key={index} className='m-1 bg-black'>
+              <span className='m-1 text-light'>{i.name}</span>
+              {edit && (
+                <span
+                  role='button'
+                  className='p-1 badge rounded-pill bg-danger'
+                  onClick={() => delItem(i)}
+                >
+                  X
+                </span>
+              )}
+            </span>
+          ))}
+        </div>
       )}
       {edit && (
-        <>
-          <div className='p-1 m-1 inline-block'>
-            <form onSubmit={onSubmit}>
-              <Stack direction='horizontal' gap={2}>
-                <Form.Control
-                  type='text'
-                  placeholder={"Enter " + title}
-                  value={item}
-                  onChange={(e) => setItem(e.target.value)}
-                  size='sm'
-                />
-
-                <Button disabled={!item} size='sm' type='submit'>
-                  +
-                </Button>
-              </Stack>
-            </form>
-          </div>
-        </>
+        <div className='p-1 m-1 inline-block'>
+          <form onSubmit={onSubmit}>
+            <div className='hstack gap-2'>
+              <input
+                placeholder={"Enter " + title}
+                value={item}
+                onChange={(e) => setItem(e.target.value)}
+                type='text'
+                className='form-control form-control-sm'
+              />
+              <button
+                type='submit'
+                disabled={!item}
+                className='btn btn-primary btn-sm'
+              >
+                +
+              </button>
+            </div>
+          </form>
+        </div>
       )}
       {items?.length > 0 && <hr className='m-1' />}
     </>

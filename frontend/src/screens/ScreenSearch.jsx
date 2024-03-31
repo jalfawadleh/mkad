@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import Form from "react-bootstrap/Form";
 
 import {
   ListLinks,
@@ -140,11 +139,12 @@ const ScreenSearch = () => {
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
-        <Form.Control
-          autoFocus={true}
-          className='bg-black p-1 m-1'
-          placeholder='Search'
+        <input
           size='sm'
+          autoFocus={true}
+          className='form-control form-control-sm bg-black p-1 m-1'
+          placeholder='Search'
+          value={text}
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, text: e.target.value }))
           }

@@ -1,38 +1,55 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-
 const LandingHeader = () => {
   return (
     <>
-      <Navbar collapseOnSelect fixed='top' expand='sm' className='bg-black'>
-        <Container className='bg-black border-bottom'>
-          <Navbar.Brand href='#'>
+      <nav className='bg-black navbar navbar-expand-sm navbar-light fixed-top'>
+        <div className='bg-black border-bottom container'>
+          <a href='#' className='navbar-brand'>
             <h4>
               <img
                 src='/logo.png'
                 alt='δ'
                 className='img-thumbnail border-0'
-                height={30}
-                width={30}
+                height='30'
+                width='30'
                 style={{ marginTop: "-6px" }}
               />
               MKaδifference
             </h4>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse
-            id='basic-navbar-nav'
-            className='justify-content-end'
+          </a>
+          <button
+            aria-controls='basic-navbar-nav'
+            type='button'
+            aria-label='Toggle navigation'
+            className='navbar-toggler collapsed'
           >
-            <Nav>
-              <Nav.Link href='#login'>Login or Join</Nav.Link>
-              <Nav.Link href='#about'>Who We Are</Nav.Link>
-              <Nav.Link href='#faq'>Why Join Us</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+            <span className='navbar-toggler-icon'></span>
+          </button>
+          <div
+            className='justify-content-end navbar-collapse collapse'
+            id='basic-navbar-nav'
+          >
+            <div className='navbar-nav'>
+              <a
+                href='#login'
+                data-rr-ui-event-key='#login'
+                className='nav-link'
+              >
+                Login or Join
+              </a>
+              <a
+                href='#about'
+                data-rr-ui-event-key='#about'
+                className='nav-link'
+              >
+                Who We Are
+              </a>
+              <a href='#faq' data-rr-ui-event-key='#faq' className='nav-link'>
+                Why Join Us
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
     </>
   );
 };

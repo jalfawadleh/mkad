@@ -1,16 +1,11 @@
 import { useState, useContext } from "react";
-import { toast } from "react-toastify";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { UserContext } from "../../store";
 
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/esm/Container";
-import Col from "react-bootstrap/esm/Col";
-import Row from "react-bootstrap/esm/Row";
-
 function LoginForm() {
+  // const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
   const [register, setRegister] = useState(false);
 
@@ -70,117 +65,113 @@ function LoginForm() {
 
   return (
     <>
-      <Container className='bg-black' id='login'>
-        <Row style={{ paddingTop: "80px" }}>
-          <Col
-            className='col-12 col-md-6 '
-            style={{ margin: "0 auto", position: "relative" }}
+      <div id='login' className=' container'>
+        <div style={{ paddingTop: "80px" }} className='row'>
+          <div
+            style={{ margin: "0px auto", position: "relative" }}
+            className='col-12 col-md-6  col'
           >
-            <Container className='p-2 needs-validation border'>
-              <Container className='h4 mb-3 text-center'>
+            <div className='p-2 needs-validation border container'>
+              <div className='h4 mb-3 text-center container'>
                 {!register ? "Welcome Back" : "Create Account"}
-                <Button
-                  variant='success'
+                {/* sdfsdf */}
+                <button
                   type='submit'
-                  className='ms-3'
+                  className='ms-3 btn btn-success'
                   onClick={() => setRegister(!register)}
                 >
-                  or {!register ? "Join " : "Login"}
-                </Button>
-              </Container>
-              <Container className='text-center mb-3'>
+                  {!register ? " or Join Us " : "or Login"}
+                </button>
+              </div>
+              <div className='text-center mb-3 container'>
                 <img height='100px' src='/logo.png' alt='Profile Photo' />
-              </Container>
-
-              <Form onSubmit={onSubmit}>
-                <FloatingLabel
-                  controlId='username'
-                  label='Username'
-                  className='mb-3'
-                >
-                  <Form.Control
-                    type='text'
+              </div>
+              <form onSubmit={onSubmit}>
+                <div className='mb-3 form-floating'>
+                  <input
                     placeholder='Username'
                     name='username'
+                    type='text'
+                    id='username'
+                    className='form-control'
                     value={username}
                     onChange={onChange}
                   />
-                </FloatingLabel>
+                  <label htmlFor='username'>Username</label>
+                </div>
 
-                <FloatingLabel
-                  controlId='password'
-                  label='Password'
-                  className='mb-3'
-                >
-                  <Form.Control
-                    type='password'
+                <div className='mb-3 form-floating'>
+                  <input
                     placeholder='Password'
                     name='password'
+                    type='password'
+                    id='password'
+                    className='form-control'
                     value={password}
                     onChange={onChange}
                   />
-                </FloatingLabel>
+                  <label htmlFor='password'>Password</label>
+                </div>
 
                 {register && (
                   <>
-                    <FloatingLabel
-                      controlId='confirmPassword'
-                      label='Confirm Password'
-                      className='mb-3'
-                    >
-                      <Form.Control
-                        type='password'
+                    <div className='mb-3 form-floating'>
+                      <input
                         placeholder='Confirm Password'
                         name='confirmPassword'
+                        type='password'
+                        id='confirmPassword'
+                        className='form-control'
                         value={confirmPassword}
                         onChange={onChange}
                       />
-                    </FloatingLabel>
-                    <FloatingLabel
-                      controlId='name'
-                      label='Name'
-                      className='mb-3'
-                    >
-                      <Form.Control
-                        type='text'
+                      <label htmlFor='confirmPassword'>Confirm Password</label>
+                    </div>
+
+                    <div className='mb-3 form-floating'>
+                      <input
                         placeholder='Name'
                         name='name'
+                        type='text'
+                        id='name'
+                        className='form-control'
                         value={name}
                         onChange={onChange}
                       />
-                    </FloatingLabel>
-                    <FloatingLabel
-                      controlId='email'
-                      label='Email address'
-                      className='mb-3'
-                    >
-                      <Form.Control
-                        type='email'
+                      <label htmlFor='name'>Name</label>
+                    </div>
+
+                    <div className='mb-3 form-floating'>
+                      <input
                         placeholder='name@example.com'
                         name='email'
+                        type='email'
+                        id='email'
+                        className='form-control'
                         value={email}
                         onChange={onChange}
                       />
                       <small id='emailHelp' className='text-muted'>
                         Email will only be used for password reset
                       </small>
-                    </FloatingLabel>
+                      <label htmlFor='email'>Email address</label>
+                    </div>
                   </>
                 )}
 
-                <Container className='text-center'>
-                  <Button variant='primary' type='submit' className='w-50 '>
+                <div className='text-center container'>
+                  <button type='submit' className='w-50 btn btn-primary'>
                     {register ? "Join " : "Login"}
-                  </Button>
-                </Container>
-              </Form>
-            </Container>
-          </Col>
-          <Col className='col-12 col-md-6 pt-4 pt-lg-0'>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div className='col-12 col-md-6 pt-4 pt-lg-0 col'>
             <p>Example of how the website looks like</p>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

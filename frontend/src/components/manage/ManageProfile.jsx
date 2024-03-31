@@ -3,9 +3,6 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import FloatingLabel from "react-bootstrap/FloatingLabel";
-import Form from "react-bootstrap/Form";
-
 import { MapContext, UserContext } from "../../store.js";
 
 import ListItems from "../common/ListItems.jsx";
@@ -111,32 +108,38 @@ function SettingsProfile() {
         <hr className='my-1' />
         <div className='overflow-y-auto p-1 m-0'>
           {editing && (
-            <FloatingLabel controlId='name' label='Name' className='mb-3'>
-              <Form.Control
-                type='text'
-                placeholder='Name'
-                name='name'
-                value={name}
-                onChange={onChange}
-              />
-              <Form.Text>Avatar depends on the name</Form.Text>
-            </FloatingLabel>
+            <>
+              <div className='text-center'>
+                Your Profile Avatar is based on your name
+              </div>
+              <div className='form-floating mb-3'>
+                <input
+                  type='text'
+                  className='form-control'
+                  id='name'
+                  placeholder='Name'
+                  name='name'
+                  value={name}
+                  onChange={onChange}
+                />
+                <label htmlFor='name'>Name</label>
+              </div>
+            </>
           )}
 
           {editing ? (
-            <FloatingLabel
-              controlId='description'
-              label='Description'
-              className='mb-3'
-            >
-              <Form.Control
+            <div className='form-floating mb-3'>
+              <input
                 type='text'
+                className='form-control'
+                id='description'
                 placeholder='Description'
                 name='description'
                 value={description}
                 onChange={onChange}
               />
-            </FloatingLabel>
+              <label htmlFor='description'>Description</label>
+            </div>
           ) : (
             description && (
               <>
@@ -186,16 +189,25 @@ function SettingsProfile() {
 
           {editing && (
             <>
-              <Form.Check // prettier-ignore
-                className='mb-3'
-                type='switch'
-                id='hidden'
-                label='Hide profile'
-                checked={hidden}
-                onChange={() =>
-                  setMember((prev) => ({ ...prev, hidden: !hidden }))
-                }
-              />
+              <div className='d-flex p-1 m-1 justify-content-left'>
+                <input
+                  type='checkbox'
+                  className='btn-check mb-3'
+                  id='hidden'
+                  autoComplete='off'
+                  checked={hidden}
+                  onChange={() =>
+                    setMember((prev) => ({ ...prev, hidden: !hidden }))
+                  }
+                />
+                <label className='btn btn-outline-warning ' htmlFor='hidden'>
+                  Hide Profile
+                </label>
+                <div className='m-auto'>
+                  Your profile
+                  {hidden ? " is hidden" : " is public"}
+                </div>
+              </div>
               <hr className='my-1' />
             </>
           )}
