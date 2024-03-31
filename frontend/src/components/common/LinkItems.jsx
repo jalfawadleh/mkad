@@ -392,3 +392,29 @@ export const WrapperModal = ({ children }) => {
     </div>
   );
 };
+
+export const IconSpin = () => {
+  return (
+    <div
+      className='spinner-border text-primary'
+      role='status'
+      style={{ height: 20, width: 20, padding: 0, margin: 0 }}
+    >
+      <span className='visually-hidden w-100 h-100'>Loading...</span>
+    </div>
+  );
+};
+
+export const IconLoading = () => {
+  return (
+    <div className='d-block p-4 m-auto'>
+      <div
+        className='spinner-border text-primary'
+        role='status'
+        style={{ height: 100, width: 100 }}
+      >
+        <span className='visually-hidden w-100 h-100'>Loading...</span>
+      </div>
+    </div>
+  );
+};

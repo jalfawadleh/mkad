@@ -4,13 +4,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import Loader from "./common/Loader.jsx";
-
 import ListItems from "./common/ListItems.jsx";
 import {
   AvatarMember,
   BoxCenterText,
   IconCircleClose,
+  IconLoading,
   LinkButtoneBack,
   WrapperModal,
 } from "./common/LinkItems.jsx";
@@ -102,10 +101,11 @@ function Member() {
           setParent={setItem}
         />
 
+        {isLoading && <IconLoading />}
+
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
         </div>
-        {isLoading && <Loader />}
       </WrapperModal>
     </>
   );

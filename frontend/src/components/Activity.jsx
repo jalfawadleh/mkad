@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import Loader from "./common/Loader.jsx";
 import ListItems from "./common/ListItems.jsx";
 
 import {
@@ -15,6 +14,8 @@ import {
   IconCircleClose,
   LinkButtoneBack,
   WrapperModal,
+  IconSpin,
+  IconLoading,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
@@ -22,6 +23,7 @@ const Activity = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [isJoining, setIsJoining] = useState(false);
   const [isMember, setIsMembers] = useState(false);
 
   const [activity, setActivity] = useState({
@@ -65,12 +67,12 @@ const Activity = () => {
   };
 
   const joinActivity = async () => {
-    setIsLoading(true);
+    setIsJoining(true);
     try {
       await axios
         .get(`/activities/join/${id}`)
         .then((res) => setActivity(res.data))
-        .then(() => setIsLoading(false));
+        .then(() => setIsJoining(false));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -111,7 +113,9 @@ const Activity = () => {
         <div className='d-flex justify-content-wrap p-1 m-1'>
           <LinkAvatarMember item={createdBy} />
           <span onClick={() => toggleJoin()}>
-            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+            <IconButton>
+              {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
+            </IconButton>
           </span>
           {members.map((m) => (
             <LinkAvatarMember item={m} key={m._id} />
@@ -172,11 +176,11 @@ const Activity = () => {
           items={languages}
           setParent={setActivity}
         />
+        {isLoading && <IconLoading />}
 
         <div className='d-flex justify-content-between m-1 p-1'>
           <LinkButtoneBack />
         </div>
-        {isLoading && <Loader />}
       </WrapperModal>
     </>
   );
