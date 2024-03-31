@@ -20,8 +20,6 @@ import { MapContext } from "../../store";
 
 import Header from "./Header";
 
-// https://akursat.gitbook.io/marker-cluster/examples/custom-marker-clusters
-
 const Map = () => {
   const { user } = useContext(UserContext);
 
@@ -121,6 +119,44 @@ const Map = () => {
     </Marker>
   );
 
+  // NOTE: iconCreateFunction is running by leaflet, which is not support ES6 arrow func syntax
+  // eslint-disable-next-line
+  const createClusterActivitiesIcon = function (cluster) {
+    return L.divIcon({
+      html: `
+      <span class="d-block p-0 bg-black text-center fw-bold border border-3 border-warning rounded-circle " style="margin-top: -24px; width:34px;">
+        ${cluster.getChildCount()}
+      </span>
+      <img src="./flag.svg" height="34px" class="bg-black position-absolute top-0 start-0 border border-3 border-warning rounded-circle"/>`,
+      iconSize: L.point(0, 0),
+      class: "bg-black",
+    });
+  };
+
+  const createClusterOrganisationsIcon = function (cluster) {
+    return L.divIcon({
+      html: `
+      <span class="d-block p-0 bg-black text-center fw-bold border border-3 border-warning rounded-circle " style="margin-top: -24px; width:34px;">
+        ${cluster.getChildCount()}
+      </span>
+      <img src="./organisation.svg" height="34px" class="bg-black position-absolute top-0 start-0 border border-3 border-warning rounded-circle"/>`,
+      iconSize: L.point(0, 0),
+      class: "bg-black",
+    });
+  };
+
+  const createClusterMembersIcon = function (cluster) {
+    return L.divIcon({
+      html: `
+      <span class="d-block p-0 bg-black text-center fw-bold border border-3 border-warning rounded-circle " style="margin-top: -24px; width:34px;">
+        ${cluster.getChildCount()}
+      </span>
+      <img src="./member.svg" height="34px" class="bg-black position-absolute top-0 start-0 border border-3 border-warning rounded-circle"/>`,
+      iconSize: L.point(0, 0),
+      class: "bg-black",
+    });
+  };
+
   return (
     <>
       <MapContext.Provider value={{ mapCenter, setMapCenter, getMapItems }}>
@@ -148,7 +184,11 @@ const Map = () => {
           style={{ zIndex: -1 }}
         >
           <Recenter />
-          <MarkerClusterGroup chunkedLoading>
+          <MarkerClusterGroup
+            iconCreateFunction={createClusterMembersIcon}
+            maxClusterRadius={150}
+            chunkedLoading
+          >
             {items &&
               items.map(
                 (item) =>
@@ -157,7 +197,11 @@ const Map = () => {
                   )
               )}
           </MarkerClusterGroup>
-          <MarkerClusterGroup chunkedLoading>
+          <MarkerClusterGroup
+            iconCreateFunction={createClusterOrganisationsIcon}
+            maxClusterRadius={150}
+            chunkedLoading
+          >
             {items &&
               items.map(
                 (item) =>
@@ -166,7 +210,11 @@ const Map = () => {
                   )
               )}
           </MarkerClusterGroup>
-          <MarkerClusterGroup chunkedLoading>
+          <MarkerClusterGroup
+            iconCreateFunction={createClusterActivitiesIcon}
+            maxClusterRadius={150}
+            chunkedLoading
+          >
             {items &&
               items.map(
                 (item) =>
