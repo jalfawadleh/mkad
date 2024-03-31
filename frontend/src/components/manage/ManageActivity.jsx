@@ -176,7 +176,7 @@ const Activity = () => {
                   id='description'
                   placeholder='Description'
                   name='name'
-                  value={name}
+                  value={description}
                   onChange={onChange}
                 />
                 <label htmlFor='description'>Description</label>
