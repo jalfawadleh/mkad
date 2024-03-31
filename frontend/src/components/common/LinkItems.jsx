@@ -64,20 +64,22 @@ export const Box = ({ children }) => {
 export const BoxCenterText = ({ text }) => {
   return (
     <Box>
-      <span className='h5'>{text}</span>
+      <span className='h5 text-wrap'>{text}</span>
     </Box>
   );
 };
 
 export const IconCircleClose = () => {
   return (
-    <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
-      role='button'
-    >
-      <Link to='/'>
-        <AiOutlineClose color='white' size={iconSize} className={iconClass} />
-      </Link>
+    <span>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <Link to='/'>
+          <AiOutlineClose color='white' size={iconSize} className={iconClass} />
+        </Link>
+      </span>
     </span>
   );
 };
@@ -127,11 +129,17 @@ export const IconAccount = () => {
 
 export const IconCirlceAccount = () => {
   return (
-    <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
-      role='button'
-    >
-      <MdOutlineManageAccounts color='white' size={24} className={iconClass} />
+    <span>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <MdOutlineManageAccounts
+          color='white'
+          size={24}
+          className={iconClass}
+        />
+      </span>
     </span>
   );
 };
@@ -151,11 +159,13 @@ export const IconAddLink = ({ color = iconColor }) => {
 
 export const IconCircleHelp = ({ color = iconColor }) => {
   return (
-    <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
-      role='button'
-    >
-      <FaQuestion color={color} size={iconSize} className={iconClass} />
+    <span>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <FaQuestion color={color} size={iconSize} className={iconClass} />
+      </span>
     </span>
   );
 };
@@ -211,13 +221,15 @@ export const IconMember = ({ color = iconColor }) => {
 
 export const AvatarMember = ({ name = "na" }) => {
   return (
-    <img
-      height={iconSize + 10}
-      width={iconSize + 10}
-      src={"https://api.multiavatar.com/" + name + ".png"}
-      alt='Profile Photo'
-      className='p-0 m-1'
-    />
+    <span>
+      <img
+        height={iconSize + 10}
+        width={iconSize + 10}
+        src={"https://api.multiavatar.com/" + name + ".png"}
+        alt='Profile Photo'
+        className='p-0 m-1'
+      />
+    </span>
   );
 };
 
@@ -289,9 +301,11 @@ export const IconOrganisation = ({ color = "white" }) => {
 
 export const CircleIconOrganisation = () => {
   return (
-    <Circle>
-      <IconOrganisation />
-    </Circle>
+    <span>
+      <Circle>
+        <IconOrganisation />
+      </Circle>
+    </span>
   );
 };
 
@@ -307,11 +321,13 @@ export const LinkCircleIconOrganisation = ({ item }) => {
 
 export const IconCircleActivity = ({ color = iconColor }) => {
   return (
-    <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
-      role='button'
-    >
-      <BiSolidFlag color={color} size={iconSize} className={iconClass} />
+    <span>
+      <span
+        className='p-1 m-1 badge rounded-pill border border-primary'
+        role='button'
+      >
+        <BiSolidFlag color={color} size={iconSize} className={iconClass} />
+      </span>
     </span>
   );
 };

@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Location from "../common/Location.jsx";
 import Period from "../common/Period.jsx";
 import {
+  BoxCenterText,
   IconButton,
   IconCircleActivity,
   IconCircleClose,
@@ -139,9 +140,7 @@ const Activity = () => {
         {/* icon title join and close */}
         <div className='d-flex justify-content-between m-1 p-1'>
           <IconCircleActivity />
-          <div className='p-1 m-1 badge border border-primary w-100'>
-            <span className='h5'>{name}</span>
-          </div>
+          <BoxCenterText text={name} />
           <IconCircleClose />
         </div>
         <hr className='m-1' />

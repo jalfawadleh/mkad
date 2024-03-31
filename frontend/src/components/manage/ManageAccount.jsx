@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { MapContext, UserContext } from "../../store.js";
 
 import {
+  BoxCenterText,
   IconButton,
   IconCircleClose,
   IconCirlceAccount,
@@ -91,9 +92,7 @@ function ManageAccount() {
         {/* icon title join and close */}
         <div className='d-flex justify-content-between m-1 p-1'>
           <IconCirlceAccount />
-          <div className='p-1 m-1 badge border border-primary w-100'>
-            <span className='h5'>Update Account</span>
-          </div>
+          <BoxCenterText text='Update Account' />
           <IconCircleClose />
         </div>
         <hr className='m-1' />

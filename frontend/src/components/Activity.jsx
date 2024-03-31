@@ -16,6 +16,7 @@ import {
   WrapperModal,
   IconSpin,
   IconLoading,
+  BoxCenterText,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
 
@@ -101,10 +102,7 @@ const Activity = () => {
         {/* icon title join and close */}
         <div className='d-flex justify-content-between m-1 p-1'>
           <IconCircleActivity />
-
-          <div className='p-1 m-1 badge border border-primary w-100'>
-            <span className='h5'>{name}</span>
-          </div>
+          <BoxCenterText text={name} />
           <IconCircleClose />
         </div>
         <hr className='m-1' />
