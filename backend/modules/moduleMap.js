@@ -4,6 +4,9 @@ import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
 import Activities from "../models/modelActivities.js";
 
+import dotenv from "dotenv";
+dotenv.config();
+
 // @desc    Get Items
 // @route   GET /api/map/
 // @access  Private
@@ -31,7 +34,7 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
   const fields = "name type location";
   const hidden = false;
 
-  const coverage = 7;
+  const coverage = parseInt(process.env.MAPCOVERAGE);
 
   const lngMax = parseFloat(req.body.lng) + coverage;
   const lngMin = parseFloat(req.body.lng) - coverage;
