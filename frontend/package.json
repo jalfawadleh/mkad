@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@multiavatar/multiavatar": "^1.0.7",
     "@srexi/purecounterjs": "^1.5.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
