@@ -5,7 +5,6 @@ import helmet from "helmet";
 import compression from "compression";
 
 import dotenv from "dotenv";
-dotenv.config();
 
 import connectDB from "./config/db.js";
 
@@ -17,6 +16,8 @@ import activities from "./modules/moduleActivities.js";
 import organisations from "./modules/moduleOrganisations.js";
 import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
+
+dotenv.config();
 
 const port = process.env.PORT || 3001;
 
@@ -54,7 +55,7 @@ app.use("/api/organisations", organisations);
 app.use("/api/search", search);
 app.use("/api/map", map);
 
-if (process.env.NODE_ENV === "production" || true) {
+if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) =>

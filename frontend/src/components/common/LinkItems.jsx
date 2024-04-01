@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MapContext } from "../../store";
 
+import multiavatar from "@multiavatar/multiavatar/esm";
+
 import { BiSolidFlag } from "react-icons/bi";
 import { FaHouseUser } from "react-icons/fa";
 import { FaLocationCrosshairs } from "react-icons/fa6";
@@ -175,7 +177,7 @@ export const IconHelp = ({ color = iconColor }) => {
 };
 
 export const IconFlyTo = ({ location }) => {
-  const { setMapCenter } = useContext(MapContext);
+  const { setFlyToLocation } = useContext(MapContext);
   return (
     <span
       role='button'
@@ -185,14 +187,16 @@ export const IconFlyTo = ({ location }) => {
         size={iconSize}
         className={iconClass}
         color={"white"}
-        onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
+        onClick={() =>
+          setFlyToLocation({ lng: location.lng, lat: location.lat })
+        }
       />
     </span>
   );
 };
 
 export const IconLinkCircleFlyTo = ({ location }) => {
-  const { setMapCenter } = useContext(MapContext);
+  const { setFlyToLocation } = useContext(MapContext);
   return (
     <span className='p-0 m-0'>
       <span
@@ -202,7 +206,9 @@ export const IconLinkCircleFlyTo = ({ location }) => {
         <FaLocationCrosshairs
           size={24}
           className={iconClass}
-          onClick={() => setMapCenter({ lng: location.lng, lat: location.lat })}
+          onClick={() =>
+            setFlyToLocation({ lng: location.lng, lat: location.lat })
+          }
         />
       </span>
     </span>
@@ -221,15 +227,13 @@ export const IconMember = ({ color = iconColor }) => {
 
 export const AvatarMember = ({ name = "na" }) => {
   return (
-    <span>
-      <img
-        height={iconSize + 10}
-        width={iconSize + 10}
-        src={"https://api.multiavatar.com/" + name + ".png"}
-        alt='Profile Photo'
-        className='p-0 m-1'
-      />
-    </span>
+    <img
+      height={34}
+      width={34}
+      src={`data:image/svg+xml;utf8,${encodeURIComponent(multiavatar(name))}`}
+      alt='Profile Photo'
+      className='p-0 m-1'
+    />
   );
 };
 
@@ -240,11 +244,12 @@ export const LinkAvatarMember = ({ item }) => {
       to={"/member/" + item._id}
     >
       <img
-        height={34}
+        className='p-0 m-0'
         width={34}
-        src={"https://api.multiavatar.com/" + item.name + ".png"}
-        alt='Profile Photo'
-        className='p-0 m-1'
+        height={34}
+        src={`data:image/svg+xml;utf8,${encodeURIComponent(
+          multiavatar(item.name)
+        )}`}
       />
     </Link>
   );

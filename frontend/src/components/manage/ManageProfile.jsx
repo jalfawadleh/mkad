@@ -21,7 +21,7 @@ import {
 
 function SettingsProfile() {
   const { user, setUser } = useContext(UserContext);
-  const { getMapItems } = useContext(MapContext);
+  const { setFlyToLocation } = useContext(MapContext);
 
   const [editing, setEditing] = useState(false);
 
@@ -58,7 +58,7 @@ function SettingsProfile() {
     try {
       await axios
         .put("/members", member)
-        .then(() => getMapItems())
+        .then(() => setFlyToLocation(location))
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
         // in case name or location changed

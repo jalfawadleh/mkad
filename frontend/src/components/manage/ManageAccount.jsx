@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 import { toast } from "react-toastify";
-import { MapContext, UserContext } from "../../store.js";
+import { UserContext } from "../../store.js";
 
 import {
   BoxCenterText,
@@ -18,12 +17,9 @@ import {
 } from "../common/LinkItems.jsx";
 
 function ManageAccount() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const { user } = useContext(UserContext);
-  const { getMapItems } = useContext(MapContext);
-
+  const { user, setUser } = useContext(UserContext);
   const [newDetails, setNewDetails] = useState({
     _id: user._id,
     username: "",
@@ -66,11 +62,7 @@ function ManageAccount() {
     if (result) {
       setIsLoading(true);
       try {
-        await axios
-          .delete(`/users`)
-          .then(() => getMapItems())
-          .then(() => setIsLoading(false))
-          .then(() => navigate(-1));
+        await axios.delete(`/users`).then(() => setUser([]));
       } catch (error) {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);

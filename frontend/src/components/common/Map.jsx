@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 
+import multiavatar from "@multiavatar/multiavatar/esm";
+
 import L from "leaflet";
 import {
   MapContainer,
@@ -24,33 +26,52 @@ const Map = () => {
   const { user } = useContext(UserContext);
 
   const [mapCenter, setMapCenter] = useState(user.location);
+  const [flyToLocation, setFlyToLocation] = useState(null);
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState({
+    members: [],
+    activities: [],
+    organisations: [],
+  });
+
+  const getMapItems = async (location) => {
+    await axios
+      .post(`/map`, location)
+      .then((res) => setItems(res.data))
+      .catch((error) => {
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      });
+  };
 
   const Recenter = () => {
     const map = useMap();
 
+    map.on("dragend", () => setMapCenter(map.getCenter()));
+
+    // map.on("moveend", (e) => {
+    //   console.log("move End");
+    //   console.log(e);
+
+    //   getMapItems(map.getCenter());
+    // });
+
     useEffect(() => {
-      map.flyTo(mapCenter, 14);
+      if (flyToLocation) {
+        setMapCenter(flyToLocation);
+        map.flyTo(flyToLocation, 17);
+        setFlyToLocation(null);
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [mapCenter]);
+    }, [flyToLocation]);
 
     return null;
   };
 
-  const getMapItems = async () => {
-    try {
-      await axios.get(`/map`).then((res) => setItems(res.data));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
-  };
-
   useEffect(() => {
-    getMapItems();
-  }, []);
+    getMapItems(mapCenter);
+  }, [mapCenter]);
 
   const ItemPopup = ({ item }) => (
     <Popup>
@@ -69,7 +90,9 @@ const Map = () => {
       title={item.name}
       icon={
         new L.icon({
-          iconUrl: ["https://api.multiavatar.com/" + item.name + ".png"],
+          iconUrl: `data:image/svg+xml;utf8,${encodeURIComponent(
+            multiavatar(item.name)
+          )}`,
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(18, 18),
           popupAnchor: new L.Point(0, -18),
@@ -159,7 +182,7 @@ const Map = () => {
 
   return (
     <>
-      <MapContext.Provider value={{ mapCenter, setMapCenter, getMapItems }}>
+      <MapContext.Provider value={{ setFlyToLocation }}>
         <div
           className='m-2 p-0 w-100'
           style={{
@@ -186,42 +209,31 @@ const Map = () => {
           <Recenter />
           <MarkerClusterGroup
             iconCreateFunction={createClusterMembersIcon}
-            maxClusterRadius={150}
             chunkedLoading
+            chunkDelay={2000}
+            animate={false}
           >
-            {items &&
-              items.map(
-                (item) =>
-                  item.type === "member" && (
-                    <MarkerMember key={item._id} item={item} />
-                  )
-              )}
+            {items.members.map((item) => (
+              <MarkerMember key={item._id} item={item} />
+            ))}
           </MarkerClusterGroup>
           <MarkerClusterGroup
             iconCreateFunction={createClusterOrganisationsIcon}
             maxClusterRadius={150}
             chunkedLoading
           >
-            {items &&
-              items.map(
-                (item) =>
-                  item.type === "organisation" && (
-                    <MarkerOrganisation key={item._id} item={item} />
-                  )
-              )}
+            {items.organisations.map((item) => (
+              <MarkerOrganisation key={item._id} item={item} />
+            ))}
           </MarkerClusterGroup>
           <MarkerClusterGroup
             iconCreateFunction={createClusterActivitiesIcon}
             maxClusterRadius={150}
             chunkedLoading
           >
-            {items &&
-              items.map(
-                (item) =>
-                  item.type === "activity" && (
-                    <MarkerActivity key={item._id} item={item} />
-                  )
-              )}
+            {items.activities.map((item) => (
+              <MarkerActivity key={item._id} item={item} />
+            ))}
           </MarkerClusterGroup>
 
           <ZoomControl position='topright' />

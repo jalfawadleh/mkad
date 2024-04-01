@@ -58,8 +58,23 @@ const getMember = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc    Get Members Count
+// @route   GET /api/members/count
+// @access  Private
+const getMembersCount = asyncHandler(async (req, res) => {
+  try {
+    const data = await Members.countDocuments({});
+    res.json(data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 const members = express.Router();
 
-members.put("/", protect, putMember).get("/:id", protect, getMember);
+members
+  .put("/", protect, putMember)
+  .get("/count", getMembersCount)
+  .get("/:id", protect, getMember);
 
 export default members;

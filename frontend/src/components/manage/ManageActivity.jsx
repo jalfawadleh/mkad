@@ -24,7 +24,7 @@ const Activity = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
-  const { getMapItems } = useContext(MapContext);
+  const { setFlyToLocation } = useContext(MapContext);
   const { getActivities } = useContext(ActivitiesContext);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -75,14 +75,14 @@ const Activity = () => {
           .then(() => toast("Updated"))
           .then(() => setIsUpdating(false))
           .then(() => getActivities())
-          .then(() => getMapItems());
+          .then(() => setFlyToLocation(location));
       else
         await axios
           .post("/activities/", activity)
           .then(() => toast("Created"))
           .then(() => setIsUpdating(false))
           .then(() => getActivities())
-          .then(() => getMapItems());
+          .then(() => setFlyToLocation(location));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -99,7 +99,7 @@ const Activity = () => {
           .delete(`/activities/${id}`)
           .then(() => setIsLoading(false))
           .then(() => getActivities())
-          .then(() => getMapItems())
+          .then(() => setFlyToLocation(user.location))
           .then(() => navigate(-1));
       } catch (error) {
         error?.response?.data?.message &&
