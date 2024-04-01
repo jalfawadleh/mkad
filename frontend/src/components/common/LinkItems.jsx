@@ -288,7 +288,11 @@ export const LinkButtoneBack = () => {
 };
 
 export const IconLinkCenterText = ({ item }) => {
-  return (
+  return item.type == "location" ? (
+    <span className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'>
+      {item.name}
+    </span>
+  ) : (
     <Link
       to={item.type + "/" + item._id}
       className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'

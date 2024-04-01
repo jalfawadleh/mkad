@@ -11,7 +11,7 @@ import {
   Marker,
   Popup,
   ZoomControl,
-  useMap,
+  useMapEvent,
 } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 
@@ -45,10 +45,19 @@ const Map = () => {
       });
   };
 
-  const Recenter = () => {
-    const map = useMap();
+  const SetViewOnClick = () => {
+    const map = useMapEvent("click", (e) => {
+      map.setView(e.latlng, map.getZoom(), {
+        animate: true,
+      });
+      setMapCenter(map.getCenter());
+    });
 
-    map.on("dragend", () => setMapCenter(map.getCenter()));
+    return null;
+  };
+
+  const Recenter = () => {
+    const map = useMapEvent("dragend", () => setMapCenter(map.getCenter()));
 
     // map.on("moveend", (e) => {
     //   console.log("move End");
@@ -60,7 +69,7 @@ const Map = () => {
     useEffect(() => {
       if (flyToLocation) {
         setMapCenter(flyToLocation);
-        map.flyTo(flyToLocation, 17);
+        map.flyTo(flyToLocation, 15);
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -206,6 +215,7 @@ const Map = () => {
           className='position-absolute top-0 start-0 end-0 bottom-0'
           style={{ zIndex: -1 }}
         >
+          <SetViewOnClick />
           <Recenter />
           <MarkerClusterGroup
             iconCreateFunction={createClusterMembersIcon}
