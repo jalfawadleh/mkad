@@ -36,10 +36,10 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
 
   const coverage = parseInt(process.env.MAPCOVERAGE);
 
-  const lngMax = parseFloat(req.body.lng) + coverage;
-  const lngMin = parseFloat(req.body.lng) - coverage;
-  const latMax = parseFloat(req.body.lat) + coverage;
-  const latMin = parseFloat(req.body.lat) - coverage;
+  const lngMax = parseFloat(req.body.lng) + coverage * 1.5;
+  const lngMin = parseFloat(req.body.lng) - coverage * 1.5;
+  const latMax = parseFloat(req.body.lat) + coverage * 0.75;
+  const latMin = parseFloat(req.body.lat) - coverage * 0.75;
 
   const members = await Members.find(
     {

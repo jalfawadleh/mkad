@@ -1,55 +1,40 @@
 const LandingHeader = () => {
+  const links = (
+    <div className='nav justify-content-around'>
+      <a href='#login' className='nav-link'>
+        Login or Join
+      </a>
+      <a href='#about' className='nav-link'>
+        About
+      </a>
+      <a href='#faq' className='nav-link'>
+        Why Join
+      </a>
+    </div>
+  );
+
   return (
     <>
-      <nav className='bg-black navbar navbar-expand-sm navbar-light fixed-top border-primary-subtle border-bottom'>
-        <div className='bg-black container'>
-          <a href='#' className='navbar-brand'>
-            <h4>
+      <header className='m-0 p-0'>
+        <nav className='navbar fixed-top bg-black'>
+          <div className='container border-primary-subtle border-bottom'>
+            <a href='#' className='navbar-brand h4 m-0'>
               <img
+                className='mb-1 me-1 border border-1 border-primary'
                 src='/logo.png'
                 alt='δ'
-                className='img-thumbnail border-0'
-                height='30'
-                width='30'
-                style={{ marginTop: "-6px" }}
+                height='24'
+                width='24'
               />
               MKaδifference
-            </h4>
-          </a>
-          <button
-            aria-controls='basic-navbar-nav'
-            type='button'
-            aria-label='Toggle navigation'
-            className='navbar-toggler collapsed'
-          >
-            <span className='navbar-toggler-icon'></span>
-          </button>
-          <div
-            className='justify-content-end navbar-collapse collapse'
-            id='basic-navbar-nav'
-          >
-            <div className='navbar-nav'>
-              <a
-                href='#login'
-                data-rr-ui-event-key='#login'
-                className='nav-link'
-              >
-                Login or Join
-              </a>
-              <a
-                href='#about'
-                data-rr-ui-event-key='#about'
-                className='nav-link'
-              >
-                Who We Are
-              </a>
-              <a href='#faq' data-rr-ui-event-key='#faq' className='nav-link'>
-                Why Join Us
-              </a>
+            </a>
+            <div className='d-none d-sm-block justify-content-end'>{links}</div>
+            <div className='d-block d-sm-none w-100' style={{ marginTop: -15 }}>
+              {links}
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </header>
     </>
   );
 };
