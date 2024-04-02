@@ -207,9 +207,9 @@ const Map = () => {
 
         <MapContainer
           center={mapCenter}
-          zoom={8}
+          zoom={6}
           maxZoom={15}
-          minZoom={5}
+          minZoom={4}
           zoomControl={false}
           scrollWheelZoom={true}
           className='position-absolute top-0 start-0 end-0 bottom-0'

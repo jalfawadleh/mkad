@@ -80,7 +80,7 @@ const populateUser = async (person) => {
       : -19.72534224805787); // AU
 
   const username = "p-no-" + personId;
-  const description = person[4] + "Years Old Palestinian Victim";
+  const description = person[4] + " Years Old Palestinian Victim";
   const name = person[2];
   const email = username + "@heaven.com";
   const location = { lng, lat };
