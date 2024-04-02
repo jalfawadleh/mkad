@@ -223,16 +223,21 @@ const ScreenSearch = () => {
     <>
       {topLayer}
       {!folded && filter && filtersBar}
-      {!folded && places.length ? <ListLinks items={places} /> : ""}
-      {!folded && results.length ? <ListLinks items={results} /> : ""}
-      {!folded && !places.length && !results.length && (
-        <ChocolateBar>
-          <span role='button' className={iconWrapperClass}>
-            <IconExclamation color='#dddddd' />
-          </span>
-          <span className='m-auto'>Enter search query, min 3 letters</span>
-        </ChocolateBar>
-      )}
+      <div
+        className='overflow-auto'
+        style={{ height: window.innerHeight - 150 }}
+      >
+        {!folded && places.length ? <ListLinks items={places} /> : ""}
+        {!folded && results.length ? <ListLinks items={results} /> : ""}
+        {!folded && !places.length && !results.length && (
+          <ChocolateBar>
+            <span role='button' className={iconWrapperClass}>
+              <IconExclamation color='#dddddd' />
+            </span>
+            <span className='m-auto'>Enter search query, min 3 letters</span>
+          </ChocolateBar>
+        )}
+      </div>
       <Outlet />
     </>
   );

@@ -69,7 +69,7 @@ const Map = () => {
     useEffect(() => {
       if (flyToLocation) {
         setMapCenter(flyToLocation);
-        map.flyTo(flyToLocation, 15);
+        map.flyTo(flyToLocation, 9);
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -196,7 +196,7 @@ const Map = () => {
           className='m-2 p-0 w-100'
           style={{
             maxWidth: "320px",
-            maxHeight: window.innerHeight,
+            maxHeight: window.innerHeight - 100,
             position: "absolute",
           }}
         >

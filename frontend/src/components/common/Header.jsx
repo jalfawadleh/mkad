@@ -82,7 +82,7 @@ const Header = () => {
         <div className='d-flex flex-column navbar-nav'>{headerLinks}</div>
       </nav>
 
-      <nav className='w-100 position-absolute bottom-0 none d-sm-none navbar navbar-expand navbar-light'>
+      <nav className='w-100 position-absolute bottom-0 none d-sm-none navbar navbar-expand navbar-light m-0 p-0'>
         <div className='w-100 p-0 m-0 justify-content-around navbar-nav'>
           {headerLinks}
         </div>
