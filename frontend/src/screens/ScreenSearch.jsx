@@ -225,7 +225,7 @@ const ScreenSearch = () => {
       {!folded && filter && filtersBar}
       <div
         className='overflow-auto'
-        style={{ height: window.innerHeight - 150 }}
+        style={{ maxHeight: window.innerHeight - 150 }}
       >
         {!folded && places.length ? <ListLinks items={places} /> : ""}
         {!folded && results.length ? <ListLinks items={results} /> : ""}
