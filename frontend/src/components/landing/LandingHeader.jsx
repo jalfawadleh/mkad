@@ -1,18 +1,4 @@
 const LandingHeader = () => {
-  const links = (
-    <div className='nav justify-content-around'>
-      <a href='#login' className='nav-link'>
-        Login or Join
-      </a>
-      <a href='#about' className='nav-link'>
-        About
-      </a>
-      <a href='#faq' className='nav-link'>
-        Why Join
-      </a>
-    </div>
-  );
-
   return (
     <>
       <header className='m-0 p-0'>
@@ -28,9 +14,34 @@ const LandingHeader = () => {
               />
               MKaδifference
             </a>
-            <div className='d-none d-sm-block justify-content-end'>{links}</div>
-            <div className='d-block d-sm-none w-100' style={{ marginTop: -15 }}>
-              {links}
+            <div className='d-none d-md-block justify-content-end'>
+              <div className='nav justify-content-around p-1'>
+                <a href='#login' className='nav-link'>
+                  Login or join
+                </a>
+                <a href='#about' className='nav-link'>
+                  Who we are
+                </a>
+                <a href='#faq' className='nav-link'>
+                  Why Join Us
+                </a>
+              </div>
+            </div>
+            <div
+              className='d-xs-block d-md-none w-100'
+              style={{ marginTop: -15 }}
+            >
+              <div className='nav justify-content-around p-1 w-100'>
+                <a href='#login' className='nav-link p-1'>
+                  Login or join
+                </a>
+                <a href='#about' className='nav-link p-1'>
+                  Who we are
+                </a>
+                <a href='#faq' className='nav-link p-1'>
+                  Why Join Us
+                </a>
+              </div>
             </div>
           </div>
         </nav>

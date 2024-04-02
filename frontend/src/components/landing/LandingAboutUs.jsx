@@ -5,59 +5,10 @@ const LandingAboutUs = () => {
       <section
         id='about'
         className='container bg-black'
-        style={{ paddingTop: "80px" }}
+        style={{ paddingTop: "90px" }}
       >
         <h2 className='text-center pb-4'>Who We Are</h2>
-        <div className='container pb-2'>
-          <div className='row justify-content-center'>
-            <div className='col-sm-3 col-6'>
-              <div className='text-center'>
-                <span
-                  data-purecounter-start='0'
-                  data-purecounter-end='65'
-                  data-purecounter-duration='2'
-                  className='purecounter h3'
-                ></span>
-                <p>Members</p>
-              </div>
-            </div>
 
-            <div className='col-sm-3 col-6'>
-              <div className='text-center'>
-                <span
-                  data-purecounter-start='0'
-                  data-purecounter-end='85'
-                  data-purecounter-duration='2'
-                  className='purecounter h3'
-                ></span>
-                <p>Activities</p>
-              </div>
-            </div>
-
-            <div className='col-sm-3 col-6'>
-              <div className='text-center'>
-                <span
-                  data-purecounter-start='0'
-                  data-purecounter-end='30'
-                  data-purecounter-duration='2'
-                  className='purecounter h3'
-                ></span>
-                <p>Organisations</p>
-              </div>
-            </div>
-            <div className='col-sm-3 col-6'>
-              <div className='text-center'>
-                <span
-                  data-purecounter-start='0'
-                  data-purecounter-end='24'
-                  data-purecounter-duration='2'
-                  className='purecounter h3'
-                ></span>
-                <p>Unions</p>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className='row content'>
           <div className='col-lg-6'>
             <p>
