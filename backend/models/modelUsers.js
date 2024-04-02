@@ -27,7 +27,7 @@ const usersSchema = Schema(
     description: { type: String, default: "" },
     icon: { type: String, default: "" },
 
-    languages: { type: [{ name: String }], default: [{ name: "English" }] },
+    languages: { type: [{ name: String }] },
     helpOffered: {
       type: [
         {

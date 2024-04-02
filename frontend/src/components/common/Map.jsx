@@ -45,16 +45,16 @@ const Map = () => {
       });
   };
 
-  const SetViewOnClick = () => {
-    const map = useMapEvent("click", (e) => {
-      map.setView(e.latlng, map.getZoom(), {
-        animate: true,
-      });
-      setMapCenter(map.getCenter());
-    });
+  // const SetViewOnClick = () => {
+  //   const map = useMapEvent("click", (e) => {
+  //     map.setView(e.latlng, map.getZoom(), {
+  //       animate: true,
+  //     });
+  //     setMapCenter(map.getCenter());
+  //   });
 
-    return null;
-  };
+  //   return null;
+  // };
 
   const Recenter = () => {
     const map = useMapEvent("dragend", () => setMapCenter(map.getCenter()));
@@ -207,15 +207,15 @@ const Map = () => {
 
         <MapContainer
           center={mapCenter}
-          zoom={13}
-          maxZoom={18}
-          minZoom={1}
+          zoom={8}
+          maxZoom={15}
+          minZoom={5}
           zoomControl={false}
           scrollWheelZoom={true}
           className='position-absolute top-0 start-0 end-0 bottom-0'
           style={{ zIndex: -1 }}
         >
-          <SetViewOnClick />
+          {/* <SetViewOnClick /> */}
           <Recenter />
           <MarkerClusterGroup
             iconCreateFunction={createClusterMembersIcon}

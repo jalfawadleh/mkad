@@ -1,26 +1,23 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const UpdatesScreen = () => {
-  const [results, setResults] = useState([]);
+  const [count, setCount] = useState(0);
 
-  const getResults = async () => {
-    await axios.get("/members/count").then((res) => setResults(res));
-  };
-  let x = 0;
-  const updateCount = () => {
-    x++;
-    getResults();
-    if (x < 10) setTimeout(updateCount(), 20000); // Change image every 2 seconds
+  const updateCount = async () => {
+    await axios.get("/members/count").then(({ data }) => setCount(data));
+    setTimeout(() => updateCount(), 1000);
   };
 
-  updateCount();
+  useEffect(() => {
+    updateCount();
+  }, []);
 
   return (
-    <>
-      <div>Updates</div>
-      <div className='h3 m-auto'>{results.data}</div>
-    </>
+    <div className='bg-black w-100'>
+      <div className='bg-black h4 text-center p-1'>Number of members</div>
+      <div className='h3 m-auto p-auto text-center'>{count}</div>
+    </div>
   );
 };
 

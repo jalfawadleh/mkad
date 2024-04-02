@@ -36,13 +36,10 @@ app.disable("x-powered-by");
 
 const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
-    console.log("\nreq -------- --- --- --- --- -- --- --- -");
-    console.log("URL: " + req.url);
-    console.log("method: " + req.method);
-    console.log("params: ");
-    console.log(req.params);
-    console.log("Body:");
-    console.log(req.body);
+    console.log("\nreq ---" + Date.now());
+    console.log(req.method + ": " + req.url);
+    console.log("params ", req.params);
+    console.log("Body:", req.body);
   }
   next();
 };
