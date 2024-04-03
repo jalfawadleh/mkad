@@ -80,7 +80,8 @@ const populateUser = async (person) => {
       : -19.72534224805787); // AU
 
   const username = "p-no-" + personId;
-  const description = person[4] + " Years Old Palestinian Victim";
+  const description =
+    "ID Number" + personId + " " + person[4] + " Years Old Palestinian Victim";
   const name = person[2];
   const email = username + "@heaven.com";
   const location = { lng, lat };
@@ -96,6 +97,8 @@ const populateUser = async (person) => {
   });
 };
 
+console.log("started", Date.now());
+
 deleteAll();
 addme();
 
@@ -103,8 +106,13 @@ let no = 0;
 
 const nIntervId = setInterval(() => {
   no++;
-  palestiniansList[no] ? populateUser(palestiniansList[no]) : process.exit(0);
-}, 100);
+  palestiniansList[no]
+    ? populateUser(palestiniansList[no])
+    : () => {
+        console.log("End " + Date.now());
+        process.exit(0);
+      };
+}, 50);
 
 setTimeout(() => {
   clearInterval(nIntervId);

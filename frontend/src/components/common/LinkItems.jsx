@@ -240,7 +240,7 @@ export const AvatarMember = ({ name = "na" }) => {
 export const LinkAvatarMember = ({ item }) => {
   return (
     <Link
-      className='link-underline link-underline-opacity-0 p-0 m-0'
+      className='link-underline link-underline-opacity-0 p-0 m-1'
       to={"/member/" + item._id}
     >
       <img
@@ -358,10 +358,7 @@ export const LinkCircleIconActivity = ({ item }) => {
 export const IconLinkMembersCircle = ({ item }) => {
   return (
     <Link to={item.type + "/" + item._id + "/members"}>
-      <span
-        className='p-1 m-1 badge rounded-pill border border-primary'
-        role='button'
-      >
+      <span className='p-1 m-1 badge rounded-pill' role='button'>
         <FaPeopleGroup color={"white"} size={24} className={iconClass} />
       </span>
     </Link>

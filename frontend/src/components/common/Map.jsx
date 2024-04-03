@@ -105,7 +105,7 @@ const Map = () => {
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(18, 18),
           popupAnchor: new L.Point(0, -18),
-          className: "border border-3 border-primary rounded-circle",
+          className: "",
         })
       }
     >
@@ -180,12 +180,17 @@ const Map = () => {
   const createClusterMembersIcon = function (cluster) {
     return L.divIcon({
       html: `
-      <span class="d-block p-0 bg-black text-center fw-bold border border-3 border-warning rounded-circle " style="margin-top: -24px; width:34px;">
-        ${cluster.getChildCount()}
-      </span>
-      <img src="./member.svg" height="34px" class="bg-black position-absolute top-0 start-0 border border-3 border-warning rounded-circle"/>`,
-      iconSize: L.point(0, 0),
-      class: "bg-black",
+      <div class="d-flex justify-content-center h-100 border-1 border-primary rounded-circle"
+        style="background: radial-gradient(red, blue); box-shadow: 0 0 15px 10px blue;"
+      >
+        <div class='d-block m-auto fw-bold text-center h5'>${cluster.getChildCount()}</div>
+      </div>`,
+      iconSize: L.point(
+        cluster.getChildCount() / 4 + 30,
+        cluster.getChildCount() / 4 + 30
+      ),
+      iconAnchor: L.point(0, 0),
+      className: "",
     });
   };
 
