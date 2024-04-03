@@ -33,16 +33,14 @@ const Header = () => {
         </Link>
       </span>
 
-      {user.type === "organisation" && (
-        <span
-          role='button'
-          className='p-1 m-1 bg-black rounded-pill border border-primary'
-        >
-          <Link to='activities'>
-            <IconActivity />
-          </Link>
-        </span>
-      )}
+      <span
+        role='button'
+        className='p-1 m-1 bg-black rounded-pill border border-primary'
+      >
+        <Link to='activities'>
+          <IconActivity />
+        </Link>
+      </span>
 
       <span
         role='button'

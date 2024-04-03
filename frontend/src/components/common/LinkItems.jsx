@@ -373,17 +373,6 @@ export const ChocolateBar = ({ children }) => {
   );
 };
 
-export const ListManageActivities = ({ items }) => {
-  return items.map((item) => (
-    <ChocolateBar key={item._id}>
-      <LinkCircleIconActivity item={item} />
-      <IconLinkCenterText item={item} />
-      {/* <IconLinkMembersCircle item={item} /> */}
-      <IconLinkCircleFlyTo location={item.location} />
-    </ChocolateBar>
-  ));
-};
-
 export const ListLinks = ({ items }) => {
   return (
     items.length &&

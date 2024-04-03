@@ -8,7 +8,7 @@ const OrganisationRoute = () => {
   return user.type === "organisation" ? (
     <Outlet />
   ) : (
-    <Navigate to='/' replace />
+    <Navigate to='/activities' replace />
   );
 };
 export default OrganisationRoute;

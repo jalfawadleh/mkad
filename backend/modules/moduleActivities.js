@@ -8,8 +8,8 @@ import Activities from "../models/modelActivities.js";
 // @access  Private
 const getActivities = asyncHandler(async (req, res) => {
   const activities = await Activities.find({
-    "createdBy._id": req.user._id,
-  }).select("name location type");
+    $or: [{ "createdBy._id": req.user._id }, { "members._id": req.user._id }],
+  }).select("name location type createdBy");
   res.status(200).json(activities);
 });
 

@@ -130,7 +130,7 @@ const Activity = () => {
 
           {description && (
             <>
-              <div className='d-flex justify-content-wrap p-2 m-1'>
+              <div className='d-flex justify-content-wrap p-1 m-1'>
                 {description}
               </div>
               <hr className='m-1' />

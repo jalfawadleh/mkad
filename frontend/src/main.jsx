@@ -54,10 +54,11 @@ const router = createBrowserRouter(
           <Route path=':id' element={<h1>Update ID</h1>} />
         </Route>
 
-        <Route path='' element={<RouteOrganisation />}>
-          <Route path='activities' element={<ScreenActivities />}>
+        <Route path='activities' element={<ScreenActivities />}>
+          <Route path='activity/:id' element={<Activity />} />
+          <Route path='' element={<RouteOrganisation />}>
+            <Route path='manageactivity/:id' element={<ManageActivity />} />
             <Route path='new' element={<ManageActivity />} />
-            <Route path='activity/:id' element={<ManageActivity />} />
           </Route>
         </Route>
       </Route>
