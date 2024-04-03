@@ -33,8 +33,8 @@ const Activity = () => {
   const [activity, setActivity] = useState({
     _id: id ? id : "",
     name: "",
-    startOn: "",
-    endOn: "",
+    startOn: Date.now(),
+    endOn: Date.now(),
     description: "",
     notes: [],
     languages: [],
@@ -145,13 +145,13 @@ const Activity = () => {
         </div>
         <hr className='m-1' />
 
-        <div className='overflow-y-auto p-1 m-0'>
+        <div className='overflow-y-auto p-1 m-1'>
           {isEditing && (
             <>
               <div className='text-center'>
                 Your Profile Avatar is based on your name
               </div>
-              <div className='form-floating mb-3'>
+              <div className='form-floating m-1 p-1'>
                 <input
                   type='text'
                   className='form-control'
@@ -163,23 +163,7 @@ const Activity = () => {
                 />
                 <label htmlFor='name'>Name</label>
               </div>
-            </>
-          )}
-
-          {isEditing && (
-            <>
-              <div className='form-floating mb-3'>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='description'
-                  placeholder='Description'
-                  name='name'
-                  value={description}
-                  onChange={onChange}
-                />
-                <label htmlFor='description'>Description</label>
-              </div>
+              <hr className='m-1' />
             </>
           )}
 
@@ -192,7 +176,7 @@ const Activity = () => {
 
           {isEditing ? (
             <>
-              <div className='form-floating mb-3'>
+              <div className='form-floating m-1 p-1'>
                 <input
                   type='text'
                   className='form-control'
@@ -204,11 +188,12 @@ const Activity = () => {
                 />
                 <label htmlFor='description'>Description</label>
               </div>
+              <hr className='m-1' />
             </>
           ) : (
             description && (
               <>
-                <div className='d-flex justify-content-wrap p-2 m-1'>
+                <div className='d-flex justify-content-wrap p-1 m-1'>
                   {description}
                 </div>
                 <hr className='m-1' />

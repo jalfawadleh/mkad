@@ -26,7 +26,7 @@ const addme = async () => {
     discription: "test",
     name: "test",
     email: "test@test.com",
-    type: "member",
+    type: "organisation",
   });
 
   console.log("test Added");
@@ -99,22 +99,22 @@ const populateUser = async (person) => {
 
 console.log("started", Date.now());
 
-deleteAll();
+// deleteAll();
 addme();
 
-let no = 0;
+// let no = 0;
 
-const nIntervId = setInterval(() => {
-  no++;
-  palestiniansList[no]
-    ? populateUser(palestiniansList[no])
-    : () => {
-        console.log("End " + Date.now());
-        process.exit(0);
-      };
-}, 50);
+// const nIntervId = setInterval(() => {
+//   no++;
+//   palestiniansList[no]
+//     ? populateUser(palestiniansList[no])
+//     : () => {
+//         console.log("End " + Date.now());
+//         process.exit(0);
+//       };
+// }, 50);
 
-setTimeout(() => {
-  clearInterval(nIntervId);
-  process.exit(0);
-}, 12 * 60 * 1000);
+// setTimeout(() => {
+//   clearInterval(nIntervId);
+//   process.exit(0);
+// }, 12 * 60 * 1000);

@@ -59,17 +59,12 @@ const Map = () => {
   const Recenter = () => {
     const map = useMapEvent("dragend", () => setMapCenter(map.getCenter()));
 
-    // map.on("moveend", (e) => {
-    //   console.log("move End");
-    //   console.log(e);
-
-    //   getMapItems(map.getCenter());
-    // });
+    // map.on("moveend", (e) => { getMapItems(map.getCenter()); });
 
     useEffect(() => {
       if (flyToLocation) {
         setMapCenter(flyToLocation);
-        map.flyTo(flyToLocation, 9);
+        map.flyTo(flyToLocation, 13);
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -33,7 +33,7 @@ const ListItems = ({
     <>
       {items?.length > 0 && (
         <div className='p-1 m-1 inline-block'>
-          <span className='font-weight-bold m-2'>{message}</span>
+          <span className='font-weight-bold m-0'>{message}</span>
           {items.map((i, index) => (
             <span key={index} className='m-1 bg-black'>
               <span className='m-1 text-light'>{i.name}</span>
