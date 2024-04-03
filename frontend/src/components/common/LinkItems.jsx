@@ -332,7 +332,7 @@ export const IconCircleActivity = ({ color = iconColor }) => {
   return (
     <span>
       <span
-        className='p-1 m-1 badge rounded-pill border border-primary'
+        className='p-1 m-1 badge rounded-pill border border-success'
         role='button'
       >
         <BiSolidFlag color={color} size={iconSize} className={iconClass} />

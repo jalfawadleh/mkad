@@ -21,11 +21,11 @@ const deleteAll = async () => {
 
 const addme = async () => {
   await Users.create({
-    username: "test",
-    password: "test",
-    discription: "test",
-    name: "test",
-    email: "test@test.com",
+    username: "test1",
+    password: "test1",
+    discription: "test1",
+    name: "test1",
+    email: "test1@test.com",
     type: "organisation",
   });
 
