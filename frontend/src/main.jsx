@@ -14,14 +14,14 @@ import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenSearch from "./screens/ScreenSearch.jsx";
-import ScreenActivities from "./screens/ScreenActivities.jsx";
+import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 import ScreenUpdates from "./screens/ScreenUpdates.jsx";
 import ScreenMessages from "./screens/ScreenMessages.jsx";
 import ScreenLogout from "./screens/ScreenLogout.jsx";
 
-import ManageActivity from "./components/manage/ManageActivity.jsx";
-import ManageAccount from "./components/manage/ManageAccount.jsx";
-import ManageProfile from "./components/manage/ManageProfile.jsx";
+import ActivityManage from "./components/dashboard/ActivityManage.jsx";
+import MemberAccount from "./components/dashboard/MemberAccount.jsx";
+import MemberProfile from "./components/dashboard/MemberProfile.jsx";
 
 import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
@@ -38,12 +38,20 @@ const router = createBrowserRouter(
           <Route path='member/:id' element={<Member />} />
         </Route>
 
-        <Route path='profile' element={<ManageProfile />} />
-        <Route path='account' element={<ManageAccount />} />
-        <Route path='help' element={<Help />} />
+        <Route path='dashboard' element={<ScreenDashboard />}>
+          <Route path='profile' element={<MemberProfile />} />
+          <Route path='account' element={<MemberAccount />} />
+          <Route path='activity/:id' element={<Activity />} />
+          <Route path='organisation/:id' element={<Organisation />} />
+          <Route path='' element={<RouteOrganisation />}>
+            <Route path='activity/manage/:id' element={<ActivityManage />} />
+            <Route path='new' element={<ActivityManage />} />
+          </Route>
+        </Route>
 
+        <Route path='help' element={<Help />} />
         <Route path='activity/:id' element={<Activity />} />
-        <Route path='organisation/:id' element={<Member />} />
+        <Route path='organisation/:id' element={<Organisation />} />
         <Route path='member/:id' element={<Member />} />
 
         <Route path='messages' element={<ScreenMessages />}>
@@ -52,14 +60,6 @@ const router = createBrowserRouter(
 
         <Route path='updates' element={<ScreenUpdates />}>
           <Route path=':id' element={<h1>Update ID</h1>} />
-        </Route>
-
-        <Route path='activities' element={<ScreenActivities />}>
-          <Route path='activity/:id' element={<Activity />} />
-          <Route path='' element={<RouteOrganisation />}>
-            <Route path='manageactivity/:id' element={<ManageActivity />} />
-            <Route path='new' element={<ManageActivity />} />
-          </Route>
         </Route>
       </Route>
 

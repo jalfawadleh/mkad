@@ -3,13 +3,28 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Activities from "../models/modelActivities.js";
 
-// @desc    Get All Activities
+// @desc    Get All Activities Managed
+// @route   GET /api/activities/managed
+// @access  Private
+const getActivitiesManaged = asyncHandler(async (req, res) => {
+  console.log("managed activities");
+
+  const activities = await Activities.find({
+    "createdBy._id": req.user._id,
+  }).select("name location type");
+
+  console.log("managed activities", activities);
+
+  res.status(200).json(activities);
+});
+
+// @desc    Get Activities Joined
 // @route   GET /api/activities
 // @access  Private
-const getActivities = asyncHandler(async (req, res) => {
+const getActivitiesJoined = asyncHandler(async (req, res) => {
   const activities = await Activities.find({
-    $or: [{ "createdBy._id": req.user._id }, { "members._id": req.user._id }],
-  }).select("name location type createdBy");
+    "members._id": req.user._id,
+  }).select("name location type");
   res.status(200).json(activities);
 });
 
@@ -97,6 +112,7 @@ const deleteActivity = asyncHandler(async (req, res) => {
 // @access  Private
 const joinActivity = asyncHandler(async (req, res) => {
   const activity = await Activities.findOne({ _id: req.params.id });
+
   if (activity) {
     try {
       if (
@@ -125,13 +141,15 @@ const activities = express.Router();
 
 activities
   .route("/")
-  .get(protect, getActivities)
+  .get(protect, getActivitiesJoined)
   .post(protect, postActivity)
   .put(protect, putActivity);
+activities
+  .get("/managed", protect, getActivitiesManaged)
+  .get("/join/:id", protect, joinActivity);
 activities
   .route("/:id")
   .get(protect, getActivity)
   .delete(protect, deleteActivity);
-activities.route("/join/:id").get(protect, joinActivity);
 
 export default activities;

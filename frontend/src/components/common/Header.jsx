@@ -18,12 +18,6 @@ const Header = () => {
     <>
       <IconFlyTo location={user.location} />
 
-      <span role='button' className='p-0 m-0'>
-        <Link to='profile'>
-          <AvatarMember name={user.name} />
-        </Link>
-      </span>
-
       <span
         role='button'
         className='p-1 m-1 bg-black rounded-pill border border-primary'
@@ -33,12 +27,9 @@ const Header = () => {
         </Link>
       </span>
 
-      <span
-        role='button'
-        className='p-1 m-1 bg-black rounded-pill border border-primary'
-      >
-        <Link to='activities'>
-          <IconActivity />
+      <span role='button' className='p-0 m-0'>
+        <Link to='dashboard'>
+          <AvatarMember name={user.name} />
         </Link>
       </span>
 

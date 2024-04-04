@@ -3,6 +3,16 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Items from "../models/modelUsers.js";
 
+// @desc    Get Organisations Joined
+// @route   GET /api/activities
+// @access  Private
+const getJoined = asyncHandler(async (req, res) => {
+  const items = await Items.find({
+    "members._id": req.user._id,
+  }).select("name location type");
+  res.status(200).json(items);
+});
+
 // @desc    Get Organisation
 // @route   GET /api/activities/:id
 // @access  Private
@@ -44,7 +54,9 @@ const joinItem = asyncHandler(async (req, res) => {
 });
 
 const items = express.Router();
-items.route("/:id").get(protect, getItem);
-items.route("/join/:id").get(protect, joinItem);
+items
+  .get("/join", protect, getJoined)
+  .get("/join/:id", protect, joinItem)
+  .get("/:id", protect, getItem);
 
 export default items;
