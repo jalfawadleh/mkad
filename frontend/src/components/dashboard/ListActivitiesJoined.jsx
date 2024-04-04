@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import {
@@ -9,20 +9,21 @@ import {
   IconFold,
   IconLinkCircleFlyTo,
   LinkCircleIconActivity,
-  IconLoading,
+  // IconLoading,
 } from "../common/LinkItems";
 
 const ListActivitiesJoined = () => {
+  const location = useLocation();
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     await axios
       .get("/activities")
       .then((res) => setItems(res.data))
-      .then(() => setIsLoading(false))
+      // .then(() => setIsLoading(false))
       .catch((error) => {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);
@@ -31,8 +32,8 @@ const ListActivitiesJoined = () => {
   };
 
   useEffect(() => {
-    getItems();
-  }, []);
+    if (location.pathname === "/dashboard") getItems();
+  }, [location]);
 
   const LinkText = ({ item }) => {
     return (
@@ -43,16 +44,6 @@ const ListActivitiesJoined = () => {
         {item.name}
       </Link>
     );
-  };
-
-  const ListItems = ({ items }) => {
-    return items.map((item) => (
-      <ChocolateBar key={item._id}>
-        <LinkCircleIconActivity item={item} />
-        <LinkText item={item} />
-        <IconLinkCircleFlyTo location={item.location} />
-      </ChocolateBar>
-    ));
   };
 
   return (
@@ -68,7 +59,13 @@ const ListActivitiesJoined = () => {
 
       {!folded &&
         (items.length ? (
-          <ListItems items={items} />
+          items.map((item) => (
+            <ChocolateBar key={item._id}>
+              <LinkCircleIconActivity item={item} />
+              <LinkText item={item} />
+              <IconLinkCircleFlyTo location={item.location} />
+            </ChocolateBar>
+          ))
         ) : (
           <ChocolateBar>
             <Icon>
@@ -78,7 +75,7 @@ const ListActivitiesJoined = () => {
           </ChocolateBar>
         ))}
 
-      {isLoading && <IconLoading />}
+      {/* {isLoading && <IconLoading />} */}
     </>
   );
 };

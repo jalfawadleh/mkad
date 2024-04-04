@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../store";
@@ -11,25 +11,26 @@ import {
   IconFold,
   IconLinkCircleFlyTo,
   LinkCircleIconActivity,
-  IconLoading,
+  // IconLoading,
   IconAddLink,
 } from "../common/LinkItems";
 
 const ListActivitiesManaged = () => {
+  const location = useLocation();
   const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     await axios
       .get("/activities/managed")
       .then((res) => {
         setItems(res.data);
         console.log("got Items");
       })
-      .then(() => setIsLoading(false))
+      // .then(() => setIsLoading(false))
       .catch((error) => {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);
@@ -38,8 +39,8 @@ const ListActivitiesManaged = () => {
   };
 
   useEffect(() => {
-    getItems();
-  }, []);
+    if (location.pathname === "/dashboard") getItems();
+  }, [location]);
 
   return (
     <>
@@ -75,7 +76,7 @@ const ListActivitiesManaged = () => {
           </ChocolateBar>
         ))}
 
-      {isLoading && <IconLoading />}
+      {/* {isLoading && <IconLoading />} */}
     </>
   );
 };

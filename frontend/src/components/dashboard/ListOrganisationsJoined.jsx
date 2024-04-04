@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -9,21 +9,22 @@ import {
   IconExclamation,
   IconFold,
   IconLinkCircleFlyTo,
-  LinkCircleIconActivity,
-  IconLoading,
+  LinkCircleIconOrganisation,
+  // IconLoading,
 } from "../common/LinkItems";
 
 const ListOrganisationsJoined = () => {
+  const location = useLocation();
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     await axios
       .get("/organisations/join")
       .then((res) => setItems(res.data))
-      .then(() => setIsLoading(false))
+      // .then(() => setIsLoading(false))
       .catch((error) => {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);
@@ -32,8 +33,8 @@ const ListOrganisationsJoined = () => {
   };
 
   useEffect(() => {
-    getItems();
-  }, []);
+    if (location.pathname === "/dashboard") getItems();
+  }, [location]);
 
   const LinkText = ({ item }) => {
     return (
@@ -49,7 +50,7 @@ const ListOrganisationsJoined = () => {
   const ListItems = ({ items }) => {
     return items.map((item) => (
       <ChocolateBar key={item._id}>
-        <LinkCircleIconActivity item={item} />
+        <LinkCircleIconOrganisation item={item} />
         <LinkText item={item} />
         <IconLinkCircleFlyTo location={item.location} />
       </ChocolateBar>
@@ -79,7 +80,7 @@ const ListOrganisationsJoined = () => {
           </ChocolateBar>
         ))}
 
-      {isLoading && <IconLoading />}
+      {/* {isLoading && <IconLoading />} */}
     </>
   );
 };
