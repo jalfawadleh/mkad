@@ -271,13 +271,13 @@ const Activity = () => {
             </>
           )}
 
-          {isEditing && (
-            <Location
-              editing={isEditing}
-              location={location}
-              setParent={setActivity}
-            />
-          )}
+          <Location
+            editing={isEditing}
+            location={location}
+            setParent={setActivity}
+            user={user}
+          />
+
           {isLoading && <IconLoading />}
         </div>
 

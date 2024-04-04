@@ -12,16 +12,17 @@ dotenv.config();
 // @access  Private
 const getItems = asyncHandler(async (req, res) => {
   const fields = "name type location";
-  const hidden = false;
   const members = await Members.find({ hidden, type: "member" }, fields);
   const organisations = await Members.find(
-    { hidden, type: "organisation" },
+    { hidden: false, type: "organisation" },
     fields
   );
   const activities = await Activities.find(
-    { hidden, type: "activity" },
+    { hidden: false, "location.online": false },
     fields
   );
+
+  console.log(activities);
 
   res.json({ members, activities, organisations });
   // res.json([...members]);
@@ -66,6 +67,7 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
       type: "activity",
       "location.lng": { $gte: lngMin, $lt: lngMax },
       "location.lat": { $gte: latMin, $lt: latMax },
+      "location.online": false,
     },
     fields
   );

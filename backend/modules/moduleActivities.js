@@ -7,13 +7,9 @@ import Activities from "../models/modelActivities.js";
 // @route   GET /api/activities/managed
 // @access  Private
 const getActivitiesManaged = asyncHandler(async (req, res) => {
-  console.log("managed activities");
-
   const activities = await Activities.find({
     "createdBy._id": req.user._id,
   }).select("name location type");
-
-  console.log("managed activities", activities);
 
   res.status(200).json(activities);
 });

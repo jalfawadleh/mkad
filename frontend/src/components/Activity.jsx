@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,7 @@ import {
   BoxCenterText,
 } from "./common/LinkItems.jsx";
 import Period from "./common/Period.jsx";
+import Location from "./common/Location.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -37,6 +38,7 @@ const Activity = () => {
     helpNeeded: [],
     createdBy: [],
     members: [],
+    location: [],
   });
 
   const {
@@ -51,6 +53,7 @@ const Activity = () => {
     helpNeeded,
     createdBy,
     members,
+    location,
   } = activity;
 
   const getActivity = async (id) => {
@@ -174,6 +177,8 @@ const Activity = () => {
             items={languages}
             setParent={setActivity}
           />
+
+          <Location location={location} setParent={setActivity} />
 
           {isLoading && <IconLoading />}
         </div>

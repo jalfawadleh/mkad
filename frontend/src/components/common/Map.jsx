@@ -216,7 +216,7 @@ const Map = () => {
           center={mapCenter}
           zoom={6}
           maxZoom={15}
-          minZoom={4}
+          minZoom={3}
           zoomControl={false}
           scrollWheelZoom={true}
           className='position-absolute top-0 start-0 end-0 bottom-0'
