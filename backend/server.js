@@ -30,9 +30,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-app.use(helmet());
 app.use(compression());
-app.disable("x-powered-by");
+
+// Define the sources to allow
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
+    },
+  })
+);
 
 const printRequest = (req, res, next) => {
   if (process.env.NODE_ENV === "development") {
