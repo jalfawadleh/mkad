@@ -21,11 +21,11 @@ const deleteAll = async () => {
 
 const addme = async () => {
   await Users.create({
-    username: "test1",
-    password: "test1",
-    discription: "test1",
-    name: "test1",
-    email: "test1@test.com",
+    username: "test",
+    password: "test",
+    discription: "test",
+    name: "test",
+    email: "test@test.com",
     type: "organisation",
   });
 
@@ -81,7 +81,7 @@ const populateUser = async (person) => {
 
   const username = "p-no-" + personId;
   const description =
-    "ID Number" + personId + " " + person[4] + " Years Old Palestinian Victim";
+    "ID Number" + personId + ", " + person[4] + " Years Old Palestinian Victim";
   const name = person[2];
   const email = username + "@heaven.com";
   const location = { lng, lat };

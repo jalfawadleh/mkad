@@ -1,7 +1,4 @@
 .DS_Store
 backend/node_modules
+backend/logs
 frontend/node_modules
-front
-OnePage
-server
-client

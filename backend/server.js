@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
+import morgan from "morgan";
+import rfs from "rotating-file-stream";
 
 import dotenv from "dotenv";
 
@@ -32,6 +34,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
 
+const __dirname = path.resolve();
+
+// create a rotating write stream
+const accessLogStream = rfs.createStream("access.log", {
+  interval: "1d", // rotate daily
+  path: path.join(__dirname, "logs"),
+});
+
+// setup the logger
+app.use(morgan("combined", { stream: accessLogStream }));
+
 // Define the sources to allow
 app.use(
   helmet.contentSecurityPolicy({
@@ -45,17 +58,6 @@ app.use(
   })
 );
 
-const printRequest = (req, res, next) => {
-  if (process.env.NODE_ENV === "development") {
-    console.log("\nreq ---" + Date.now());
-    console.log(req.method + ": " + req.url);
-    console.log("params ", req.params);
-    console.log("Body:", req.body);
-  }
-  next();
-};
-app.use(printRequest);
-
 app.use("/api/users", users);
 app.use("/api/members", members);
 app.use("/api/activities", activities);
@@ -64,7 +66,6 @@ app.use("/api/search", search);
 app.use("/api/map", map);
 
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
