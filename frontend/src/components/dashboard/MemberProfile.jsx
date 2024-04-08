@@ -21,6 +21,8 @@ import {
   WrapperModal,
 } from "../common/LinkItems.jsx";
 import ManageHidden from "../common/ManageHidden.jsx";
+import ManageDescription from "../common/ManageDescription.jsx";
+import ManageName from "../common/ManageName.jsx";
 
 function SettingsProfile() {
   const { user, setUser } = useContext(UserContext);
@@ -64,13 +66,6 @@ function SettingsProfile() {
     }
   };
 
-  const onChange = (e) => {
-    setMember((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   useEffect(() => {
     const getProfile = async () => {
       setIsLoading(true);
@@ -101,72 +96,49 @@ function SettingsProfile() {
       <hr className='m-1' />
 
       <div className='overflow-y-auto p-1 m-0'>
-        {editing && (
-          <>
-            <div className='text-center'>
-              Your Profile Avatar is based on your name
-            </div>
-            <div className='form-floating mb-3'>
-              <input
-                type='text'
-                className='form-control'
-                id='name'
-                placeholder='Name'
-                name='name'
-                value={name}
-                onChange={onChange}
-              />
-              <label htmlFor='name'>Name</label>
-            </div>
-          </>
-        )}
+        <ManageName
+          name={member.name}
+          setParent={setMember}
+          editing={editing}
+        />
 
-        {editing ? (
-          <div className='form-floating mb-3'>
-            <input
-              type='text'
-              className='form-control'
-              id='description'
-              placeholder='Description'
-              name='description'
-              value={description}
-              onChange={onChange}
-            />
-            <label htmlFor='description'>Description</label>
-          </div>
-        ) : (
-          description && (
-            <>
-              <div className='d-flex justify-content-wrap p-2 m-1'>
-                {description}
-              </div>
-              <hr className='m-1' />
-            </>
-          )
-        )}
+        <ManageDescription
+          description={member.description}
+          setParent={setMember}
+          editing={editing}
+        />
 
         <ListItems
           edit={editing}
           message='Interests'
           type='interests'
           title='interest'
-          items={interests}
+          items={member.interests}
           setParent={setMember}
         />
 
-        <ManageHelp help={help} setParent={setMember} editing={editing} />
         <ListItems
           edit={editing}
           message='Languages'
           type='languages'
           title='language'
-          items={languages}
+          items={member.languages}
           setParent={setMember}
         />
 
-        <ManageHidden hidden={hidden} setParent={setMember} editing={editing} />
+        <ManageHelp
+          help={member.help}
+          setParent={setMember}
+          editing={editing}
+        />
+
+        <ManageHidden
+          hidden={member.hidden}
+          setParent={setMember}
+          editing={editing}
+        />
         <ManageLocation
-          location={location}
+          location={member.location}
           setParent={setMember}
           editing={editing}
         />
