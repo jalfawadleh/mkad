@@ -45,13 +45,13 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
 
   const iconDel = (h) => {
     return (
-      <span
+      <div
         role='button'
-        className='d-inline m-1 p-1 badge rounded-circle bg-danger'
+        className='d-inline-block ms-2 p-0 rounded-pill rounded-start bg-danger'
         onClick={() => delItem(h)}
       >
-        <FaMinus size={14} className='' />
-      </span>
+        <FaMinus size={16} className='mx-2' />
+      </div>
     );
   };
 
@@ -59,14 +59,10 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
     return (
       <div
         role='button'
-        className='d-inline m-1 p-1'
+        className='d-inline-block ms-2 p-0 rounded-pill rounded-start bg-primary'
         onClick={() => offerHelp(h._id)}
       >
-        {isHelping ? (
-          <IconSpin />
-        ) : (
-          <FaRegHand size={20} className='m-auto p-0' />
-        )}
+        {isHelping ? <IconSpin /> : <FaRegHand size={16} className='mx-2' />}
       </div>
     );
   };
@@ -81,7 +77,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
   return (
     <>
       {help?.length > 0 && (
-        <section className=' container '>
+        <section className='container m-1 p-0'>
           Help
           {help.map((h, index) => (
             <div
@@ -89,21 +85,19 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               className='d-inline-block m-1 p-0 rounded-pill border border-primary'
             >
               <div className='d-inline p-auto m-auto text-center '>
-                <span className='p-1 me-1 d-inline-block fw-bold bg-success rounded-pill rounded-end '>
+                <span className='px-1 me-2 d-inline-block bg-success rounded-pill rounded-end '>
                   {h.offer ? "Offered " : "Needed "}
                 </span>
-                <span className='d-inline p-auto m-auto text-center'>
-                  {h.text}
-                </span>
+                <span className='p-auto m-auto text-center'>{h.text}</span>
+                {editing ? iconDel(h) : iconHelp(h)}
               </div>
-
-              {editing ? iconDel(h) : iconHelp(h)}
             </div>
           ))}
         </section>
       )}
+
       {editing && (
-        <div className='d-block p-1 m-1 '>
+        <section className='container m-1 p-1'>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <div
@@ -140,9 +134,9 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               </button>
             </div>
           </form>
-        </div>
+        </section>
       )}
-      {(editing || help?.length > 0) && <hr className='d-block m-2' />}
+      {(editing || help?.length > 0) && <hr className='my-2' />}
     </>
   );
 };
