@@ -10,7 +10,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import App from "./App.jsx";
 
-import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenSearch from "./screens/ScreenSearch.jsx";
@@ -32,27 +31,19 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
-        <Route path='' element={<ScreenSearch />}>
-          <Route path='activity/:id' element={<Activity />} />
-          <Route path='organisation/:id' element={<Organisation />} />
-          <Route path='member/:id' element={<Member />} />
-        </Route>
+        <Route path='help' element={<Help />} />
+        <Route path='activity/:id' element={<Activity />} />
+        <Route path='organisation/:id' element={<Organisation />} />
+        <Route path='member/:id' element={<Member />} />
 
         <Route path='dashboard' element={<ScreenDashboard />}>
           <Route path='profile' element={<MemberProfile />} />
           <Route path='account' element={<MemberAccount />} />
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
-          <Route path='' element={<RouteOrganisation />}>
-            <Route path='activity/manage/:id' element={<ActivityManage />} />
-            <Route path='new' element={<ActivityManage />} />
-          </Route>
+          <Route path='activity/manage/:id' element={<ActivityManage />} />
+          <Route path='new' element={<ActivityManage />} />
         </Route>
-
-        <Route path='help' element={<Help />} />
-        <Route path='activity/:id' element={<Activity />} />
-        <Route path='organisation/:id' element={<Organisation />} />
-        <Route path='member/:id' element={<Member />} />
 
         <Route path='messages' element={<ScreenMessages />}>
           <Route path=':id' element={<>Messages ID</>} />
@@ -60,6 +51,12 @@ const router = createBrowserRouter(
 
         <Route path='updates' element={<ScreenUpdates />}>
           <Route path=':id' element={<h1>Update ID</h1>} />
+        </Route>
+
+        <Route path='' element={<ScreenSearch />}>
+          <Route path='activity/:id' element={<Activity />} />
+          <Route path='organisation/:id' element={<Organisation />} />
+          <Route path='member/:id' element={<Member />} />
         </Route>
       </Route>
 
