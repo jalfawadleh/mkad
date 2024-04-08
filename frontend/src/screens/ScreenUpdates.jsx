@@ -6,7 +6,7 @@ const UpdatesScreen = () => {
 
   const updateCount = async () => {
     await axios.get("/members/count").then(({ data }) => setCount(data));
-    setTimeout(() => updateCount(), 1000);
+    // setTimeout(() => updateCount(), 1000);
   };
 
   useEffect(() => {

@@ -3,7 +3,6 @@ import { useContext } from "react";
 
 import {
   AvatarMember,
-  IconActivity,
   IconFlyTo,
   IconHelp,
   IconMessage,
