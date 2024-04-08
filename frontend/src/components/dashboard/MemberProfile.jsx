@@ -6,7 +6,9 @@ import axios from "axios";
 import { MapContext, UserContext } from "../../store.js";
 
 import ListItems from "../common/ListItems.jsx";
-import Location from "../common/Location.jsx";
+import ManageHelp from "../common/ManageHelp.jsx";
+import ManageLocation from "../common/ManageLocation.jsx";
+
 import {
   AvatarMember,
   BoxCenterText,
@@ -18,6 +20,7 @@ import {
   LinkButtoneBack,
   WrapperModal,
 } from "../common/LinkItems.jsx";
+import ManageHidden from "../common/ManageHidden.jsx";
 
 function SettingsProfile() {
   const { user, setUser } = useContext(UserContext);
@@ -34,23 +37,14 @@ function SettingsProfile() {
     description: "",
     languages: [],
     interests: [],
-    helpOffered: [],
-    helpNeeded: [],
     darkmood: true,
     hidden: true,
     location: "",
+    help: [],
   });
 
-  const {
-    name,
-    description,
-    languages,
-    interests,
-    helpOffered,
-    helpNeeded,
-    hidden,
-    location,
-  } = member;
+  const { name, description, languages, interests, hidden, location, help } =
+    member;
 
   const onPut = async (e) => {
     e.preventDefault();
@@ -97,152 +91,108 @@ function SettingsProfile() {
   }, [user._id]);
 
   return (
-    <>
-      <WrapperModal>
-        {/* icon itemName closeButton */}
-        <div className='d-flex justify-content-between m-1 p-1'>
-          <AvatarMember name={name} />
-          <BoxCenterText text={name} />
-          <IconCircleClose />
-        </div>
-        <hr className='my-1' />
-        <div className='overflow-y-auto p-1 m-0'>
-          {editing && (
-            <>
-              <div className='text-center'>
-                Your Profile Avatar is based on your name
-              </div>
-              <div className='form-floating mb-3'>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='name'
-                  placeholder='Name'
-                  name='name'
-                  value={name}
-                  onChange={onChange}
-                />
-                <label htmlFor='name'>Name</label>
-              </div>
-            </>
-          )}
+    <WrapperModal>
+      {/* icon itemName closeButton */}
+      <div className='d-flex justify-content-between m-1 p-1'>
+        <AvatarMember name={name} />
+        <BoxCenterText text={name} />
+        <IconCircleClose />
+      </div>
+      <hr className='m-1' />
 
-          {editing ? (
+      <div className='overflow-y-auto p-1 m-0'>
+        {editing && (
+          <>
+            <div className='text-center'>
+              Your Profile Avatar is based on your name
+            </div>
             <div className='form-floating mb-3'>
               <input
                 type='text'
                 className='form-control'
-                id='description'
-                placeholder='Description'
-                name='description'
-                value={description}
+                id='name'
+                placeholder='Name'
+                name='name'
+                value={name}
                 onChange={onChange}
               />
-              <label htmlFor='description'>Description</label>
+              <label htmlFor='name'>Name</label>
             </div>
-          ) : (
-            description && (
-              <>
-                <div className='d-flex justify-content-wrap p-2 m-1'>
-                  {description}
-                </div>
-                <hr className='m-1' />
-              </>
-            )
-          )}
+          </>
+        )}
 
-          <ListItems
-            edit={editing}
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
-            setParent={setMember}
-          />
-
-          <ListItems
-            edit={editing}
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setMember}
-          />
-
-          <ListItems
-            edit={editing}
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setMember}
-          />
-
-          <ListItems
-            edit={editing}
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setMember}
-          />
-
-          {editing && (
-            <>
-              <div className='d-flex p-1 m-1 justify-content-left'>
-                <input
-                  type='checkbox'
-                  className='btn-check mb-3'
-                  id='hidden'
-                  autoComplete='off'
-                  checked={hidden}
-                  onChange={() =>
-                    setMember((prev) => ({ ...prev, hidden: !hidden }))
-                  }
-                />
-                <label className='btn btn-outline-warning ' htmlFor='hidden'>
-                  Hide Profile
-                </label>
-                <div className='m-auto'>
-                  Your profile
-                  {hidden ? " is hidden" : " is public"}
-                </div>
-              </div>
-              <hr className='my-1' />
-            </>
-          )}
-
-          {editing && (
-            <Location
-              editing={editing}
-              location={location}
-              setParent={setMember}
+        {editing ? (
+          <div className='form-floating mb-3'>
+            <input
+              type='text'
+              className='form-control'
+              id='description'
+              placeholder='Description'
+              name='description'
+              value={description}
+              onChange={onChange}
             />
-          )}
-
-          {isLoading && <IconLoading />}
-        </div>
-
-        <div className='d-flex justify-content-between m-1 p-1'>
-          <LinkButtoneBack />
-          {editing ? (
+            <label htmlFor='description'>Description</label>
+          </div>
+        ) : (
+          description && (
             <>
-              <span onClick={() => setEditing(false)}>
-                <IconButton>View</IconButton>
-              </span>
-              <span onClick={onPut}>
-                <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
-              </span>
+              <div className='d-flex justify-content-wrap p-2 m-1'>
+                {description}
+              </div>
+              <hr className='m-1' />
             </>
-          ) : (
-            <span onClick={() => setEditing(true)}>
-              <IconButton>Edit</IconButton>
+          )
+        )}
+
+        <ListItems
+          edit={editing}
+          message='Interests'
+          type='interests'
+          title='interest'
+          items={interests}
+          setParent={setMember}
+        />
+
+        <ManageHelp help={help} setParent={setMember} editing={editing} />
+        <ListItems
+          edit={editing}
+          message='Languages'
+          type='languages'
+          title='language'
+          items={languages}
+          setParent={setMember}
+        />
+
+        <ManageHidden hidden={hidden} setParent={setMember} editing={editing} />
+        <ManageLocation
+          location={location}
+          setParent={setMember}
+          editing={editing}
+        />
+
+        {isLoading && <IconLoading />}
+      </div>
+
+      <div className='d-flex justify-content-between m-1 p-1'>
+        <LinkButtoneBack />
+        {editing ? (
+          <>
+            <span onClick={() => setEditing(false)}>
+              <IconButton>View</IconButton>
             </span>
-          )}
-          <LinkButton to={"/account"}>Manage Account</LinkButton>
-        </div>
-      </WrapperModal>
-    </>
+            <span onClick={onPut}>
+              <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
+            </span>
+          </>
+        ) : (
+          <span onClick={() => setEditing(true)}>
+            <IconButton>Edit</IconButton>
+          </span>
+        )}
+        <LinkButton to={"/account"}>Account</LinkButton>
+      </div>
+    </WrapperModal>
   );
 }
 
