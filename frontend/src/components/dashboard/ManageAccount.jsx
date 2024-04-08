@@ -13,8 +13,8 @@ import {
   IconLoading,
   IconSpin,
   LinkButtoneBack,
-  WrapperModal,
 } from "../common/LinkItems.jsx";
+import { WrapperModal } from "./common/Wrappers.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);

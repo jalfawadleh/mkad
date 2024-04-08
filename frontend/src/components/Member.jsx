@@ -11,8 +11,8 @@ import {
   IconCircleClose,
   IconLoading,
   LinkButtoneBack,
-  WrapperModal,
 } from "./common/LinkItems.jsx";
+import { WrapperModal } from "./common/Wrappers.jsx";
 
 function Member() {
   const { id } = useParams();

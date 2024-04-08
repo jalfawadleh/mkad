@@ -3,8 +3,8 @@ import {
   IconCircleClose,
   IconCircleHelp,
   LinkButtoneBack,
-  WrapperModal,
 } from "./common/LinkItems";
+import { WrapperModal } from "./common/Wrappers.jsx";
 
 function Help() {
   return (

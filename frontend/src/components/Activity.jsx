@@ -13,11 +13,12 @@ import {
   IconCircleActivity,
   IconCircleClose,
   LinkButtoneBack,
-  WrapperModal,
   IconSpin,
   IconLoading,
   BoxCenterText,
 } from "./common/LinkItems.jsx";
+
+import { WrapperModal } from "./common/Wrappers.jsx";
 
 import ManageLocation from "./common/ManageLocation.jsx";
 

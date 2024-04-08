@@ -394,24 +394,6 @@ export const ListLinks = ({ items }) => {
   );
 };
 
-export const WrapperModal = ({ children }) => {
-  return (
-    <div
-      role='dialog'
-      aria-modal='true'
-      className='fade modal show d-block bg-dark bg-opacity-75'
-      tabIndex='-1'
-      data-bs-backdrop='static'
-    >
-      <div className='modal-dialog modal-dialog-centered ' role='document'>
-        <div className='modal-content bg-black p-1 border-1 border-primary'>
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const IconSpin = () => {
   return (
     <div

@@ -16,8 +16,9 @@ import {
   IconLoading,
   IconSpin,
   LinkButtoneBack,
-  WrapperModal,
 } from "../common/LinkItems.jsx";
+
+import { WrapperModal } from "./common/Wrappers.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();

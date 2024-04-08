@@ -13,10 +13,11 @@ import {
   CircleIconOrganisation,
   BoxCenterText,
   LinkButtoneBack,
-  WrapperModal,
   IconLoading,
   IconSpin,
 } from "./common/LinkItems.jsx";
+import { WrapperModal } from "./common/Wrappers.jsx";
+
 import ManagePeriod from "./common/ManagePeriod.jsx";
 
 const Organization = () => {

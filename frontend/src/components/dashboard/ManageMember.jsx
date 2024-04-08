@@ -18,8 +18,9 @@ import {
   IconSpin,
   LinkButton,
   LinkButtoneBack,
-  WrapperModal,
 } from "../common/LinkItems.jsx";
+import { WrapperModal } from "./common/Wrappers.jsx";
+
 import ManageHidden from "../common/ManageHidden.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
 import ManageName from "../common/ManageName.jsx";
