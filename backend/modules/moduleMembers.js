@@ -22,6 +22,7 @@ const putMember = asyncHandler(async (req, res) => {
     member.contacts = req.body.contacts;
     member.helpOffered = req.body.helpOffered;
     member.helpNeeded = req.body.helpNeeded;
+    member.help = req.body.help;
 
     await member.save();
 
@@ -51,6 +52,7 @@ const getMember = asyncHandler(async (req, res) => {
       contacts: member.contacts,
       helpOffered: member.helpOffered,
       helpNeeded: member.helpNeeded,
+      help: member.help,
     });
   else {
     res.status(404);

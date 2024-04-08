@@ -46,6 +46,16 @@ const usersSchema = Schema(
       ],
       default: [],
     },
+    help: {
+      type: [
+        {
+          offer: Boolean,
+          text: String,
+          members: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
+    },
     interests: { type: [{ name: String }], default: [] },
     location: {
       type: { lng: Number, lat: Number },

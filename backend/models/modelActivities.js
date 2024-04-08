@@ -11,8 +11,24 @@ const schema = Schema(
     endOn: { type: Date },
 
     location: {
-      type: { lng: Number, lat: Number, online: Boolean, link: String },
-      default: { lng: -122.2683, lat: 37.8243, online: false, link: "" },
+      type: { lng: Number, lat: Number },
+      default: { lng: -122.2683, lat: 37.8243 },
+    },
+
+    online: {
+      type: { value: Boolean, link: String },
+      default: { value: false, link: "" },
+    },
+
+    help: {
+      type: [
+        {
+          offer: Boolean,
+          text: String,
+          members: [{ _id: Schema.Types.ObjectId, name: String }],
+        },
+      ],
+      default: [],
     },
 
     notes: { type: [{ name: String }], default: [] },

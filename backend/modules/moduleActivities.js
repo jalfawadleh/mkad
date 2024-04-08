@@ -53,6 +53,8 @@ const postActivity = asyncHandler(async (req, res) => {
     interests: req.body.interests,
     hidden: req.body.hidden,
     location: req.body.location,
+    online: req.body.online,
+    help: req.body.help,
     createdBy: { _id: req.user._id, name: req.user.name },
   });
   if (activity) res.status(201).json({ activity });
@@ -80,6 +82,8 @@ const putActivity = asyncHandler(async (req, res) => {
     activity.interests = req.body.interests;
     activity.hidden = req.body.hidden;
     activity.location = req.body.location;
+    activity.online = req.body.online;
+    activity.help = req.body.help;
 
     await activity.save();
     res.status(200).json({ activity });
