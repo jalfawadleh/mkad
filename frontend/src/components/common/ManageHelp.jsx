@@ -43,30 +43,6 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
     // putParent();
   };
 
-  const iconDel = (h) => {
-    return (
-      <div
-        role='button'
-        className='d-inline-block ms-2 p-0 rounded-pill rounded-start bg-danger'
-        onClick={() => delItem(h)}
-      >
-        <FaMinus size={16} className='mx-2' />
-      </div>
-    );
-  };
-
-  const iconHelp = (h) => {
-    return (
-      <div
-        role='button'
-        className='d-inline-block ms-2 p-0 rounded-pill rounded-start bg-primary'
-        onClick={() => offerHelp(h._id)}
-      >
-        {isHelping ? <IconSpin /> : <FaRegHand size={16} className='mx-2' />}
-      </div>
-    );
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     help.push({ ...item });
@@ -84,20 +60,38 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               key={index}
               className='d-inline-block m-1 p-0 rounded-pill border border-primary'
             >
-              <div className='d-inline p-auto m-auto text-center '>
-                <span className='px-1 me-2 d-inline-block bg-success rounded-pill rounded-end '>
-                  {h.offer ? "Offered " : "Needed "}
+              <span className='m-0 p-1 ps-2 bg-success rounded-pill rounded-end '>
+                {h.offer ? "Offered " : "Needed "}
+              </span>
+              <span className='m-0 p-1'>{h.text}</span>
+              {editing ? (
+                <span
+                  role='button'
+                  className='m-0 p-1 rounded-pill rounded-start bg-danger text-center'
+                  onClick={() => delItem(h)}
+                >
+                  <FaMinus size={16} className='m-0 p-0' />
                 </span>
-                <span className='p-auto m-auto text-center'>{h.text}</span>
-                {editing ? iconDel(h) : iconHelp(h)}
-              </div>
+              ) : (
+                <span
+                  role='button'
+                  className='m-0 p-1 rounded-pill rounded-start bg-success text-center'
+                  onClick={() => offerHelp(h._id)}
+                >
+                  {isHelping ? (
+                    <IconSpin />
+                  ) : (
+                    <FaRegHand size={16} className='m-0 p-0' />
+                  )}
+                </span>
+              )}
             </div>
           ))}
         </section>
       )}
 
       {editing && (
-        <section className='container m-1 p-1'>
+        <section className='container m-1 mt-2 p-1'>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <div

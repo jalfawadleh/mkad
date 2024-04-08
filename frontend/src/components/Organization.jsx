@@ -17,7 +17,7 @@ import {
   IconLoading,
   IconSpin,
 } from "./common/LinkItems.jsx";
-import Period from "./common/Period.jsx";
+import ManagePeriod from "./common/ManagePeriod.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -118,7 +118,7 @@ const Organization = () => {
         </div>
         <hr className='m-1' />
         <div className='overflow-y-auto p-1 m-0'>
-          <Period
+          <ManagePeriod
             startOn={startOn}
             endOn={endOn}
             setParent={setItem}

@@ -18,9 +18,9 @@ import ScreenUpdates from "./screens/ScreenUpdates.jsx";
 import ScreenMessages from "./screens/ScreenMessages.jsx";
 import ScreenLogout from "./screens/ScreenLogout.jsx";
 
-import ActivityManage from "./components/dashboard/ActivityManage.jsx";
-import MemberAccount from "./components/dashboard/MemberAccount.jsx";
-import MemberProfile from "./components/dashboard/MemberProfile.jsx";
+import ManageActivity from "./components/dashboard/ManageActivity.jsx";
+import ManageAccount from "./components/dashboard/ManageAccount.jsx";
+import ManageProfile from "./components/dashboard/ManageMember.jsx";
 
 import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
@@ -37,12 +37,12 @@ const router = createBrowserRouter(
         <Route path='member/:id' element={<Member />} />
 
         <Route path='dashboard' element={<ScreenDashboard />}>
-          <Route path='profile' element={<MemberProfile />} />
-          <Route path='account' element={<MemberAccount />} />
+          <Route path='profile' element={<ManageProfile />} />
+          <Route path='account' element={<ManageAccount />} />
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
-          <Route path='activity/manage/:id' element={<ActivityManage />} />
-          <Route path='new' element={<ActivityManage />} />
+          <Route path='activity/manage/:id' element={<ManageActivity />} />
+          <Route path='new' element={<ManageActivity />} />
         </Route>
 
         <Route path='messages' element={<ScreenMessages />}>

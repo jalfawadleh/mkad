@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from "react";
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
 import ListItems from "./common/ListItems.jsx";
-
+import ManagePeriod from "./common/ManagePeriod.jsx";
 import {
   LinkAvatarMember,
   IconButton,
@@ -18,8 +18,8 @@ import {
   IconLoading,
   BoxCenterText,
 } from "./common/LinkItems.jsx";
-import Period from "./common/Period.jsx";
-import Location from "./common/Location.jsx";
+
+import ManageLocation from "./common/ManageLocation.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -124,7 +124,7 @@ const Activity = () => {
         </div>
         <hr className='m-1' />
         <div className='overflow-y-auto p-1 m-0'>
-          <Period
+          <ManagePeriod
             startOn={startOn}
             endOn={endOn}
             setParent={setActivity}
@@ -178,7 +178,7 @@ const Activity = () => {
             setParent={setActivity}
           />
 
-          <Location location={location} setParent={setActivity} />
+          <ManageLocation location={location} setParent={setActivity} />
 
           {isLoading && <IconLoading />}
         </div>

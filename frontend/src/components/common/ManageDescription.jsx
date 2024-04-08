@@ -11,7 +11,7 @@ const ManageDescription = ({ description, setParent, editing = false }) => {
   return (
     <>
       {editing ? (
-        <section className='container m-1 p-1'>
+        <section className='container m-1 p-0'>
           <div className='form-floating'>
             <input
               type='text'
@@ -32,7 +32,7 @@ const ManageDescription = ({ description, setParent, editing = false }) => {
         </section>
       ) : (
         description && (
-          <section className='container m-1 p-1 d-flex justify-content-wrap'>
+          <section className='container m-1 p-0 d-flex justify-content-wrap'>
             {description}
           </section>
         )

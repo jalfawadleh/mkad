@@ -6,8 +6,8 @@ import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
 
 import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import Location from "../common/Location.jsx";
-import Period from "../common/Period.jsx";
+import Location from "../common/ManageLocation.jsx";
+import ManagePeriod from "../common/ManagePeriod.jsx";
 import {
   BoxCenterText,
   IconButton,
@@ -19,7 +19,7 @@ import {
   WrapperModal,
 } from "../common/LinkItems.jsx";
 
-const Activity = () => {
+const ManageActivity = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -167,7 +167,7 @@ const Activity = () => {
             </>
           )}
 
-          <Period
+          <ManagePeriod
             startOn={startOn}
             endOn={endOn}
             setParent={setActivity}
@@ -314,4 +314,4 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default ManageActivity;

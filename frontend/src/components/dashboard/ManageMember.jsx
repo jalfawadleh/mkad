@@ -24,7 +24,7 @@ import ManageHidden from "../common/ManageHidden.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
 import ManageName from "../common/ManageName.jsx";
 
-function SettingsProfile() {
+function ManageMember() {
   const { user, setUser } = useContext(UserContext);
   const { setFlyToLocation } = useContext(MapContext);
 
@@ -95,7 +95,7 @@ function SettingsProfile() {
       </div>
       <hr className='m-1' />
 
-      <div className='overflow-y-auto p-1 m-0'>
+      <div className='overflow-y-auto p-1 m-1'>
         <ManageName
           name={member.name}
           setParent={setMember}
@@ -168,4 +168,4 @@ function SettingsProfile() {
   );
 }
 
-export default SettingsProfile;
+export default ManageMember;
