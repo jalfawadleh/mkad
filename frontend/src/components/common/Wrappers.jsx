@@ -58,10 +58,10 @@ export const Language = ({ children }) => {
   return (
     <>
       <div className='d-inline-block m-2 p-0'>
-        <span className='d-inline m-0 p-1 text-bg-primary rounded-pill rounded-end'>
+        <span className='d-inline m-0 p-1 ps-2 text-bg-primary rounded-pill rounded-end'>
           <FaLanguage size={24} />
         </span>
-        <span className='d-inline-block m-0 p-0 border border-gray text-wrap'>
+        <span className='d-inline-block m-0 p-0 px-1 border border-gray text-wrap'>
           {children}
         </span>
       </div>
@@ -74,13 +74,13 @@ export const HelpItem = ({ offer, children }) => {
     <>
       <div className='d-inline-block m-2 p-0'>
         <div
-          className={`d-inline m-0 p-1 rounded-pill rounded-end text-bg-${
+          className={`d-inline m-0 p-1 ps-2 rounded-pill rounded-end text-bg-${
             offer ? "primary" : "success"
           }`}
         >
           {offer ? "Offer" : "Need"}
         </div>
-        <div className='d-inline-block m-0 p-0 border border-gray text-wrap'>
+        <div className='d-inline-block m-0 p-0 px-1 border border-gray text-wrap'>
           {children}
         </div>
       </div>
