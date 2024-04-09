@@ -20,7 +20,7 @@ import ScreenLogout from "./screens/ScreenLogout.jsx";
 
 import ManageActivity from "./components/dashboard/ManageActivity.jsx";
 import ManageAccount from "./components/dashboard/ManageAccount.jsx";
-import ManageProfile from "./components/dashboard/ManageMember.jsx";
+import ManageMember from "./components/dashboard/ManageMember.jsx";
 
 import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
@@ -37,7 +37,7 @@ const router = createBrowserRouter(
         <Route path='member/:id' element={<Member />} />
 
         <Route path='dashboard' element={<ScreenDashboard />}>
-          <Route path='profile' element={<ManageProfile />} />
+          <Route path='profile' element={<ManageMember />} />
           <Route path='account' element={<ManageAccount />} />
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
