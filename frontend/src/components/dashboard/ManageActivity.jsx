@@ -3,10 +3,8 @@ import { toast } from "react-toastify";
 
 import axios from "axios";
 import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
-
 import { useNavigate, useParams } from "react-router-dom";
 
-import ManagePeriod from "../common/ManagePeriod.jsx";
 import {
   BoxCenterText,
   IconButton,
@@ -23,11 +21,16 @@ import {
   WrapperHeader,
   WrapperModal,
 } from "../common/Wrappers.jsx";
-import ManageHidden from "../common/ManageHidden.jsx";
-import ManageDescription from "../common/ManageDescription.jsx";
+
 import ManageName from "../common/ManageName.jsx";
+import ManageDescription from "../common/ManageDescription.jsx";
+import ManagePeriod from "../common/ManagePeriod.jsx";
+import ManageLanguages from "../common/ManageLanguages.jsx";
 import ManageHelp from "../common/ManageHelp.jsx";
+import ManageHidden from "../common/ManageHidden.jsx";
+import ManageOnline from "../common/ManageOnline.jsx";
 import ManageLocation from "../common/ManageLocation.jsx";
+import ManageInterests from "../common/ManageInterests.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();
@@ -47,10 +50,12 @@ const ManageActivity = () => {
     endOn: Date.now(),
     description: "",
     notes: [],
+    help: [],
     languages: [],
     interests: [],
     createdBy: [],
     hidden: false,
+    online: { value: false, link: "" },
     location: { lng: -122.2683, lat: 37.8243 },
   });
 
@@ -134,6 +139,13 @@ const ManageActivity = () => {
             setParent={setActivity}
             editing={isEditing}
           />
+
+          <ManageDescription
+            description={activity.description}
+            setParent={setActivity}
+            editing={isEditing}
+          />
+
           <ManagePeriod
             startOn={activity.startOn}
             endOn={activity.endOn}
@@ -141,8 +153,14 @@ const ManageActivity = () => {
             isEditing={isEditing}
           />
 
-          <ManageDescription
-            description={activity.description}
+          <ManageLanguages
+            languages={activity.languages}
+            setParent={setActivity}
+            editing={isEditing}
+          />
+
+          <ManageInterests
+            interests={activity.interests}
             setParent={setActivity}
             editing={isEditing}
           />
@@ -155,6 +173,12 @@ const ManageActivity = () => {
 
           <ManageHidden
             hidden={activity.hidden}
+            setParent={setActivity}
+            editing={isEditing}
+          />
+
+          <ManageOnline
+            online={activity.online}
             setParent={setActivity}
             editing={isEditing}
           />
