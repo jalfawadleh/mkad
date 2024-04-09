@@ -24,8 +24,8 @@ const usersSchema = Schema(
 
     type: { type: String, default: "member" }, //organisation union
     name: { type: String, required: true },
-    description: { type: String, default: "" },
     icon: { type: String, default: "" },
+    description: { type: String, default: "" },
 
     languages: { type: [{ name: String }], default: [] },
     interests: { type: [{ name: String }], default: [] },
