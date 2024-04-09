@@ -54,7 +54,6 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
     <>
       {help?.length > 0 && (
         <section className='container m-1 p-0'>
-          Help
           {help.map((h, index) => (
             <div key={index} className='d-inline-block m-1 p-0'>
               <div
@@ -69,30 +68,34 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               <div className='d-inline m-auto p-1 border border-gray text-wrap'>
                 {h.text}
               </div>
-              {editing ? (
-                <div
-                  role='button'
-                  className='d-inline m-auto p-1 bg-danger rounded-end text-center'
-                  onClick={() => delItem(h)}
-                >
-                  <FaMinus size={16} className='m-0 p-0' />
-                </div>
-              ) : (
-                <span
-                  role='button'
-                  className={
-                    "m-0 p-1 rounded-end text-center " +
-                    (h.offer ? "bg-primary" : "bg-success")
-                  }
-                  onClick={() => offerHelp(h._id)}
-                >
-                  {isHelping ? (
-                    <IconSpin />
-                  ) : (
-                    <FaRegHand size={16} className='m-0 p-0' />
-                  )}
-                </span>
-              )}
+              {/* {editing ? ( */}
+              {
+                editing && (
+                  <div
+                    role='button'
+                    className='d-inline m-auto p-1 bg-danger rounded-end text-center'
+                    onClick={() => delItem(h)}
+                  >
+                    <FaMinus size={16} className='m-0 p-0' />
+                  </div>
+                )
+                // : (
+                //   <span
+                //     role='button'
+                //     className={
+                //       "m-0 p-1 rounded-end text-center " +
+                //       (h.offer ? "bg-primary" : "bg-success")
+                //     }
+                //     //onClick={() => offerHelp(h._id)}
+                //   >
+                //     {isHelping ? (
+                //       <IconSpin />
+                //     ) : (
+                //       <FaRegHand size={16} className='m-0 p-0' />
+                //     )}
+                //   </span>
+                // )
+              }
             </div>
           ))}
         </section>

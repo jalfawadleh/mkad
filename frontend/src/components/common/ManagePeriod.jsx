@@ -20,24 +20,22 @@ const Period = ({ startOn, endOn, setParent, isEditing = false }) => {
   return isEditing ? (
     <>
       <div className='d-flex justify-content-between m-1 ps-1'>
-        <div className='d-flex float-left w-50'>
-          <span className='p-auto m-auto'>Start</span>
-          <Datetime
-            input={true}
-            className='p-0 m-1'
-            value={moment(startOn)}
-            onChange={onChangeToStart}
-          />
-        </div>
-        <div className='d-flex float-left w-50'>
-          <span className='p-auto m-auto'>End</span>
-          <Datetime
-            className='p-0 m-1'
-            value={moment(endOn)}
-            onChange={onChangeToEnd}
-          />
-        </div>
+        <span className='p-auto m-auto'>Start</span>
+        <Datetime
+          input={true}
+          className='p-0 m-1'
+          value={moment(startOn)}
+          onChange={onChangeToStart}
+        />
+
+        <span className='p-auto m-auto'>End</span>
+        <Datetime
+          className='p-0 m-1'
+          value={moment(endOn)}
+          onChange={onChangeToEnd}
+        />
       </div>
+
       <hr className='m-1' />
     </>
   ) : (

@@ -214,7 +214,7 @@ const Map = () => {
 
         <MapContainer
           center={mapCenter}
-          zoom={6}
+          zoom={12}
           maxZoom={15}
           minZoom={3}
           zoomControl={false}
