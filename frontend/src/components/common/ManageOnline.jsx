@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ManageOnline = ({ editing = false, parent, setParent }) => {
-  const online = parent.online;
-
+const ManageOnline = ({ online, editing = false, setParent }) => {
   return (
     <>
       {editing && (
@@ -13,7 +11,7 @@ const ManageOnline = ({ editing = false, parent, setParent }) => {
               className='btn-check mb-3'
               id='online'
               autoComplete='off'
-              checked={online}
+              checked={online.value}
               onChange={(e) =>
                 setParent((prev) => ({
                   ...prev,
@@ -38,11 +36,11 @@ const ManageOnline = ({ editing = false, parent, setParent }) => {
                 id='link'
                 placeholder='Link to event'
                 name='link'
-                value={location.link}
+                value={online.link}
                 onChange={(e) =>
                   setParent((prev) => ({
                     ...prev,
-                    location: { value: true, link: e.target.value },
+                    online: { value: true, link: e.target.value },
                   }))
                 }
               />
