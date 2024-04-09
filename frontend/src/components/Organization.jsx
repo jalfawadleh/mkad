@@ -4,7 +4,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
-import ListItems from "./common/ListItems.jsx";
 
 import {
   LinkAvatarMember,
@@ -134,44 +133,6 @@ const Organization = () => {
               <hr className='m-1' />
             </>
           )}
-
-          <ListItems
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
-            setParent={setItem}
-          />
-          <ListItems
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setItem}
-          />
-          <ListItems
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setItem}
-          />
-
-          <ListItems
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setItem}
-          />
-
-          <ListItems
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
-            setParent={setItem}
-          />
 
           {isLoading && <IconLoading />}
         </div>

@@ -5,10 +5,6 @@ import axios from "axios";
 
 import { MapContext, UserContext } from "../../store.js";
 
-import ListItems from "../common/ListItems.jsx";
-import ManageHelp from "../common/ManageHelp.jsx";
-import ManageLocation from "../common/ManageLocation.jsx";
-
 import {
   AvatarMember,
   BoxCenterText,
@@ -26,9 +22,13 @@ import {
   WrapperModal,
 } from "../common/Wrappers.jsx";
 
-import ManageHidden from "../common/ManageHidden.jsx";
-import ManageDescription from "../common/ManageDescription.jsx";
 import ManageName from "../common/ManageName.jsx";
+import ManageDescription from "../common/ManageDescription.jsx";
+import ManageLanguages from "../common/ManageLanguages.jsx";
+import ManageInterests from "../common/ManageInterests.jsx";
+import ManageHelp from "../common/ManageHelp.jsx";
+import ManageHidden from "../common/ManageHidden.jsx";
+import ManageLocation from "../common/ManageLocation.jsx";
 
 function ManageMember() {
   const { user, setUser } = useContext(UserContext);
@@ -116,22 +116,16 @@ function ManageMember() {
           editing={editing}
         />
 
-        <ListItems
-          edit={editing}
-          message='Interests'
-          type='interests'
-          title='interest'
-          items={member.interests}
+        <ManageInterests
+          interests={member.interests}
           setParent={setMember}
+          editing={editing}
         />
 
-        <ListItems
-          edit={editing}
-          message='Languages'
-          type='languages'
-          title='language'
-          items={member.languages}
+        <ManageLanguages
+          languages={member.languages}
           setParent={setMember}
+          editing={editing}
         />
 
         <ManageHelp

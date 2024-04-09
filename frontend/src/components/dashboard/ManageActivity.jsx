@@ -4,9 +4,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
 
-import ListItems from "../common/ListItems.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import Location from "../common/ManageLocation.jsx";
+
 import ManagePeriod from "../common/ManagePeriod.jsx";
 import {
   BoxCenterText,
@@ -50,17 +49,12 @@ const ManageActivity = () => {
     notes: [],
     languages: [],
     interests: [],
-    helpOffered: [],
-    helpNeeded: [],
     createdBy: [],
     hidden: false,
     location: { lng: -122.2683, lat: 37.8243 },
   });
 
-  const { startOn, endOn, languages, interests, createdBy, location } =
-    activity;
-
-  const isOwner = createdBy?._id === user._id;
+  const isOwner = activity.createdBy?._id === user._id;
   const isCreating = activity._id ? false : true;
   const [isEditing, setIsEditing] = useState(isCreating);
 
@@ -74,14 +68,14 @@ const ManageActivity = () => {
           .then(() => toast("Updated"))
           .then(() => setIsUpdating(false))
           .then(() => getActivities())
-          .then(() => setFlyToLocation(location));
+          .then(() => setFlyToLocation(activity.location));
       else
         await axios
           .post("/activities/", activity)
           .then(() => toast("Created"))
           .then(() => setIsUpdating(false))
           .then(() => getActivities())
-          .then(() => setFlyToLocation(location));
+          .then(() => setFlyToLocation(activity.location));
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -151,24 +145,6 @@ const ManageActivity = () => {
             description={activity.description}
             setParent={setActivity}
             editing={isEditing}
-          />
-
-          <ListItems
-            edit={isEditing}
-            message='Languages'
-            type='languages'
-            title='language'
-            items={activity.languages}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            edit={isEditing}
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={activity.interests}
-            setParent={setActivity}
           />
 
           <ManageHelp

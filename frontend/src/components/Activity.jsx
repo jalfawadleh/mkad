@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import ListItems from "./common/ListItems.jsx";
 import ManagePeriod from "./common/ManagePeriod.jsx";
 import {
   LinkAvatarMember,
@@ -42,20 +41,8 @@ const Activity = () => {
     location: [],
   });
 
-  const {
-    name,
-    startOn,
-    endOn,
-    description,
-    notes,
-    languages,
-    interests,
-    helpOffered,
-    helpNeeded,
-    createdBy,
-    members,
-    location,
-  } = activity;
+  const { name, startOn, endOn, description, createdBy, members, location } =
+    activity;
 
   const getActivity = async (id) => {
     setIsLoading(true);
@@ -140,44 +127,6 @@ const Activity = () => {
               <hr className='m-1' />
             </>
           )}
-
-          <ListItems
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
-            setParent={setActivity}
-          />
-          <ListItems
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setActivity}
-          />
-          <ListItems
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
-            setParent={setActivity}
-          />
 
           <ManageLocation location={location} setParent={setActivity} />
 

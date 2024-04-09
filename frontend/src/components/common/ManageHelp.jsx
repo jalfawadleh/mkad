@@ -60,9 +60,15 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               key={index}
               className='d-inline-block m-1 p-0 rounded-pill border border-primary'
             >
-              <span className='m-0 p-1 ps-2 bg-success rounded-pill rounded-end '>
-                {h.offer ? "Offered " : "Needed "}
+              <span
+                className={
+                  "m-0 p-1 ps-2 rounded-pill rounded-end " +
+                  (h.offer ? "bg-primary" : "bg-success")
+                }
+              >
+                {h.offer ? "Offered" : "Needed"}
               </span>
+
               <span className='m-0 p-1'>{h.text}</span>
               {editing ? (
                 <span
@@ -75,7 +81,10 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               ) : (
                 <span
                   role='button'
-                  className='m-0 p-1 rounded-pill rounded-start bg-success text-center'
+                  className={
+                    "m-0 p-1 rounded-pill rounded-start text-center " +
+                    (h.offer ? "bg-primary" : "bg-success")
+                  }
                   onClick={() => offerHelp(h._id)}
                 >
                   {isHelping ? (

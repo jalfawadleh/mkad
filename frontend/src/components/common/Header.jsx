@@ -3,7 +3,6 @@ import { useContext } from "react";
 
 import {
   AvatarMember,
-  IconFlyTo,
   IconHelp,
   IconMessage,
   IconSearch,
@@ -15,8 +14,6 @@ const Header = () => {
   const { user } = useContext(UserContext);
   const headerLinks = (
     <>
-      <IconFlyTo location={user.location} />
-
       <span
         role='button'
         className='p-1 m-1 bg-black rounded-pill border border-primary'

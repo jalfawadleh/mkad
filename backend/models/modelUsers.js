@@ -21,31 +21,15 @@ const usersSchema = Schema(
       required: [true, "Please add an email"],
       unique: true,
     },
-    type: { type: String, default: "member" }, //organisation union
 
+    type: { type: String, default: "member" }, //organisation union
     name: { type: String, required: true },
     description: { type: String, default: "" },
     icon: { type: String, default: "" },
 
-    languages: { type: [{ name: String }] },
-    helpOffered: {
-      type: [
-        {
-          name: String,
-          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
-        },
-      ],
-      default: [],
-    },
-    helpNeeded: {
-      type: [
-        {
-          name: String,
-          volunteers: [{ _id: Schema.Types.ObjectId, name: String }],
-        },
-      ],
-      default: [],
-    },
+    languages: { type: [{ name: String }], default: [] },
+    interests: { type: [{ name: String }], default: [] },
+
     help: {
       type: [
         {
@@ -56,7 +40,7 @@ const usersSchema = Schema(
       ],
       default: [],
     },
-    interests: { type: [{ name: String }], default: [] },
+
     location: {
       type: { lng: Number, lat: Number },
       default: { lng: -122.2683, lat: 37.8243 },
@@ -66,29 +50,38 @@ const usersSchema = Schema(
     hidden: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
 
-    contacts: [
-      {
-        id: { type: Schema.Types.ObjectId },
-        name: { type: String },
-        approved: { type: Boolean, default: false },
-      },
-    ],
+    contacts: {
+      type: [
+        {
+          id: { type: Schema.Types.ObjectId },
+          name: { type: String },
+          approved: { type: Boolean, default: false },
+        },
+      ],
+      default: [],
+    },
 
-    members: [
-      {
-        _id: Schema.Types.ObjectId,
-        name: String,
-        approved: { type: Boolean, default: false },
-      },
-    ],
+    members: {
+      type: [
+        {
+          _id: Schema.Types.ObjectId,
+          name: String,
+          approved: { type: Boolean, default: false },
+        },
+      ],
+      default: [],
+    },
 
-    organisations: [
-      {
-        id: Schema.Types.ObjectId,
-        name: String,
-        approved: { type: Boolean, default: false },
-      },
-    ],
+    organisations: {
+      type: [
+        {
+          id: Schema.Types.ObjectId,
+          name: String,
+          approved: { type: Boolean, default: false },
+        },
+      ],
+      default: [],
+    },
   },
   {
     timestamps: true,

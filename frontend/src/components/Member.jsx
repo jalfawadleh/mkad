@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import ListItems from "./common/ListItems.jsx";
 import {
   AvatarMember,
   BoxCenterText,
@@ -29,8 +28,7 @@ function Member() {
     helpNeeded: [],
   });
 
-  const { name, description, languages, interests, helpOffered, helpNeeded } =
-    item;
+  const { name, description } = item;
 
   useEffect(() => {
     async function getMember() {
@@ -69,37 +67,6 @@ function Member() {
               <hr className='m-1' />
             </>
           )}
-
-          <ListItems
-            message='Interests'
-            type='interests'
-            title='interest'
-            items={interests}
-            setParent={setItem}
-          />
-
-          <ListItems
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setItem}
-          />
-          <ListItems
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setItem}
-          />
-
-          <ListItems
-            message='Languages'
-            type='languages'
-            title='language'
-            items={languages}
-            setParent={setItem}
-          />
 
           {isLoading && <IconLoading />}
         </div>
