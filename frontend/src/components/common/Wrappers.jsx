@@ -59,7 +59,7 @@ export const Language = ({ children }) => {
     <>
       <div className='d-inline m-1 p-0'>
         <span className='my-auto p-1 text-bg-primary rounded-pill rounded-end'>
-          <FaLanguage size={14} />
+          <FaLanguage size={24} />
         </span>
         <span className='my-auto p-1 border border-gray'>{children}</span>
       </div>
