@@ -67,5 +67,24 @@ export const Language = ({ children }) => {
   );
 };
 
-const Wrappers = { Modal, Body, Header, Footer, Bar, Language };
+export const HelpItem = ({ offer, children }) => {
+  return (
+    <>
+      <div className='d-inline-block m-2 p-0'>
+        <div
+          className={`d-inline m-0 p-1 rounded-pill rounded-end text-bg-${
+            offer ? "primary" : "success"
+          }`}
+        >
+          {offer ? "Offer" : "Need"}
+        </div>
+        <div className='d-inline-block m-0 p-0 border border-gray text-wrap'>
+          {children}
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Wrappers = { Modal, Body, Header, Footer, Bar, Language, HelpItem };
 export default Wrappers;

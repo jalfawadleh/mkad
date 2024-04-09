@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
-import { FaRegHand } from "react-icons/fa6";
-import { IconSpin } from "./LinkItems";
+import { HelpItem } from "./Wrappers";
+import { AiOutlineClose } from "react-icons/ai";
 
 /**
  * Help component.
@@ -20,21 +20,6 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
   const [item, setItem] = useState({ text: "", offer: true });
   const { text, offer } = item;
 
-  const [isHelping, setIsHelping] = useState(false);
-
-  const offerHelp = async (id) => {
-    setIsHelping(true);
-    await axios
-      .post(`/help`, { itemType: parent.type, itemId: parent._id, id })
-      .then((res) => setParent({ ...parent, help: [res.data] }))
-      .then(() => setIsHelping(false))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
-  };
-
   const delItem = (t) => {
     setParent((prev) => ({
       ...prev,
@@ -47,58 +32,28 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
     e.preventDefault();
     help.push({ ...item });
     setParent((prev) => ({ ...prev, help }));
-    setItem({ text: "", offer: true });
+    item.text = "";
   };
 
   return (
     <>
       {help?.length > 0 && (
-        <section className='container m-1 p-0'>
+        <div className='d-inline-block m-1 p-0'>
           {help.map((h, index) => (
-            <div key={index} className='d-inline-block m-1 p-0'>
-              <div
-                className={
-                  "d-inline m-auto p-1 rounded-start " +
-                  (h.offer ? "bg-primary" : "bg-success")
-                }
-              >
-                {h.offer ? "Offer" : "Need"}
-              </div>
-
-              <div className='d-inline m-auto p-1 border border-gray text-wrap'>
-                {h.text}
-              </div>
-              {/* {editing ? ( */}
-              {
-                editing && (
-                  <div
-                    role='button'
-                    className='d-inline m-auto p-1 bg-danger rounded-end text-center'
-                    onClick={() => delItem(h)}
-                  >
-                    <FaMinus size={16} className='m-0 p-0' />
-                  </div>
-                )
-                // : (
-                //   <span
-                //     role='button'
-                //     className={
-                //       "m-0 p-1 rounded-end text-center " +
-                //       (h.offer ? "bg-primary" : "bg-success")
-                //     }
-                //     //onClick={() => offerHelp(h._id)}
-                //   >
-                //     {isHelping ? (
-                //       <IconSpin />
-                //     ) : (
-                //       <FaRegHand size={16} className='m-0 p-0' />
-                //     )}
-                //   </span>
-                // )
-              }
-            </div>
+            <HelpItem key={index} offer={h.offer}>
+              {h.text}
+              {editing && (
+                <span
+                  role='button'
+                  className='my-auto ms-2 p-1 bg-danger'
+                  onClick={() => delItem(h)}
+                >
+                  <AiOutlineClose size={16} />
+                </span>
+              )}
+            </HelpItem>
           ))}
-        </section>
+        </div>
       )}
 
       {editing && (
@@ -106,7 +61,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <div
-                className={`p-1 btn btn-${offer ? "" : "outline-"}success`}
+                className={`p-1 btn btn-${offer ? "" : "outline-"}primary`}
                 onClick={() => setItem((prev) => ({ ...prev, offer: true }))}
                 style={{ width: 70 }}
               >
