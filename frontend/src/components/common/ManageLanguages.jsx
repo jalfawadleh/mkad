@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Language } from "./Wrappers";
 import { FaPlus } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import { Delete } from "./Icons";
 
 /**
  * Languages component.
@@ -39,12 +40,8 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
             <Language key={index}>
               {l.name}
               {editing && (
-                <span
-                  role='button'
-                  className='d-inline m-0 ms-1 p-0 bg-danger'
-                  onClick={() => delItem(l)}
-                >
-                  <AiOutlineClose size={16} className='m-0 p-0' />
+                <span onClick={() => delItem(l)}>
+                  <Delete />
                 </span>
               )}
             </Language>

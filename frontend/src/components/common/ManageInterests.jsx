@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
+import { Interest } from "./Wrappers";
+import { Delete } from "./Icons";
 
 /**
  * Interests component.
@@ -33,23 +35,15 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
     <>
       {interests?.length > 0 && (
         <section className='container m-1 p-0'>
-          Interests
           {interests.map((i, index) => (
-            <div
-              key={index}
-              className='d-inline-block m-1 p-0 rounded-pill border border-primary'
-            >
-              <span className='m-0 p-1'>{i.name}</span>
+            <Interest key={index}>
+              {i.name}
               {editing && (
-                <span
-                  role='button'
-                  className='m-0 p-1 rounded-pill rounded-start bg-danger text-center'
-                  onClick={() => delItem(i)}
-                >
-                  <FaMinus size={16} className='m-0 p-0' />
+                <span onClick={() => delItem(i)}>
+                  <Delete />
                 </span>
               )}
-            </div>
+            </Interest>
           ))}
         </section>
       )}

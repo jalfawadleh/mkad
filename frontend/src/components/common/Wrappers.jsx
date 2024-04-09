@@ -1,4 +1,5 @@
 import { FaLanguage } from "react-icons/fa";
+import { MdOutlineInterests } from "react-icons/md";
 
 export const Section = ({ children }) => {
   return (
@@ -88,5 +89,29 @@ export const HelpItem = ({ offer, children }) => {
   );
 };
 
-const Wrappers = { Modal, Body, Header, Footer, Bar, Language, HelpItem };
+export const Interest = ({ children }) => {
+  return (
+    <>
+      <div className='d-inline-block m-2 p-0'>
+        <span className='d-inline m-0 p-1 ps-2 text-bg-primary rounded-pill rounded-end'>
+          <MdOutlineInterests size={20} />
+        </span>
+        <span className='d-inline-block m-0 p-0 px-1 border border-gray text-wrap'>
+          {children}
+        </span>
+      </div>
+    </>
+  );
+};
+
+const Wrappers = {
+  Modal,
+  Body,
+  Header,
+  Footer,
+  Bar,
+  Language,
+  HelpItem,
+  Interest,
+};
 export default Wrappers;

@@ -7,6 +7,7 @@ import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { HelpItem } from "./Wrappers";
 import { AiOutlineClose } from "react-icons/ai";
+import { Delete } from "./Icons";
 
 /**
  * Help component.
@@ -43,12 +44,8 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
             <HelpItem key={index} offer={h.offer}>
               {h.text}
               {editing && (
-                <span
-                  role='button'
-                  className='d-inline m-0 ms-1 p-0 bg-danger'
-                  onClick={() => delItem(h)}
-                >
-                  <AiOutlineClose size={16} />
+                <span onClick={() => delItem(h)}>
+                  <Delete />
                 </span>
               )}
             </HelpItem>
