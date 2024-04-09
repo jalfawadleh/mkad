@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import axios from "axios";
-import { ActivitiesContext, MapContext, UserContext } from "../../store.js";
+import { UserContext } from "../../store.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
@@ -37,8 +37,6 @@ const ManageActivity = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(UserContext);
-  const { setFlyToLocation } = useContext(MapContext);
-  const { getActivities } = useContext(ActivitiesContext);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -71,7 +69,6 @@ const ManageActivity = () => {
         .put("/activities/", activity)
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
-        .then(() => getActivities())
         .then(() => navigate("/dashboard"))
         .catch((error) => {
           error?.response?.data?.message &&
@@ -83,7 +80,6 @@ const ManageActivity = () => {
         .post("/activities/", activity)
         .then(() => toast("Created"))
         .then(() => setIsUpdating(false))
-        .then(() => getActivities())
         .then(() => navigate("/dashboard"))
         .catch((error) => {
           error?.response?.data?.message &&
@@ -99,8 +95,6 @@ const ManageActivity = () => {
       await axios
         .delete(`/activities/${id}`)
         .then(() => setIsLoading(false))
-        .then(() => getActivities())
-        .then(() => setFlyToLocation(user.location))
         .then(() => navigate("/dashboard"))
         .catch((error) => {
           error?.response?.data?.message &&
