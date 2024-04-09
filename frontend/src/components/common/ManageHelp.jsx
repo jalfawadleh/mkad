@@ -1,19 +1,14 @@
 import { useState } from "react";
-
-import axios from "axios";
-import { toast } from "react-toastify";
-
-import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { HelpItem } from "./Wrappers";
-import { AiOutlineClose } from "react-icons/ai";
 import { Delete } from "./Icons";
 
 /**
  * Help component.
  *
- * @param {Object} props.parent - parent object.
+ * @param {Object} props.help - help object.
  * @param {function} props.setParent - function to update parent object.
+ * @param {Boolean} props.editing - editing object.
  *
  * @returns {React.ReactElement} Help element.
  */
@@ -54,20 +49,18 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
       )}
 
       {editing && (
-        <section className='container m-1 mt-2 p-1'>
+        <section className='d-block m-1 mt-2 p-1'>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <div
-                className={`p-1 btn btn-${offer ? "" : "outline-"}primary`}
+                className={`m-0 p-1 btn btn-${offer ? "" : "outline-"}primary`}
                 onClick={() => setItem((prev) => ({ ...prev, offer: true }))}
-                style={{ width: 70 }}
               >
                 Offer
               </div>
               <div
                 className={`p-1 btn btn-${offer ? "outline-" : ""}success`}
                 onClick={() => setItem((prev) => ({ ...prev, offer: false }))}
-                style={{ width: 70 }}
               >
                 Need
               </div>
@@ -85,7 +78,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
                 type='submit'
                 disabled={!text}
                 role='button'
-                className='p-1 badge rounded-pill border-0 bg-primary'
+                className='m-0 p-1 badge rounded-pill border-0 bg-primary'
               >
                 <FaPlus size={20} />
               </button>

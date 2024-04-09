@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { Language } from "./Wrappers";
 import { FaPlus } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
 import { Delete } from "./Icons";
 
 /**
@@ -50,7 +49,7 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
       )}
 
       {editing && (
-        <section className='container m-1 mt-2 p-1'>
+        <section className='d-block m-1 mt-2 p-1'>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <input

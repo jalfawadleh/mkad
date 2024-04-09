@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { FaMinus } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa";
 import { Interest } from "./Wrappers";
 import { Delete } from "./Icons";
@@ -49,7 +48,7 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
       )}
 
       {editing && (
-        <section className='container m-1 mt-2 p-1'>
+        <section className='d-block m-1 mt-2 p-1'>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <input
