@@ -44,10 +44,10 @@ const Period = ({ startOn, endOn, setParent, isEditing = false }) => {
         <div className='d-flex justify-content-between m-1 p-0'>
           {startOn && (
             <div className='d-flex float-left w-50'>
-              <span className='p-3 my-auto text-start text-bg-primary'>
+              <span className='p-3 my-auto text-start text-bg-primary rounded-pill rounded-end'>
                 Start
               </span>
-              <span className='p-auto m-auto'>
+              <span className='p-2 my-auto float-left '>
                 <div>{moment(startOn).format("DD MMMM YYYY")}</div>
                 <div>{moment(startOn).format("h:mm:ss a")}</div>
               </span>
@@ -55,8 +55,10 @@ const Period = ({ startOn, endOn, setParent, isEditing = false }) => {
           )}
           {endOn && (
             <div className='d-flex float-left w-50'>
-              <span className='p-3 my-auto text-end text-bg-primary'>End</span>
-              <span className='p-auto m-auto'>
+              <span className='p-3 my-auto text-end text-bg-primary rounded-pill rounded-end'>
+                End
+              </span>
+              <span className='p-2 my-auto float-left '>
                 <div>{moment(endOn).format("DD MMMM YYYY")}</div>
                 <div>{moment(endOn).format("h:mm:ss a")}</div>
               </span>
