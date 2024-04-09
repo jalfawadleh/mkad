@@ -36,7 +36,7 @@ const Map = () => {
 
   const getMapItems = async (location) => {
     await axios
-      .post(`/map`, location)
+      .post("/map", location)
       .then((res) => setItems(res.data))
       .catch((error) => {
         error?.response?.data?.message &&

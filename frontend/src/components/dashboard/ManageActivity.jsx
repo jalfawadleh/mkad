@@ -66,7 +66,6 @@ const ManageActivity = () => {
   const onPut = async () => {
     // checking for common required fields
     setIsUpdating(true);
-
     if (activity._id)
       await axios
         .put("/activities/", activity)
@@ -97,33 +96,31 @@ const ManageActivity = () => {
     var result = confirm("Are you sure?");
     if (result) {
       setIsLoading(true);
-      try {
-        await axios
-          .delete(`/activities/${id}`)
-          .then(() => setIsLoading(false))
-          .then(() => getActivities())
-          .then(() => setFlyToLocation(user.location))
-          .then(() => navigate("/dashboard"));
-      } catch (error) {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      }
+      await axios
+        .delete(`/activities/${id}`)
+        .then(() => setIsLoading(false))
+        .then(() => getActivities())
+        .then(() => setFlyToLocation(user.location))
+        .then(() => navigate("/dashboard"))
+        .catch((error) => {
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
+        });
     }
   };
 
   const getActivity = async (id) => {
     setIsLoading(true);
-    try {
-      await axios
-        .get(`/activities/${id}`)
-        .then((res) => setActivity(res.data))
-        .then(() => setIsLoading(false));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
+    await axios
+      .get(`/activities/${id}`)
+      .then((res) => setActivity(res.data))
+      .then(() => setIsLoading(false))
+      .catch((error) => {
+        error?.response?.data?.message &&
+          toast.error(error?.response.data.message);
+        error?.response?.status > 499 && toast.error("Something went wrong");
+      });
   };
 
   useEffect(() => {
@@ -138,6 +135,7 @@ const ManageActivity = () => {
           <BoxCenterText text={activity.name} />
           <IconCircleClose />
         </WrapperHeader>
+
         <WrapperBody>
           <ManageName
             name={activity.name}
@@ -172,6 +170,8 @@ const ManageActivity = () => {
 
           <ManageHelp
             help={activity.help}
+            parentType={activity.type}
+            parentId={activity._id}
             setParent={setActivity}
             editing={isEditing}
           />

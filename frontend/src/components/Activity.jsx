@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import ManagePeriod from "./common/ManagePeriod.jsx";
 import {
   LinkAvatarMember,
   IconButton,
@@ -17,48 +16,38 @@ import {
   BoxCenterText,
 } from "./common/LinkItems.jsx";
 
-import { WrapperModal } from "./common/Wrappers.jsx";
+import {
+  WrapperBody,
+  WrapperFooter,
+  WrapperHeader,
+  WrapperModal,
+} from "./common/Wrappers.jsx";
 
-import ManageLocation from "./common/ManageLocation.jsx";
+import ManageDescription from "./common/ManageDescription.jsx";
+import ManagePeriod from "./common/ManagePeriod.jsx";
+import ManageLanguages from "./common/ManageLanguages.jsx";
+import ManageInterests from "./common/ManageInterests.jsx";
+import ManageHelp from "./common/ManageHelp.jsx";
+import ManageOnline from "./common/ManageOnline.jsx";
 
 const Activity = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
-  const [isMember, setIsMembers] = useState(false);
+  const [isMember, setIsMember] = useState(false);
 
   const [activity, setActivity] = useState({
     name: "",
     description: "",
-    notes: [],
     languages: [],
     interests: [],
-    helpOffered: [],
-    helpNeeded: [],
     createdBy: [],
     members: [],
-    location: [],
+    online: [],
   });
 
-  const { name, startOn, endOn, description, createdBy, members, location } =
-    activity;
-
-  const getActivity = async (id) => {
-    setIsLoading(true);
-    try {
-      await axios
-        .get(`/activities/${id}`)
-        .then((res) => setActivity(res.data))
-        .then(() => setIsLoading(false));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
-  };
-
-  const joinActivity = async () => {
+  const onJoin = async () => {
     setIsJoining(true);
     try {
       await axios
@@ -73,69 +62,69 @@ const Activity = () => {
   };
 
   useEffect(() => {
+    const getActivity = async (id) => {
+      setIsLoading(true);
+      await axios
+        .get(`/activities/${id}`)
+        .then((res) => setActivity(res.data))
+        .then(() => setIsLoading(false))
+        .catch((error) => {
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
+        });
+    };
+
     getActivity(id);
+    setIsMember(activity.members.find((m) => m._id == user._id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const toggleJoin = () => {
-    joinActivity();
-    // putActivity();
-  };
-
   useEffect(() => {
-    setIsMembers(members.find((m) => m._id == user._id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members]);
+    setIsMember(activity.members.find((m) => m._id == user._id));
+  }, [activity.members, user._id]);
 
   return (
     <>
       <WrapperModal>
-        {/* icon title join and close */}
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperHeader>
+          {/* icon title join and close */}
+
           <IconCircleActivity />
-          <BoxCenterText text={name} />
+          <BoxCenterText text={activity.name} />
           <IconCircleClose />
-        </div>
-        <hr className='m-1' />
+        </WrapperHeader>
 
         {/* members */}
         <div className='d-flex justify-content-wrap p-1 m-1'>
-          <LinkAvatarMember item={createdBy} />
-          <span onClick={() => toggleJoin()}>
+          <LinkAvatarMember item={activity.createdBy} />
+          <span onClick={() => onJoin()}>
             <IconButton>
               {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
             </IconButton>
           </span>
-          {members.map((m) => (
+          {activity.members.map((m) => (
             <LinkAvatarMember item={m} key={m._id} />
           ))}
         </div>
         <hr className='m-1' />
-        <div className='overflow-y-auto p-1 m-0'>
-          <ManagePeriod
-            startOn={startOn}
-            endOn={endOn}
-            setParent={setActivity}
-            isEditing={false}
+        <WrapperBody>
+          <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
+          <ManageDescription description={activity.description} />
+          <ManageLanguages languages={activity.languages} />
+          <ManageInterests interests={activity.interests} />
+          <ManageHelp
+            help={activity.help}
+            parentId={activity._id}
+            parentType={activity.type}
           />
-
-          {description && (
-            <>
-              <div className='d-flex justify-content-wrap p-1 m-1'>
-                {description}
-              </div>
-              <hr className='m-1' />
-            </>
-          )}
-
-          <ManageLocation location={location} setParent={setActivity} />
-
+          <ManageOnline online={activity.online} />
           {isLoading && <IconLoading />}
-        </div>
+        </WrapperBody>
 
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperFooter>
           <LinkButtoneBack />
-        </div>
+        </WrapperFooter>
       </WrapperModal>
     </>
   );

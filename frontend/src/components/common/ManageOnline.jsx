@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const ManageOnline = ({ online, editing = false, setParent }) => {
+const ManageOnline = ({ online, setParent, editing = false }) => {
   return (
     <>
       {editing && (

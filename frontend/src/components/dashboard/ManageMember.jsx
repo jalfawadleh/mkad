@@ -78,17 +78,16 @@ function ManageMember() {
   useEffect(() => {
     const getProfile = async () => {
       setIsLoading(true);
-      try {
-        await axios.get(`/members/${user._id}`).then((res) => {
-          setMember(res.data);
+      await axios
+        .get(`/members/${user._id}`)
+        .then((res) => setMember(res.data))
+        .then(() => setIsLoading(false))
+        .catch((error) => {
           setIsLoading(false);
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
         });
-      } catch (error) {
-        setIsLoading(false);
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      }
     };
 
     getProfile();
