@@ -8,7 +8,6 @@ import Members from "../models/modelUsers.js";
 // @access  Private
 const putMember = asyncHandler(async (req, res) => {
   const member = await Members.findById(req.body._id);
-  console.log(req.body);
 
   if (member) {
     // Update profile
