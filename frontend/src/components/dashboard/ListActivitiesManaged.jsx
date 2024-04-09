@@ -27,10 +27,7 @@ const ListActivitiesManaged = () => {
     // setIsLoading(true);
     await axios
       .get("/activities/managed")
-      .then((res) => {
-        setItems(res.data);
-        console.log("got Items");
-      })
+      .then((res) => setItems(res.data))
       // .then(() => setIsLoading(false))
       .catch((error) => {
         error?.response?.data?.message &&
