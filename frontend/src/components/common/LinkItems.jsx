@@ -19,6 +19,7 @@ import { FaQuestion } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { ChocolateBar } from "./Wrappers";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -362,14 +363,6 @@ export const IconLinkMembersCircle = ({ item }) => {
         <FaPeopleGroup color={"white"} size={24} className={iconClass} />
       </span>
     </Link>
-  );
-};
-
-export const ChocolateBar = ({ children }) => {
-  return (
-    <div className='d-flex rounded-pill p-0 m-0 mb-1 bg-black justify-content-between'>
-      {children}
-    </div>
   );
 };
 

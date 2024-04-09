@@ -6,7 +6,7 @@ import {
   ZoomControl,
 } from "react-leaflet";
 
-const ManageLocation = ({ editing = false, location, setParent }) => {
+const ManageLocation = ({ location, setParent, editing = false }) => {
   return (
     <>
       {editing && (

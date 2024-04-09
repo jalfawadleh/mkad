@@ -18,7 +18,17 @@ import {
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 
-import { WrapperModal } from "./common/Wrappers.jsx";
+import {
+  WrapperBody,
+  WrapperFooter,
+  WrapperHeader,
+  WrapperModal,
+} from "../common/Wrappers.jsx";
+import ManageHidden from "../common/ManageHidden.jsx";
+import ManageDescription from "../common/ManageDescription.jsx";
+import ManageName from "../common/ManageName.jsx";
+import ManageHelp from "../common/ManageHelp.jsx";
+import ManageLocation from "../common/ManageLocation.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();
@@ -47,20 +57,8 @@ const ManageActivity = () => {
     location: { lng: -122.2683, lat: 37.8243 },
   });
 
-  const {
-    name,
-    startOn,
-    endOn,
-    description,
-    languages,
-    interests,
-    notes,
-    helpOffered,
-    helpNeeded,
-    hidden,
-    createdBy,
-    location,
-  } = activity;
+  const { startOn, endOn, languages, interests, createdBy, location } =
+    activity;
 
   const isOwner = createdBy?._id === user._id;
   const isCreating = activity._id ? false : true;
@@ -124,13 +122,6 @@ const ManageActivity = () => {
     }
   };
 
-  const onChange = (e) => {
-    setActivity((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
   useEffect(() => {
     activity._id && getActivity(activity._id);
   }, [activity._id]);
@@ -138,76 +129,36 @@ const ManageActivity = () => {
   return (
     <>
       <WrapperModal>
-        {/* icon title join and close */}
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperHeader>
           <IconCircleActivity />
-          <BoxCenterText text={name} />
+          <BoxCenterText text={activity.name} />
           <IconCircleClose />
-        </div>
-        <hr className='m-1' />
-
-        <div className='overflow-y-auto p-1 m-1'>
-          {isEditing && (
-            <>
-              <div className='text-center'>
-                Your Profile Avatar is based on your name
-              </div>
-              <div className='form-floating m-1 p-1'>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='name'
-                  placeholder='Name'
-                  name='name'
-                  value={name}
-                  onChange={onChange}
-                />
-                <label htmlFor='name'>Name</label>
-              </div>
-              <hr className='m-1' />
-            </>
-          )}
-
+        </WrapperHeader>
+        <WrapperBody>
+          <ManageName
+            name={activity.name}
+            setParent={setActivity}
+            editing={isEditing}
+          />
           <ManagePeriod
-            startOn={startOn}
-            endOn={endOn}
+            startOn={activity.startOn}
+            endOn={activity.endOn}
             setParent={setActivity}
             isEditing={isEditing}
           />
 
-          {isEditing ? (
-            <>
-              <div className='form-floating m-1 p-1'>
-                <input
-                  type='text'
-                  className='form-control'
-                  id='description'
-                  placeholder='Description'
-                  name='description'
-                  value={description}
-                  onChange={onChange}
-                />
-                <label htmlFor='description'>Description</label>
-              </div>
-              <hr className='m-1' />
-            </>
-          ) : (
-            description && (
-              <>
-                <div className='d-flex justify-content-wrap p-1 m-1'>
-                  {description}
-                </div>
-                <hr className='m-1' />
-              </>
-            )
-          )}
+          <ManageDescription
+            description={activity.description}
+            setParent={setActivity}
+            editing={isEditing}
+          />
 
           <ListItems
             edit={isEditing}
             message='Languages'
             type='languages'
             title='language'
-            items={languages}
+            items={activity.languages}
             setParent={setActivity}
           />
 
@@ -216,73 +167,32 @@ const ManageActivity = () => {
             message='Interests'
             type='interests'
             title='interest'
-            items={interests}
+            items={activity.interests}
             setParent={setActivity}
           />
 
-          <ListItems
-            edit={isEditing}
-            message='Notes'
-            type='notes'
-            title='note'
-            items={notes}
+          <ManageHelp
+            help={activity.help}
             setParent={setActivity}
-          />
-
-          <ListItems
-            edit={isEditing}
-            message='Offer'
-            type='helpOffered'
-            title='Help Offered'
-            items={helpOffered}
-            setParent={setActivity}
-          />
-
-          <ListItems
-            edit={isEditing}
-            message='Want'
-            type='helpNeeded'
-            title='Help Needed'
-            items={helpNeeded}
-            setParent={setActivity}
-          />
-
-          {isEditing && (
-            <>
-              <div className='d-flex p-1 m-1 justify-content-left'>
-                <input
-                  type='checkbox'
-                  className='btn-check mb-3'
-                  id='hidden'
-                  autoComplete='off'
-                  checked={hidden}
-                  onChange={() =>
-                    setActivity((prev) => ({ ...prev, hidden: !hidden }))
-                  }
-                />
-                <label className='btn btn-outline-warning ' htmlFor='hidden'>
-                  Hide Activity
-                </label>
-                <div className='m-auto'>
-                  Your Activity
-                  {hidden ? " is hidden" : " is public"}
-                </div>
-              </div>
-              <hr className='my-1' />
-            </>
-          )}
-
-          <Location
             editing={isEditing}
-            location={location}
+          />
+
+          <ManageHidden
+            hidden={activity.hidden}
             setParent={setActivity}
-            user={user}
+            editing={isEditing}
+          />
+
+          <ManageLocation
+            location={activity.location}
+            setParent={setActivity}
+            editing={isEditing}
           />
 
           {isLoading && <IconLoading />}
-        </div>
+        </WrapperBody>
 
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperFooter>
           <LinkButtoneBack />
           {isOwner && isEditing && !isCreating && (
             <>
@@ -305,11 +215,11 @@ const ManageActivity = () => {
           )}
 
           {isCreating && (
-            <span onClick={onPut} disabled={!name}>
+            <span onClick={onPut} disabled={!activity.name}>
               <IconButton>Create</IconButton>
             </span>
           )}
-        </div>
+        </WrapperFooter>
       </WrapperModal>
     </>
   );

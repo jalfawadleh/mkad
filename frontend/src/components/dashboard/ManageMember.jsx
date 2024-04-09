@@ -19,7 +19,12 @@ import {
   LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import { WrapperModal } from "./common/Wrappers.jsx";
+import {
+  WrapperBody,
+  WrapperFooter,
+  WrapperHeader,
+  WrapperModal,
+} from "../common/Wrappers.jsx";
 
 import ManageHidden from "../common/ManageHidden.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
@@ -46,20 +51,23 @@ function ManageMember() {
     help: [],
   });
 
-  const { name, description, languages, interests, hidden, location, help } =
-    member;
-
   const onPut = async (e) => {
     e.preventDefault();
     setIsUpdating(true);
     try {
       await axios
         .put("/members", member)
-        .then(() => setFlyToLocation(location))
+        .then(() => setFlyToLocation(member.location))
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
         // in case name or location changed
-        .then(() => setUser((prevState) => ({ ...prevState, name, location })));
+        .then(() =>
+          setUser((prevState) => ({
+            ...prevState,
+            name: member.name,
+            location: member.location,
+          }))
+        );
     } catch (error) {
       error?.response?.data?.message &&
         toast.error(error?.response.data.message);
@@ -89,14 +97,13 @@ function ManageMember() {
   return (
     <WrapperModal>
       {/* icon itemName closeButton */}
-      <div className='d-flex justify-content-between m-1 p-1'>
-        <AvatarMember name={name} />
-        <BoxCenterText text={name} />
+      <WrapperHeader>
+        <AvatarMember name={member.name} />
+        <BoxCenterText text={member.name} />
         <IconCircleClose />
-      </div>
-      <hr className='m-1' />
+      </WrapperHeader>
 
-      <div className='overflow-y-auto p-1 m-1'>
+      <WrapperBody>
         <ManageName
           name={member.name}
           setParent={setMember}
@@ -145,9 +152,9 @@ function ManageMember() {
         />
 
         {isLoading && <IconLoading />}
-      </div>
+      </WrapperBody>
 
-      <div className='d-flex justify-content-between m-1 p-1'>
+      <WrapperFooter>
         <LinkButtoneBack />
         {editing ? (
           <>
@@ -164,7 +171,7 @@ function ManageMember() {
           </span>
         )}
         <LinkButton to={"/account"}>Account</LinkButton>
-      </div>
+      </WrapperFooter>
     </WrapperModal>
   );
 }

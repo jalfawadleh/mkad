@@ -14,7 +14,12 @@ import {
   IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import { WrapperModal } from "./common/Wrappers.jsx";
+import {
+  WrapperBody,
+  WrapperFooter,
+  WrapperHeader,
+  WrapperModal,
+} from "../common/Wrappers.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -81,14 +86,14 @@ function ManageAccount() {
   return (
     <>
       <WrapperModal>
-        {/* icon title join and close */}
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperHeader>
+          {/* icon title join and close */}
           <IconCirlceAccount />
           <BoxCenterText text='Update Account' />
           <IconCircleClose />
-        </div>
-        <hr className='m-1' />
-        <div className='overflow-y-auto p-1 m-0'>
+        </WrapperHeader>
+
+        <WrapperBody>
           <div className='p-0 mb-2 text-center'>
             Enter only fields you want to Update and Current Password
           </div>
@@ -171,9 +176,9 @@ function ManageAccount() {
           </div>
 
           {isLoading && <IconLoading />}
-        </div>
+        </WrapperBody>
 
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <WrapperFooter>
           <LinkButtoneBack />
           <span onClick={onPut}>
             <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
@@ -181,7 +186,7 @@ function ManageAccount() {
           <span onClick={onDelete}>
             <IconButton>Delete</IconButton>
           </span>
-        </div>
+        </WrapperFooter>
       </WrapperModal>
     </>
   );

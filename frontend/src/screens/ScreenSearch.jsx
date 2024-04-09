@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 import {
   ListLinks,
-  ChocolateBar,
   IconActivity,
   IconOrganisation,
   iconWrapperClass,
@@ -19,6 +18,7 @@ import {
   IconLocation,
   IconSpin,
 } from "../components/common/LinkItems";
+import { ChocolateBar } from "../components/common/Wrappers";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);

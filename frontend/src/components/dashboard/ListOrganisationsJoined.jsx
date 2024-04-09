@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import axios from "axios";
 
 import {
-  ChocolateBar,
   Icon,
   IconExclamation,
   IconFold,
@@ -12,6 +11,7 @@ import {
   LinkCircleIconOrganisation,
   // IconLoading,
 } from "../common/LinkItems";
+import { ChocolateBar } from "../common/Wrappers";
 
 const ListOrganisationsJoined = () => {
   const location = useLocation();

@@ -25,10 +25,29 @@ export const WrapperModal = ({ children }) => {
       data-bs-backdrop='static'
     >
       <div className='modal-dialog modal-dialog-centered ' role='document'>
-        <div className='modal-content bg-black p-1 border-1 border-primary'>
+        <div className='modal-content bg-black p-0 border-1 border-primary'>
           {children}
         </div>
       </div>
     </div>
+  );
+};
+
+export const WrapperHeader = ({ children }) => {
+  return (
+    <>
+      <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
+      <hr className='m-1' />
+    </>
+  );
+};
+
+export const WrapperBody = ({ children }) => {
+  return <div className='overflow-y-auto p-1 m-0'>{children}</div>;
+};
+
+export const WrapperFooter = ({ children }) => {
+  return (
+    <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
   );
 };

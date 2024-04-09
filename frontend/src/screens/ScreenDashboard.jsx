@@ -5,13 +5,14 @@ import { UserContext } from "../store";
 
 import {
   AvatarMember,
-  ChocolateBar,
   IconLinkCircleFlyTo,
 } from "../components/common/LinkItems";
 
 import ListActivitiesManaged from "../components/dashboard/ListActivitiesManaged";
 import ListActivitiesJoined from "../components/dashboard/ListActivitiesJoined";
 import ListOrganisationsJoined from "../components/dashboard/ListOrganisationsJoined";
+
+import { ChocolateBar } from "../components/common/Wrappers";
 
 const ScreenDashboard = () => {
   const { user } = useContext(UserContext);

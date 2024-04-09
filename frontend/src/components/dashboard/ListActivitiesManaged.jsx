@@ -5,7 +5,6 @@ import axios from "axios";
 import { UserContext } from "../../store";
 
 import {
-  ChocolateBar,
   Icon,
   IconExclamation,
   IconFold,
@@ -14,6 +13,8 @@ import {
   // IconLoading,
   IconAddLink,
 } from "../common/LinkItems";
+
+import { ChocolateBar } from "../common/Wrappers";
 
 const ListActivitiesManaged = () => {
   const location = useLocation();
