@@ -56,33 +56,32 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
         <section className='container m-1 p-0'>
           Help
           {help.map((h, index) => (
-            <div
-              key={index}
-              className='d-inline-block m-1 p-0 rounded-pill border border-primary'
-            >
-              <span
+            <div key={index} className='d-inline-block m-1 p-0'>
+              <div
                 className={
-                  "m-0 p-1 ps-2 rounded-pill rounded-end " +
+                  "d-inline m-auto p-1 rounded-start " +
                   (h.offer ? "bg-primary" : "bg-success")
                 }
               >
-                {h.offer ? "Offered" : "Needed"}
-              </span>
+                {h.offer ? "Offer" : "Need"}
+              </div>
 
-              <span className='m-0 p-1'>{h.text}</span>
+              <div className='d-inline m-auto p-1 border border-gray text-wrap'>
+                {h.text}
+              </div>
               {editing ? (
-                <span
+                <div
                   role='button'
-                  className='m-0 p-1 rounded-pill rounded-start bg-danger text-center'
+                  className='d-inline m-auto p-1 bg-danger rounded-end text-center'
                   onClick={() => delItem(h)}
                 >
                   <FaMinus size={16} className='m-0 p-0' />
-                </span>
+                </div>
               ) : (
                 <span
                   role='button'
                   className={
-                    "m-0 p-1 rounded-pill rounded-start text-center " +
+                    "m-0 p-1 rounded-end text-center " +
                     (h.offer ? "bg-primary" : "bg-success")
                   }
                   onClick={() => offerHelp(h._id)}
@@ -108,14 +107,14 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
                 onClick={() => setItem((prev) => ({ ...prev, offer: true }))}
                 style={{ width: 70 }}
               >
-                Offered
+                Offer
               </div>
               <div
                 className={`p-1 btn btn-${offer ? "outline-" : ""}success`}
                 onClick={() => setItem((prev) => ({ ...prev, offer: false }))}
                 style={{ width: 70 }}
               >
-                Needed
+                Need
               </div>
 
               <input
