@@ -67,7 +67,6 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
       type: "activity",
       "location.lng": { $gte: lngMin, $lt: lngMax },
       "location.lat": { $gte: latMin, $lt: latMax },
-      "location.online": false,
     },
     fields
   );
