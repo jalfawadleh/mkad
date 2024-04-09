@@ -13,7 +13,7 @@ import {
 
 import { ChocolateBar } from "../common/Wrappers";
 
-const ListActivitiesJoined = () => {
+const ListJoinedActivities = () => {
   const location = useLocation();
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(false);
@@ -54,7 +54,7 @@ const ListActivitiesJoined = () => {
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
-        <div className='p-auto m-auto h5 text-center'>Activities </div>
+        <div className='p-auto m-auto text-center'>Joined Activities </div>
         <div className='p-1 m-1' style={{ width: 35 }}></div>
       </ChocolateBar>
 
@@ -81,4 +81,4 @@ const ListActivitiesJoined = () => {
   );
 };
 
-export default ListActivitiesJoined;
+export default ListJoinedActivities;

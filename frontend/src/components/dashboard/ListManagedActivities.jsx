@@ -1,20 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { UserContext } from "../../store";
 
 import {
   Icon,
   IconExclamation,
   IconFold,
   IconLinkCircleFlyTo,
-  LinkCircleIconOrganisation,
+  LinkCircleIconActivity,
   // IconLoading,
+  IconAddLink,
 } from "../common/LinkItems";
+
 import { ChocolateBar } from "../common/Wrappers";
 
-const ListOrganisationsJoined = () => {
+const ListManagedActivities = () => {
   const location = useLocation();
+  const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(false);
   // const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +26,7 @@ const ListOrganisationsJoined = () => {
   const getItems = async () => {
     // setIsLoading(true);
     await axios
-      .get("/organisations/join")
+      .get("/activities/managed")
       .then((res) => setItems(res.data))
       // .then(() => setIsLoading(false))
       .catch((error) => {
@@ -36,27 +40,6 @@ const ListOrganisationsJoined = () => {
     if (location.pathname === "/dashboard") getItems();
   }, [location]);
 
-  const LinkText = ({ item }) => {
-    return (
-      <Link
-        to={"organisation/" + item._id}
-        className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
-      >
-        {item.name}
-      </Link>
-    );
-  };
-
-  const ListItems = ({ items }) => {
-    return items.map((item) => (
-      <ChocolateBar key={item._id}>
-        <LinkCircleIconOrganisation item={item} />
-        <LinkText item={item} />
-        <IconLinkCircleFlyTo location={item.location} />
-      </ChocolateBar>
-    ));
-  };
-
   return (
     <>
       <div className='my-3'></div>
@@ -64,19 +47,30 @@ const ListOrganisationsJoined = () => {
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
-        <div className='p-auto m-auto h5 text-center'>Organisatoins</div>
-        <div className='p-1 m-1' style={{ width: 35 }}></div>
+        <div className='p-auto m-auto text-center'>Managed Activities</div>
+        {user.type === "organisation" && <IconAddLink />}
       </ChocolateBar>
 
       {!folded &&
         (items.length ? (
-          <ListItems items={items} />
+          items.map((item) => (
+            <ChocolateBar key={item._id}>
+              <LinkCircleIconActivity item={item} />
+              <Link
+                to={"activity/manage/" + item._id}
+                className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+              >
+                {item.name}
+              </Link>
+              <IconLinkCircleFlyTo location={item.location} />
+            </ChocolateBar>
+          ))
         ) : (
           <ChocolateBar>
             <Icon>
               <IconExclamation color='white' />
             </Icon>
-            <span className='p-auto m-auto'>No Organisations Joined</span>
+            <span className='p-auto m-auto'>No Activities Joined</span>
           </ChocolateBar>
         ))}
 
@@ -85,4 +79,4 @@ const ListOrganisationsJoined = () => {
   );
 };
 
-export default ListOrganisationsJoined;
+export default ListManagedActivities;

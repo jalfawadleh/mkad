@@ -8,9 +8,9 @@ import {
   IconLinkCircleFlyTo,
 } from "../components/common/LinkItems";
 
-import ListActivitiesManaged from "../components/dashboard/ListActivitiesManaged";
-import ListActivitiesJoined from "../components/dashboard/ListActivitiesJoined";
-import ListOrganisationsJoined from "../components/dashboard/ListOrganisationsJoined";
+import ListManagedActivities from "../components/dashboard/ListManagedActivities";
+import ListJoinedActivities from "../components/dashboard/ListJoinedActivities";
+import ListJoinedOrganisations from "../components/dashboard/ListJoinedOrganisations";
 
 import { ChocolateBar } from "../components/common/Wrappers";
 
@@ -36,11 +36,11 @@ const ScreenDashboard = () => {
         <IconLinkCircleFlyTo location={user.location} />
       </ChocolateBar>
 
-      {user.type === "organisation" && <ListActivitiesManaged />}
+      {user.type === "organisation" && <ListManagedActivities />}
 
-      <ListOrganisationsJoined />
+      <ListJoinedOrganisations />
 
-      <ListActivitiesJoined />
+      <ListJoinedActivities />
 
       <Outlet />
     </>
