@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { FaMinus } from "react-icons/fa";
+
+import { Language } from "./Wrappers";
 import { FaPlus } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 
 /**
  * Languages component.
@@ -33,23 +35,19 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
     <>
       {languages?.length > 0 && (
         <section className='container m-1 p-0'>
-          Languages
           {languages.map((l, index) => (
-            <div
-              key={index}
-              className='d-inline-block m-1 p-0 rounded-pill border border-primary'
-            >
-              <span className='m-0 p-1'>{l.name}</span>
+            <>
+              <Language key={index}>{l.name}</Language>
               {editing && (
                 <span
                   role='button'
-                  className='m-0 p-1 rounded-pill rounded-start bg-danger text-center'
+                  className='my-auto me-2 p-1 bg-danger'
                   onClick={() => delItem(l)}
                 >
-                  <FaMinus size={16} className='m-0 p-0' />
+                  <AiOutlineClose size={16} className='m-0 p-0' />
                 </span>
               )}
-            </div>
+            </>
           ))}
         </section>
       )}

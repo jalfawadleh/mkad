@@ -1,3 +1,5 @@
+import { FaLanguage } from "react-icons/fa";
+
 export const Section = ({ children }) => {
   return (
     <>
@@ -52,5 +54,18 @@ export const Footer = ({ children }) => {
   );
 };
 
-const Wrappers = { Modal, Body, Header, Footer, Bar };
+export const Language = ({ children }) => {
+  return (
+    <>
+      <div className='d-inline m-1 p-0'>
+        <span className='my-auto p-1 text-bg-primary rounded-pill rounded-end'>
+          <FaLanguage size={14} />
+        </span>
+        <span className='my-auto p-1 border border-gray'>{children}</span>
+      </div>
+    </>
+  );
+};
+
+const Wrappers = { Modal, Body, Header, Footer, Bar, Language };
 export default Wrappers;
