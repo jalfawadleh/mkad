@@ -57,11 +57,13 @@ export const Footer = ({ children }) => {
 export const Language = ({ children }) => {
   return (
     <>
-      <div className='d-inline m-1 p-0'>
-        <span className='my-auto p-1 text-bg-primary rounded-pill rounded-end'>
+      <div className='d-inline-block m-2 p-0'>
+        <span className='d-inline m-0 p-1 text-bg-primary rounded-pill rounded-end'>
           <FaLanguage size={24} />
         </span>
-        <span className='my-auto p-1 border border-gray'>{children}</span>
+        <span className='d-inline-block m-0 p-0 border border-gray text-wrap'>
+          {children}
+        </span>
       </div>
     </>
   );

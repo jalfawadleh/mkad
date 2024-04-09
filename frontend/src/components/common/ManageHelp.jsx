@@ -45,7 +45,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               {editing && (
                 <span
                   role='button'
-                  className='my-auto ms-2 p-1 bg-danger'
+                  className='d-inline m-0 p-1 bg-danger'
                   onClick={() => delItem(h)}
                 >
                   <AiOutlineClose size={16} />

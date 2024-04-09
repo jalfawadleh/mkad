@@ -36,18 +36,18 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
       {languages?.length > 0 && (
         <section className='container m-1 p-0'>
           {languages.map((l, index) => (
-            <>
-              <Language key={index}>{l.name}</Language>
+            <Language key={index}>
+              {l.name}
               {editing && (
                 <span
                   role='button'
-                  className='my-auto me-2 p-1 bg-danger'
+                  className='d-inline m-0 p-1 bg-danger'
                   onClick={() => delItem(l)}
                 >
                   <AiOutlineClose size={16} className='m-0 p-0' />
                 </span>
               )}
-            </>
+            </Language>
           ))}
         </section>
       )}
