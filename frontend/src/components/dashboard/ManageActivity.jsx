@@ -66,26 +66,31 @@ const ManageActivity = () => {
   const onPut = async () => {
     // checking for common required fields
     setIsUpdating(true);
-    try {
-      if (activity._id)
-        await axios
-          .put("/activities/", activity)
-          .then(() => toast("Updated"))
-          .then(() => setIsUpdating(false))
-          .then(() => getActivities())
-          .then(() => setFlyToLocation(activity.location));
-      else
-        await axios
-          .post("/activities/", activity)
-          .then(() => toast("Created"))
-          .then(() => setIsUpdating(false))
-          .then(() => getActivities())
-          .then(() => setFlyToLocation(activity.location));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
+
+    if (activity._id)
+      await axios
+        .put("/activities/", activity)
+        .then(() => toast("Updated"))
+        .then(() => setIsUpdating(false))
+        .then(() => getActivities())
+        .then(() => navigate("/dashboard"))
+        .catch((error) => {
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
+        });
+    else
+      await axios
+        .post("/activities/", activity)
+        .then(() => toast("Created"))
+        .then(() => setIsUpdating(false))
+        .then(() => getActivities())
+        .then(() => navigate("/dashboard"))
+        .catch((error) => {
+          error?.response?.data?.message &&
+            toast.error(error?.response.data.message);
+          error?.response?.status > 499 && toast.error("Something went wrong");
+        });
   };
 
   const onDelete = async () => {
@@ -98,7 +103,7 @@ const ManageActivity = () => {
           .then(() => setIsLoading(false))
           .then(() => getActivities())
           .then(() => setFlyToLocation(user.location))
-          .then(() => navigate(-1));
+          .then(() => navigate("/dashboard"));
       } catch (error) {
         error?.response?.data?.message &&
           toast.error(error?.response.data.message);
