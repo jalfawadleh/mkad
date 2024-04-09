@@ -15,9 +15,12 @@ import {
   IconLoading,
   IconSpin,
 } from "./common/LinkItems.jsx";
-import { WrapperModal } from "./common/Wrappers.jsx";
+import Wrapper from "./common/Wrappers.jsx";
 
-import ManagePeriod from "./common/ManagePeriod.jsx";
+import ManageDescription from "./common/ManageDescription.jsx";
+import ManageLanguages from "./common/ManageLanguages.jsx";
+import ManageInterests from "./common/ManageInterests.jsx";
+import ManageHelp from "./common/ManageHelp.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -37,18 +40,7 @@ const Organization = () => {
     members: [],
   });
 
-  const {
-    name,
-    startOn,
-    endOn,
-    description,
-    notes,
-    languages,
-    interests,
-    helpOffered,
-    helpNeeded,
-    members,
-  } = item;
+  const { name, members } = item;
 
   const getItem = async (id) => {
     setIsLoading(true);
@@ -95,14 +87,13 @@ const Organization = () => {
 
   return (
     <>
-      <WrapperModal>
+      <Wrapper.Modal>
         {/* icon itemName closeButton */}
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <Wrapper.Header>
           <CircleIconOrganisation />
           <BoxCenterText text={name} />
           <IconCircleClose />
-        </div>
-        <hr className='my-1' />
+        </Wrapper.Header>
 
         {/* Join members list */}
         <div className='d-flex justify-content-wrap p-0 m-1'>
@@ -117,30 +108,23 @@ const Organization = () => {
           ))}
         </div>
         <hr className='m-1' />
-        <div className='overflow-y-auto p-1 m-0'>
-          <ManagePeriod
-            startOn={startOn}
-            endOn={endOn}
-            setParent={setItem}
-            isEditing={false}
+
+        <Wrapper.Body>
+          <ManageDescription description={item.description} />
+          <ManageLanguages languages={item.languages} />
+          <ManageInterests interests={item.interests} />
+          <ManageHelp
+            help={item.help}
+            parentId={item._id}
+            parentType={item.type}
           />
-
-          {description && (
-            <>
-              <div className='d-flex justify-content-wrap p-2 m-1'>
-                {description}
-              </div>
-              <hr className='m-1' />
-            </>
-          )}
-
           {isLoading && <IconLoading />}
-        </div>
+        </Wrapper.Body>
 
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <Wrapper.Footer>
           <LinkButtoneBack />
-        </div>
-      </WrapperModal>
+        </Wrapper.Footer>
+      </Wrapper.Modal>
     </>
   );
 };

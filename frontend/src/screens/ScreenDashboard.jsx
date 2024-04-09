@@ -12,14 +12,14 @@ import ListManagedActivities from "../components/dashboard/ListManagedActivities
 import ListJoinedActivities from "../components/dashboard/ListJoinedActivities";
 import ListJoinedOrganisations from "../components/dashboard/ListJoinedOrganisations";
 
-import { ChocolateBar } from "../components/common/Wrappers";
+import { Bar } from "../components/common/Wrappers";
 
 const ScreenDashboard = () => {
   const { user } = useContext(UserContext);
 
   return (
     <>
-      <ChocolateBar>
+      <Bar>
         <AvatarMember name={user.name} />
         <Link
           to={"profile"}
@@ -34,7 +34,7 @@ const ScreenDashboard = () => {
           Account
         </Link>
         <IconLinkCircleFlyTo location={user.location} />
-      </ChocolateBar>
+      </Bar>
 
       {user.type === "organisation" && <ListManagedActivities />}
 

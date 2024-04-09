@@ -11,7 +11,7 @@ import {
   IconLoading,
   LinkButtoneBack,
 } from "./common/LinkItems.jsx";
-import { WrapperModal } from "./common/Wrappers.jsx";
+import Wrappers from "./common/Wrappers.jsx";
 
 function Member() {
   const { id } = useParams();
@@ -50,15 +50,15 @@ function Member() {
 
   return (
     <>
-      <WrapperModal>
+      <Wrappers.Modal>
         {/* icon itemName closeButton */}
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <Wrappers.Header>
           <AvatarMember name={name} />
           <BoxCenterText text={name} />
           <IconCircleClose />
-        </div>
-        <hr className='my-1' />
-        <div className='overflow-y-auto p-1 m-0'>
+        </Wrappers.Header>
+
+        <Wrappers.Body>
           {description && (
             <>
               <div className='d-flex justify-content-wrap p-2 m-1'>
@@ -69,12 +69,12 @@ function Member() {
           )}
 
           {isLoading && <IconLoading />}
-        </div>
+        </Wrappers.Body>
 
-        <div className='d-flex justify-content-between m-1 p-1'>
+        <Wrappers.Footer>
           <LinkButtoneBack />
-        </div>
-      </WrapperModal>
+        </Wrappers.Footer>
+      </Wrappers.Modal>
     </>
   );
 }

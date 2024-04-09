@@ -11,7 +11,7 @@ import {
   LinkCircleIconOrganisation,
   // IconLoading,
 } from "../common/LinkItems";
-import { ChocolateBar } from "../common/Wrappers";
+import { Bar } from "../common/Wrappers";
 
 const ListJoinedOrganisations = () => {
   const location = useLocation();
@@ -60,24 +60,24 @@ const ListJoinedOrganisations = () => {
   return (
     <>
       <div className='my-3'></div>
-      <ChocolateBar>
+      <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Joined Organisatoins</div>
         <div className='p-1 m-1' style={{ width: 35 }}></div>
-      </ChocolateBar>
+      </Bar>
 
       {!folded &&
         (items.length ? (
           <ListItems items={items} />
         ) : (
-          <ChocolateBar>
+          <Bar>
             <Icon>
               <IconExclamation color='white' />
             </Icon>
             <span className='p-auto m-auto'>No Organisations Joined</span>
-          </ChocolateBar>
+          </Bar>
         ))}
 
       {/* {isLoading && <IconLoading />} */}

@@ -11,7 +11,7 @@ import {
   // IconLoading,
 } from "../common/LinkItems";
 
-import { ChocolateBar } from "../common/Wrappers";
+import { Bar } from "../common/Wrappers";
 
 const ListJoinedActivities = () => {
   const location = useLocation();
@@ -50,30 +50,30 @@ const ListJoinedActivities = () => {
   return (
     <>
       <div className='my-3'></div>
-      <ChocolateBar>
+      <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Joined Activities </div>
         <div className='p-1 m-1' style={{ width: 35 }}></div>
-      </ChocolateBar>
+      </Bar>
 
       {!folded &&
         (items.length ? (
           items.map((item) => (
-            <ChocolateBar key={item._id}>
+            <Bar key={item._id}>
               <LinkCircleIconActivity item={item} />
               <LinkText item={item} />
               <IconLinkCircleFlyTo location={item.location} />
-            </ChocolateBar>
+            </Bar>
           ))
         ) : (
-          <ChocolateBar>
+          <Bar>
             <Icon>
               <IconExclamation color='white' />
             </Icon>
             <span className='p-auto m-auto'>No Activities Joined</span>
-          </ChocolateBar>
+          </Bar>
         ))}
 
       {/* {isLoading && <IconLoading />} */}

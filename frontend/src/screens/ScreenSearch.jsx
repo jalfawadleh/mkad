@@ -18,7 +18,7 @@ import {
   IconLocation,
   IconSpin,
 } from "../components/common/LinkItems";
-import { ChocolateBar } from "../components/common/Wrappers";
+import { Bar } from "../components/common/Wrappers";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
@@ -135,7 +135,7 @@ const ScreenSearch = () => {
 
   const topLayer = (
     <form onSubmit={onSubmit}>
-      <ChocolateBar>
+      <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
@@ -167,12 +167,12 @@ const ScreenSearch = () => {
             <IconSearch color={text ? "white" : "gray"} />
           )}
         </button>
-      </ChocolateBar>
+      </Bar>
     </form>
   );
 
   const filtersBar = (
-    <ChocolateBar>
+    <Bar>
       <span
         role='button'
         className={iconWrapperClass}
@@ -216,7 +216,7 @@ const ScreenSearch = () => {
       >
         <IconUpdate color={updates ? "white" : "gray"} />
       </span>
-    </ChocolateBar>
+    </Bar>
   );
 
   return (
@@ -230,12 +230,12 @@ const ScreenSearch = () => {
         {!folded && places.length ? <ListLinks items={places} /> : ""}
         {!folded && results.length ? <ListLinks items={results} /> : ""}
         {!folded && !places.length && !results.length && (
-          <ChocolateBar>
+          <Bar>
             <span role='button' className={iconWrapperClass}>
               <IconExclamation color='#dddddd' />
             </span>
             <span className='m-auto'>Enter search query, min 3 letters</span>
-          </ChocolateBar>
+          </Bar>
         )}
       </div>
       <Outlet />

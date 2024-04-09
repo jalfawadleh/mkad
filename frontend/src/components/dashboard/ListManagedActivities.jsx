@@ -14,7 +14,7 @@ import {
   IconAddLink,
 } from "../common/LinkItems";
 
-import { ChocolateBar } from "../common/Wrappers";
+import { Bar } from "../common/Wrappers";
 
 const ListManagedActivities = () => {
   const location = useLocation();
@@ -54,7 +54,7 @@ const ListManagedActivities = () => {
       {!folded &&
         (items.length ? (
           items.map((item) => (
-            <ChocolateBar key={item._id}>
+            <Bar key={item._id}>
               <LinkCircleIconActivity item={item} />
               <Link
                 to={"activity/manage/" + item._id}
@@ -63,15 +63,15 @@ const ListManagedActivities = () => {
                 {item.name}
               </Link>
               <IconLinkCircleFlyTo location={item.location} />
-            </ChocolateBar>
+            </Bar>
           ))
         ) : (
-          <ChocolateBar>
+          <Bar>
             <Icon>
               <IconExclamation color='white' />
             </Icon>
             <span className='p-auto m-auto'>No Activities Joined</span>
-          </ChocolateBar>
+          </Bar>
         ))}
 
       {/* {isLoading && <IconLoading />} */}

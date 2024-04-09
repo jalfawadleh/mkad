@@ -16,12 +16,7 @@ import {
   BoxCenterText,
 } from "./common/LinkItems.jsx";
 
-import {
-  WrapperBody,
-  WrapperFooter,
-  WrapperHeader,
-  WrapperModal,
-} from "./common/Wrappers.jsx";
+import Wrappers from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
 import ManagePeriod from "./common/ManagePeriod.jsx";
@@ -86,14 +81,14 @@ const Activity = () => {
 
   return (
     <>
-      <WrapperModal>
-        <WrapperHeader>
+      <Wrappers.Modal>
+        <Wrappers.Header>
           {/* icon title join and close */}
 
           <IconCircleActivity />
           <BoxCenterText text={activity.name} />
           <IconCircleClose />
-        </WrapperHeader>
+        </Wrappers.Header>
 
         {/* members */}
         <div className='d-flex justify-content-wrap p-1 m-1'>
@@ -108,7 +103,7 @@ const Activity = () => {
           ))}
         </div>
         <hr className='m-1' />
-        <WrapperBody>
+        <Wrappers.Body>
           <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
           <ManageDescription description={activity.description} />
           <ManageLanguages languages={activity.languages} />
@@ -120,12 +115,12 @@ const Activity = () => {
           />
           <ManageOnline online={activity.online} />
           {isLoading && <IconLoading />}
-        </WrapperBody>
+        </Wrappers.Body>
 
-        <WrapperFooter>
+        <Wrappers.Footer>
           <LinkButtoneBack />
-        </WrapperFooter>
-      </WrapperModal>
+        </Wrappers.Footer>
+      </Wrappers.Modal>
     </>
   );
 };

@@ -15,12 +15,7 @@ import {
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 
-import {
-  WrapperBody,
-  WrapperFooter,
-  WrapperHeader,
-  WrapperModal,
-} from "../common/Wrappers.jsx";
+import Wrapper from "../common/Wrappers.jsx";
 
 import ManageName from "../common/ManageName.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
@@ -123,14 +118,14 @@ const ManageActivity = () => {
 
   return (
     <>
-      <WrapperModal>
-        <WrapperHeader>
+      <Wrappers.Modal>
+        <Wrappers.Header>
           <IconCircleActivity />
           <BoxCenterText text={activity.name} />
           <IconCircleClose />
-        </WrapperHeader>
+        </Wrappers.Header>
 
-        <WrapperBody>
+        <Wrappers.Body>
           <ManageName
             name={activity.name}
             setParent={setActivity}
@@ -189,9 +184,9 @@ const ManageActivity = () => {
           />
 
           {isLoading && <IconLoading />}
-        </WrapperBody>
+        </Wrappers.Body>
 
-        <WrapperFooter>
+        <Wrappers.Footer>
           <LinkButtoneBack />
           {isOwner && isEditing && !isCreating && (
             <>
@@ -218,8 +213,8 @@ const ManageActivity = () => {
               <IconButton>Create</IconButton>
             </span>
           )}
-        </WrapperFooter>
-      </WrapperModal>
+        </Wrappers.Footer>
+      </Wrappers.Modal>
     </>
   );
 };

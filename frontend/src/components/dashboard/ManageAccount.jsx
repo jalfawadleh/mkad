@@ -14,12 +14,7 @@ import {
   IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import {
-  WrapperBody,
-  WrapperFooter,
-  WrapperHeader,
-  WrapperModal,
-} from "../common/Wrappers.jsx";
+import Wrappers from "../common/Wrappers.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -85,15 +80,15 @@ function ManageAccount() {
 
   return (
     <>
-      <WrapperModal>
-        <WrapperHeader>
+      <Wrappers.Modal>
+        <Wrappers.Header>
           {/* icon title join and close */}
           <IconCirlceAccount />
           <BoxCenterText text='Update Account' />
           <IconCircleClose />
-        </WrapperHeader>
+        </Wrappers.Header>
 
-        <WrapperBody>
+        <Wrappers.Body>
           <div className='p-0 mb-2 text-center'>
             Enter only fields you want to Update and Current Password
           </div>
@@ -176,9 +171,9 @@ function ManageAccount() {
           </div>
 
           {isLoading && <IconLoading />}
-        </WrapperBody>
+        </Wrappers.Body>
 
-        <WrapperFooter>
+        <Wrappers.Footer>
           <LinkButtoneBack />
           <span onClick={onPut}>
             <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
@@ -186,8 +181,8 @@ function ManageAccount() {
           <span onClick={onDelete}>
             <IconButton>Delete</IconButton>
           </span>
-        </WrapperFooter>
-      </WrapperModal>
+        </Wrappers.Footer>
+      </Wrappers.Modal>
     </>
   );
 }

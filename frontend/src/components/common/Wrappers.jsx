@@ -7,7 +7,7 @@ export const Section = ({ children }) => {
   );
 };
 
-export const ChocolateBar = ({ children }) => {
+export const Bar = ({ children }) => {
   return (
     <div className='d-flex rounded-pill p-0 m-0 mb-1 bg-black justify-content-between'>
       {children}
@@ -15,7 +15,7 @@ export const ChocolateBar = ({ children }) => {
   );
 };
 
-export const WrapperModal = ({ children }) => {
+export const Modal = ({ children }) => {
   return (
     <div
       role='dialog'
@@ -33,7 +33,7 @@ export const WrapperModal = ({ children }) => {
   );
 };
 
-export const WrapperHeader = ({ children }) => {
+export const Header = ({ children }) => {
   return (
     <>
       <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
@@ -42,12 +42,15 @@ export const WrapperHeader = ({ children }) => {
   );
 };
 
-export const WrapperBody = ({ children }) => {
+export const Body = ({ children }) => {
   return <div className='overflow-y-auto p-1 m-0'>{children}</div>;
 };
 
-export const WrapperFooter = ({ children }) => {
+export const Footer = ({ children }) => {
   return (
     <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
   );
 };
+
+const Wrappers = { Modal, Body, Header, Footer, Bar };
+export default Wrappers;

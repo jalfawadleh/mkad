@@ -4,18 +4,18 @@ import {
   IconCircleHelp,
   LinkButtoneBack,
 } from "./common/LinkItems";
-import { WrapperModal } from "./common/Wrappers.jsx";
+import Wrappers from "./common/Wrappers.jsx";
 
 function Help() {
   return (
-    <WrapperModal>
-      <div className='d-flex justify-content-between m-1 p-1'>
+    <Wrappers.Modal>
+      <Wrappers.Header>
         <IconCircleHelp />
         <BoxCenterText text='Help' />
         <IconCircleClose />
-      </div>
-      <hr className='my-1' />
-      <div className='overflow-y-auto p-1 m-0'>
+      </Wrappers.Header>
+
+      <Wrappers.Body>
         <div className='m-1 p-1'>
           Winnie-then he name a buzz! Buzzing. You dont quite so ander the tree,
           then he sure, said I One does? One day why honey? Buzz! Buzzing, head
@@ -51,12 +51,12 @@ function Help() {
           will go only reason for making-noise, anders. What that is somebodys
           meaning a because youre climb
         </div>
-      </div>
-      <hr className='my-1' />
-      <div className='d-flex justify-content-between m-1 p-1'>
+      </Wrappers.Body>
+
+      <Wrappers.Footer>
         <LinkButtoneBack />
-      </div>
-    </WrapperModal>
+      </Wrappers.Footer>
+    </Wrappers.Modal>
   );
 }
 

@@ -15,12 +15,7 @@ import {
   LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import {
-  WrapperBody,
-  WrapperFooter,
-  WrapperHeader,
-  WrapperModal,
-} from "../common/Wrappers.jsx";
+import Wrappers from "../common/Wrappers.jsx";
 
 import ManageName from "../common/ManageName.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
@@ -94,15 +89,15 @@ function ManageMember() {
   }, [user._id]);
 
   return (
-    <WrapperModal>
+    <Wrappers.Modal>
       {/* icon itemName closeButton */}
-      <WrapperHeader>
+      <Wrappers.Header>
         <AvatarMember name={member.name} />
         <BoxCenterText text={member.name} />
         <IconCircleClose />
-      </WrapperHeader>
+      </Wrappers.Header>
 
-      <WrapperBody>
+      <Wrappers.Body>
         <ManageName
           name={member.name}
           setParent={setMember}
@@ -145,9 +140,9 @@ function ManageMember() {
         />
 
         {isLoading && <IconLoading />}
-      </WrapperBody>
+      </Wrappers.Body>
 
-      <WrapperFooter>
+      <Wrappers.Footer>
         <LinkButtoneBack />
         {editing ? (
           <>
@@ -164,8 +159,8 @@ function ManageMember() {
           </span>
         )}
         <LinkButton to={"/account"}>Account</LinkButton>
-      </WrapperFooter>
-    </WrapperModal>
+      </Wrappers.Footer>
+    </Wrappers.Modal>
   );
 }
 

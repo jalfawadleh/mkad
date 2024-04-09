@@ -19,7 +19,7 @@ import { FaQuestion } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { ChocolateBar } from "./Wrappers";
+import { Bar } from "./Wrappers";
 
 const iconSize = 24;
 const iconClass = "p-0 m-0";
@@ -370,7 +370,7 @@ export const ListLinks = ({ items }) => {
   return (
     items.length &&
     items.map((item) => (
-      <ChocolateBar key={item._id}>
+      <Bar key={item._id}>
         {
           {
             location: <IconLinkCircleFlyTo location={item.location} />,
@@ -382,7 +382,7 @@ export const ListLinks = ({ items }) => {
 
         <IconLinkCenterText item={item} />
         <IconLinkCircleFlyTo location={item.location} />
-      </ChocolateBar>
+      </Bar>
     ))
   );
 };
