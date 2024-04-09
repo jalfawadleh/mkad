@@ -74,8 +74,6 @@ const ManageOnline = ({ online, setParent, editing = false }) => {
               Copy Link
             </div>
           </div>
-
-          <div className='p-1 m-1'>Link</div>
           <div className='p-2 my-2 small'>{online.link}</div>
 
           <hr className='m-1' />
