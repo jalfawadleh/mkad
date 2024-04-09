@@ -26,6 +26,7 @@ import ManageHidden from "../common/ManageHidden.jsx";
 import ManageOnline from "../common/ManageOnline.jsx";
 import ManageLocation from "../common/ManageLocation.jsx";
 import ManageInterests from "../common/ManageInterests.jsx";
+import Wrappers from "../common/Wrappers.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();

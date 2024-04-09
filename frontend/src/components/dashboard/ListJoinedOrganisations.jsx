@@ -49,11 +49,11 @@ const ListJoinedOrganisations = () => {
 
   const ListItems = ({ items }) => {
     return items.map((item) => (
-      <ChocolateBar key={item._id}>
+      <Bar key={item._id}>
         <LinkCircleIconOrganisation item={item} />
         <LinkText item={item} />
         <IconLinkCircleFlyTo location={item.location} />
-      </ChocolateBar>
+      </Bar>
     ));
   };
 

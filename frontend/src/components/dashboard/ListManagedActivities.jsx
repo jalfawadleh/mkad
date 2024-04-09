@@ -43,13 +43,13 @@ const ListManagedActivities = () => {
   return (
     <>
       <div className='my-3'></div>
-      <ChocolateBar>
+      <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Managed Activities</div>
         {user.type === "organisation" && <IconAddLink />}
-      </ChocolateBar>
+      </Bar>
 
       {!folded &&
         (items.length ? (
