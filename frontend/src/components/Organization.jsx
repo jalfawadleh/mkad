@@ -29,7 +29,7 @@ const Organization = () => {
   const [isJoining, setIsJoining] = useState(false);
   const [isMember, setIsMembers] = useState(false);
 
-  const [item, setItem] = useState({
+  const [organisation, setOrganisation] = useState({
     name: "",
     description: "",
     notes: [],
@@ -40,14 +40,12 @@ const Organization = () => {
     members: [],
   });
 
-  const { name, members } = item;
-
   const getItem = async (id) => {
     setIsLoading(true);
     try {
       await axios
         .get(`/organisations/${id}`)
-        .then((res) => setItem(res.data))
+        .then((res) => setOrganisation(res.data))
         .then(() => setIsLoading(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -56,12 +54,12 @@ const Organization = () => {
     }
   };
 
-  const joinItem = async () => {
+  const joinOrganisation = async () => {
     setIsJoining(true);
     try {
       await axios
         .get(`/organisations/join/${id}`)
-        .then((res) => setItem(res.data))
+        .then((res) => setOrganisation(res.data))
         .then(() => setIsJoining(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -75,15 +73,10 @@ const Organization = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const toggleJoin = () => {
-    joinItem();
-    // putActivity();
-  };
-
   useEffect(() => {
-    setIsMembers(members.find((m) => m._id == user._id));
+    setIsMembers(organisation.members.find((m) => m._id == user._id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members]);
+  }, [organisation.members]);
 
   return (
     <>
@@ -91,33 +84,29 @@ const Organization = () => {
         {/* icon itemName closeButton */}
         <Wrapper.Header>
           <CircleIconOrganisation />
-          <BoxCenterText text={name} />
+          <BoxCenterText text={organisation.name} />
           <IconCircleClose />
         </Wrapper.Header>
 
         {/* Join members list */}
         <div className='d-flex justify-content-wrap p-0 m-1'>
-          <LinkAvatarMember item={item} />
-          <span onClick={() => toggleJoin()}>
+          <LinkAvatarMember item={organisation} />
+          <span onClick={() => joinOrganisation()}>
             <IconButton>
               {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
             </IconButton>
           </span>
-          {members.map((m) => (
+          {organisation.members.map((m) => (
             <LinkAvatarMember item={m} key={m._id} />
           ))}
         </div>
-        <hr className='m-1' />
+        <hr className='m-2' />
 
         <Wrapper.Body>
-          <ManageDescription description={item.description} />
-          <ManageLanguages languages={item.languages} />
-          <ManageInterests interests={item.interests} />
-          <ManageHelp
-            help={item.help}
-            parentId={item._id}
-            parentType={item.type}
-          />
+          <ManageDescription description={organisation.description} />
+          <ManageLanguages languages={organisation.languages} />
+          <ManageInterests interests={organisation.interests} />
+          <ManageHelp help={organisation.help} />
           {isLoading && <IconLoading />}
         </Wrapper.Body>
 
