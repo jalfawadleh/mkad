@@ -14,7 +14,7 @@ import {
   IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import Wrappers from "../common/Wrappers.jsx";
+import Wrappers, { Section, SectionForm } from "../common/Wrappers.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -89,90 +89,97 @@ function ManageAccount() {
         </Wrappers.Header>
 
         <Wrappers.Body>
-          <div className='p-0 mb-2 text-center'>
+          <div className='p-0 mb-2 text-center text-warning'>
             Enter only fields you want to Update and Current Password
           </div>
+          <hr className='my-2' />
+          <SectionForm>
+            <div className='form-floating m-1'>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Username'
+                id='username'
+                name='username'
+                value={username}
+                size='small'
+                onChange={onChange}
+              />
+              <label htmlFor='username'>Username</label>
+            </div>
+          </SectionForm>
+          <hr className='my-2' />
+          <SectionForm>
+            <div className='form-floating m-1'>
+              <input
+                className='form-control'
+                id='password'
+                type='password'
+                placeholder='Password'
+                name='password'
+                value={password}
+                size='small'
+                onChange={onChange}
+              />
+              <label htmlFor='password'>Password</label>
+            </div>
 
-          <div className='form-floating mb-3'>
-            <input
-              type='text'
-              className='form-control'
-              placeholder='Username'
-              id='username'
-              name='username'
-              value={username}
-              size='small'
-              onChange={onChange}
-            />
-            <label htmlFor='username'>Username</label>
-          </div>
+            <div className='form-floating m-1'>
+              <input
+                className='form-control'
+                id='confirmPassword'
+                type='password'
+                placeholder='Confirm Password'
+                name='confirmPassword'
+                value={confirmPassword}
+                size='small'
+                onChange={onChange}
+              />
+              <label htmlFor='confirmPassword'>Confirm Password</label>
+            </div>
+          </SectionForm>
+          <hr className='my-2' />
+          <SectionForm>
+            <div className='text-center'>
+              Email will only be used for password reset
+            </div>
 
-          <div className='form-floating mb-3'>
-            <input
-              className='form-control'
-              id='password'
-              type='password'
-              placeholder='Password'
-              name='password'
-              value={password}
-              size='small'
-              onChange={onChange}
-            />
-            <label htmlFor='password'>Password</label>
-          </div>
+            <div className='form-floating m-1'>
+              <input
+                className='form-control'
+                id='email'
+                type='email'
+                placeholder='email@proton.me'
+                name='email'
+                value={email}
+                size='small'
+                onChange={onChange}
+              />
+              <label htmlFor='email'>Email</label>
+            </div>
+          </SectionForm>
+          <hr className='my-2' />
+          <SectionForm>
+            <div className='text-center'>
+              Enter Current password for verification
+            </div>
 
-          <div className='form-floating mb-3'>
-            <input
-              className='form-control mb-3'
-              id='confirmPassword'
-              type='password'
-              placeholder='Confirm Password'
-              name='confirmPassword'
-              value={confirmPassword}
-              size='small'
-              onChange={onChange}
-            />
-            <label htmlFor='confirmPassword'>Confirm Password</label>
-          </div>
-
-          <div className='text-center'>
-            Email will only be used for password reset
-          </div>
-
-          <div className='form-floating mb-3'>
-            <input
-              className='form-control mb-3'
-              id='email'
-              type='email'
-              placeholder='email@proton.me'
-              name='email'
-              value={email}
-              size='small'
-              onChange={onChange}
-            />
-            <label htmlFor='email'>Email</label>
-          </div>
-
-          <div className='text-center'>
-            Enter Current password for verification
-          </div>
-
-          <div className='form-floating mb-3'>
-            <input
-              className='form-control'
-              id='currentPassword'
-              type='password'
-              placeholder='Current Password'
-              name='currentPassword'
-              value={currentPassword}
-              onChange={onChange}
-            />
-            <label htmlFor='currentPassword'>Current Password</label>
-          </div>
-
+            <div className='form-floating m-1'>
+              <input
+                className='form-control'
+                id='currentPassword'
+                type='password'
+                placeholder='Current Password'
+                name='currentPassword'
+                value={currentPassword}
+                onChange={onChange}
+              />
+              <label htmlFor='currentPassword'>Current Password</label>
+            </div>
+          </SectionForm>
           {isLoading && <IconLoading />}
         </Wrappers.Body>
-
+        <hr className='my-2' />
         <Wrappers.Footer>
           <LinkButtoneBack />
           <span onClick={onPut}>
