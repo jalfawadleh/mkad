@@ -15,8 +15,6 @@ import {
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 
-import Wrapper from "../common/Wrappers.jsx";
-
 import ManageName from "../common/ManageName.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
 import ManagePeriod from "../common/ManagePeriod.jsx";

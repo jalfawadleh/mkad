@@ -110,14 +110,14 @@ function ManageMember() {
           editing={editing}
         />
 
-        <ManageInterests
-          interests={member.interests}
+        <ManageLanguages
+          languages={member.languages}
           setParent={setMember}
           editing={editing}
         />
 
-        <ManageLanguages
-          languages={member.languages}
+        <ManageInterests
+          interests={member.interests}
           setParent={setMember}
           editing={editing}
         />
