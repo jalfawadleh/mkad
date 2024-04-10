@@ -1,3 +1,5 @@
+import { Section, SectionForm } from "./Wrappers";
+
 /**
  * Help component.
  *
@@ -11,7 +13,7 @@ const ManageName = ({ name, setParent, editing = false }) => {
   return (
     editing && (
       <>
-        <section className='container m-1 p-1'>
+        <SectionForm>
           <div className='text-center mb-2'>
             Your Profile Avatar is based on your name
           </div>
@@ -32,7 +34,7 @@ const ManageName = ({ name, setParent, editing = false }) => {
             />
             <label htmlFor='name'>Name</label>
           </div>
-        </section>
+        </SectionForm>
         <hr className='my-2' />
       </>
     )

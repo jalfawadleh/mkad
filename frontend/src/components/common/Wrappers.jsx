@@ -2,11 +2,7 @@ import { FaLanguage } from "react-icons/fa";
 import { MdOutlineInterests } from "react-icons/md";
 
 export const Section = ({ children }) => {
-  return (
-    <>
-      <section className='d-inline-block m-1 p-0'>{children}</section>
-    </>
-  );
+  return <section className='d-inline-block m-1 p-0'>{children}</section>;
 };
 
 export const SectionForm = ({ children }) => {

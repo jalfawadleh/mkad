@@ -65,7 +65,7 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
                 type='submit'
                 disabled={!language.name}
                 role='button'
-                className='p-1 badge rounded-pill border-0 bg-primary'
+                className='m-0 p-1 badge border-0 text-bg-primary'
               >
                 <FaPlus size={20} />
               </button>

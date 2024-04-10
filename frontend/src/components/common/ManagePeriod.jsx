@@ -19,53 +19,51 @@ const Period = ({ startOn, endOn, setParent, isEditing = false }) => {
 
   return isEditing ? (
     <>
-      <div className='d-flex justify-content-between m-1 ps-1'>
-        <span className='p-auto m-auto'>Start</span>
+      <div className='d-flex justify-content-between m-2'>
+        <span className='p-2 my-auto text-bg-primary rounded-start'>Start</span>
         <Datetime
           input={true}
-          className='p-0 m-1'
+          className='p-0 me-1'
           value={moment(startOn)}
           onChange={onChangeToStart}
         />
 
-        <span className='p-auto m-auto'>End</span>
+        <span className='p-2 ms-3 my-auto text-bg-primary rounded-start'>
+          End
+        </span>
         <Datetime
-          className='p-0 m-1'
+          className='p-0 rounded-end'
           value={moment(endOn)}
           onChange={onChangeToEnd}
         />
       </div>
-
-      <hr className='m-1' />
+      <hr className='my-2' />
     </>
   ) : (
     (startOn || endOn) && (
       <>
-        <div className='d-flex justify-content-between m-1 p-0'>
-          {startOn && (
-            <div className='d-flex float-left w-50'>
-              <span className='p-3 my-auto text-start text-bg-primary rounded-pill rounded-end'>
-                Start
-              </span>
-              <span className='p-2 my-auto float-left '>
-                <div>{moment(startOn).format("DD MMMM YYYY")}</div>
-                <div>{moment(startOn).format("h:mm:ss a")}</div>
-              </span>
-            </div>
-          )}
-          {endOn && (
-            <div className='d-flex float-left w-50'>
-              <span className='p-3 my-auto text-end text-bg-primary rounded-pill rounded-end'>
-                End
-              </span>
-              <span className='p-2 my-auto float-left '>
-                <div>{moment(endOn).format("DD MMMM YYYY")}</div>
-                <div>{moment(endOn).format("h:mm:ss a")}</div>
-              </span>
-            </div>
-          )}
-        </div>
-        <hr className='m-2' />
+        {startOn && (
+          <div className='d-inline-block m-2'>
+            <span className='p-1 ps-2 my-auto text-start bg-primary rounded-pill rounded-end'>
+              Start
+            </span>
+            <span className='p-1 my-auto border border-gray'>
+              {moment(startOn).format("h:mm a DD MMMM YYYY ")}
+            </span>
+          </div>
+        )}
+        {endOn && (
+          <div className='d-inline-block m-2'>
+            <span className='p-1 ps-2 my-auto text-end bg-primary rounded-pill rounded-end'>
+              End
+            </span>
+            <span className='p-1 my-auto border border-gray'>
+              {moment(endOn).format("h:mm a DD MMMM YYYY")}
+            </span>
+          </div>
+        )}
+
+        <hr className='my-2' />
       </>
     )
   );

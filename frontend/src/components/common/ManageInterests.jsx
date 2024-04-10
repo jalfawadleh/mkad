@@ -64,7 +64,7 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
                 type='submit'
                 disabled={!interest.name}
                 role='button'
-                className='p-1 badge rounded-pill border-0 bg-primary'
+                className='m-0 p-1 badge border-0 text-bg-primary'
               >
                 <FaPlus size={20} />
               </button>

@@ -1,3 +1,5 @@
+import { Section, SectionForm } from "./Wrappers";
+
 /**
  * Help component.
  *
@@ -11,7 +13,7 @@ const ManageDescription = ({ description, setParent, editing = false }) => {
   return (
     <>
       {editing ? (
-        <section className='container m-1 p-0'>
+        <SectionForm>
           <div className='form-floating'>
             <input
               type='text'
@@ -29,15 +31,15 @@ const ManageDescription = ({ description, setParent, editing = false }) => {
             />
             <label htmlFor='discription'>Description</label>
           </div>
-        </section>
+        </SectionForm>
       ) : (
         description && (
-          <section className='container m-1 p-0 d-flex justify-content-wrap'>
-            {description}
-          </section>
+          <Section>
+            <div className='m-2'>{description}</div>
+          </Section>
         )
       )}
-      <hr className='my-2' />
+      {(editing || description) && <hr className='my-2' />}
     </>
   );
 };

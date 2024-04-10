@@ -5,17 +5,16 @@ import {
   TileLayer,
   ZoomControl,
 } from "react-leaflet";
+import { SectionForm } from "./Wrappers";
 
 const ManageLocation = ({ location, setParent, editing = false }) => {
   return (
-    <>
-      {editing && (
-        <>
-          <div className='inline-block m-1 p-auto text-center'>
+    editing && (
+      <>
+        <SectionForm>
+          <div className='d-block m-1 p-auto text-center'>
             Drag the marker to change location
-          </div>
-          <div className='inline-block m-1 p-auto text-center text-warning'>
-            try not to be very accurate
+            <span className='ps-2 text-warning'>- not exact -</span>
           </div>
 
           <MapContainer
@@ -34,8 +33,8 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
               position={location}
               eventHandlers={{
                 dragend: (e) => {
-                  setParent((prevState) => ({
-                    ...prevState,
+                  setParent((prev) => ({
+                    ...prev,
                     location: {
                       lat: e.target._latlng.lat,
                       lng: e.target._latlng.lng,
@@ -54,10 +53,10 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
           </MapContainer>
-          <hr className='my-1' />
-        </>
-      )}
-    </>
+        </SectionForm>
+        <hr className='my-2' />
+      </>
+    )
   );
 };
 
