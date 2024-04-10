@@ -4,10 +4,13 @@ import { MdOutlineInterests } from "react-icons/md";
 export const Section = ({ children }) => {
   return (
     <>
-      <section className='container m-1 p-0'>{children}</section>
-      <hr className='my-1' />
+      <section className='d-inline-block m-1 p-0'>{children}</section>
     </>
   );
+};
+
+export const SectionForm = ({ children }) => {
+  return <section className='d-block m-1 mt-2 p-1'>{children}</section>;
 };
 
 export const Bar = ({ children }) => {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Language } from "./Wrappers";
+import { Language, Section, SectionForm } from "./Wrappers";
 import { FaPlus } from "react-icons/fa";
 import { Delete } from "./Icons";
 
@@ -34,7 +34,7 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
   return (
     <>
       {languages?.length > 0 && (
-        <section className='container m-1 p-0'>
+        <Section>
           {languages.map((l, index) => (
             <Language key={index}>
               {l.name}
@@ -45,11 +45,11 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
               )}
             </Language>
           ))}
-        </section>
+        </Section>
       )}
 
       {editing && (
-        <section className='d-block m-1 mt-2 p-1'>
+        <SectionForm>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <input
@@ -71,7 +71,7 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
               </button>
             </div>
           </form>
-        </section>
+        </SectionForm>
       )}
       {(editing || languages?.length > 0) && <hr className='my-2' />}
     </>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { HelpItem } from "./Wrappers";
+import { HelpItem, Section, SectionForm } from "./Wrappers";
 import { Delete } from "./Icons";
 
 /**
@@ -34,7 +34,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
   return (
     <>
       {help?.length > 0 && (
-        <div className='d-inline-block m-1 p-0'>
+        <Section>
           {help.map((h, index) => (
             <HelpItem key={index} offer={h.offer}>
               {h.text}
@@ -45,11 +45,11 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               )}
             </HelpItem>
           ))}
-        </div>
+        </Section>
       )}
 
       {editing && (
-        <section className='d-block m-1 mt-2 p-1'>
+        <SectionForm>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <div
@@ -84,7 +84,7 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
               </button>
             </div>
           </form>
-        </section>
+        </SectionForm>
       )}
       {(editing || help?.length > 0) && <hr className='my-2' />}
     </>

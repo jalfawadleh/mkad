@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Interest } from "./Wrappers";
+import { Interest, Section, SectionForm } from "./Wrappers";
 import { Delete } from "./Icons";
 
 /**
@@ -33,7 +33,7 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
   return (
     <>
       {interests?.length > 0 && (
-        <section className='container m-1 p-0'>
+        <Section>
           {interests.map((i, index) => (
             <Interest key={index}>
               {i.name}
@@ -44,11 +44,11 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
               )}
             </Interest>
           ))}
-        </section>
+        </Section>
       )}
 
       {editing && (
-        <section className='d-block m-1 mt-2 p-1'>
+        <SectionForm>
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2'>
               <input
@@ -70,7 +70,7 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
               </button>
             </div>
           </form>
-        </section>
+        </SectionForm>
       )}
       {(editing || interests?.length > 0) && <hr className='my-2' />}
     </>
