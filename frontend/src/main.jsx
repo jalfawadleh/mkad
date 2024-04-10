@@ -37,12 +37,12 @@ const router = createBrowserRouter(
         <Route path='member/:id' element={<Member />} />
 
         <Route path='dashboard' element={<ScreenDashboard />}>
-          <Route path='profile' element={<ManageMember />} />
-          <Route path='account' element={<ManageAccount />} />
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
-          <Route path='activity/manage/:id' element={<ManageActivity />} />
-          <Route path='new' element={<ManageActivity />} />
+          <Route path='manage/member' element={<ManageMember />} />
+          <Route path='manage/account' element={<ManageAccount />} />
+          <Route path='manage/activity/:id' element={<ManageActivity />} />
+          <Route path='manage/activity/new' element={<ManageActivity />} />
         </Route>
 
         <Route path='messages' element={<ScreenMessages />}>

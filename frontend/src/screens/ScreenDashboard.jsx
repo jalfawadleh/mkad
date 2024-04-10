@@ -22,13 +22,13 @@ const ScreenDashboard = () => {
       <Bar>
         <AvatarMember name={user.name} />
         <Link
-          to={"profile"}
+          to={"manage/member"}
           className='p-auto m-auto fw-bold text-center link-underline link-underline-opacity-0'
         >
           Profile
         </Link>
         <Link
-          to={"account"}
+          to={"manage/account"}
           className='p-auto m-auto fw-bold text-center link-underline link-underline-opacity-0'
         >
           Account

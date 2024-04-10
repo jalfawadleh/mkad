@@ -149,7 +149,7 @@ export const IconCirlceAccount = () => {
 
 export const IconAddLink = ({ color = iconColor }) => {
   return (
-    <Link to='new'>
+    <Link to='manage/activity/new'>
       <span
         className='p-1 m-1 badge rounded-pill border border-primary'
         role='button'

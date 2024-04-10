@@ -57,7 +57,7 @@ const ListManagedActivities = () => {
             <Bar key={item._id}>
               <LinkCircleIconActivity item={item} />
               <Link
-                to={"activity/manage/" + item._id}
+                to={"manage/activity/" + item._id}
                 className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
               >
                 {item.name}
