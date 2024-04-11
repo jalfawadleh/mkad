@@ -11,7 +11,6 @@ import {
   IconCircleClose,
   CircleIconOrganisation,
   BoxCenterText,
-  LinkButtoneBack,
   IconLoading,
   IconSpin,
 } from "./common/LinkItems.jsx";
@@ -109,10 +108,6 @@ const Organization = () => {
           <ManageHelp help={organisation.help} />
           {isLoading && <IconLoading />}
         </Wrapper.Body>
-
-        <Wrapper.Footer>
-          <LinkButtoneBack />
-        </Wrapper.Footer>
       </Wrapper.Modal>
     </>
   );

@@ -10,7 +10,6 @@ import {
   IconButton,
   IconCircleActivity,
   IconCircleClose,
-  LinkButtoneBack,
   IconSpin,
   IconLoading,
   BoxCenterText,
@@ -116,10 +115,6 @@ const Activity = () => {
           <ManageOnline online={activity.online} />
           {isLoading && <IconLoading />}
         </Wrappers.Body>
-
-        <Wrappers.Footer>
-          <LinkButtoneBack />
-        </Wrappers.Footer>
       </Wrappers.Modal>
     </>
   );
