@@ -26,4 +26,30 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { protect };
+const protectSocket = asyncHandler(async (socket, next) => {
+  const token = socket.handshake.headers.authorization;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      socket.user = await User.findById(decoded.id).select("-password");
+      if (socket.user) next();
+      else {
+        const err = new Error("Not authorized");
+        err.data = { content: "token failed" };
+        next(err);
+      }
+    } catch (error) {
+      const err = new Error("Not authorized");
+      err.data = { content: error };
+      next(err);
+    }
+  } else {
+    const err = new Error("Not authorized");
+    err.data = { content: "No token" };
+    next(err);
+  }
+});
+
+export { protect, protectSocket };
