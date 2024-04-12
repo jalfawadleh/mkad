@@ -23,6 +23,8 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 import ManageOnline from "./common/ManageOnline.jsx";
+import Chat from "./common/Chat.jsx";
+import { CircleMessage } from "./common/Icons.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -30,6 +32,8 @@ const Activity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
   const [isMember, setIsMember] = useState(false);
+
+  const [activeChat, setActiveChat] = useState(false);
 
   const [activity, setActivity] = useState({
     name: "",
@@ -78,43 +82,56 @@ const Activity = () => {
     setIsMember(activity.members.find((m) => m._id == user._id));
   }, [activity.members, user._id]);
 
+  const joinSection = (
+    <>
+      <div className='d-flex justify-content-wrap p-1 m-1'>
+        <LinkAvatarMember item={activity.createdBy} />
+        <span onClick={() => onJoin()}>
+          <IconButton>
+            {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
+          </IconButton>
+        </span>
+        {activity.members.map((m) => (
+          <LinkAvatarMember item={m} key={m._id} />
+        ))}
+      </div>
+      <hr className='m-1' />
+    </>
+  );
+
   return (
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
           {/* icon title join and close */}
-
           <IconCircleActivity />
           <BoxCenterText text={activity.name} />
+          <span onClick={() => setActiveChat(!activeChat)}>
+            <CircleMessage color={activeChat ? "white" : "gray"} />
+          </span>
           <IconCircleClose />
         </Wrappers.Header>
 
-        {/* members */}
-        <div className='d-flex justify-content-wrap p-1 m-1'>
-          <LinkAvatarMember item={activity.createdBy} />
-          <span onClick={() => onJoin()}>
-            <IconButton>
-              {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
-            </IconButton>
-          </span>
-          {activity.members.map((m) => (
-            <LinkAvatarMember item={m} key={m._id} />
-          ))}
-        </div>
-        <hr className='m-1' />
-        <Wrappers.Body>
-          <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
-          <ManageDescription description={activity.description} />
-          <ManageLanguages languages={activity.languages} />
-          <ManageInterests interests={activity.interests} />
-          <ManageHelp
-            help={activity.help}
-            parentId={activity._id}
-            parentType={activity.type}
-          />
-          <ManageOnline online={activity.online} />
-          {isLoading && <IconLoading />}
-        </Wrappers.Body>
+        {activeChat ? (
+          <Chat type='activity' id={activity._id} />
+        ) : (
+          <>
+            {joinSection}
+            <Wrappers.Body>
+              <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
+              <ManageDescription description={activity.description} />
+              <ManageLanguages languages={activity.languages} />
+              <ManageInterests interests={activity.interests} />
+              <ManageHelp
+                help={activity.help}
+                parentId={activity._id}
+                parentType={activity.type}
+              />
+              <ManageOnline online={activity.online} />
+              {isLoading && <IconLoading />}
+            </Wrappers.Body>
+          </>
+        )}
       </Wrappers.Modal>
     </>
   );

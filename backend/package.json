@@ -5,8 +5,7 @@
   "description": "MKaDifference Social Media",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "nodemon index.js"
   },
   "author": "J Alfawadleh",
   "license": "MIT",

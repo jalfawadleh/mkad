@@ -97,11 +97,16 @@ io.use(protectSocket);
 io.engine.use(helmet());
 
 io.on("connection", (socket) => {
+  socket.on("message", (msg) => {
+    console.log("message: " + msg);
+    socket.emit("message", msg);
+  });
+
   console.log(`
 connected: 
   socket id: ${socket.id}  
   user name: ${socket.user.name} 
-         id: ${socket.user.id}`);
+  user  _id: ${socket.user.id}`);
 
   // upon disconnection
   socket.on("disconnect", (reason) => {
@@ -109,11 +114,7 @@ connected:
 disconnected: due to ${reason}
   socket id: ${socket.id}  
   user name: ${socket.user.name} 
-         id: ${socket.user.id}`);
-  });
-
-  socket.on("chat message", (msg) => {
-    console.log("message: " + msg);
+  user  _id: ${socket.user.id}`);
   });
 });
 
