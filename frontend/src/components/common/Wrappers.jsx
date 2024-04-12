@@ -45,7 +45,14 @@ export const Header = ({ children }) => {
 };
 
 export const Body = ({ children }) => {
-  return <div className='overflow-y-auto p-1 m-0'>{children}</div>;
+  return (
+    <div
+      className='overflow-y-auto p-1 m-0'
+      style={{ maxHeight: window.innerHeight - 150 }}
+    >
+      {children}
+    </div>
+  );
 };
 
 export const Footer = ({ children }) => {
