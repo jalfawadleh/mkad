@@ -111,6 +111,10 @@ disconnected: due to ${reason}
   user name: ${socket.user.name} 
          id: ${socket.user.id}`);
   });
+
+  socket.on("chat message", (msg) => {
+    console.log("message: " + msg);
+  });
 });
 
 // starting the socket.io and express servers on the same port
