@@ -20,7 +20,7 @@ import ManageDescription from "./common/ManageDescription.jsx";
 import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
-import { LinkCircleDiscusstion } from "./common/Icons.jsx";
+import { LinkCircleActivity, LinkCircleDiscusstion } from "./common/Icons.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -35,9 +35,9 @@ const Organization = () => {
     notes: [],
     languages: [],
     interests: [],
-    helpOffered: [],
-    helpNeeded: [],
+    help: [],
     members: [],
+    activities: [],
   });
 
   const getItem = async (id) => {
@@ -78,6 +78,40 @@ const Organization = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [organisation.members]);
 
+  const membersJoined = (
+    <>
+      {/* Join members list */}
+      <div className='d-flex justify-content-wrap p-0 m-1 ms-3'>
+        <LinkAvatarMember item={organisation} />
+        <span onClick={() => joinOrganisation()}>
+          <IconButton>
+            {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
+          </IconButton>
+        </span>
+        {organisation.members.map((m) => (
+          <LinkAvatarMember item={m} key={m._id} />
+        ))}
+      </div>
+      <hr className='m-2' />
+    </>
+  );
+
+  const organisationActivities = (
+    <>
+      {/* Join members list */}
+      <div className='d-block p-0 m-1 ms-3'>
+        <div className='d-inline m-auto p-1'>Activities</div>
+        {organisation.activities.map((m) => (
+          <>
+            <LinkCircleActivity id={m._id} key={m._id} />
+            <div className='d-inline m-auto p-1'>{m.name}</div>
+          </>
+        ))}
+      </div>
+      <hr className='m-2' />
+    </>
+  );
+
   return (
     <>
       <Wrapper.Modal>
@@ -94,19 +128,8 @@ const Organization = () => {
           <IconCircleClose />
         </Wrapper.Header>
 
-        {/* Join members list */}
-        <div className='d-flex justify-content-wrap p-0 m-1'>
-          <LinkAvatarMember item={organisation} />
-          <span onClick={() => joinOrganisation()}>
-            <IconButton>
-              {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
-            </IconButton>
-          </span>
-          {organisation.members.map((m) => (
-            <LinkAvatarMember item={m} key={m._id} />
-          ))}
-        </div>
-        <hr className='m-2' />
+        {organisationActivities}
+        {membersJoined}
 
         <Wrapper.Body>
           <ManageDescription description={organisation.description} />
