@@ -4,19 +4,79 @@ import {
   Popup,
   TileLayer,
   ZoomControl,
+  useMapEvent,
 } from "react-leaflet";
 import { SectionForm } from "./Wrappers";
+import { FaPlus } from "react-icons/fa";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ManageLocation = ({ location, setParent, editing = false }) => {
+  const [flyToLocation, setFlyToLocation] = useState(null);
+
+  const FlytoCity = () => {
+    const map = useMapEvent("dragend", () => {
+      setParent((prev) => ({ ...prev, location: map.getCenter() }));
+    });
+
+    useEffect(() => {
+      if (flyToLocation?.lat) {
+        map.flyTo(flyToLocation, 12);
+        setFlyToLocation(null);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [flyToLocation]);
+
+    return null;
+  };
+
+  const getCity = async (city) => {
+    await axios
+      .get(
+        `https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`
+      )
+      .then(({ data }) =>
+        setFlyToLocation({ lat: data[0].lat, lon: data[0].lon })
+      );
+    // .then(() => setFolded(false));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    getCity(e.target[0].value);
+  };
+
   return (
     editing && (
       <>
         <SectionForm>
           <div className='d-block m-1 p-auto text-center'>
-            Drag the marker to change location
+            Drag the map to change location
             <span className='ps-2 text-warning'>- not exact -</span>
           </div>
+          <form onSubmit={onSubmit}>
+            <div className='hstack gap-2 mt-2'>
+              <label className='d-inline-block p-1 m-auto w-50'>
+                Or search by city
+              </label>
+              <input
+                id='city'
+                placeholder='Enter City Name'
+                type='text'
+                className='form-control form-control-sm'
+              />
+              <button
+                type='submit'
+                role='button'
+                className='m-0 p-1 badge border-0 text-bg-primary'
+              >
+                <FaPlus size={20} />
+              </button>
+            </div>
+          </form>
+        </SectionForm>
 
+        <SectionForm>
           <MapContainer
             center={location}
             zoom={13}
@@ -27,24 +87,11 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
             style={{ height: "300px" }}
             dragging={editing}
           >
+            <FlytoCity />
             <ZoomControl position='topright' />
-            <Marker
-              draggable={editing}
-              position={location}
-              eventHandlers={{
-                dragend: (e) => {
-                  setParent((prev) => ({
-                    ...prev,
-                    location: {
-                      lat: e.target._latlng.lat,
-                      lng: e.target._latlng.lng,
-                    },
-                  }));
-                },
-              }}
-            >
+            <Marker draggable={editing} position={location}>
               <Popup>
-                <span>Drag me</span>
+                <span>My location</span>
               </Popup>
             </Marker>
 
