@@ -16,6 +16,12 @@ import {
   IconLoading,
 } from "./common/LinkItems.jsx";
 import Wrappers, { Section } from "./common/Wrappers.jsx";
+import {
+  CircleActivity,
+  LinkCircleActivity,
+  LinkCircleDiscusstion,
+} from "./common/Icons.jsx";
+import { Circle } from "react-leaflet";
 
 const MemberOrganisations = ({ organisations = [] }) => {
   return (
@@ -48,7 +54,7 @@ const MemberActivities = ({ activities = [] }) => {
           </div>
           {activities.map((a) => (
             <>
-              <AvatarMember name={a.name} key={a._id} />
+              <LinkCircleActivity id={a._id} color='white' />
               <div className='d-inline me-2'>{a.name}</div>
             </>
           ))}
@@ -99,6 +105,12 @@ function Member() {
         <Wrappers.Header>
           <AvatarMember name={member.name} />
           <BoxCenterText text={member.name} />
+          <LinkCircleDiscusstion
+            type='member'
+            id={member._id}
+            name={member.name}
+            color='white'
+          />
           <IconCircleClose />
         </Wrappers.Header>
 

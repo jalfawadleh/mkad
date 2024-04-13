@@ -26,6 +26,7 @@ import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
 import Member from "./components/Member.jsx";
 import Help from "./components/Help.jsx";
+import Discussion from "./components/Discussion.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,9 +46,7 @@ const router = createBrowserRouter(
           <Route path='manage/activity/new' element={<ManageActivity />} />
         </Route>
 
-        <Route path='messages' element={<ScreenMessages />}>
-          <Route path=':id' element={<>Messages ID</>} />
-        </Route>
+        <Route path='discussion/:type/:id/:name' element={<Discussion />} />
 
         <Route path='updates' element={<ScreenUpdates />}>
           <Route path=':id' element={<h1>Update ID</h1>} />

@@ -23,8 +23,11 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 import ManageOnline from "./common/ManageOnline.jsx";
-import Chat from "./common/Chat.jsx";
-import { CircleMessage } from "./common/Icons.jsx";
+
+import {
+  LinkCircleDiscusstion,
+  LinkCircleOrganisation,
+} from "./common/Icons.jsx";
 
 const Activity = () => {
   const { id } = useParams();
@@ -32,8 +35,6 @@ const Activity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isJoining, setIsJoining] = useState(false);
   const [isMember, setIsMember] = useState(false);
-
-  const [activeChat, setActiveChat] = useState(false);
 
   const [activity, setActivity] = useState({
     name: "",
@@ -85,7 +86,11 @@ const Activity = () => {
   const joinSection = (
     <>
       <div className='d-flex justify-content-wrap p-1 m-1'>
-        <LinkAvatarMember item={activity.createdBy} />
+        <LinkCircleOrganisation id={activity.createdBy._id} />
+        <div className='d-inline-block mt-2 text-center'>
+          {activity.createdBy.name}
+        </div>
+
         <span onClick={() => onJoin()}>
           <IconButton>
             {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
@@ -106,32 +111,28 @@ const Activity = () => {
           {/* icon title join and close */}
           <IconCircleActivity />
           <BoxCenterText text={activity.name} />
-          <span onClick={() => setActiveChat(!activeChat)}>
-            <CircleMessage color={activeChat ? "white" : "gray"} />
-          </span>
+          <LinkCircleDiscusstion
+            type='activity'
+            id={activity._id}
+            name={activity.name}
+            color='white'
+          />
           <IconCircleClose />
         </Wrappers.Header>
-
-        {activeChat ? (
-          <Chat type='activity' id={activity._id} />
-        ) : (
-          <>
-            {joinSection}
-            <Wrappers.Body>
-              <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
-              <ManageDescription description={activity.description} />
-              <ManageLanguages languages={activity.languages} />
-              <ManageInterests interests={activity.interests} />
-              <ManageHelp
-                help={activity.help}
-                parentId={activity._id}
-                parentType={activity.type}
-              />
-              <ManageOnline online={activity.online} />
-              {isLoading && <IconLoading />}
-            </Wrappers.Body>
-          </>
-        )}
+        {joinSection}
+        <Wrappers.Body>
+          <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />
+          <ManageDescription description={activity.description} />
+          <ManageLanguages languages={activity.languages} />
+          <ManageInterests interests={activity.interests} />
+          <ManageHelp
+            help={activity.help}
+            parentId={activity._id}
+            parentType={activity.type}
+          />
+          <ManageOnline online={activity.online} />
+          {isLoading && <IconLoading />}
+        </Wrappers.Body>
       </Wrappers.Modal>
     </>
   );

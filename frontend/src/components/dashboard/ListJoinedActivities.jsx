@@ -12,6 +12,7 @@ import {
 } from "../common/LinkItems";
 
 import { Bar } from "../common/Wrappers";
+import { LinkCircleDiscusstion } from "../common/Icons";
 
 const ListJoinedActivities = () => {
   const location = useLocation();
@@ -64,6 +65,12 @@ const ListJoinedActivities = () => {
             <Bar key={item._id}>
               <LinkCircleIconActivity item={item} />
               <LinkText item={item} />
+              <LinkCircleDiscusstion
+                type='organisation'
+                id={item._id}
+                name={item.id}
+                color='white'
+              />
               <IconLinkCircleFlyTo location={item.location} />
             </Bar>
           ))

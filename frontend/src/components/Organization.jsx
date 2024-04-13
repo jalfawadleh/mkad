@@ -20,6 +20,7 @@ import ManageDescription from "./common/ManageDescription.jsx";
 import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
+import { LinkCircleDiscusstion } from "./common/Icons.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -84,6 +85,12 @@ const Organization = () => {
         <Wrapper.Header>
           <CircleIconOrganisation />
           <BoxCenterText text={organisation.name} />
+          <LinkCircleDiscusstion
+            type='organisation'
+            id={organisation._id}
+            name={organisation.name}
+            color='white'
+          />
           <IconCircleClose />
         </Wrapper.Header>
 

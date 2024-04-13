@@ -2,6 +2,16 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { RiArrowUpDownFill } from "react-icons/ri";
+import { FaHandshakeSimple } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { FaHouseUser } from "react-icons/fa";
+import { BiSolidFlag } from "react-icons/bi";
+
+import multiavatar from "@multiavatar/multiavatar/esm";
+
+export const Empty = () => {
+  return <div className='p-1 m-1' style={{ width: 35 }} />;
+};
 
 export const Circle = ({ children }) => {
   return (
@@ -13,6 +23,12 @@ export const Circle = ({ children }) => {
         {children}
       </span>
     </>
+  );
+};
+
+export const Box = ({ children }) => {
+  return (
+    <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
   );
 };
 
@@ -42,8 +58,22 @@ export const CenterText = ({ children }) => {
   );
 };
 
-export const Empty = () => {
-  return <div className='p-1 m-1' style={{ width: 35 }} />;
+export const BoxCenterText = ({ children }) => {
+  return (
+    <Box>
+      <CenterText> {children} </CenterText>
+    </Box>
+  );
+};
+
+export const BoxCenterHeader = ({ children }) => {
+  return (
+    <Box>
+      <CenterText>
+        <span className='h5 text-wrap'>{children} </span>
+      </CenterText>
+    </Box>
+  );
 };
 
 export const Online = ({ online }) => {
@@ -82,5 +112,105 @@ export const Button = ({ children }) => {
   );
 };
 
-const Icons = { Delete, CircleMessage, CenterText, Empty, Online, CircleFold };
+export const CircleDiscusstion = ({ color = "gray" }) => {
+  return (
+    <Circle>
+      <FaHandshakeSimple color={color} size={24} />
+    </Circle>
+  );
+};
+
+export const LinkCircleDiscusstion = ({ type, id, name, color = "gray" }) => {
+  return (
+    <Link to={`/discussion/${type}/${id}/${name}`}>
+      <Circle>
+        <FaHandshakeSimple color={color} size={24} />
+      </Circle>
+    </Link>
+  );
+};
+
+export const LinkCircleClose = () => {
+  return (
+    <Circle>
+      <Link to={-1}>
+        <AiOutlineClose color='white' size={24} />
+      </Link>
+    </Circle>
+  );
+};
+
+export const Organisation = ({ color = "white" }) => {
+  return <FaHouseUser color={color} size={24} />;
+};
+
+export const CircleOrganisation = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Organisation color={color} />
+    </Circle>
+  );
+};
+
+export const LinkCircleOrganisation = ({ id }) => {
+  return (
+    <Link to={"/organisation/" + id}>
+      <Circle>
+        <Organisation color={"white"} />
+      </Circle>
+    </Link>
+  );
+};
+
+export const Activity = ({ color = "white" }) => {
+  return <BiSolidFlag color={color} size={24} />;
+};
+
+export const CircleActivity = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Activity color={color} />
+    </Circle>
+  );
+};
+
+export const LinkCircleActivity = ({ id }) => {
+  return (
+    <Link to={"/activity/" + id}>
+      <Circle>
+        <BiSolidFlag color={"white"} size={24} />
+      </Circle>
+    </Link>
+  );
+};
+
+export const Member = ({ name = "na" }) => {
+  return (
+    <img
+      height={34}
+      width={34}
+      src={`data:image/svg+xml;utf8,${encodeURIComponent(multiavatar(name))}`}
+      alt='Profile Photo'
+      className='p-0 m-1'
+    />
+  );
+};
+
+const Icons = {
+  Delete,
+  CircleMessage,
+  CenterText,
+  Empty,
+  Online,
+  CircleFold,
+  LinkCircleDiscusstion,
+  CircleDiscusstion,
+  LinkCircleClose,
+  BoxCenterText,
+  Organisation,
+  CircleOrganisation,
+  LinkCircleOrganisation,
+  CircleActivity,
+  Member,
+};
 export default Icons;
