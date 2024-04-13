@@ -20,19 +20,10 @@ const ScreenDashboard = () => {
   return (
     <>
       <Bar>
-        <AvatarMember name={user.name} />
-        <Link
-          to={"manage/member"}
-          className='p-auto m-auto fw-bold text-center link-underline link-underline-opacity-0'
-        >
-          Profile
+        <Link to={"manage/member"}>
+          <AvatarMember name={user.name} />
         </Link>
-        <Link
-          to={"manage/account"}
-          className='p-auto m-auto fw-bold text-center link-underline link-underline-opacity-0'
-        >
-          Account
-        </Link>
+
         <IconLinkCircleFlyTo location={user.location} />
       </Bar>
 
