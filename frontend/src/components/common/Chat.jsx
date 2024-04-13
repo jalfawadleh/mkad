@@ -18,40 +18,45 @@ import { Link } from "react-router-dom";
  *
  * @returns {React.ReactElement} languages element.
  */
-const Chat = ({ type = [], id = "" }) => {
+const Chat = ({ type = "", id = "" }) => {
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
 
   const URL = "http://localhost:3001";
   const socket = io(URL, {
     autoConnect: true,
-    extraHeaders: {
-      authorization: user.token,
-    },
-  });
-
-  socket.on("message", (msg) => console.log(msg));
-  socket.on("disconnect", (reason) => {
-    console.log(`disconnected due to ${reason}`);
+    extraHeaders: { authorization: user.token },
   });
 
   useEffect(() => {
-    return () => {
-      socket.disconnect();
-    };
+    socket.on("connect", function () {
+      // Connected, let's sign-up for to receive messages for this room
+      socket.emit("join", type, id);
+      console.log("User joined ", type, id);
+    });
+
+    socket.on("message", (message) => {
+      setMessages((previous) => [...previous, message]);
+    });
+
+    socket.on("disconnect", (reason) => {
+      console.log(`disconnected due to ${reason}`);
+    });
+
+    return () => socket.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const send = () => {
     const element = document.getElementById("content");
     const content = element.value;
-    if (content) {
-      setMessages((previous) => [
-        ...previous,
-        { content, name: user.name, memberId: user._id },
-      ]);
-      socket.emit("message", content);
-      element.value = "";
-    }
+    const message = { content, name: user.name, _id: user._id };
+    // if (content) {
+    //   setMessages((prev) => [...prev, { ...message }]);
+    //   socket.emit("message", message);
+    //   element.value = "";
+    // }
+    socket.emit("message", message);
   };
 
   const LinkAvatarMember = ({ item }) => {
@@ -77,9 +82,10 @@ const Chat = ({ type = [], id = "" }) => {
       <Wrappers.Body>
         {messages?.length > 0 &&
           messages.map((m, index) => (
-            <div className='d-block w100 m-1 p-1' key={index}>
+            <div className='d-block w100 m-1 p-0' key={index}>
               <LinkAvatarMember item={{ name: m.name, _id: m.memberId }} />
-              <div className='d-inline'>{m.content}</div>
+              <div className='d-inline'>{m.name}</div>
+              <div className='d-inline ms-1'>{m.content}</div>
             </div>
           ))}
       </Wrappers.Body>
@@ -111,3 +117,5 @@ const Chat = ({ type = [], id = "" }) => {
 };
 
 export default Chat;
+
+// https://gist.github.com/crtr0/2896891

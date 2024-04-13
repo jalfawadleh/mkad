@@ -21,7 +21,7 @@ import activities from "./modules/moduleActivities.js";
 import organisations from "./modules/moduleOrganisations.js";
 import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
-import { protect, protectSocket } from "./middleware/authMiddleware.js";
+import { protectSocket } from "./middleware/authMiddleware.js";
 
 dotenv.config();
 const port = process.env.PORT || 3001;
@@ -71,7 +71,7 @@ app.use("/api/map", map);
 
 app.use(notFound);
 app.use(errorHandler);
-
+// socket code ############################################
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
@@ -82,6 +82,7 @@ const io = new Server(server, {
   },
   allowEIO3: true,
 });
+
 // setup the logger and create a rotating write stream
 io.engine.use(
   morgan("combined", {
@@ -96,25 +97,44 @@ io.engine.use(
 io.use(protectSocket);
 io.engine.use(helmet());
 
+let type = "";
+let id = "";
+
+// socket code ############################################
 io.on("connection", (socket) => {
-  socket.on("message", (msg) => {
-    console.log("message: " + msg);
-    socket.emit("message", msg);
+  // console.log(`user: ${socket.user.name} communicated`);
+
+  // once a client has connected, emit what room they want to join
+  socket.on("join", (t, i) => {
+    type = t;
+    id = i;
+
+    socket.join(type + "|" + id); // Joining the room
+    // send a message to room members that user joined
+    io.sockets.in(type + "|" + id).emit("message", {
+      content: "Joined",
+      name: socket.user.name,
+      _id: socket.user._id,
+    });
+    console.log(`user: ${socket.user.name} joined ${type}|${id}`);
   });
 
-  console.log(`
-connected: 
-  socket id: ${socket.id}  
-  user name: ${socket.user.name} 
-  user  _id: ${socket.user.id}`);
+  socket.on("message", (message) => {
+    // send a message to just the clients in a given room
+    io.sockets.in(type + "|" + id).emit("message", message);
+    console.log(
+      `user: ${socket.user.name} Messaged ${type}|${id} ${message.content}`
+    );
+  });
 
   // upon disconnection
   socket.on("disconnect", (reason) => {
-    console.log(`
-disconnected: due to ${reason}
-  socket id: ${socket.id}  
-  user name: ${socket.user.name} 
-  user  _id: ${socket.user.id}`);
+    io.sockets.in(type + "|" + id).emit("message", {
+      content: "Left",
+      name: socket.user.name,
+      _id: socket.user._id,
+    });
+    console.log("disconnected: user: ", socket.user.name);
   });
 });
 
