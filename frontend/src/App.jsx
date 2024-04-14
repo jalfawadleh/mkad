@@ -12,7 +12,7 @@ import { UserContext } from "./store.js";
 const App = () => {
   const [user, setUser] = useState([]);
 
-  axios.defaults.baseURL = "api/";
+  axios.defaults.baseURL = "https://demo.mkadifference.com/api/";
   axios.defaults.headers.common.Authorization = user.token;
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
