@@ -12,7 +12,7 @@ import { UserContext } from "./store.js";
 const App = () => {
   const [user, setUser] = useState([]);
 
-  axios.defaults.baseURL = "http://127.0.0.1:3001/api/";
+  axios.defaults.baseURL = "/api/";
   axios.defaults.headers.common.Authorization = user.token;
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
