@@ -111,37 +111,35 @@ let id = "";
 io.on("connection", (socket) => {
   // console.log(`user: ${socket.user.name} communicated`);
 
-  // once a client has connected, emit what room they want to join
+  // once a member has requested to join a room
   socket.on("join", (t, i) => {
     type = t;
     id = i;
-
-    socket.join(type + "|" + id); // Joining the room
+    // Add member to the room
+    socket.join(type + "|" + id);
     // send a message to room members that user joined
     io.sockets.in(type + "|" + id).emit("message", {
       content: "Joined",
       name: socket.user.name,
       _id: socket.user._id,
     });
-    console.log(`user: ${socket.user.name} joined ${type}|${id}`);
   });
 
+  // on receiving a message send a message to the members in the room
   socket.on("message", (message) => {
-    // send a message to just the clients in a given room
     io.sockets.in(type + "|" + id).emit("message", message);
-    console.log(
-      `user: ${socket.user.name} Messaged ${type}|${id} ${message.content}`
-    );
   });
 
-  // upon disconnection
+  // on member disconnect and leave the room
   socket.on("disconnect", (reason) => {
+    // member leave the room
+    socket.leave(type + "|" + id);
+    // advertise the member had left the room
     io.sockets.in(type + "|" + id).emit("message", {
       content: "Left",
       name: socket.user.name,
       _id: socket.user._id,
     });
-    console.log("disconnected: user: ", socket.user.name);
   });
 });
 
