@@ -32,7 +32,7 @@ const Discussion = () => {
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
 
-  const URL = "http://localhost:3001";
+  const URL = "https://demo.mkadifference.com";
   const socket = io(URL, {
     autoConnect: true,
     extraHeaders: { authorization: user.token },
