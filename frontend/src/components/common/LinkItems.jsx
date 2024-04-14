@@ -7,7 +7,7 @@ import multiavatar from "@multiavatar/multiavatar/esm";
 import { BiSolidFlag } from "react-icons/bi";
 import { FaHouseUser } from "react-icons/fa";
 import { FaLocationCrosshairs } from "react-icons/fa6";
-import { FaRegFaceGrinBeam } from "react-icons/fa6";
+import { IoPersonSharp } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
 import { FaBell } from "react-icons/fa";
 import { RiArrowUpDownFill } from "react-icons/ri";
@@ -221,9 +221,7 @@ export const IconLocation = ({ color }) => {
 };
 
 export const IconMember = ({ color = iconColor }) => {
-  return (
-    <FaRegFaceGrinBeam color={color} size={iconSize} className={iconClass} />
-  );
+  return <IoPersonSharp color={color} size={iconSize} className={iconClass} />;
 };
 
 export const AvatarMember = ({ name = "na" }) => {

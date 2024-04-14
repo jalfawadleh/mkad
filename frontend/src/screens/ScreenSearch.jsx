@@ -202,20 +202,6 @@ const ScreenSearch = () => {
       >
         <IconMember color={members ? "white" : "gray"} />
       </span>
-      <span
-        className={iconWrapperClass}
-        role='button'
-        onClick={() => toggleItem({ messages })}
-      >
-        <IconMessage color={messages ? "white" : "gray"} />
-      </span>
-      <span
-        className={iconWrapperClass}
-        role='button'
-        onClick={() => toggleItem({ updates })}
-      >
-        <IconUpdate color={updates ? "white" : "gray"} />
-      </span>
     </Bar>
   );
 
