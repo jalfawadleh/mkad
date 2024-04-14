@@ -24,7 +24,7 @@ import map from "./modules/moduleMap.js";
 import { protectSocket } from "./middleware/authMiddleware.js";
 
 dotenv.config();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3011;
 const __dirname = path.resolve();
 
 connectDB();
