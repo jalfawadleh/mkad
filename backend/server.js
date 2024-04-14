@@ -13,7 +13,7 @@ import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
 
-import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+// import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import users from "./modules/moduleUsers.js";
 import members from "./modules/moduleMembers.js";
@@ -65,12 +65,13 @@ app.use("/api/organisations", organisations);
 app.use("/api/search", search);
 app.use("/api/map", map);
 
-// app.get("/", (req, res) =>
-//   res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
-// );
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.get("*", (req, res) =>
+  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
+);
 
 app.use(notFound);
-app.use(errorHandler);
+// app.use(errorHandler);
 // socket code ############################################
 const server = createServer(app);
 const io = new Server(server, {
