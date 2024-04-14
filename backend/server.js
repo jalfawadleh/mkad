@@ -53,7 +53,11 @@ app.use(
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
+      connectSrc: [
+        "'self'",
+        "https://nominatim.openstreetmap.org",
+        "https://demo.mkadifference.com",
+      ],
     },
   })
 );
@@ -73,10 +77,13 @@ app.get("*", (req, res) =>
 app.use(notFound);
 app.use(errorHandler);
 // socket code ############################################
+
 const server = createServer(app);
+
+/*
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://l:3000",
     methods: ["GET", "POST"],
     transports: ["websocket", "polling"],
     credentials: true,
@@ -138,6 +145,8 @@ io.on("connection", (socket) => {
     console.log("disconnected: user: ", socket.user.name);
   });
 });
+
+*/
 
 // starting the socket.io and express servers on the same port
 server.listen(port, () => console.log(`Server started on port ${port}`));
