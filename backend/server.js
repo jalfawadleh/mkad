@@ -82,7 +82,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://l:3000",
+    origin: "https://demo.mkadifference.com/",
     methods: ["GET", "POST"],
     transports: ["websocket", "polling"],
     credentials: true,
