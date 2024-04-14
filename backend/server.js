@@ -71,7 +71,7 @@ app.get("*", (req, res) =>
 );
 
 app.use(notFound);
-// app.use(errorHandler);
+app.use(errorHandler);
 // socket code ############################################
 const server = createServer(app);
 const io = new Server(server, {
