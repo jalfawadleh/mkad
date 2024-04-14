@@ -80,7 +80,6 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-/*
 const io = new Server(server, {
   cors: {
     origin: "https://l:3000",
@@ -145,8 +144,6 @@ io.on("connection", (socket) => {
     console.log("disconnected: user: ", socket.user.name);
   });
 });
-
-*/
 
 // starting the socket.io and express servers on the same port
 server.listen(port, () => console.log(`Server started on port ${port}`));
