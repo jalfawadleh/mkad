@@ -13,7 +13,7 @@ import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
 
-// import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
+import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 
 import users from "./modules/moduleUsers.js";
 import members from "./modules/moduleMembers.js";
