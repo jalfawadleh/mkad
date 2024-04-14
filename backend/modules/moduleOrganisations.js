@@ -67,7 +67,7 @@ const joinItem = asyncHandler(async (req, res) => {
       // [Error: Uh oh!]
     }
 
-    res.status(200).json(organisation);
+    res.status(200).json(organisation.members);
   } else {
     res.status(404);
     throw new Error("Organisation not found");

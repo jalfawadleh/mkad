@@ -59,7 +59,9 @@ const Organization = () => {
     try {
       await axios
         .get(`/organisations/join/${id}`)
-        .then((res) => setOrganisation(res.data))
+        .then((res) =>
+          setOrganisation((prev) => ({ ...prev, members: res.data }))
+        )
         .then(() => setIsJoining(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -81,15 +83,21 @@ const Organization = () => {
   const membersJoined = (
     <>
       {/* Join members list */}
-      <div className='d-flex justify-content-wrap p-0 m-1 ms-3'>
-        <LinkAvatarMember item={organisation} />
-        <span onClick={() => joinOrganisation()}>
+      <div className='d-inline-block p-0 m-1 ms-3'>
+        <div className='d-inline m-auto p-1'>Members</div>
+        <span
+          className='d-inline-block m-0 p-0'
+          onClick={() => joinOrganisation()}
+        >
           <IconButton>
             {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
           </IconButton>
         </span>
-        {organisation.members.map((m) => (
-          <LinkAvatarMember item={m} key={m._id} />
+
+        {organisation.members?.map((m) => (
+          <span className='d-inline' key={m._id}>
+            <LinkAvatarMember item={m} />
+          </span>
         ))}
       </div>
       <hr className='m-2' />
@@ -102,10 +110,10 @@ const Organization = () => {
       <div className='d-block p-0 m-1 ms-3'>
         <div className='d-inline m-auto p-1'>Activities</div>
         {organisation.activities.map((m) => (
-          <>
-            <LinkCircleActivity id={m._id} key={m._id} />
+          <span key={m._id}>
+            <LinkCircleActivity id={m._id} />
             <div className='d-inline m-auto p-1'>{m.name}</div>
-          </>
+          </span>
         ))}
       </div>
       <hr className='m-2' />
@@ -128,7 +136,7 @@ const Organization = () => {
           <IconCircleClose />
         </Wrapper.Header>
 
-        {organisationActivities}
+        {organisation.activities && organisationActivities}
         {membersJoined}
 
         <Wrapper.Body>
