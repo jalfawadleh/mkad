@@ -42,7 +42,7 @@ const ListManagedActivities = () => {
 
   return (
     <>
-      <div className='my-3'></div>
+      <div className='m-1'></div>
       <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <IconFold color={folded ? "white" : "gray"} />
