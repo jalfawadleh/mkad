@@ -32,26 +32,22 @@ const Discussion = () => {
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
 
-  const URL = "https://demo.mkadifference.com";
+  const URL = import.meta.env.PROD
+    ? "https://demo.mkadifference.com/"
+    : "http://localhost:3011/";
+
   const socket = io(URL, {
     autoConnect: true,
     extraHeaders: { authorization: user.token },
   });
 
   useEffect(() => {
-    socket.on("connect", function () {
-      // Connected, let's sign-up for to receive messages for this room
-      socket.emit("join", type, id);
-      console.log("User joined ", type, id);
-    });
+    // Connected, let's sign-up for to receive messages for this room
+    socket.on("connect", () => socket.emit("join", type, id));
 
-    socket.on("message", (message) => {
-      setMessages((previous) => [...previous, message]);
-    });
-
-    socket.on("disconnect", (reason) => {
-      console.log(`disconnected due to ${reason}`);
-    });
+    socket.on("message", (message) =>
+      setMessages((previous) => [...previous, message])
+    );
 
     return () => socket.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -144,5 +140,3 @@ const Discussion = () => {
 };
 
 export default Discussion;
-
-// https://gist.github.com/crtr0/2896891
