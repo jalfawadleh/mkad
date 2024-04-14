@@ -19,7 +19,7 @@ const HeaderTop = () => {
         <Link to='/dashboard' className='m-1 p-1 '>
           <div
             className=' m-auto p-auto rounded-circle bg-black'
-            style={{ width: 28, height: 28, boxShadow: "gold 0px 0px 5px 5px" }}
+            style={{ width: 28, height: 28, boxShadow: "gold 0px 0px 3px 3px" }}
           >
             <div className='m-auto p-auto'>
               <svg

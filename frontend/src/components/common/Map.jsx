@@ -21,7 +21,6 @@ import { UserContext } from "../../store";
 import { MapContext } from "../../store";
 
 import Header from "./Header";
-import HeaderTop from "./HeaderTop";
 
 const Map = () => {
   const { user } = useContext(UserContext);
@@ -218,7 +217,6 @@ const Map = () => {
             position: "absolute",
           }}
         >
-          <HeaderTop />
           <Outlet />
         </div>
 
