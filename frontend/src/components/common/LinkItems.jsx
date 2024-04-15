@@ -64,7 +64,7 @@ export const Box = ({ children }) => {
   );
 };
 
-export const BoxCenterText = ({ text }) => {
+export const TextCenterBox = ({ text }) => {
   return (
     <Box>
       <span className='h5 text-wrap'>{text}</span>

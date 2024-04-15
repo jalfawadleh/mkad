@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "../../store.js";
 
 import {
-  BoxCenterText,
+  TextCenterBox,
   IconButton,
   IconCircleClose,
   IconCirlceAccount,
@@ -84,7 +84,7 @@ function ManageAccount() {
         <Wrappers.Header>
           {/* icon title join and close */}
           <IconCirlceAccount />
-          <BoxCenterText text='Update Account' />
+          <TextCenterBox text='Update Account' />
           <IconCircleClose />
         </Wrappers.Header>
 

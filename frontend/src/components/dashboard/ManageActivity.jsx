@@ -6,7 +6,7 @@ import { UserContext } from "../../store.js";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  BoxCenterText,
+  TextCenterBox,
   IconButton,
   IconCircleActivity,
   IconCircleClose,
@@ -120,7 +120,7 @@ const ManageActivity = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           <IconCircleActivity />
-          <BoxCenterText text={activity.name} />
+          <TextCenterBox text={activity.name} />
           <IconCircleClose />
         </Wrappers.Header>
 

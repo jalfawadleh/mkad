@@ -5,20 +5,20 @@ import { toast } from "react-toastify";
 
 import {
   ListLinks,
-  IconActivity,
-  IconOrganisation,
   iconWrapperClass,
-  IconMember,
-  IconMessage,
-  IconUpdate,
-  IconFold,
-  IconFilter,
   IconSearch,
   IconExclamation,
-  IconLocation,
   IconSpin,
 } from "../components/common/LinkItems";
 import { Bar } from "../components/common/Wrappers";
+import {
+  ActivityCircle,
+  FoldCircle,
+  LocationCircle,
+  MembersCircle,
+  OrganisationCircle,
+  FilterCircle,
+} from "../components/common/Icons";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
@@ -39,16 +39,7 @@ const ScreenSearch = () => {
     updates: true,
     messages: true,
   });
-  const {
-    text,
-    filter,
-    locations,
-    organisations,
-    members,
-    activities,
-    messages,
-    updates,
-  } = query;
+  const { text, filter, locations, organisations, members, activities } = query;
 
   const getResults = async () => {
     if (text.length > 2) {
@@ -136,8 +127,8 @@ const ScreenSearch = () => {
   const topLayer = (
     <form onSubmit={onSubmit}>
       <Bar>
-        <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
-          <IconFold color={folded ? "white" : "gray"} />
+        <span onClick={() => setFolded(!folded)}>
+          <FoldCircle color={folded ? "white" : "gray"} />
         </span>
         <input
           size='sm'
@@ -149,12 +140,8 @@ const ScreenSearch = () => {
             setQuery((prev) => ({ ...prev, text: e.target.value }))
           }
         />
-        <span
-          className='p-1 m-1 badge rounded-pill border border-primary'
-          role='button'
-          onClick={() => toggleFilter()}
-        >
-          <IconFilter color={filter ? "white" : "gray"} />
+        <span role='button' onClick={() => toggleFilter()}>
+          <FilterCircle color={filter ? "white" : "gray"} />
         </span>
         <button
           type='submit'
@@ -173,34 +160,17 @@ const ScreenSearch = () => {
 
   const filtersBar = (
     <Bar>
-      <span
-        role='button'
-        className={iconWrapperClass}
-        onClick={() => toggleItem({ locations })}
-      >
-        <IconLocation color={locations ? "white" : "gray"} />
+      <span role='button' onClick={() => toggleItem({ locations })}>
+        <LocationCircle color={locations ? "white" : "gray"} />
       </span>
-      <span
-        role='button'
-        className={iconWrapperClass}
-        onClick={() => toggleItem({ activities })}
-      >
-        <IconActivity color={activities ? "white" : "gray"} />
+      <span role='button' onClick={() => toggleItem({ activities })}>
+        <ActivityCircle color={activities ? "white" : "gray"} />
       </span>
-      <span
-        className={iconWrapperClass}
-        role='button'
-        onClick={() => toggleItem({ organisations })}
-      >
-        <IconOrganisation color={organisations ? "white" : "gray"} />
+      <span role='button' onClick={() => toggleItem({ organisations })}>
+        <OrganisationCircle color={organisations ? "white" : "gray"} />
       </span>
-
-      <span
-        className='p-1 m-1 rounded-pill border border-primary'
-        role='button'
-        onClick={() => toggleItem({ members })}
-      >
-        <IconMember color={members ? "white" : "gray"} />
+      <span role='button' onClick={() => toggleItem({ members })}>
+        <MembersCircle color={members ? "white" : "gray"} />
       </span>
     </Bar>
   );

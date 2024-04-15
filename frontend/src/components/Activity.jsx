@@ -12,7 +12,7 @@ import {
   IconCircleClose,
   IconSpin,
   IconLoading,
-  BoxCenterText,
+  TextCenterBox,
 } from "./common/LinkItems.jsx";
 
 import Wrappers from "./common/Wrappers.jsx";
@@ -25,8 +25,8 @@ import ManageHelp from "./common/ManageHelp.jsx";
 import ManageOnline from "./common/ManageOnline.jsx";
 
 import {
-  LinkCircleDiscusstion,
-  LinkCircleOrganisation,
+  DiscusstionCircleLink,
+  OrganisationCircleLink,
 } from "./common/Icons.jsx";
 
 const Activity = () => {
@@ -86,7 +86,7 @@ const Activity = () => {
   const joinSection = (
     <>
       <div className='d-flex justify-content-wrap p-1 m-1'>
-        <LinkCircleOrganisation id={activity.createdBy._id} />
+        <OrganisationCircleLink id={activity.createdBy._id} />
         <div className='d-inline-block mt-2 text-center'>
           {activity.createdBy.name}
         </div>
@@ -110,8 +110,8 @@ const Activity = () => {
         <Wrappers.Header>
           {/* icon title join and close */}
           <IconCircleActivity />
-          <BoxCenterText text={activity.name} />
-          <LinkCircleDiscusstion
+          <TextCenterBox text={activity.name} />
+          <DiscusstionCircleLink
             type='activity'
             id={activity._id}
             name={activity.name}

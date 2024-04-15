@@ -1,17 +1,17 @@
 import {
-  BoxCenterText,
+  TextCenterBox,
   IconCircleClose,
   IconCircleHelp,
   LinkButtoneBack,
-} from "./common/LinkItems";
-import Wrappers from "./common/Wrappers.jsx";
+} from "../common/LinkItems.jsx";
+import Wrappers from "../common/Wrappers.jsx";
 
-function Help() {
+function Updates() {
   return (
     <Wrappers.Modal>
       <Wrappers.Header>
         <IconCircleHelp />
-        <BoxCenterText text='Help' />
+        <TextCenterBox text='Help' />
         <IconCircleClose />
       </Wrappers.Header>
 
@@ -26,4 +26,4 @@ function Help() {
   );
 }
 
-export default Help;
+export default Updates;

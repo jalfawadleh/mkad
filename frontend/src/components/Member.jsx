@@ -11,15 +11,15 @@ import ManageHelp from "./common/ManageHelp.jsx";
 
 import {
   AvatarMember,
-  BoxCenterText,
+  TextCenterBox,
   IconCircleClose,
   IconLoading,
 } from "./common/LinkItems.jsx";
 import Wrappers, { Section } from "./common/Wrappers.jsx";
 import {
-  LinkCircleActivity,
-  LinkCircleDiscusstion,
-  LinkCircleOrganisation,
+  ActivityCircleLink,
+  DiscusstionCircleLink,
+  OrganisationCircleLink,
 } from "./common/Icons.jsx";
 
 const MemberOrganisations = ({ organisations = [] }) => {
@@ -32,7 +32,7 @@ const MemberOrganisations = ({ organisations = [] }) => {
           </div>
           {organisations.map((o) => (
             <span key={o._id}>
-              <LinkCircleOrganisation id={o._id} />
+              <OrganisationCircleLink id={o._id} />
               <div className='d-inline me-2'>{o.name}</div>
             </span>
           ))}
@@ -53,7 +53,7 @@ const MemberActivities = ({ activities = [] }) => {
           </div>
           {activities.map((a) => (
             <span key={a._id}>
-              <LinkCircleActivity id={a._id} color='white' />
+              <ActivityCircleLink id={a._id} color='white' />
               <div className='d-inline me-2'>{a.name}</div>
             </span>
           ))}
@@ -103,8 +103,8 @@ function Member() {
         {/* icon itemName closeButton */}
         <Wrappers.Header>
           <AvatarMember name={member.name} />
-          <BoxCenterText text={member.name} />
-          <LinkCircleDiscusstion
+          <TextCenterBox text={member.name} />
+          <DiscusstionCircleLink
             type='member'
             id={member._id}
             name={member.name}

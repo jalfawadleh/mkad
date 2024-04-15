@@ -10,13 +10,15 @@ import { UserContext } from "../store";
 import { Link, useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
-  BoxCenterText,
-  CircleActivity,
-  CircleDiscusstion,
-  CircleOrganisation,
-  LinkCircleClose,
+  TextCenterBox,
+  ActivityCircle,
+  DiscusstionCircle,
+  OrganisationCircle,
+  CloseCircleLink,
   Member,
+  Avatar,
 } from "./common/Icons";
+import { AiFillVideoCamera } from "react-icons/ai";
 
 /**
  * Languages component.
@@ -85,9 +87,9 @@ const Discussion = () => {
 
   const iconType = (
     <>
-      {type == "organisation" && <CircleOrganisation />}
-      {type == "activity" && <CircleActivity />}
-      {type == "member" && <Member name={name} />}
+      {type == "organisation" && <OrganisationCircle />}
+      {type == "activity" && <ActivityCircle />}
+      {type == "member" && <Avatar name={name} />}
     </>
   );
 
@@ -96,9 +98,9 @@ const Discussion = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           {iconType}
-          <CircleDiscusstion color='white' />
+          <DiscusstionCircle color='white' />
           <BoxCenterHeader>{name}</BoxCenterHeader>
-          <LinkCircleClose />
+          <CloseCircleLink />
         </Wrappers.Header>
 
         <Wrappers.Body>

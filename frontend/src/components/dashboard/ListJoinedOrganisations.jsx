@@ -12,7 +12,7 @@ import {
   // IconLoading,
 } from "../common/LinkItems";
 import { Bar } from "../common/Wrappers";
-import { LinkCircleDiscusstion } from "../common/Icons";
+import { DiscusstionCircleLink } from "../common/Icons";
 
 const ListJoinedOrganisations = () => {
   const location = useLocation();
@@ -53,7 +53,7 @@ const ListJoinedOrganisations = () => {
       <Bar key={item._id}>
         <LinkCircleIconOrganisation item={item} />
         <LinkText item={item} />
-        <LinkCircleDiscusstion
+        <DiscusstionCircleLink
           type='organisation'
           id={item._id}
           name={item.name}

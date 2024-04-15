@@ -7,7 +7,7 @@ import { MapContext, UserContext } from "../../store.js";
 
 import {
   AvatarMember,
-  BoxCenterText,
+  TextCenterBox,
   IconButton,
   IconCircleClose,
   IconLoading,
@@ -93,7 +93,7 @@ function ManageMember() {
       {/* icon itemName closeButton */}
       <Wrappers.Header>
         <AvatarMember name={member.name} />
-        <BoxCenterText text={member.name} />
+        <TextCenterBox text={member.name} />
         <IconCircleClose />
       </Wrappers.Header>
 

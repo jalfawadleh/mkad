@@ -1,16 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { FaRegEnvelope } from "react-icons/fa6";
+import { FaLocationCrosshairs, FaRegEnvelope } from "react-icons/fa6";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { FaHandshakeSimple } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { FaHouseUser } from "react-icons/fa";
+import { FaBell, FaHouseUser, FaQuestion } from "react-icons/fa";
 import { BiSolidFlag } from "react-icons/bi";
-
+import { FaUsers } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa";
 import multiavatar from "@multiavatar/multiavatar/esm";
+import { MdTune } from "react-icons/md";
+import { MapContext } from "../../store";
 
 export const Empty = () => {
-  return <div className='p-1 m-1' style={{ width: 35 }} />;
+  return <div className='p-1 m-1' style={{ width: 35, height: 24 }} />;
 };
 
 export const Circle = ({ children }) => {
@@ -58,7 +61,7 @@ export const CenterText = ({ children }) => {
   );
 };
 
-export const BoxCenterText = ({ children }) => {
+export const TextCenterBox = ({ children }) => {
   return (
     <Box>
       <CenterText> {children} </CenterText>
@@ -94,10 +97,14 @@ export const Online = ({ online }) => {
   );
 };
 
-export const CircleFold = ({ color = "gray" }) => {
+export const Fold = ({ color = "gray" }) => {
+  return <RiArrowUpDownFill color={color} size={24} />;
+};
+
+export const FoldCircle = ({ color = "gray" }) => {
   return (
     <Circle>
-      <RiArrowUpDownFill color={color} size={24} />
+      <Fold color={color} size={24} />
     </Circle>
   );
 };
@@ -112,31 +119,55 @@ export const Button = ({ children }) => {
   );
 };
 
-export const CircleDiscusstion = ({ color = "gray" }) => {
+export const Members = ({ color = "gray" }) => {
+  return <FaUsers color={color} size={24} />;
+};
+
+export const MembersCircle = ({ color = "gray" }) => {
   return (
     <Circle>
-      <FaHandshakeSimple color={color} size={24} />
+      <Members color={color} />
     </Circle>
   );
 };
 
-export const LinkCircleDiscusstion = ({ type, id, name, color = "gray" }) => {
+export const Discusstion = ({ color = "gray" }) => {
+  return <FaHandshakeSimple color={color} size={24} />;
+};
+
+export const DiscusstionCircle = ({ color = "gray" }) => {
+  return (
+    <Circle>
+      <Discusstion color={color} />
+    </Circle>
+  );
+};
+
+export const DiscusstionCircleLink = ({ type, id, name, color = "gray" }) => {
   return (
     <Link to={`/discussion/${type}/${id}/${name}`}>
-      <Circle>
-        <FaHandshakeSimple color={color} size={24} />
-      </Circle>
+      <DiscusstionCircle color={color} />
     </Link>
   );
 };
 
-export const LinkCircleClose = () => {
+export const Close = ({ color = "white" }) => {
+  return <AiOutlineClose color={color} size={24} />;
+};
+
+export const CloseCircle = ({ color = "white" }) => {
   return (
     <Circle>
-      <Link to={-1}>
-        <AiOutlineClose color='white' size={24} />
-      </Link>
+      <Close color={color} />
     </Circle>
+  );
+};
+
+export const CloseCircleLink = ({ color = "white" }) => {
+  return (
+    <Link to={-1}>
+      <CloseCircle color={color} />
+    </Link>
   );
 };
 
@@ -144,7 +175,7 @@ export const Organisation = ({ color = "white" }) => {
   return <FaHouseUser color={color} size={24} />;
 };
 
-export const CircleOrganisation = ({ color = "white" }) => {
+export const OrganisationCircle = ({ color = "white" }) => {
   return (
     <Circle>
       <Organisation color={color} />
@@ -152,12 +183,10 @@ export const CircleOrganisation = ({ color = "white" }) => {
   );
 };
 
-export const LinkCircleOrganisation = ({ id }) => {
+export const OrganisationCircleLink = ({ color = "white", id }) => {
   return (
     <Link to={"/organisation/" + id}>
-      <Circle>
-        <Organisation color={"white"} />
-      </Circle>
+      <OrganisationCircle color={color} />
     </Link>
   );
 };
@@ -166,7 +195,7 @@ export const Activity = ({ color = "white" }) => {
   return <BiSolidFlag color={color} size={24} />;
 };
 
-export const CircleActivity = ({ color = "white" }) => {
+export const ActivityCircle = ({ color = "white" }) => {
   return (
     <Circle>
       <Activity color={color} />
@@ -174,17 +203,15 @@ export const CircleActivity = ({ color = "white" }) => {
   );
 };
 
-export const LinkCircleActivity = ({ id }) => {
+export const ActivityCircleLink = ({ id, color = "white" }) => {
   return (
     <Link to={"/activity/" + id}>
-      <Circle>
-        <BiSolidFlag color={"white"} size={24} />
-      </Circle>
+      <ActivityCircle color={color} />
     </Link>
   );
 };
 
-export const Member = ({ name = "na" }) => {
+export const Avatar = ({ name = "na" }) => {
   return (
     <img
       height={34}
@@ -196,21 +223,163 @@ export const Member = ({ name = "na" }) => {
   );
 };
 
+export const AvatarLink = ({ name = "na", id }) => {
+  return (
+    <Link to={"/member/" + id}>
+      <Avatar name={name} />
+    </Link>
+  );
+};
+
+export const Member = ({ color = "white" }) => {
+  return <FaUser color={color} size={24} />;
+};
+
+export const MemberCircle = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Member color={color} />
+    </Circle>
+  );
+};
+
+export const MemberCircleLink = ({ id, color = "white" }) => {
+  return (
+    <Link to={"/member/" + id}>
+      <Circle>
+        <Member color={color} />
+      </Circle>
+    </Link>
+  );
+};
+
+export const Help = ({ color = "white" }) => {
+  return <FaQuestion color={color} size={24} />;
+};
+
+export const HelpCircle = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Help color={color} />
+    </Circle>
+  );
+};
+
+export const HelpCircleLink = ({ to = "/help", color = "white" }) => {
+  return (
+    <Link to={to}>
+      <HelpCircle color={color} />
+    </Link>
+  );
+};
+
+export const Updates = ({ color = "white" }) => {
+  return <FaBell color={color} size={24} />;
+};
+
+export const UpdatesCircle = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Updates color={color} />
+    </Circle>
+  );
+};
+
+export const UpdatesCircleLink = ({
+  to = "/help/updates",
+  color = "white",
+}) => {
+  return (
+    <Link to={to}>
+      <UpdatesCircle color={color} size={24} />
+    </Link>
+  );
+};
+
+export const Location = ({ color }) => {
+  return <FaLocationCrosshairs color={color} size={24} />;
+};
+
+export const LocationCircle = ({ color }) => {
+  return (
+    <Circle>
+      <Location color={color} />
+    </Circle>
+  );
+};
+
+export const LocationCircleLink = ({ color, location }) => {
+  const { setFlyToLocation } = useContext(MapContext);
+  return (
+    <span role='button' onClick={() => setFlyToLocation(location)}>
+      <LocationCircle color={color} />
+    </span>
+  );
+};
+
+export const Filter = ({ color = color }) => {
+  return <MdTune color={color} size={24} />;
+};
+
+export const FilterCircle = ({ color = color }) => {
+  return (
+    <Circle>
+      <MdTune color={color} size={24} />
+    </Circle>
+  );
+};
+
 const Icons = {
   Delete,
   CircleMessage,
   CenterText,
   Empty,
   Online,
-  CircleFold,
-  LinkCircleDiscusstion,
-  CircleDiscusstion,
-  LinkCircleClose,
-  BoxCenterText,
-  Organisation,
-  CircleOrganisation,
-  LinkCircleOrganisation,
-  CircleActivity,
+
+  Close,
+  CloseCircle,
+  CloseCircleLink,
+
+  TextCenterBox,
+
+  Filter,
+  FilterCircle,
+
+  Location,
+  LocationCircle,
+  LocationCircleLink,
+
+  Fold,
+  FoldCircle,
+
+  Help,
+  HelpCircle,
+  HelpCircleLink,
+
+  Avatar,
+  AvatarLink,
+
   Member,
+  MemberCircle,
+  MemberCircleLink,
+
+  Members,
+  MembersCircle,
+
+  Discusstion,
+  DiscusstionCircle,
+  DiscusstionCircleLink,
+
+  Organisation,
+  OrganisationCircle,
+  OrganisationCircleLink,
+
+  Activity,
+  ActivityCircle,
+  ActivityCircleLink,
+
+  Updates,
+  UpdatesCircle,
+  UpdatesCircleLink,
 };
 export default Icons;

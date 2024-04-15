@@ -10,7 +10,7 @@ import {
   IconButton,
   IconCircleClose,
   CircleIconOrganisation,
-  BoxCenterText,
+  TextCenterBox,
   IconLoading,
   IconSpin,
 } from "./common/LinkItems.jsx";
@@ -20,7 +20,7 @@ import ManageDescription from "./common/ManageDescription.jsx";
 import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
-import { LinkCircleActivity, LinkCircleDiscusstion } from "./common/Icons.jsx";
+import { ActivityCircleLink, DiscusstionCircleLink } from "./common/Icons.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -111,7 +111,7 @@ const Organization = () => {
         <div className='d-inline m-auto p-1'>Activities</div>
         {organisation.activities.map((m) => (
           <span key={m._id}>
-            <LinkCircleActivity id={m._id} />
+            <ActivityCircleLink id={m._id} />
             <div className='d-inline m-auto p-1'>{m.name}</div>
           </span>
         ))}
@@ -126,8 +126,8 @@ const Organization = () => {
         {/* icon itemName closeButton */}
         <Wrapper.Header>
           <CircleIconOrganisation />
-          <BoxCenterText text={organisation.name} />
-          <LinkCircleDiscusstion
+          <TextCenterBox text={organisation.name} />
+          <DiscusstionCircleLink
             type='organisation'
             id={organisation._id}
             name={organisation.name}
