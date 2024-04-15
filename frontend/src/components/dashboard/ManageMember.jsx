@@ -100,9 +100,11 @@ function ManageMember() {
 
       <Wrappers.Body>
         <SectionForm>
-          <div className='text-center mb-2'>
-            Your Profile Avatar is based on your name
-          </div>
+          {editing && (
+            <div className='text-center mb-2'>
+              Your Profile Avatar is based on your name
+            </div>
+          )}
         </SectionForm>
         <ManageName
           name={member.name}
