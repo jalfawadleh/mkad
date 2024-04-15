@@ -2,7 +2,6 @@ import { UserContext } from "../../store.js";
 import { useContext } from "react";
 import {
   AvatarCustomLink,
-  HelpCircleLink,
   LocationCircleLink,
   MKaDifferenceCircleLink,
   SearchCircleLink,
@@ -14,10 +13,9 @@ const Header = () => {
   const headerLinks = (
     <>
       <LocationCircleLink location={user.location} />
-      <HelpCircleLink />
-      <AvatarCustomLink name={user.name} />
+      <MKaDifferenceCircleLink to='/help' />
       <SearchCircleLink />
-      <MKaDifferenceCircleLink />
+      <AvatarCustomLink name={user.name} to='/' />
     </>
   );
 

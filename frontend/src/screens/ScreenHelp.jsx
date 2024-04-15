@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Bar } from "../components/common/Wrappers";
 import {
-  HelpCircle,
   UpdatesCircle,
   Empty,
-  MembersCircle,
   MemberCircle,
+  MKaDifferenceCircle,
+  OrganisationCircle,
+  ActivityCircle,
 } from "../components/common/Icons";
 
 const ScreenHelp = () => {
@@ -25,18 +26,22 @@ const ScreenHelp = () => {
   return (
     <>
       <Bar>
-        <HelpCircle />
-        <div className='p-auto m-auto text-center'>Help Topics</div>
+        <MKaDifferenceCircle />
+        <div className='p-auto m-auto text-center fw-bold'>MKaδifference</div>
         <Empty />
       </Bar>
       <Bar>
-        <MembersCircle color='white' />
-        <div className='p-auto m-auto text-center'>Members Count: {count}</div>
+        <MemberCircle />
+        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
+        <OrganisationCircle />
+        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
+        <ActivityCircle />
+        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
         <Empty />
       </Bar>
       <Bar>
         <MemberCircle color='white' />
-        <div className='p-auto m-auto text-center'>New Member</div>
+        <div className='p-auto m-auto text-center'>For New Members</div>
         <Empty />
       </Bar>
       <Bar>

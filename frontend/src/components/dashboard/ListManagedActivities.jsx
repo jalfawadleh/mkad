@@ -8,6 +8,7 @@ import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
   AddActivityCircleLink,
+  AvatarCustomLink,
   ExclamationCircle,
   FoldCircle,
   LocationCircleLink,
@@ -44,7 +45,8 @@ const ListManagedActivities = () => {
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <FoldCircle color={folded ? "white" : "gray"} />
         </span>
-        <div className='p-auto m-auto text-center'>Managed Activities</div>
+        <AvatarCustomLink name={user.name} />
+        <div className='p-auto m-auto text-center'> Manage Activities</div>
         {user.type === "organisation" && <AddActivityCircleLink />}
       </Bar>
 
