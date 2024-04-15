@@ -169,7 +169,7 @@ export const AddCircle = ({ color = "white" }) => {
   );
 };
 
-export const AddCircleLink = ({
+export const AddActivityCircleLink = ({
   color = "white",
   to = "/manage/activity/new",
 }) => {

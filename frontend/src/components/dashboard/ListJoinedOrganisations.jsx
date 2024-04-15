@@ -2,17 +2,15 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
-import {
-  Icon,
-  IconExclamation,
-  IconFold,
-  IconLinkCircleFlyTo,
-  LinkCircleIconOrganisation,
-  // IconLoading,
-} from "../common/LinkItems";
 import { Bar } from "../common/Wrappers";
-import { DiscusstionCircleLink } from "../common/Icons";
+import {
+  DiscusstionCircleLink,
+  Empty,
+  ExclamationCircle,
+  FoldCircle,
+  LocationCircleLink,
+  OrganisationCircleLink,
+} from "../common/Icons";
 
 const ListJoinedOrganisations = () => {
   const location = useLocation();
@@ -51,7 +49,7 @@ const ListJoinedOrganisations = () => {
   const ListItems = ({ items }) => {
     return items.map((item) => (
       <Bar key={item._id}>
-        <LinkCircleIconOrganisation item={item} />
+        <OrganisationCircleLink id={item._id} />
         <LinkText item={item} />
         <DiscusstionCircleLink
           type='organisation'
@@ -59,20 +57,20 @@ const ListJoinedOrganisations = () => {
           name={item.name}
           color='white'
         />
-        <IconLinkCircleFlyTo location={item.location} />
+        <LocationCircleLink location={item.location} />
       </Bar>
     ));
   };
 
   return (
     <>
-      <div className='my-3'></div>
+      <div className='my-2'></div>
       <Bar>
-        <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
-          <IconFold color={folded ? "white" : "gray"} />
+        <span onClick={() => setFolded(!folded)}>
+          <FoldCircle color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Joined Organisatoins</div>
-        <div className='p-1 m-1' style={{ width: 35 }}></div>
+        <Empty />
       </Bar>
 
       {!folded &&
@@ -80,9 +78,7 @@ const ListJoinedOrganisations = () => {
           <ListItems items={items} />
         ) : (
           <Bar>
-            <Icon>
-              <IconExclamation color='white' />
-            </Icon>
+            <ExclamationCircle color='white' />
             <span className='p-auto m-auto'>No Organisations Joined</span>
           </Bar>
         ))}

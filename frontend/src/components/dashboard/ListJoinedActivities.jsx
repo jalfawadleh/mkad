@@ -2,17 +2,16 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import {
-  Icon,
-  IconExclamation,
-  IconFold,
-  IconLinkCircleFlyTo,
-  LinkCircleIconActivity,
-  // IconLoading,
-} from "../common/LinkItems";
 
 import { Bar } from "../common/Wrappers";
-import { DiscusstionCircleLink } from "../common/Icons";
+import {
+  ActivityCircleLink,
+  DiscusstionCircleLink,
+  Empty,
+  ExclamationCircle,
+  FoldCircle,
+  LocationCircleLink,
+} from "../common/Icons";
 
 const ListJoinedActivities = () => {
   const location = useLocation();
@@ -50,20 +49,20 @@ const ListJoinedActivities = () => {
 
   return (
     <>
-      <div className='my-3'></div>
+      <div className='my-2'></div>
       <Bar>
-        <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
-          <IconFold color={folded ? "white" : "gray"} />
+        <span onClick={() => setFolded(!folded)}>
+          <FoldCircle color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Joined Activities </div>
-        <div className='p-1 m-1' style={{ width: 35 }}></div>
+        <Empty />
       </Bar>
 
       {!folded &&
         (items.length ? (
           items.map((item) => (
             <Bar key={item._id}>
-              <LinkCircleIconActivity item={item} />
+              <ActivityCircleLink id={item._id} />
               <LinkText item={item} />
               <DiscusstionCircleLink
                 type='organisation'
@@ -71,19 +70,15 @@ const ListJoinedActivities = () => {
                 name={item.id}
                 color='white'
               />
-              <IconLinkCircleFlyTo location={item.location} />
+              <LocationCircleLink location={item.location} />
             </Bar>
           ))
         ) : (
           <Bar>
-            <Icon>
-              <IconExclamation color='white' />
-            </Icon>
+            <ExclamationCircle color='white' />
             <span className='p-auto m-auto'>No Activities Joined</span>
           </Bar>
         ))}
-
-      {/* {isLoading && <IconLoading />} */}
     </>
   );
 };

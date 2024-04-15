@@ -4,17 +4,14 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../store";
 
-import {
-  Icon,
-  IconExclamation,
-  IconFold,
-  IconLinkCircleFlyTo,
-  LinkCircleIconActivity,
-  // IconLoading,
-  IconAddLink,
-} from "../common/LinkItems";
-
 import { Bar } from "../common/Wrappers";
+import {
+  ActivityCircleLink,
+  AddActivityCircleLink,
+  ExclamationCircle,
+  FoldCircle,
+  LocationCircleLink,
+} from "../common/Icons";
 
 const ListManagedActivities = () => {
   const location = useLocation();
@@ -45,31 +42,29 @@ const ListManagedActivities = () => {
       <div className='m-1'></div>
       <Bar>
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
-          <IconFold color={folded ? "white" : "gray"} />
+          <FoldCircle color={folded ? "white" : "gray"} />
         </span>
         <div className='p-auto m-auto text-center'>Managed Activities</div>
-        {user.type === "organisation" && <IconAddLink />}
+        {user.type === "organisation" && <AddActivityCircleLink />}
       </Bar>
 
       {!folded &&
         (items.length ? (
           items.map((item) => (
             <Bar key={item._id}>
-              <LinkCircleIconActivity item={item} />
+              <ActivityCircleLink id={item._id} />
               <Link
                 to={"/manage/activity/" + item._id}
                 className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
               >
                 {item.name}
               </Link>
-              <IconLinkCircleFlyTo location={item.location} />
+              <LocationCircleLink location={item.location} />
             </Bar>
           ))
         ) : (
           <Bar>
-            <Icon>
-              <IconExclamation color='white' />
-            </Icon>
+            <ExclamationCircle color='white' />
             <span className='p-auto m-auto'>No Activities Joined</span>
           </Bar>
         ))}
