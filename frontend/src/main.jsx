@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App.jsx";
 
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
+import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 import ScreenSearch from "./screens/ScreenSearch.jsx";
@@ -35,8 +36,10 @@ const router = createBrowserRouter(
           <Route path='organisation/:id' element={<Organisation />} />
           <Route path='manage/member' element={<ManageMember />} />
           <Route path='manage/account' element={<ManageAccount />} />
-          <Route path='manage/activity/:id' element={<ManageActivity />} />
-          <Route path='manage/activity/new' element={<ManageActivity />} />
+          <Route path='' element={<RouteOrganisation />}>
+            <Route path='manage/activity/:id' element={<ManageActivity />} />
+            <Route path='manage/activity/new' element={<ManageActivity />} />
+          </Route>
         </Route>
 
         <Route path='discussion/:type/:id/:name' element={<Discussion />} />
