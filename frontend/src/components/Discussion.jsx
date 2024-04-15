@@ -54,13 +54,12 @@ const Discussion = () => {
   const send = () => {
     const element = document.getElementById("content");
     const content = element.value;
-    const message = { content, name: user.name, _id: user._id };
-    // if (content) {
-    //   setMessages((prev) => [...prev, { ...message }]);
-    //   socket.emit("message", message);
-    //   element.value = "";
-    // }
-    socket.emit("message", message);
+
+    if (content) {
+      const message = { content, name: user.name, _id: user._id };
+      socket.emit("message", message);
+      element.value = "";
+    }
   };
 
   const iconType = (
