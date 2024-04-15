@@ -27,10 +27,12 @@ export const Empty = () => {
   return <div className='p-1 m-1' style={{ width: 35, height: 24 }} />;
 };
 
-export const Circle = ({ children }) => {
+export const Circle = ({ children, borderColor = "primary" }) => {
   return (
     <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
+      className={
+        "p-1 m-1 badge rounded-pill border border-2 border-" + borderColor
+      }
       role='button'
     >
       {children}
@@ -148,7 +150,7 @@ export const Discusstion = ({ color = "white" }) => {
 
 export const DiscusstionCircle = ({ color = "white" }) => {
   return (
-    <Circle>
+    <Circle borderColor='info'>
       <Discusstion color={color} />
     </Circle>
   );
@@ -162,14 +164,14 @@ export const DiscusstionCircleLink = ({ type, id, name, color = "white" }) => {
   );
 };
 
-export const Add = ({ color = "white" }) => {
+export const AddActivity = ({ color = "white" }) => {
   return <FaPlus color={color} size={24} />;
 };
 
-export const AddCircle = ({ color = "white" }) => {
+export const AddActivityCircle = ({ color = "white" }) => {
   return (
-    <Circle>
-      <Add color={color} />
+    <Circle borderColor='success'>
+      <AddActivity color={color} />
     </Circle>
   );
 };
@@ -177,7 +179,7 @@ export const AddCircle = ({ color = "white" }) => {
 export const AddActivityCircleLink = ({ color = "white" }) => {
   return (
     <Link to='/manage/activity/new'>
-      <AddCircle color={color} />
+      <AddActivityCircle color={color} />
     </Link>
   );
 };
@@ -208,7 +210,7 @@ export const Organisation = ({ color = "white" }) => {
 
 export const OrganisationCircle = ({ color = "white" }) => {
   return (
-    <Circle>
+    <Circle borderColor='warning'>
       <Organisation color={color} />
     </Circle>
   );
@@ -228,7 +230,7 @@ export const Activity = ({ color = "white" }) => {
 
 export const ActivityCircle = ({ color = "white" }) => {
   return (
-    <Circle>
+    <Circle borderColor='success'>
       <Activity color={color} />
     </Circle>
   );
