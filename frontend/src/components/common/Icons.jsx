@@ -256,7 +256,7 @@ export const Avatar = ({ name = "na" }) => {
 
 export const AvatarLink = ({ name = "na", id }) => {
   return (
-    <Link to={"member/" + id}>
+    <Link to={"/member/" + id}>
       <Avatar name={name} />
     </Link>
   );
