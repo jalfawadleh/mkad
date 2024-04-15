@@ -83,15 +83,17 @@ const Organization = () => {
   const membersJoined = (
     <>
       {/* Join members list */}
-      <div className='d-inline-block p-0 m-1 ms-3'>
+      <div className='d-inline-block p-0 m-0 ms-3'>
         <div className='d-inline m-auto p-1'>Members</div>
         <span
-          className='d-inline-block m-0 p-0'
+          className='d-inline-block m-0 p-1'
           onClick={() => joinOrganisation()}
         >
-          <IconButton>
-            {isJoining ? <SpinnerCircle /> : isMember ? "Leave" : "Join"}
-          </IconButton>
+          {isJoining ? (
+            <SpinnerCircle />
+          ) : (
+            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+          )}
         </span>
 
         {organisation.members?.map((m) => (

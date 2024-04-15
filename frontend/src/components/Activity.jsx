@@ -87,11 +87,14 @@ const Activity = () => {
           {activity.createdBy.name}
         </div>
 
-        <span onClick={() => onJoin()}>
-          <IconButton>
-            {isJoining ? <SpinnerCircle /> : isMember ? "Leave" : "Join"}
-          </IconButton>
-        </span>
+        {isJoining ? (
+          <SpinnerCircle />
+        ) : (
+          <span onClick={() => onJoin()}>
+            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+          </span>
+        )}
+
         {activity.members.map((m) => (
           <AvatarLink name={m.name} id={m._id} key={m._id} />
         ))}
