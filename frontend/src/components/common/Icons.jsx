@@ -164,17 +164,14 @@ export const Add = ({ color = "white" }) => {
 export const AddCircle = ({ color = "white" }) => {
   return (
     <Circle>
-      <AddCircle color={color} />
+      <Add color={color} />
     </Circle>
   );
 };
 
-export const AddActivityCircleLink = ({
-  color = "white",
-  to = "/manage/activity/new",
-}) => {
+export const AddActivityCircleLink = ({ color = "white" }) => {
   return (
-    <Link to={to}>
+    <Link to='/manage/activity/new'>
       <AddCircle color={color} />
     </Link>
   );

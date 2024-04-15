@@ -52,14 +52,14 @@ const ListManagedActivities = () => {
         (items.length ? (
           items.map((item) => (
             <Bar key={item._id}>
-              <ActivityCircleLink id={item._id} />
+              <ActivityCircleLink id={item._id} color='white' />
               <Link
                 to={"/manage/activity/" + item._id}
                 className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
               >
                 {item.name}
               </Link>
-              <LocationCircleLink location={item.location} />
+              <LocationCircleLink color={"white"} location={item.location} />
             </Bar>
           ))
         ) : (
@@ -68,8 +68,6 @@ const ListManagedActivities = () => {
             <span className='p-auto m-auto'>No Activities Joined</span>
           </Bar>
         ))}
-
-      {/* {isLoading && <IconLoading />} */}
     </>
   );
 };
