@@ -67,7 +67,7 @@ const ListJoinedActivities = () => {
               <DiscusstionCircleLink
                 type='organisation'
                 id={item._id}
-                name={item.id}
+                name={item.name}
                 color='white'
               />
               <LocationCircleLink location={item.location} />
