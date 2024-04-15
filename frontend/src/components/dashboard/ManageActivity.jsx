@@ -8,10 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   TextCenterBox,
   IconButton,
-  IconCircleActivity,
-  IconCircleClose,
   IconLoading,
-  IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 
@@ -25,6 +22,11 @@ import ManageOnline from "../common/ManageOnline.jsx";
 import ManageLocation from "../common/ManageLocation.jsx";
 import ManageInterests from "../common/ManageInterests.jsx";
 import Wrappers from "../common/Wrappers.jsx";
+import {
+  ActivityCircle,
+  CloseCircleLink,
+  SpinnerCircle,
+} from "../common/Icons.jsx";
 
 const ManageActivity = () => {
   const { id } = useParams();
@@ -119,9 +121,9 @@ const ManageActivity = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          <IconCircleActivity />
+          <ActivityCircle />
           <TextCenterBox text={activity.name} />
-          <IconCircleClose />
+          <CloseCircleLink />
         </Wrappers.Header>
 
         <Wrappers.Body>
@@ -193,7 +195,9 @@ const ManageActivity = () => {
                 <IconButton>View</IconButton>
               </span>
               <span onClick={onPut}>
-                <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
+                <IconButton>
+                  {isUpdating ? <SpinnerCircle /> : "Update"}
+                </IconButton>
               </span>
               <span onClick={onDelete}>
                 <IconButton>Delete</IconButton>

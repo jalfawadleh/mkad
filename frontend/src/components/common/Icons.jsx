@@ -211,7 +211,7 @@ export const OrganisationCircle = ({ color = "white" }) => {
 
 export const OrganisationCircleLink = ({ color = "white", id }) => {
   return (
-    <Link to={"/organisation/" + id}>
+    <Link to={"organisation/" + id}>
       <OrganisationCircle color={color} />
     </Link>
   );
@@ -231,7 +231,7 @@ export const ActivityCircle = ({ color = "white" }) => {
 
 export const ActivityCircleLink = ({ id, color = "white" }) => {
   return (
-    <Link to={"/activity/" + id}>
+    <Link to={"activity/" + id}>
       <ActivityCircle color={color} />
     </Link>
   );
@@ -251,7 +251,7 @@ export const Avatar = ({ name = "na" }) => {
 
 export const AvatarLink = ({ name = "na", id }) => {
   return (
-    <Link to={"/member/" + id}>
+    <Link to={"member/" + id}>
       <Avatar name={name} />
     </Link>
   );
@@ -279,7 +279,7 @@ export const MemberCircle = ({ color = "white" }) => {
 
 export const MemberCircleLink = ({ id, color = "white" }) => {
   return (
-    <Link to={"/member/" + id}>
+    <Link to={"member/" + id}>
       <Circle>
         <Member color={color} />
       </Circle>

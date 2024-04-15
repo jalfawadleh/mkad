@@ -87,10 +87,6 @@ export const IconCircleClose = () => {
   );
 };
 
-export const IconMessage = ({ color = iconColor }) => {
-  return <FaEnvelope color={color} size={iconSize} className={iconClass} />;
-};
-
 export const IconUpdate = ({ color = iconColor }) => {
   return <FaBell color={color} size={iconSize} className={iconClass} />;
 };
@@ -236,24 +232,6 @@ export const AvatarMember = ({ name = "na" }) => {
   );
 };
 
-export const LinkAvatarMember = ({ item }) => {
-  return (
-    <Link
-      className='link-underline link-underline-opacity-0 p-0 m-1'
-      to={"/member/" + item._id}
-    >
-      <img
-        className='p-0 m-0'
-        width={34}
-        height={34}
-        src={`data:image/svg+xml;utf8,${encodeURIComponent(
-          multiavatar(item.name)
-        )}`}
-      />
-    </Link>
-  );
-};
-
 export const IconButton = ({ children }) => {
   return (
     <div className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>
@@ -298,102 +276,6 @@ export const IconLinkCenterText = ({ item }) => {
     >
       {item.name}
     </Link>
-  );
-};
-
-// Organisation
-
-export const IconOrganisation = ({ color = "white" }) => {
-  return <FaHouseUser color={color} size={24} className={iconClass} />;
-};
-
-export const CircleIconOrganisation = () => {
-  return (
-    <span>
-      <Circle>
-        <IconOrganisation />
-      </Circle>
-    </span>
-  );
-};
-
-export const LinkCircleIconOrganisation = ({ item }) => {
-  return (
-    <Link to={"organisation/" + item._id}>
-      <CircleIconOrganisation />
-    </Link>
-  );
-};
-
-// activity
-
-export const IconCircleActivity = ({ color = iconColor }) => {
-  return (
-    <span>
-      <span
-        className='p-1 m-1 badge rounded-pill border border-success'
-        role='button'
-      >
-        <BiSolidFlag color={color} size={iconSize} className={iconClass} />
-      </span>
-    </span>
-  );
-};
-
-export const IconActivity = ({ color = iconColor }) => {
-  return <BiSolidFlag color={color} size={iconSize} className={iconClass} />;
-};
-
-export const LinkCircleIconActivity = ({ item }) => {
-  return (
-    <Link to={"activity/" + item._id}>
-      <Circle>
-        <BiSolidFlag color={"white"} size={24} className={iconClass} />
-      </Circle>
-    </Link>
-  );
-};
-
-export const IconLinkMembersCircle = ({ item }) => {
-  return (
-    <Link to={item.type + "/" + item._id + "/members"}>
-      <span className='p-1 m-1 badge rounded-pill' role='button'>
-        <FaPeopleGroup color={"white"} size={24} className={iconClass} />
-      </span>
-    </Link>
-  );
-};
-
-export const ListLinks = ({ items }) => {
-  return (
-    items.length &&
-    items.map((item) => (
-      <Bar key={item._id}>
-        {
-          {
-            location: <IconLinkCircleFlyTo location={item.location} />,
-            member: <LinkAvatarMember item={item} />,
-            activity: <LinkCircleIconActivity item={item} />,
-            organisation: <LinkCircleIconOrganisation item={item} />,
-          }[item.type]
-        }
-
-        <IconLinkCenterText item={item} />
-        <IconLinkCircleFlyTo location={item.location} />
-      </Bar>
-    ))
-  );
-};
-
-export const IconSpin = () => {
-  return (
-    <div
-      className='spinner-border text-primary'
-      role='status'
-      style={{ height: 20, width: 20, padding: 0, margin: 0 }}
-    >
-      <span className='visually-hidden w-100 h-100'>Loading...</span>
-    </div>
   );
 };
 

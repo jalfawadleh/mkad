@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { ListLinks } from "../components/common/LinkItems";
 import { Bar } from "../components/common/Wrappers";
 import {
   ActivityCircle,
@@ -15,7 +14,12 @@ import {
   SearchCircle,
   SpinnerCircle,
   ExclamationCircle,
+  LocationCircleLink,
+  AvatarLink,
+  ActivityCircleLink,
+  OrganisationCircleLink,
 } from "../components/common/Icons";
+import { IconLinkCenterText } from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
@@ -119,6 +123,27 @@ const ScreenSearch = () => {
   const toggleFilter = () => {
     setFolded(false);
     setQuery((prev) => ({ ...prev, filter: !filter }));
+  };
+
+  const ListLinks = ({ items }) => {
+    return (
+      items.length &&
+      items.map((item) => (
+        <Bar key={item._id}>
+          {
+            {
+              location: <LocationCircleLink location={item.location} />,
+              member: <AvatarLink name={item.name} id={item._id} />,
+              activity: <ActivityCircleLink id={item._id} />,
+              organisation: <OrganisationCircleLink id={item._id} />,
+            }[item.type]
+          }
+
+          <IconLinkCenterText item={item} />
+          <LocationCircleLink location={item.location} />
+        </Bar>
+      ))
+    );
   };
 
   const topLayer = (

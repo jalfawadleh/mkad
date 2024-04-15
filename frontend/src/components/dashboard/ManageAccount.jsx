@@ -10,11 +10,10 @@ import {
   IconButton,
   IconCircleClose,
   IconLoading,
-  IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
-import { MemberCircle } from "../common/Icons.jsx";
+import { MemberCircle, SpinnerCircle } from "../common/Icons.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -182,7 +181,7 @@ function ManageAccount() {
         <Wrappers.Footer>
           <LinkButtoneBack />
           <span onClick={onPut}>
-            <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
+            <IconButton>{isUpdating ? <SpinnerCircle /> : "Update"}</IconButton>
           </span>
           <span onClick={onDelete}>
             <IconButton>Delete</IconButton>
