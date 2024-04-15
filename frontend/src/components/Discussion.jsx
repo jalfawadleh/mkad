@@ -1,24 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 
-import multiavatar from "@multiavatar/multiavatar/esm";
-
 import Wrappers, { SectionForm } from "./common/Wrappers";
 import { FaPlus } from "react-icons/fa";
 
 import { UserContext } from "../store";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
-  TextCenterBox,
   ActivityCircle,
   DiscusstionCircle,
   OrganisationCircle,
   CloseCircleLink,
-  Member,
   Avatar,
+  AvatarLink,
 } from "./common/Icons";
-import { AiFillVideoCamera } from "react-icons/ai";
 
 /**
  * Languages component.
@@ -67,24 +63,6 @@ const Discussion = () => {
     socket.emit("message", message);
   };
 
-  const LinkAvatarMember = ({ item }) => {
-    return (
-      <Link
-        className='link-underline link-underline-opacity-0 p-0 m-1'
-        to={"/member/" + item._id}
-      >
-        <img
-          className='p-0 m-0'
-          width={28}
-          height={28}
-          src={`data:image/svg+xml;utf8,${encodeURIComponent(
-            multiavatar(item.name)
-          )}`}
-        />
-      </Link>
-    );
-  };
-
   const iconType = (
     <>
       {type == "organisation" && <OrganisationCircle />}
@@ -107,7 +85,7 @@ const Discussion = () => {
           {messages?.length > 0 &&
             messages.map((m, index) => (
               <div className='d-block w100 m-1 p-0' key={index}>
-                <LinkAvatarMember item={{ name: m.name, _id: m.memberId }} />
+                <AvatarLink name={m.name} id={m.memberId} />
                 <div className='d-inline'>{m.name}</div>
                 <div className='d-inline ms-1'>{m.content}</div>
               </div>

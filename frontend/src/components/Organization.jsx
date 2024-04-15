@@ -5,22 +5,21 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import {
-  LinkAvatarMember,
-  IconButton,
-  IconCircleClose,
-  CircleIconOrganisation,
-  TextCenterBox,
-  IconLoading,
-  IconSpin,
-} from "./common/LinkItems.jsx";
+import { IconButton, TextCenterBox, IconLoading } from "./common/LinkItems.jsx";
 import Wrapper from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
 import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
-import { ActivityCircleLink, DiscusstionCircleLink } from "./common/Icons.jsx";
+import {
+  ActivityCircleLink,
+  AvatarLink,
+  CloseCircleLink,
+  DiscusstionCircleLink,
+  OrganisationCircle,
+  SpinnerCircle,
+} from "./common/Icons.jsx";
 
 const Organization = () => {
   const { id } = useParams();
@@ -90,13 +89,13 @@ const Organization = () => {
           onClick={() => joinOrganisation()}
         >
           <IconButton>
-            {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
+            {isJoining ? <SpinnerCircle /> : isMember ? "Leave" : "Join"}
           </IconButton>
         </span>
 
         {organisation.members?.map((m) => (
           <span className='d-inline' key={m._id}>
-            <LinkAvatarMember item={m} />
+            <AvatarLink name={m.name} id={m._id} />
           </span>
         ))}
       </div>
@@ -123,9 +122,8 @@ const Organization = () => {
   return (
     <>
       <Wrapper.Modal>
-        {/* icon itemName closeButton */}
         <Wrapper.Header>
-          <CircleIconOrganisation />
+          <OrganisationCircle />
           <TextCenterBox text={organisation.name} />
           <DiscusstionCircleLink
             type='organisation'
@@ -133,7 +131,7 @@ const Organization = () => {
             name={organisation.name}
             color='white'
           />
-          <IconCircleClose />
+          <CloseCircleLink />
         </Wrapper.Header>
 
         {organisation.activities && organisationActivities}

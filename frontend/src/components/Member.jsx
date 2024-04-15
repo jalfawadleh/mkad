@@ -10,7 +10,6 @@ import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 
 import {
-  AvatarMember,
   TextCenterBox,
   IconCircleClose,
   IconLoading,
@@ -18,6 +17,7 @@ import {
 import Wrappers, { Section } from "./common/Wrappers.jsx";
 import {
   ActivityCircleLink,
+  Avatar,
   DiscusstionCircleLink,
   OrganisationCircleLink,
 } from "./common/Icons.jsx";
@@ -100,9 +100,8 @@ function Member() {
   return (
     <>
       <Wrappers.Modal>
-        {/* icon itemName closeButton */}
         <Wrappers.Header>
-          <AvatarMember name={member.name} />
+          <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
           <DiscusstionCircleLink
             type='member'

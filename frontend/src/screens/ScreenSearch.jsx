@@ -3,13 +3,7 @@ import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import {
-  ListLinks,
-  iconWrapperClass,
-  IconSearch,
-  IconExclamation,
-  IconSpin,
-} from "../components/common/LinkItems";
+import { ListLinks } from "../components/common/LinkItems";
 import { Bar } from "../components/common/Wrappers";
 import {
   ActivityCircle,
@@ -18,6 +12,9 @@ import {
   MembersCircle,
   OrganisationCircle,
   FilterCircle,
+  SearchCircle,
+  SpinnerCircle,
+  ExclamationCircle,
 } from "../components/common/Icons";
 
 const ScreenSearch = () => {
@@ -143,15 +140,16 @@ const ScreenSearch = () => {
         <span role='button' onClick={() => toggleFilter()}>
           <FilterCircle color={filter ? "white" : "gray"} />
         </span>
+
         <button
           type='submit'
-          disabled={!text}
-          className='p-1 m-1 badge rounded-pill border bg-black border-primary'
+          disabled={text.length < 3}
+          className='m-0 p-0 border-0 bg-black rounded-circle'
         >
           {isGettingPlaces || isGettingResults ? (
-            <IconSpin />
+            <SpinnerCircle />
           ) : (
-            <IconSearch color={text ? "white" : "gray"} />
+            <SearchCircle color={text.length > 3 ? "white" : "gray"} />
           )}
         </button>
       </Bar>
@@ -187,9 +185,7 @@ const ScreenSearch = () => {
         {!folded && results.length ? <ListLinks items={results} /> : ""}
         {!folded && !places.length && !results.length && (
           <Bar>
-            <span role='button' className={iconWrapperClass}>
-              <IconExclamation color='#dddddd' />
-            </span>
+            <ExclamationCircle />
             <span className='m-auto'>Enter search query, min 3 letters</span>
           </Bar>
         )}

@@ -6,12 +6,9 @@ import axios from "axios";
 import { MapContext, UserContext } from "../../store.js";
 
 import {
-  AvatarMember,
   TextCenterBox,
   IconButton,
-  IconCircleClose,
   IconLoading,
-  IconSpin,
   LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
@@ -24,6 +21,7 @@ import ManageInterests from "../common/ManageInterests.jsx";
 import ManageHelp from "../common/ManageHelp.jsx";
 import ManageHidden from "../common/ManageHidden.jsx";
 import ManageLocation from "../common/ManageLocation.jsx";
+import { Avatar, CloseCircleLink, SpinnerCircle } from "../common/Icons.jsx";
 
 function ManageMember() {
   const { user, setUser } = useContext(UserContext);
@@ -90,11 +88,10 @@ function ManageMember() {
 
   return (
     <Wrappers.Modal>
-      {/* icon itemName closeButton */}
       <Wrappers.Header>
-        <AvatarMember name={member.name} />
+        <Avatar name={member.name} />
         <TextCenterBox text={member.name} />
-        <IconCircleClose />
+        <CloseCircleLink />
       </Wrappers.Header>
 
       <Wrappers.Body>
@@ -150,7 +147,9 @@ function ManageMember() {
               <IconButton>View</IconButton>
             </span>
             <span onClick={onPut}>
-              <IconButton>{isUpdating ? <IconSpin /> : "Update"}</IconButton>
+              <IconButton>
+                {isUpdating ? <SpinnerCircle /> : "Update"}
+              </IconButton>
             </span>
           </>
         ) : (

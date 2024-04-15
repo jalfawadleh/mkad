@@ -9,12 +9,12 @@ import {
   TextCenterBox,
   IconButton,
   IconCircleClose,
-  IconCirlceAccount,
   IconLoading,
   IconSpin,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import Wrappers, { Section, SectionForm } from "../common/Wrappers.jsx";
+import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
+import { MemberCircle } from "../common/Icons.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -82,8 +82,7 @@ function ManageAccount() {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {/* icon title join and close */}
-          <IconCirlceAccount />
+          <MemberCircle />
           <TextCenterBox text='Update Account' />
           <IconCircleClose />
         </Wrappers.Header>

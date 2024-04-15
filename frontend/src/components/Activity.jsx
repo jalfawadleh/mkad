@@ -5,16 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import {
-  LinkAvatarMember,
-  IconButton,
-  IconCircleActivity,
-  IconCircleClose,
-  IconSpin,
-  IconLoading,
-  TextCenterBox,
-} from "./common/LinkItems.jsx";
-
+import { IconButton, IconLoading, TextCenterBox } from "./common/LinkItems.jsx";
 import Wrappers from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
@@ -25,8 +16,12 @@ import ManageHelp from "./common/ManageHelp.jsx";
 import ManageOnline from "./common/ManageOnline.jsx";
 
 import {
+  ActivityCircle,
+  AvatarLink,
+  CloseCircleLink,
   DiscusstionCircleLink,
   OrganisationCircleLink,
+  SpinnerCircle,
 } from "./common/Icons.jsx";
 
 const Activity = () => {
@@ -93,11 +88,11 @@ const Activity = () => {
 
         <span onClick={() => onJoin()}>
           <IconButton>
-            {isJoining ? <IconSpin /> : isMember ? "Leave" : "Join"}
+            {isJoining ? <SpinnerCircle /> : isMember ? "Leave" : "Join"}
           </IconButton>
         </span>
         {activity.members.map((m) => (
-          <LinkAvatarMember item={m} key={m._id} />
+          <AvatarLink name={m.name} id={m._id} key={m._id} />
         ))}
       </div>
       <hr className='m-1' />
@@ -108,8 +103,7 @@ const Activity = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {/* icon title join and close */}
-          <IconCircleActivity />
+          <ActivityCircle />
           <TextCenterBox text={activity.name} />
           <DiscusstionCircleLink
             type='activity'
@@ -117,7 +111,7 @@ const Activity = () => {
             name={activity.name}
             color='white'
           />
-          <IconCircleClose />
+          <CloseCircleLink />
         </Wrappers.Header>
         {joinSection}
         <Wrappers.Body>
