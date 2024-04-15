@@ -22,6 +22,7 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
     useEffect(() => {
       if (flyToLocation?.lat) {
         map.flyTo(flyToLocation, 12);
+        setParent((prev) => ({ ...prev, location: flyToLocation }));
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,7 +39,6 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
       .then(({ data }) =>
         setFlyToLocation({ lat: data[0].lat, lon: data[0].lon })
       );
-    // .then(() => setFolded(false));
   };
 
   const onSubmit = (e) => {
