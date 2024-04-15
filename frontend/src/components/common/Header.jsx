@@ -26,7 +26,7 @@ const Header = () => {
       </span>
 
       <span role='button' className='p-0 m-0'>
-        <Link to='dashboard/manage/member'>
+        <Link to='/manage/member'>
           <AvatarMember name={user.name} />
         </Link>
       </span>
@@ -35,7 +35,7 @@ const Header = () => {
         role='button'
         className='p-1 m-1 bg-black rounded-pill border border-primary'
       >
-        <Link to='/'>
+        <Link to='/search'>
           <span>
             <IconSearch />
           </span>
@@ -43,7 +43,7 @@ const Header = () => {
       </span>
 
       <Link
-        to='/dashboard'
+        to='/'
         // style={{ boxShadow: "0 0 5px 5px gold" }}
       >
         <div

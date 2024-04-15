@@ -158,7 +158,7 @@ function ManageMember() {
             <IconButton>Edit</IconButton>
           </span>
         )}
-        <LinkButton to={"/dashboard/manage/account"}>Account</LinkButton>
+        <LinkButton to={"/manage/account"}>Account</LinkButton>
       </Wrappers.Footer>
     </Wrappers.Modal>
   );

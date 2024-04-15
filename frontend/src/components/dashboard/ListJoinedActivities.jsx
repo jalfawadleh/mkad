@@ -34,7 +34,7 @@ const ListJoinedActivities = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/dashboard") getItems();
+    if (location.pathname === "/") getItems();
   }, [location]);
 
   const LinkText = ({ item }) => {

@@ -37,7 +37,7 @@ const ListManagedActivities = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/dashboard") getItems();
+    if (location.pathname === "/") getItems();
   }, [location]);
 
   return (
@@ -57,7 +57,7 @@ const ListManagedActivities = () => {
             <Bar key={item._id}>
               <LinkCircleIconActivity item={item} />
               <Link
-                to={"manage/activity/" + item._id}
+                to={"/manage/activity/" + item._id}
                 className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
               >
                 {item.name}

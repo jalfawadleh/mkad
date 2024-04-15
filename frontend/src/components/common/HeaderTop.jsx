@@ -16,7 +16,7 @@ const HeaderTop = () => {
   return (
     <span className='d-none d-sm-block'>
       <Bar>
-        <Link to='/dashboard' className='m-1 p-1 '>
+        <Link to='/' className='m-1 p-1 '>
           <div
             className=' m-auto p-auto rounded-circle bg-black'
             style={{ width: 28, height: 28, boxShadow: "gold 0px 0px 3px 3px" }}
@@ -37,7 +37,7 @@ const HeaderTop = () => {
         </Link>
 
         <span role='button' className='p-0 m-0'>
-          <Link to='dashboard/manage/member'>
+          <Link to='/manage/member'>
             <AvatarMember name={user.name} />
           </Link>
         </span>

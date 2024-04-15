@@ -63,7 +63,7 @@ const ManageActivity = () => {
         .put("/activities/", activity)
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
-        .then(() => navigate("/dashboard"))
+        .then(() => navigate("/"))
         .catch((error) => {
           error?.response?.data?.message &&
             toast.error(error?.response.data.message);
@@ -74,7 +74,7 @@ const ManageActivity = () => {
         .post("/activities/", activity)
         .then(() => toast("Created"))
         .then(() => setIsUpdating(false))
-        .then(() => navigate("/dashboard"))
+        .then(() => navigate("/"))
         .catch((error) => {
           error?.response?.data?.message &&
             toast.error(error?.response.data.message);
@@ -89,7 +89,7 @@ const ManageActivity = () => {
       await axios
         .delete(`/activities/${id}`)
         .then(() => setIsLoading(false))
-        .then(() => navigate("/dashboard"))
+        .then(() => navigate("/"))
         .catch((error) => {
           error?.response?.data?.message &&
             toast.error(error?.response.data.message);

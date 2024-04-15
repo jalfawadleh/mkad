@@ -32,30 +32,27 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
-        <Route path='help' element={<Help />} />
-        <Route path='activity/:id' element={<Activity />} />
-        <Route path='organisation/:id' element={<Organisation />} />
-        <Route path='member/:id' element={<Member />} />
-
-        <Route path='dashboard' element={<ScreenDashboard />}>
+        <Route path='' element={<ScreenDashboard />}>
+          <Route path='member/:id' element={<Member />} />
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
           <Route path='manage/member' element={<ManageMember />} />
           <Route path='manage/account' element={<ManageAccount />} />
           <Route path='manage/activity/:id' element={<ManageActivity />} />
           <Route path='manage/activity/new' element={<ManageActivity />} />
+          <Route path='help' element={<Help />} />
         </Route>
 
         <Route path='discussion/:type/:id/:name' element={<Discussion />} />
 
-        <Route path='updates' element={<ScreenUpdates />}>
-          <Route path=':id' element={<h1>Update ID</h1>} />
-        </Route>
-
-        <Route path='' element={<ScreenSearch />}>
+        <Route path='search' element={<ScreenSearch />}>
           <Route path='activity/:id' element={<Activity />} />
           <Route path='organisation/:id' element={<Organisation />} />
           <Route path='member/:id' element={<Member />} />
+        </Route>
+
+        <Route path='updates' element={<ScreenUpdates />}>
+          <Route path=':id' element={<h1>Update ID</h1>} />
         </Route>
       </Route>
 

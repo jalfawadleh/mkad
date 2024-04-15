@@ -17,11 +17,10 @@ import {
 } from "./common/LinkItems.jsx";
 import Wrappers, { Section } from "./common/Wrappers.jsx";
 import {
-  CircleActivity,
   LinkCircleActivity,
   LinkCircleDiscusstion,
+  LinkCircleOrganisation,
 } from "./common/Icons.jsx";
-import { Circle } from "react-leaflet";
 
 const MemberOrganisations = ({ organisations = [] }) => {
   return (
@@ -32,10 +31,10 @@ const MemberOrganisations = ({ organisations = [] }) => {
             Member of
           </div>
           {organisations.map((o) => (
-            <>
-              <AvatarMember name={o.name} key={o._id} />
+            <span key={o._id}>
+              <LinkCircleOrganisation id={o._id} />
               <div className='d-inline me-2'>{o.name}</div>
-            </>
+            </span>
           ))}
         </Section>
         <hr className='my-2' />
@@ -53,10 +52,10 @@ const MemberActivities = ({ activities = [] }) => {
             Attending
           </div>
           {activities.map((a) => (
-            <>
+            <span key={a._id}>
               <LinkCircleActivity id={a._id} color='white' />
               <div className='d-inline me-2'>{a.name}</div>
-            </>
+            </span>
           ))}
         </Section>
         <hr className='my-2' />
