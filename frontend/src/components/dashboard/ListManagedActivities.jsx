@@ -18,7 +18,7 @@ const ListManagedActivities = () => {
   const location = useLocation();
   const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
-  const [folded, setFolded] = useState(false);
+  const [folded, setFolded] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
