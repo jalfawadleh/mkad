@@ -67,7 +67,7 @@ const ListManagedActivities = () => {
         ) : (
           <Bar>
             <ExclamationCircle color='white' />
-            <span className='p-auto m-auto'>No Activities Joined</span>
+            <span className='p-auto m-auto'>No Activities Created</span>
           </Bar>
         ))}
     </>
