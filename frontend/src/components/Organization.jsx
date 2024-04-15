@@ -112,9 +112,9 @@ const Organization = () => {
       <div className='d-block p-0 m-1 ms-3'>
         <div className='d-inline m-auto p-1'>Activities</div>
         {organisation.activities.map((m) => (
-          <span key={m._id}>
+          <span className='d-inline-block me-2' key={m._id}>
             <ActivityCircleLink id={m._id} />
-            <div className='d-inline m-auto p-1'>{m.name}</div>
+            <div className='d-inline m-auto p-1 ps-0'>{m.name}</div>
           </span>
         ))}
       </div>
