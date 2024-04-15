@@ -1,22 +1,27 @@
 import { useContext } from "react";
-import { AiOutlineClose } from "react-icons/ai";
-import { FaLocationCrosshairs, FaPlus, FaRegEnvelope } from "react-icons/fa6";
-import { RiArrowUpDownFill } from "react-icons/ri";
-import { FaHandshakeSimple } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import multiavatar from "@multiavatar/multiavatar/esm";
+import { MapContext } from "../../store";
+
+import {
+  FaHandshakeSimple,
+  FaLocationCrosshairs,
+  FaPlus,
+  FaRegEnvelope,
+  FaUsers,
+} from "react-icons/fa6";
 import {
   FaBell,
   FaExclamationCircle,
   FaHouseUser,
   FaQuestion,
   FaSearch,
+  FaUser,
 } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
+import { RiArrowUpDownFill } from "react-icons/ri";
 import { BiSolidFlag } from "react-icons/bi";
-import { FaUsers } from "react-icons/fa6";
-import { FaUser } from "react-icons/fa";
-import multiavatar from "@multiavatar/multiavatar/esm";
 import { MdTune } from "react-icons/md";
-import { MapContext } from "../../store";
 
 export const Empty = () => {
   return <div className='p-1 m-1' style={{ width: 35, height: 24 }} />;
