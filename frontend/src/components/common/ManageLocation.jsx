@@ -21,8 +21,8 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
 
     useEffect(() => {
       if (flyToLocation?.lat) {
-        map.flyTo(flyToLocation, 12);
-        setParent((prev) => ({ ...prev, location: flyToLocation }));
+        map.flyTo(flyToLocation);
+        setParent((prev) => ({ ...prev, location: { ...flyToLocation } }));
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -89,7 +89,19 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
           >
             <FlytoCity />
             <ZoomControl position='topright' />
-            <Marker draggable={editing} position={location}>
+
+            <Marker
+              draggable={editing}
+              position={location}
+              eventHandlers={{
+                dragend: (e) => {
+                  setFlyToLocation({
+                    lat: e.target._latlng.lat,
+                    lng: e.target._latlng.lng,
+                  });
+                },
+              }}
+            >
               <Popup>
                 <span>My location</span>
               </Popup>
