@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { IconButton, TextCenterBox, IconLoading } from "./common/LinkItems.jsx";
+import { IconButton, TextCenterBox } from "./common/LinkItems.jsx";
 import Wrapper from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";

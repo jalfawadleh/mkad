@@ -8,7 +8,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   TextCenterBox,
   IconButton,
-  IconLoading,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 

@@ -8,7 +8,6 @@ import { MapContext, UserContext } from "../../store.js";
 import {
   TextCenterBox,
   IconButton,
-  IconLoading,
   LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
