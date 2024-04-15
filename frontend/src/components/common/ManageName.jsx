@@ -14,9 +14,6 @@ const ManageName = ({ name, setParent, editing = false }) => {
     editing && (
       <>
         <SectionForm>
-          <div className='text-center mb-2'>
-            Your Profile Avatar is based on your name
-          </div>
           <div className='form-floating'>
             <input
               type='text'

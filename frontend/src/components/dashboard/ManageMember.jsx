@@ -11,7 +11,7 @@ import {
   LinkButton,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
-import Wrappers from "../common/Wrappers.jsx";
+import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
 
 import ManageName from "../common/ManageName.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
@@ -99,6 +99,11 @@ function ManageMember() {
       </Wrappers.Header>
 
       <Wrappers.Body>
+        <SectionForm>
+          <div className='text-center mb-2'>
+            Your Profile Avatar is based on your name
+          </div>
+        </SectionForm>
         <ManageName
           name={member.name}
           setParent={setMember}
