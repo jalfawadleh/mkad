@@ -25,6 +25,7 @@ import Wrappers from "../common/Wrappers.jsx";
 import {
   ActivityCircle,
   CloseCircleLink,
+  Loader,
   SpinnerCircle,
 } from "../common/Icons.jsx";
 
@@ -184,7 +185,7 @@ const ManageActivity = () => {
             editing={isEditing}
           />
 
-          {isLoading && <IconLoading />}
+          {isLoading && <Loader />}
         </Wrappers.Body>
 
         <Wrappers.Footer>

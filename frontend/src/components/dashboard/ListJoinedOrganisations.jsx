@@ -83,7 +83,7 @@ const ListJoinedOrganisations = () => {
           </Bar>
         ))}
 
-      {/* {isLoading && <IconLoading />} */}
+      {/* {isLoading && <Loader />} */}
     </>
   );
 };

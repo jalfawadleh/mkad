@@ -1,18 +1,14 @@
-import {
-  TextCenterBox,
-  IconCircleClose,
-  IconCircleHelp,
-  LinkButtoneBack,
-} from "../common/LinkItems.jsx";
+import { TextCenterBox, LinkButtoneBack } from "../common/LinkItems.jsx";
 import Wrappers from "../common/Wrappers.jsx";
+import { CloseCircleLink, HelpCircle } from "../common/Icons.jsx";
 
 function Updates() {
   return (
     <Wrappers.Modal>
       <Wrappers.Header>
-        <IconCircleHelp />
+        <HelpCircle />
         <TextCenterBox text='Help' />
-        <IconCircleClose />
+        <CloseCircleLink />
       </Wrappers.Header>
 
       <Wrappers.Body>

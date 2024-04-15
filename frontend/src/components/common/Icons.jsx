@@ -404,6 +404,20 @@ export const SpinnerCircle = () => {
   );
 };
 
+export const Loader = () => {
+  return (
+    <div className='d-block p-4 m-auto text-center'>
+      <div
+        className='spinner-border text-primary'
+        role='status'
+        style={{ height: 100, width: 100 }}
+      >
+        <span className='visually-hidden w-100 h-100'>Loading...</span>
+      </div>
+    </div>
+  );
+};
+
 export const Exclamation = ({ color = "white" }) => {
   return <FaExclamationCircle color={color} size={24} />;
 };
@@ -473,6 +487,7 @@ const Icons = {
   UpdatesCircleLink,
 
   Spinner,
+  Loader,
 
   MKaDifferenceCircleLink,
 };

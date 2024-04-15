@@ -8,12 +8,15 @@ import { UserContext } from "../../store.js";
 import {
   TextCenterBox,
   IconButton,
-  IconCircleClose,
-  IconLoading,
   LinkButtoneBack,
 } from "../common/LinkItems.jsx";
 import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
-import { MemberCircle, SpinnerCircle } from "../common/Icons.jsx";
+import {
+  CloseCircleLink,
+  Loader,
+  MemberCircle,
+  SpinnerCircle,
+} from "../common/Icons.jsx";
 
 function ManageAccount() {
   const [isLoading, setIsLoading] = useState(false);
@@ -83,7 +86,7 @@ function ManageAccount() {
         <Wrappers.Header>
           <MemberCircle />
           <TextCenterBox text='Update Account' />
-          <IconCircleClose />
+          <CloseCircleLink />
         </Wrappers.Header>
 
         <Wrappers.Body>
@@ -175,7 +178,7 @@ function ManageAccount() {
               <label htmlFor='currentPassword'>Current Password</label>
             </div>
           </SectionForm>
-          {isLoading && <IconLoading />}
+          {isLoading && <Loader />}
         </Wrappers.Body>
         <hr className='my-2' />
         <Wrappers.Footer>

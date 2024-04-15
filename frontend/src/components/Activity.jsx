@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { IconButton, IconLoading, TextCenterBox } from "./common/LinkItems.jsx";
+import { IconButton, TextCenterBox } from "./common/LinkItems.jsx";
 import Wrappers from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
@@ -20,6 +20,7 @@ import {
   AvatarLink,
   CloseCircleLink,
   DiscusstionCircleLink,
+  Loader,
   OrganisationCircleLink,
   SpinnerCircle,
 } from "./common/Icons.jsx";
@@ -125,7 +126,7 @@ const Activity = () => {
             parentType={activity.type}
           />
           <ManageOnline online={activity.online} />
-          {isLoading && <IconLoading />}
+          {isLoading && <Loader />}
         </Wrappers.Body>
       </Wrappers.Modal>
     </>

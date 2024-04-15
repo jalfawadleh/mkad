@@ -9,16 +9,14 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 
-import {
-  TextCenterBox,
-  IconCircleClose,
-  IconLoading,
-} from "./common/LinkItems.jsx";
+import { TextCenterBox } from "./common/LinkItems.jsx";
 import Wrappers, { Section } from "./common/Wrappers.jsx";
 import {
   ActivityCircleLink,
   Avatar,
+  CloseCircleLink,
   DiscusstionCircleLink,
+  Loader,
   OrganisationCircleLink,
 } from "./common/Icons.jsx";
 
@@ -109,7 +107,7 @@ function Member() {
             name={member.name}
             color='white'
           />
-          <IconCircleClose />
+          <CloseCircleLink />
         </Wrappers.Header>
 
         <Wrappers.Body>
@@ -119,7 +117,7 @@ function Member() {
           <ManageLanguages languages={member.languages} />
           <ManageInterests interests={member.interests} />
           <ManageHelp help={member.help} />
-          {isLoading && <IconLoading />}
+          {isLoading && <Loader />}
         </Wrappers.Body>
       </Wrappers.Modal>
     </>

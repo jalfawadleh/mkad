@@ -17,6 +17,7 @@ import {
   AvatarLink,
   CloseCircleLink,
   DiscusstionCircleLink,
+  Loader,
   OrganisationCircle,
   SpinnerCircle,
 } from "./common/Icons.jsx";
@@ -142,7 +143,7 @@ const Organization = () => {
           <ManageLanguages languages={organisation.languages} />
           <ManageInterests interests={organisation.interests} />
           <ManageHelp help={organisation.help} />
-          {isLoading && <IconLoading />}
+          {isLoading && <Loader />}
         </Wrapper.Body>
       </Wrapper.Modal>
     </>

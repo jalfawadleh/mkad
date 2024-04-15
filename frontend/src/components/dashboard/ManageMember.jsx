@@ -21,7 +21,12 @@ import ManageInterests from "../common/ManageInterests.jsx";
 import ManageHelp from "../common/ManageHelp.jsx";
 import ManageHidden from "../common/ManageHidden.jsx";
 import ManageLocation from "../common/ManageLocation.jsx";
-import { Avatar, CloseCircleLink, SpinnerCircle } from "../common/Icons.jsx";
+import {
+  Avatar,
+  CloseCircleLink,
+  Loader,
+  SpinnerCircle,
+} from "../common/Icons.jsx";
 
 function ManageMember() {
   const { user, setUser } = useContext(UserContext);
@@ -136,7 +141,7 @@ function ManageMember() {
           editing={editing}
         />
 
-        {isLoading && <IconLoading />}
+        {isLoading && <Loader />}
       </Wrappers.Body>
 
       <Wrappers.Footer>
