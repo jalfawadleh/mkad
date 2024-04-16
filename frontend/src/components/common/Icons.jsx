@@ -258,7 +258,7 @@ export const Avatar = ({ name = "na" }) => {
 
 export const AvatarLink = ({ name = "na", id }) => {
   return (
-    <Link to={"/member/" + id}>
+    <Link to={"/member/" + id} className='' style={{ height: 34, width: 34 }}>
       <Avatar name={name} />
     </Link>
   );
@@ -392,7 +392,7 @@ export const MKaDifferenceCircle = () => {
 
 export const MKaDifferenceCircleLink = ({ to = "/" }) => {
   return (
-    <Link to={to}>
+    <Link to={to} className='m-0 p-0'>
       <div
         className='d-block m-1 p-0 border border-warning rounded-circle bg-black'
         style={{ width: 34, height: 34 }}

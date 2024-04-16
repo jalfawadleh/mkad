@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
+import moment from "moment";
 
 import Wrappers, { SectionForm } from "./common/Wrappers";
 import { FaPlus } from "react-icons/fa";
@@ -56,7 +57,12 @@ const Discussion = () => {
     const content = element.value;
 
     if (content) {
-      const message = { content, name: user.name, _id: user._id };
+      const message = {
+        content,
+        name: user.name,
+        _id: user._id,
+        date: moment(Date.now()).toISOString(),
+      };
       socket.emit("message", message);
       element.value = "";
     }
@@ -83,10 +89,22 @@ const Discussion = () => {
         <Wrappers.Body>
           {messages?.length > 0 &&
             messages.map((m, index) => (
-              <div className='d-block w100 m-1 p-0' key={index}>
-                <AvatarLink name={m.name} id={m.memberId} />
-                <div className='d-inline'>{m.name}</div>
-                <div className='d-inline ms-1'>{m.content}</div>
+              <div className='d-block m-1 p-0' key={index}>
+                <div className='d-flex justify-content-between'>
+                  <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-start'>
+                    {m.name}
+                  </span>
+                  <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-end'>
+                    {moment(m.date).format("DD MMMM h:mm a")}
+                  </span>
+                </div>
+                <tr>
+                  <td>
+                    <AvatarLink name={m.name} id={m._id} />
+                  </td>
+                  <td>{m.content}</td>
+                </tr>
+                <hr className='my-1' />
               </div>
             ))}
         </Wrappers.Body>
