@@ -26,7 +26,10 @@ export const Modal = ({ children }) => {
       tabIndex='-1'
       data-bs-backdrop='static'
     >
-      <div className='modal-dialog modal-dialog-centered ' role='document'>
+      <div
+        className='modal-dialog modal-dialog-centered modal-fullscreen-sm-down '
+        role='document'
+      >
         <div className='modal-content bg-black p-0 border-1 border-primary'>
           {children}
         </div>
@@ -47,8 +50,8 @@ export const Header = ({ children }) => {
 export const Body = ({ children }) => {
   return (
     <div
-      className='overflow-y-auto p-1 m-0'
-      style={{ maxHeight: window.innerHeight - 150 }}
+      className='d-block overflow-y-scroll p-1 m-1'
+      style={{ maxHeight: window.innerHeight - 200 }}
     >
       {children}
     </div>

@@ -40,29 +40,49 @@ const Discussion = () => {
     extraHeaders: { authorization: user.token },
   });
 
+  const message = {
+    sender: { _id: user._id, type: user.type, name: user.name },
+    recipient: { _id: id, type, name },
+    content: "",
+  };
+
   useEffect(() => {
-    // Connected, let's sign-up for to receive messages for this room
-    socket.on("connect", () => socket.emit("join", type, id));
-
-    socket.on("message", (message) =>
-      setMessages((previous) => [...previous, message])
-    );
-
+    socket.connect();
     return () => socket.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // when member connect join the discussion
+  useEffect(() => {
+    const join = () => {
+      message.content = "join";
+      socket.emit("join", message);
+    };
+    socket.on("connect", join);
+    return () => socket.off("connect", join);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const onMessage = (message) => {
+      setMessages((previous) => [...previous, message]);
+
+      document.getElementById("endoflist").scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "end",
+      });
+    };
+    socket.on("message", onMessage);
+    return () => socket.off("message", onMessage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const send = () => {
     const element = document.getElementById("content");
     const content = element.value;
-
     if (content) {
-      const message = {
-        content,
-        name: user.name,
-        _id: user._id,
-        date: moment(Date.now()).toISOString(),
-      };
+      message.content = content;
       socket.emit("message", message);
       element.value = "";
     }
@@ -88,49 +108,50 @@ const Discussion = () => {
 
         <Wrappers.Body>
           {messages?.length > 0 &&
-            messages.map((m, index) => (
-              <div className='d-block m-1 p-0' key={index}>
-                <div className='d-flex justify-content-between'>
+            messages.map((message) => (
+              <div className='d-block' id={message._id} key={message._id}>
+                <div className='d-flex justify-content-between w-100'>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-start'>
-                    {m.name}
+                    {message.sender.name}
                   </span>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-end'>
-                    {moment(m.date).format("DD MMMM h:mm a")}
+                    {moment(message.createdAt).format("DD MMMM h:mm a")}
                   </span>
                 </div>
-                <tr>
-                  <td>
-                    <AvatarLink name={m.name} id={m._id} />
-                  </td>
-                  <td>{m.content}</td>
-                </tr>
+                <div className='d-inline'>
+                  <AvatarLink
+                    name={message.sender.name}
+                    id={message.sender._id}
+                  />
+                </div>
+                <div className='d-inline'>{message.content}</div>
                 <hr className='my-1' />
               </div>
             ))}
+          <div id='endoflist' className='mb-2' />
         </Wrappers.Body>
-        <Wrappers.Body>
-          <SectionForm>
-            <div className='hstack gap-2'>
-              <input
-                id='content'
-                placeholder='Enter Message'
-                // value={content}
-                type='text'
-                className='form-control form-control-sm'
-                onKeyDown={(event) => event.key == "Enter" && send()}
-              />
-              <button
-                type='submit'
-                // disabled={!content}
-                role='button'
-                className='m-0 p-1 badge border-0 text-bg-primary'
-                onClick={() => send()}
-              >
-                <FaPlus size={20} />
-              </button>
-            </div>
-          </SectionForm>
-        </Wrappers.Body>
+
+        <SectionForm>
+          <div className='hstack gap-2' id='sendForm'>
+            <input
+              id='content'
+              placeholder='Enter Message'
+              // value={content}
+              type='text'
+              className='form-control form-control-sm'
+              onKeyDown={(event) => event.key == "Enter" && send()}
+            />
+            <button
+              type='submit'
+              // disabled={!content}
+              role='button'
+              className='m-0 p-1 badge border-0 text-bg-primary'
+              onClick={() => send()}
+            >
+              <FaPlus size={20} />
+            </button>
+          </div>
+        </SectionForm>
       </Wrappers.Modal>
     </>
   );

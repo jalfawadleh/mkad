@@ -21,9 +21,10 @@ import activities from "./modules/moduleActivities.js";
 import organisations from "./modules/moduleOrganisations.js";
 import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
-import { protectSocket } from "./middleware/authMiddleware.js";
+import { authDiscussion, saveMessage } from "./modules/modulDiscussion.js";
 
 dotenv.config();
+
 const port = process.env.PORT || 3011;
 const __dirname = path.resolve();
 
@@ -45,6 +46,7 @@ app.use(
     }),
   })
 );
+
 // allow sources to openstreetmap
 app.use(
   helmet.contentSecurityPolicy({
@@ -100,46 +102,71 @@ io.engine.use(
   })
 );
 
-// Authorization middleware to append the user as well
-io.use(protectSocket);
 io.engine.use(helmet());
 
-let type = "";
-let id = "";
+// Authorization middleware to append the user as well
+io.use(authDiscussion);
+
+let room = "";
+let recipient = {};
 
 // socket code ############################################
 io.on("connection", (socket) => {
-  // console.log(`user: ${socket.user.name} communicated`);
-
   // once a member has requested to join a room
-  socket.on("join", (t, i) => {
-    type = t;
-    id = i;
+  socket.on("join", async (m) => {
+    //store recepient details
+    recipient = m.recipient;
+    //store the room
+    room = recipient.type + ":" + recipient._id;
     // Add member to the room
-    socket.join(type + "|" + id);
-    // send a message to room members that user joined
-    io.sockets.in(type + "|" + id).emit("message", {
-      content: "Joined",
-      name: socket.user.name,
-      _id: socket.user._id,
-    });
+    socket.join(room);
+    // add member details from socket authentication to the message
+    //change content to joined
+    socket.message = { ...m, ...socket.message, content: "joined" };
+    // save message in DB
+    try {
+      socket.message = await saveMessage(socket.message);
+    } catch (error) {
+      console.log(error);
+    }
+    // announce the member has joined to discussion
+    if (socket.message) {
+      io.sockets.in(room).emit("message", socket.message);
+    }
   });
 
   // on receiving a message send a message to the members in the room
-  socket.on("message", (message) => {
-    io.sockets.in(type + "|" + id).emit("message", message);
+  socket.on("message", async (m) => {
+    // add member details from socket authentication to the message
+    socket.message = { ...m, ...socket.message };
+    // save message in DB
+    try {
+      socket.message = await saveMessage(socket.message);
+    } catch (error) {
+      console.log(error);
+    }
+    // announce the member has joined to discussion
+    if (socket.message) {
+      io.sockets.in(room).emit("message", socket.message);
+    }
   });
 
   // on member disconnect and leave the room
-  socket.on("disconnect", (reason) => {
+  socket.on("disconnect", async (reason) => {
     // member leave the room
-    socket.leave(type + "|" + id);
-    // advertise the member had left the room
-    io.sockets.in(type + "|" + id).emit("message", {
-      content: "Left",
-      name: socket.user.name,
-      _id: socket.user._id,
-    });
+    socket.leave(room);
+    // announce member had left the discussion
+    socket.message.content = "left";
+    // save message in DB
+    try {
+      socket.message = await saveMessage(socket.message);
+    } catch (error) {
+      console.log(error);
+    }
+    // announce the member has joined to discussion
+    if (socket.message) {
+      io.sockets.in(room).emit("message", socket.message);
+    }
   });
 });
 
