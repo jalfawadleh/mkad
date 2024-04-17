@@ -66,12 +66,15 @@ const Discussion = () => {
   useEffect(() => {
     const onMessage = (message) => {
       setMessages((previous) => [...previous, message]);
-
-      document.getElementById("endoflist").scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "end",
-      });
+      setTimeout(
+        () =>
+          document.getElementById("endoflist").scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end",
+          }),
+        200
+      );
     };
     socket.on("message", onMessage);
     return () => socket.off("message", onMessage);
@@ -125,33 +128,31 @@ const Discussion = () => {
                   />
                 </div>
                 <div className='d-inline'>{message.content}</div>
-                <hr className='my-1' />
+                <hr className='m-0 mt-1 p-0' />
               </div>
             ))}
-          <div id='endoflist' className='mb-2' />
+          <div id='endoflist' className='my-0' />
         </Wrappers.Body>
 
-        <SectionForm>
-          <div className='hstack gap-2' id='sendForm'>
-            <input
-              id='content'
-              placeholder='Enter Message'
-              // value={content}
-              type='text'
-              className='form-control form-control-sm'
-              onKeyDown={(event) => event.key == "Enter" && send()}
-            />
-            <button
-              type='submit'
-              // disabled={!content}
-              role='button'
-              className='m-0 p-1 badge border-0 text-bg-primary'
-              onClick={() => send()}
-            >
-              <FaPlus size={20} />
-            </button>
-          </div>
-        </SectionForm>
+        <div className='hstack gap-2 m-1' id='sendForm'>
+          <input
+            id='content'
+            placeholder='Enter Message'
+            // value={content}
+            type='text'
+            className='form-control form-control-sm'
+            onKeyDown={(event) => event.key == "Enter" && send()}
+          />
+          <button
+            type='submit'
+            // disabled={!content}
+            role='button'
+            className='m-0 p-1 badge border-0 text-bg-primary'
+            onClick={() => send()}
+          >
+            <FaPlus size={20} />
+          </button>
+        </div>
       </Wrappers.Modal>
     </>
   );
