@@ -98,7 +98,7 @@ const putActivity = asyncHandler(async (req, res) => {
 // @access  Private
 const deleteActivity = asyncHandler(async (req, res) => {
   const activity = await Activities.deleteOne({ _id: req.params.id });
-  console.log(activity);
+
   if (activity) {
     res.res.status(204);
   } else {

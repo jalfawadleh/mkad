@@ -50,7 +50,7 @@ export const Header = ({ children }) => {
 export const Body = ({ children }) => {
   return (
     <div
-      className='d-block overflow-y-scroll p-1 m-1'
+      className='d-block overflow-y-auto p-1 m-1'
       style={{ maxHeight: window.innerHeight - 200 }}
     >
       {children}

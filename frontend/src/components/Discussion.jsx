@@ -116,9 +116,9 @@ const Discussion = () => {
           <CloseCircleLink />
         </Wrappers.Header>
 
-        <div className='d-block mx-2 overflow-y-scroll'>
-          <div className='d-inline mx-2'>{members.length}</div>
-          <div className='d-inline mx-1'>Members</div>
+        <div className='d-block px-2 overflow-y-auto'>
+          <div className='d-inline px-2'>{members.length}</div>
+          <div className='d-inline px-1'>Members</div>
           {members.map((m) => (
             <AvatarLink name={m.name} id={m._id} key={m._id} />
           ))}
@@ -127,7 +127,7 @@ const Discussion = () => {
         <Wrappers.Body>
           {messages?.length > 0 &&
             messages.map((message) => (
-              <div className='d-block' id={message._id} key={message._id}>
+              <div className='d-block p-1' id={message._id} key={message._id}>
                 <div className='d-flex justify-content-between w-100'>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-start'>
                     {message.sender.name}
@@ -149,7 +149,7 @@ const Discussion = () => {
           <div id='endoflist' className='my-0' />
         </Wrappers.Body>
 
-        <div className='hstack gap-2 m-1' id='sendForm'>
+        <div className='hstack gap-2 p-1' id='sendForm'>
           <input
             id='content'
             placeholder='Enter Message'
@@ -158,15 +158,6 @@ const Discussion = () => {
             className='form-control form-control-sm'
             onKeyDown={(event) => event.key == "Enter" && send()}
           />
-          <button
-            type='submit'
-            // disabled={!content}
-            role='button'
-            className='m-0 p-1 badge border-0 text-bg-primary'
-            onClick={() => send()}
-          >
-            <FaPlus size={20} />
-          </button>
         </div>
       </Wrappers.Modal>
     </>

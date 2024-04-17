@@ -22,8 +22,6 @@ const getItems = asyncHandler(async (req, res) => {
     fields
   );
 
-  console.log(activities);
-
   res.json({ members, activities, organisations });
   // res.json([...members]);
 });
