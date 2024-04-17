@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import moment from "moment";
 
-import Wrappers, { SectionForm } from "./common/Wrappers";
+import Wrappers from "./common/Wrappers";
 import { FaPlus } from "react-icons/fa";
 
 import { UserContext } from "../store";
@@ -30,6 +30,7 @@ const Discussion = () => {
   const { type, id, name } = useParams();
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [members, setMembers] = useState([]);
 
   const URL = import.meta.env.PROD
     ? "https://demo.mkadifference.com/"
@@ -81,6 +82,12 @@ const Discussion = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    socket.on("members", setMembers);
+    return () => socket.off("members");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const send = () => {
     const element = document.getElementById("content");
     const content = element.value;
@@ -109,6 +116,14 @@ const Discussion = () => {
           <CloseCircleLink />
         </Wrappers.Header>
 
+        <div className='d-block mx-2 overflow-y-scroll'>
+          <div className='d-inline mx-2'>{members.length}</div>
+          <div className='d-inline mx-1'>Members</div>
+          {members.map((m) => (
+            <AvatarLink name={m.name} id={m._id} key={m._id} />
+          ))}
+          <hr className='border border-primary border-1 opacity-75 m-1' />
+        </div>
         <Wrappers.Body>
           {messages?.length > 0 &&
             messages.map((message) => (
@@ -128,7 +143,7 @@ const Discussion = () => {
                   />
                 </div>
                 <div className='d-inline'>{message.content}</div>
-                <hr className='m-0 mt-1 p-0' />
+                <hr className='m-1 p-0' />
               </div>
             ))}
           <div id='endoflist' className='my-0' />

@@ -21,7 +21,12 @@ import activities from "./modules/moduleActivities.js";
 import organisations from "./modules/moduleOrganisations.js";
 import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
-import { authDiscussion, saveMessage } from "./modules/modulDiscussion.js";
+import {
+  authDiscussion,
+  joinRoom,
+  leaveRoom,
+  saveMessage,
+} from "./modules/modulDiscussion.js";
 
 dotenv.config();
 
@@ -130,9 +135,16 @@ io.on("connection", (socket) => {
       console.log(error);
     }
     // announce the member has joined to discussion
-    if (socket.message) {
-      io.sockets.in(room).emit("message", socket.message);
+    if (socket.message) io.sockets.in(room).emit("message", socket.message);
+
+    try {
+      socket.members = await joinRoom(m);
+    } catch (error) {
+      console.log(error);
     }
+
+    console.log(socket.members);
+    io.sockets.in(room).emit("members", socket.members);
   });
 
   // on receiving a message send a message to the members in the room
@@ -146,13 +158,12 @@ io.on("connection", (socket) => {
       console.log(error);
     }
     // announce the member has joined to discussion
-    if (socket.message) {
-      io.sockets.in(room).emit("message", socket.message);
-    }
+    if (socket.message) io.sockets.in(room).emit("message", socket.message);
   });
 
   // on member disconnect and leave the room
   socket.on("disconnect", async (reason) => {
+    socket.message.recipient = recipient;
     // member leave the room
     socket.leave(room);
     // announce member had left the discussion
@@ -164,9 +175,15 @@ io.on("connection", (socket) => {
       console.log(error);
     }
     // announce the member has joined to discussion
-    if (socket.message) {
-      io.sockets.in(room).emit("message", socket.message);
+    if (socket.message) io.sockets.in(room).emit("message", socket.message);
+
+    try {
+      socket.members = await leaveRoom(socket.message);
+    } catch (error) {
+      console.log(error);
     }
+    console.log(socket.members);
+    io.sockets.in(room).emit("members", socket.members);
   });
 });
 
