@@ -101,12 +101,6 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
-          <DiscusstionCircleLink
-            type='member'
-            id={member._id}
-            name={member.name}
-            color='white'
-          />
           <CloseCircleLink />
         </Wrappers.Header>
 

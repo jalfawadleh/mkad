@@ -7,7 +7,7 @@ import ListManagedActivities from "../components/dashboard/ListManagedActivities
 import ListJoinedActivities from "../components/dashboard/ListJoinedActivities";
 import ListJoinedOrganisations from "../components/dashboard/ListJoinedOrganisations";
 import { Bar } from "../components/common/Wrappers";
-import { AvatarCustomLink } from "../components/common/Icons";
+import { AvatarCustomLink, Empty } from "../components/common/Icons";
 
 const ScreenDashboard = () => {
   const { user } = useContext(UserContext);
@@ -20,6 +20,7 @@ const ScreenDashboard = () => {
         <Bar>
           <AvatarCustomLink name={user.name} />
           <span className='p-auto m-auto'>{user.name}</span>
+          <Empty />
         </Bar>
       )}
 

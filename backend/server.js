@@ -142,8 +142,6 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.log(error);
     }
-
-    console.log(socket.members);
     io.sockets.in(room).emit("members", socket.members);
   });
 
@@ -182,7 +180,6 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.log(error);
     }
-    console.log(socket.members);
     io.sockets.in(room).emit("members", socket.members);
   });
 });
