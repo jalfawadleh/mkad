@@ -25,7 +25,7 @@ import map from "./modules/moduleMap.js";
 
 import { joinDiscussion, leaveDiscussion } from "./modules/modulDiscussion.js";
 import { saveMessage } from "./modules/modulMessages.js";
-import { isOnline, setOnline } from "./modules/modulMessaging.js";
+import { getConversationId } from "./modules/modulConversation.js";
 
 dotenv.config();
 
@@ -112,42 +112,32 @@ io.engine.use(helmet());
 // Authorization middleware to append the user as well
 io.use(authSender);
 
-let discussion = "";
+let discussionId = "";
+let conversationId = "";
+let sender = "";
 
-// socket code ############################################
 io.on("connection", (socket) => {
-  // set The member to be online
-  setOnline(socket.message.sender._id, true);
-
   /* Messaging Code */
 
   // once a member has requested Messaging another member
-  socket.on("joinMessaging", async (m) => {
+  socket.on("joinConversation", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
-
-    // join member to 2 rooms one for the sender another for the recepient
-    socket.join([socket.message.sender._id, socket.message.recipient._id]);
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
 
-    // announce the member has joined the messaging
-    io.sockets
-      .in([socket.message.sender._id, socket.message.recipient._id])
-      .emit("joinedMessaging", socket.message);
+    conversationId = await getConversationId(socket.message);
 
-    socket.message.recipient.online = await isOnline(
-      socket.message.recipient._id
-    );
-    // announce if the receiver is online
-    io.sockets
-      .in(m.recipient._id)
-      .emit("online", socket.message.recipient.online);
+    // join member to 2 rooms one for the sender another for the recepient
+    socket.join(conversationId);
+
+    // announce the member has joined the messaging
+    io.sockets.in(conversationId).emit("message", socket.message);
   });
 
   // on receiving a message send a message to both members in the messaging
-  socket.on("messaging", async (m) => {
+  socket.on("message", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
@@ -155,26 +145,22 @@ io.on("connection", (socket) => {
     socket.message = await saveMessage(socket.message);
 
     // announce the member has joined to discussion
-    io.sockets
-      .in([socket.message.sender._id, socket.message.recipient._id])
-      .emit("message", socket.message);
+    io.sockets.in(conversationId).emit("message", socket.message);
   });
 
   // on member leave messaging
-  socket.on("leaveMessaging", async (m) => {
+  socket.on("leaveConversation", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
 
-    // annnounce member leaving the messaging
-    io.sockets
-      .in([socket.message.sender._id, socket.message.recipient._id])
-      .emit("leftMessaging", socket.message);
-
     // member leave the room
-    socket.leave(m.sender._id).leave(m.recipient._id);
+    socket.leave(conversationId);
+
+    // annnounce member leaving the messaging
+    io.sockets.in(conversationId).emit("message", socket.message);
   });
 
   /* Discussion Code */
@@ -184,23 +170,25 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message.sender
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    //store the discussion
-    discussion =
-      socket.message.recipient.type + ":" + socket.message.recipient._id;
-
-    // Add member to the discussion
-    socket.join(discussion);
-
     // save message in DB
     socket.message = await saveMessage(socket.message);
 
+    //store the discussion
+    discussionId =
+      socket.message.recipient.type +
+      ":" +
+      socket.message.recipient._id.toString;
+
+    // Add member to the discussion
+    socket.join(discussionId);
+
     // announce the member has joined to discussion
-    io.sockets.in(discussion).emit("discussion", socket.message);
+    io.sockets.in(discussionId).emit("discussion", socket.message);
 
     // Add member to the discussion in DB
     socket.members = await joinDiscussion(socket.message);
 
-    io.sockets.in(discussion).emit("members", socket.members);
+    io.sockets.in(discussionId).emit("members", socket.members);
   });
 
   // on receiving a message send a message to the members in the discussion
@@ -212,7 +200,7 @@ io.on("connection", (socket) => {
     socket.message = await saveMessage(socket.message);
 
     // send the message to all members in the discussion
-    io.sockets.in(discussion).emit("discussion", socket.message);
+    io.sockets.in(discussionId).emit("discussion", socket.message);
   });
 
   // on member leave the discussion
@@ -221,14 +209,14 @@ io.on("connection", (socket) => {
     socket.message = { ...m, ...socket.message, content: "left" };
 
     // announce the member has joined to discussion
-    io.sockets.in(discussion).emit("discussion", socket.message);
+    io.sockets.in(discussionId).emit("discussion", socket.message);
 
     // member remove from discussion
     socket.members = await leaveDiscussion(socket.message);
-    io.sockets.in(discussion).emit("members", socket.members);
+    io.sockets.in(discussionId).emit("members", socket.members);
 
     // member leave the discussion
-    socket.leave(discussion);
+    socket.leave(discussionId);
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
@@ -237,7 +225,9 @@ io.on("connection", (socket) => {
   // on member disconnect
   socket.on("disconnect", async (reason) => {
     // set The member to be online
-    setOnline(socket.message.sender._id, false);
+    socket.message.content = "left";
+    socket.leave(conversationId);
+    io.sockets.in(conversationId).emit("message", socket.message);
   });
 });
 
