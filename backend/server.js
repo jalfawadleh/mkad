@@ -92,6 +92,7 @@ const io = new Server(server, {
     origin: "https://demo.mkadifference.com",
     methods: ["GET", "POST"],
     transports: ["websocket", "polling"],
+    allowedHeaders: ["authorization"],
     credentials: true,
   },
   allowEIO3: true,
