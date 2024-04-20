@@ -229,6 +229,13 @@ io.on("connection", async (socket) => {
   // on member disconnect
   socket.on("disconnect", async (reason) => {
     // set The member to be online
+    socket.message.content = "left";
+    // member leave the room
+    socket.leave(conversationId);
+    socket.leave(discussionId);
+    // annnounce member leaving the messaging
+    io.sockets.in(conversationId).emit("message", socket.message);
+    io.sockets.in(discussionId).emit("message", socket.message);
   });
 });
 
