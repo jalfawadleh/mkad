@@ -166,6 +166,7 @@ const Discussion = () => {
             type='text'
             className='form-control form-control-sm'
             onKeyDown={(event) => event.key == "Enter" && send()}
+            style={{ fontSize: "16px" }}
           />
         </div>
       </Wrappers.Modal>
