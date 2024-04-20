@@ -23,7 +23,17 @@ const App = () => {
     <>
       <UserContext.Provider value={{ user, setUser }}>
         <Outlet />
-        <ToastContainer />
+        <ToastContainer
+          position='top-right'
+          autoClose={1000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          pauseOnHover
+          theme='dark'
+        />
       </UserContext.Provider>
     </>
   );
