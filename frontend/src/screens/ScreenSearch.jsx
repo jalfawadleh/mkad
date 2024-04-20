@@ -161,6 +161,7 @@ const ScreenSearch = () => {
           onChange={(e) =>
             setQuery((prev) => ({ ...prev, text: e.target.value }))
           }
+          style={{ fontSize: 16 }}
         />
         <span role='button' onClick={() => toggleFilter()}>
           <FilterCircle color={filter ? "white" : "gray"} />
