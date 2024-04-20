@@ -134,18 +134,19 @@ const Discussion = () => {
         </div>
         <Wrappers.Body>
           {messages?.length > 0 &&
-            messages.map((message) => (
-              <div className='d-block p-1' id={message._id} key={message._id}>
+            messages.map((message, index) => (
+              <div className='d-block m-0 p-0' id={message._id} key={index}>
                 <div className='d-flex justify-content-between w-100'>
-                  <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-start'>
+                  <span className='w-100 m-0 ms-1 lh-1 fw-lighter fs-6 text-start'>
                     {message.sender.name}
                   </span>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-end'>
                     {moment(message.createdAt).format("DD MMMM h:mm a")}
                   </span>
                 </div>
-                <div className='d-inline'>
+                <div className='d-inline m-0 me-1 p-0'>
                   <AvatarLink
+                    size={24}
                     name={message.sender.name}
                     id={message.sender._id}
                   />

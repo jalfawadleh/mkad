@@ -290,11 +290,11 @@ export const ActivityCircleLink = ({ id, color = "white" }) => {
   );
 };
 
-export const Avatar = ({ name = "na" }) => {
+export const Avatar = ({ name = "na", size = 34 }) => {
   return (
     <img
-      height={34}
-      width={34}
+      height={size}
+      width={size}
       src={`data:image/svg+xml;utf8,${encodeURIComponent(multiavatar(name))}`}
       alt='Profile Photo'
       className='p-0 m-1'
@@ -302,10 +302,14 @@ export const Avatar = ({ name = "na" }) => {
   );
 };
 
-export const AvatarLink = ({ name = "na", id }) => {
+export const AvatarLink = ({ name = "na", id, size = 34 }) => {
   return (
-    <Link to={"/member/" + id} className='' style={{ height: 34, width: 34 }}>
-      <Avatar name={name} />
+    <Link
+      to={"/member/" + id}
+      className=''
+      style={{ height: size, width: size }}
+    >
+      <Avatar name={name} size={size} />
     </Link>
   );
 };
