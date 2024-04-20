@@ -32,7 +32,7 @@ const authSender = asyncHandler(async (socket, next) => {
   if (token) {
     try {
       // decode token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
       // find user
       const user = await User.findById(decoded.id).select("-password");

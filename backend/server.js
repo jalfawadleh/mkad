@@ -115,9 +115,8 @@ io.use(authSender);
 
 let discussionId = "";
 let conversationId = "";
-let sender = "";
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   /* Messaging Code */
 
   // once a member has requested Messaging another member
@@ -125,16 +124,20 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
-    conversationId = await getConversationId(socket.message);
+    conversationId =
+      socket.message.sender._id.toString() >
+      socket.message.recipient._id.toString()
+        ? socket.message.sender._id.toString()
+        : socket.message.recipient._id.toString();
 
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("message", socket.message);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
   });
 
   // on receiving a message send a message to both members in the messaging
@@ -142,11 +145,11 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
     // announce the member has joined to discussion
     io.sockets.in(conversationId).emit("message", socket.message);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
   });
 
   // on member leave messaging
@@ -154,14 +157,14 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
     // member leave the room
     socket.leave(conversationId);
 
     // annnounce member leaving the messaging
     io.sockets.in(conversationId).emit("message", socket.message);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
   });
 
   /* Discussion Code */
@@ -170,9 +173,6 @@ io.on("connection", (socket) => {
   socket.on("joinDiscussion", async (m) => {
     // add member details from socket authentication to the message.sender
     socket.message = { ...m, ...socket.message, content: "joined" };
-
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
 
     //store the discussion
     discussionId =
@@ -190,6 +190,9 @@ io.on("connection", (socket) => {
     socket.members = await joinDiscussion(socket.message);
 
     io.sockets.in(discussionId).emit("members", socket.members);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
   });
 
   // on receiving a message send a message to the members in the discussion
@@ -197,11 +200,11 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
     // send the message to all members in the discussion
     io.sockets.in(discussionId).emit("discussion", socket.message);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
   });
 
   // on member leave the discussion
@@ -209,26 +212,23 @@ io.on("connection", (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
+    // member leave the discussion
+    socket.leave(discussionId);
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
+
     // announce the member has joined to discussion
     io.sockets.in(discussionId).emit("discussion", socket.message);
 
     // member remove from discussion
     socket.members = await leaveDiscussion(socket.message);
     io.sockets.in(discussionId).emit("members", socket.members);
-
-    // member leave the discussion
-    socket.leave(discussionId);
-
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
   });
 
   // on member disconnect
   socket.on("disconnect", async (reason) => {
     // set The member to be online
-    socket.message.content = "left";
-    socket.leave(conversationId);
-    io.sockets.in(conversationId).emit("message", socket.message);
   });
 });
 

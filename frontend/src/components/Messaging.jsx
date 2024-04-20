@@ -40,7 +40,15 @@ const Messaging = () => {
 
   useEffect(() => {
     socket.connect();
-    return () => socket.disconnect();
+    return () => {
+      message.content = "leave";
+      socket.emit("leaveConversation", {
+        ...message,
+        sender: { _id: user._id, type: user._type, name: user.name },
+      });
+
+      socket.disconnect();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -83,15 +91,6 @@ const Messaging = () => {
       element.value = "";
     }
   };
-
-  // when member leave the discussion
-  useEffect(() => {
-    return () => {
-      message.content = "leave";
-      socket.emit("leaveConversation", message);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
