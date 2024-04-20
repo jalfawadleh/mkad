@@ -35,6 +35,7 @@ const Messaging = () => {
 
   const message = {
     recipient: { _id: id, name, type: "members" },
+    sender: { _id: user._id, name: user.name, type: "members" },
     content: "",
   };
 
