@@ -25,6 +25,7 @@ import ManageAccount from "./components/dashboard/ManageAccount.jsx";
 import ManageMember from "./components/dashboard/ManageMember.jsx";
 
 import Discussion from "./components/Discussion.jsx";
+import Messaging from "./components/Messaging.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +44,8 @@ const router = createBrowserRouter(
         </Route>
 
         <Route path='discussion/:type/:id/:name' element={<Discussion />} />
+        <Route path='messaging/:id/:name' element={<Messaging />} />
+
         <Route path='help' element={<ScreenHelp />} />
 
         <Route path='search' element={<ScreenSearch />}>

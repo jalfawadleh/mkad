@@ -1,8 +1,8 @@
 import mongoose, { Schema } from "mongoose";
 
-const roomsSchema = Schema(
+const discussions = Schema(
   {
-    room: {
+    discussion: {
       _id: { type: Schema.Types.ObjectId },
       type: { type: String },
       name: { type: String },
@@ -20,6 +20,6 @@ const roomsSchema = Schema(
   }
 );
 
-const Rooms = mongoose.model("rooms", roomsSchema);
+const Discussions = mongoose.model("discussions", discussions);
 
-export default Rooms;
+export default Discussions;

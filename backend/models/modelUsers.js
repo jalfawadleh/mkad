@@ -21,6 +21,10 @@ const usersSchema = Schema(
       required: [true, "Please add an email"],
       unique: true,
     },
+    online: {
+      type: Boolean,
+      default: false,
+    },
 
     type: { type: String, default: "member" }, //organisation union
     name: { type: String, required: true },

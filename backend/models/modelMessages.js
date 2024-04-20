@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const messagesSchema = Schema(
+const messages = Schema(
   {
     sender: {
       _id: { type: Schema.Types.ObjectId },
@@ -13,12 +13,13 @@ const messagesSchema = Schema(
       name: { type: String },
     },
     content: String,
+    read: { type: Boolean, default: false },
   },
   {
     timestamps: true,
   }
 );
 
-const Discussions = mongoose.model("discussion", messagesSchema);
+const Messages = mongoose.model("messages", messages);
 
-export default Discussions;
+export default Messages;

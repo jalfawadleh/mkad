@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
@@ -15,10 +15,11 @@ import {
   ActivityCircleLink,
   Avatar,
   CloseCircleLink,
-  DiscusstionCircleLink,
   Loader,
+  MessageCircleLink,
   OrganisationCircleLink,
 } from "./common/Icons.jsx";
+import { UserContext } from "../store.js";
 
 const MemberOrganisations = ({ organisations = [] }) => {
   return (
@@ -64,7 +65,7 @@ const MemberActivities = ({ activities = [] }) => {
 
 function Member() {
   const { id } = useParams();
-
+  const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const [member, setMember] = useState({
@@ -101,6 +102,11 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
+          {member._id != user._id ? (
+            <MessageCircleLink id={member._id} name={member.name} />
+          ) : (
+            ""
+          )}
           <CloseCircleLink />
         </Wrappers.Header>
 

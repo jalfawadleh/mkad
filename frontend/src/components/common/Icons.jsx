@@ -14,8 +14,10 @@ import {
   FaBell,
   FaExclamationCircle,
   FaHouseUser,
+  FaMoon,
   FaQuestion,
   FaSearch,
+  FaSun,
   FaUser,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
@@ -141,6 +143,50 @@ export const MembersCircle = ({ color = "white" }) => {
     <Circle>
       <Members color={color} />
     </Circle>
+  );
+};
+
+export const Online = ({ color = "yellow" }) => {
+  return <FaSun color={color} size={24} />;
+};
+
+export const OnlineCircle = ({ color = "yellow" }) => {
+  return (
+    <Circle>
+      <Online color={color} />
+    </Circle>
+  );
+};
+
+export const Offline = ({ color = "white" }) => {
+  return <FaMoon color={color} size={24} />;
+};
+
+export const OfflineCircle = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Offline color={color} />
+    </Circle>
+  );
+};
+
+export const Message = ({ color = "white" }) => {
+  return <FaRegEnvelope color={color} size={24} />;
+};
+
+export const MessageCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='info'>
+      <Message color={color} />
+    </Circle>
+  );
+};
+
+export const MessageCircleLink = ({ id, name, color = "white" }) => {
+  return (
+    <Link to={`/messaging/${id}/${name}`}>
+      <MessageCircle color={color} />
+    </Link>
   );
 };
 

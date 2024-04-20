@@ -1,31 +1,43 @@
 import { useContext, useEffect, useState } from "react";
 import io from "socket.io-client";
 import moment from "moment";
+import { toast } from "react-toastify";
 
 import Wrappers from "./common/Wrappers";
 
 import { UserContext } from "../store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
-  ActivityCircle,
-  DiscusstionCircle,
-  OrganisationCircle,
   CloseCircleLink,
   Avatar,
   AvatarLink,
+  MessageCircle,
+  OfflineCircle,
+  OnlineCircle,
 } from "./common/Icons";
 
 /**
- * Discussion component.
+ * Messaging component.
  *
  * @returns {React.ReactElement} languages element.
  */
-const Discussion = () => {
-  const { type, id, name } = useParams();
+const Messaging = () => {
+  const { id, name } = useParams();
   const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user._id == id) {
+      navigate(-1);
+      toast("You can't text yourself");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [messages, setMessages] = useState([]);
-  const [members, setMembers] = useState([]);
+  const [online, setOnline] = useState(false);
 
   const URL = import.meta.env.PROD
     ? "https://demo.mkadifference.com/"
@@ -36,35 +48,31 @@ const Discussion = () => {
     extraHeaders: { authorization: user.token },
   });
 
-  const message = { recipient: { _id: id, type, name }, content: "" };
+  const message = {
+    sender: { _id: user._id, type: "member", name: user.name },
+    recipient: { _id: id, type: "member", name },
+    content: "",
+  };
 
   useEffect(() => {
     socket.connect();
-    return () => {
-      message.content = "leave";
-      socket.emit("leaveDiscussion", {
-        ...message,
-        sender: { _id: user._id, type: user._type, name: user.name },
-      });
-      socket.disconnect();
-    };
+    return () => socket.disconnect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // when member connect join the discussion
   useEffect(() => {
-    const joinDiscussion = () => {
+    const join = () => {
       message.content = "join";
-      socket.emit("joinDiscussion", message);
+      socket.emit("join", message);
     };
-    socket.on("connect", joinDiscussion);
-    return () => socket.off("connect", joinDiscussion);
+    socket.on("connect", join);
+    return () => socket.off("connect", join);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // on receiving a message
   useEffect(() => {
-    const onDiscussion = (message) => {
+    const onMessage = (message) => {
       setMessages((previous) => [...previous, message]);
       setTimeout(
         () =>
@@ -76,14 +84,14 @@ const Discussion = () => {
         200
       );
     };
-    socket.on("discussion", onDiscussion);
-    return () => socket.off("discussion", onDiscussion);
+    socket.on("message", onMessage);
+    return () => socket.off("message", onMessage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    socket.on("members", setMembers);
-    return () => socket.off("members");
+    socket.on("online", setOnline);
+    return () => socket.off("online");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -92,46 +100,22 @@ const Discussion = () => {
     const content = element.value;
     if (content) {
       message.content = content;
-      socket.emit("discussion", message);
+      socket.emit("message", message);
       element.value = "";
     }
   };
-
-  // when member leave the discussion
-  useEffect(() => {
-    return () => {
-      message.content = "leave";
-      socket.emit("leaveDiscussion", message);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const iconType = (
-    <>
-      {type == "organisation" && <OrganisationCircle />}
-      {type == "activity" && <ActivityCircle />}
-      {type == "member" && <Avatar name={name} />}
-    </>
-  );
 
   return (
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {iconType}
-          <DiscusstionCircle color='white' />
+          <Avatar name={name} />
+          <MessageCircle color='white' />
           <BoxCenterHeader>{name}</BoxCenterHeader>
+          {online ? <OnlineCircle /> : <OfflineCircle />}
           <CloseCircleLink />
         </Wrappers.Header>
 
-        <div className='d-block px-2 overflow-y-auto'>
-          <div className='d-inline px-2'>{members.length}</div>
-          <div className='d-inline px-1'>Members</div>
-          {members.map((m) => (
-            <AvatarLink name={m.name} id={m._id} key={m._id} />
-          ))}
-          <hr className='border border-primary border-1 opacity-75 m-1' />
-        </div>
         <Wrappers.Body>
           {messages?.length > 0 &&
             messages.map((message) => (
@@ -172,4 +156,4 @@ const Discussion = () => {
   );
 };
 
-export default Discussion;
+export default Messaging;
