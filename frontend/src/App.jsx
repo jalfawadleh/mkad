@@ -30,15 +30,17 @@ const App = () => {
   };
 
   useEffect(() => {
+    const onDisconnect = () => (window.location.href = "/");
     if (user.token) setSocket(io(URL, ioParams));
+    if (user.token) socket.on("disconnect", onDisconnect);
+    return () => {
+      if (user.token) socket.off("disconnect", onDisconnect);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token]);
 
   // on socket disconnect
   useEffect(() => {
-    const onDisconnect = () => (window.location.href = "/");
-    socket.on("disconnect", onDisconnect);
-    return () => socket.off("disconnect", onDisconnect);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
