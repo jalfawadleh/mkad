@@ -34,6 +34,14 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token]);
 
+  // on socket disconnect
+  useEffect(() => {
+    const onDisconnect = () => (window.location.href = "/");
+    socket.on("disconnect", onDisconnect);
+    return () => socket.off("disconnect", onDisconnect);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <UserContext.Provider value={{ user, setUser, socket }}>

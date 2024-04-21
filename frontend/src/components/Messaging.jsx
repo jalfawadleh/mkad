@@ -4,7 +4,7 @@ import moment from "moment";
 import Wrappers from "./common/Wrappers";
 
 import { UserContext } from "../store";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
   MessageCircle,
@@ -22,7 +22,6 @@ const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
-  const navigate = useNavigate();
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "members" },
@@ -64,16 +63,6 @@ const Messaging = () => {
     }
   };
 
-  // on receiving a message
-  useEffect(() => {
-    const onDisconnect = () => {
-      navigate(-1);
-    };
-    socket.on("disconnect", onDisconnect);
-    return () => socket.off("disconnect", onDisconnect);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <>
       <Wrappers.Modal>
@@ -86,24 +75,26 @@ const Messaging = () => {
 
         <Wrappers.Body>
           {messages?.length > 0 &&
-            messages.map((message, index) => (
-              <div className='d-block m-0 p-0' id={message._id} key={index}>
+            messages.map((m, index) => (
+              <div className='d-block m-0 p-0' id={m._id} key={index}>
                 <div className='d-flex justify-content-between w-100'>
                   <span className='w-100 m-0 ms-1 lh-1 fw-lighter fs-6 text-start'>
-                    {message.sender.name}
+                    {m.sender.name ? m.sender.name : ""}
                   </span>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-end'>
-                    {moment(message.createdAt).format("DD MMMM h:mm a")}
+                    {m.createdAt
+                      ? moment(message.createdAt).format("DD MMMM h:mm a")
+                      : ""}
                   </span>
                 </div>
                 <div className='d-inline m-0 me-1 p-0'>
                   <AvatarLink
                     size={24}
-                    name={message.sender.name}
-                    id={message.sender._id}
+                    name={m.sender.name}
+                    id={m.sender._id}
                   />
                 </div>
-                <div className='d-inline'>{message.content}</div>
+                <div className='d-inline'>{m.content}</div>
                 <hr className='m-1 p-0' />
               </div>
             ))}
