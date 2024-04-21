@@ -37,12 +37,6 @@ const App = () => {
   useEffect(() => {
     const onDisconnect = () => (window.location.href = "/");
     if (socket.id) socket.on("disconnect", onDisconnect);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket.id]);
-
-  // on socket disconnect
-  useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
