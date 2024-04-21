@@ -4,7 +4,7 @@ import moment from "moment";
 import Wrappers from "./common/Wrappers";
 
 import { UserContext } from "../store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
   MessageCircle,
@@ -22,6 +22,7 @@ const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "members" },
@@ -62,6 +63,16 @@ const Messaging = () => {
       event.target.value = "";
     }
   };
+
+  // on receiving a message
+  useEffect(() => {
+    const onDisconnect = () => {
+      navigate(-1);
+    };
+    socket.on("disconnect", onDisconnect);
+    return () => socket.off("disconnect", onDisconnect);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
