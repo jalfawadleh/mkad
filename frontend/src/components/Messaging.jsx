@@ -44,11 +44,15 @@ const Messaging = () => {
   useEffect(() => {
     const onConversation = (message) => {
       setMessages((previous) => [...previous, message]);
-      document.getElementById("endoflist").scrollIntoView({
-        behavior: "smooth",
-        block: "end",
-        inline: "end",
-      });
+      setTimeout(
+        () =>
+          document.getElementById("endoflist").scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "end",
+          }),
+        200
+      );
     };
     socket.on("conversation", onConversation);
     return () => socket.off("conversation", onConversation);
