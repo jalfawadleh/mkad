@@ -24,6 +24,7 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
 
   const message = {
+    sender: { _id: user._id, name: user.name, type: "members" },
     recipient: { _id: id, name, type: "members" },
     content: "",
   };
