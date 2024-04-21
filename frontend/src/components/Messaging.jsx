@@ -22,6 +22,11 @@ const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [msgBoxH, setMsgBoxH] = useState(
+    window.innerWidth < 560
+      ? window.innerHeight - 100
+      : window.innerHeight - 200
+  );
   const navigate = useNavigate();
 
   const message = {
@@ -79,7 +84,11 @@ const Messaging = () => {
           <CloseCircleLink />
         </Wrappers.Header>
 
-        <Wrappers.Body>
+        <div
+          style={{
+            height: msgBoxH,
+          }}
+        >
           {messages?.length > 0 &&
             messages.map((m, index) => (
               <div className='d-block m-0 p-0' id={m._id} key={index}>
@@ -105,7 +114,7 @@ const Messaging = () => {
               </div>
             ))}
           <div id='endoflist' className='my-0' />
-        </Wrappers.Body>
+        </div>
 
         <div className='p-1' id='sendForm'>
           <input
@@ -119,15 +128,10 @@ const Messaging = () => {
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
-            onFocus={(event) =>
-              (document.getElementById("keyboardBG").style.height = "240px")
-            }
-            onBlur={(event) =>
-              (document.getElementById("keyboardBG").style.height = 0)
-            }
+            onFocus={() => setMsgBoxH(msgBoxH - 260)}
+            onBlur={() => setMsgBoxH(msgBoxH + 260)}
           />
         </div>
-        <div id='keyboardBG'>Keyboard</div>
       </Wrappers.Modal>
     </>
   );
