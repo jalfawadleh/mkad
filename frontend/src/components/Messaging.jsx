@@ -128,8 +128,10 @@ const Messaging = () => {
             autoCapitalize='none'
             autoComplete='off'
             onFocus={() => {
-              window.innerWidth < 560 && setMsgBoxH(msgBoxH - 270);
-              window.scrollTo(0, 0);
+              if (window.innerWidth < 560) {
+                setMsgBoxH(msgBoxH - 270);
+                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+              }
             }}
             onBlur={() =>
               window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 270) : null
