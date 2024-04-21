@@ -62,7 +62,6 @@ app.use(
         "'self'",
         "https://nominatim.openstreetmap.org",
         "https://demo.mkadifference.com",
-        "http://192.168.1.10:3012/",
       ],
     },
   })
