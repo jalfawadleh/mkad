@@ -84,6 +84,9 @@ function LoginForm() {
             className='form-control'
             value={username}
             onChange={onChange}
+            autoCorrect='off'
+            autoCapitalize='none'
+            autoComplete='off'
           />
           <label htmlFor='username'>Username</label>
         </div>
@@ -97,6 +100,9 @@ function LoginForm() {
             className='form-control'
             value={password}
             onChange={onChange}
+            autoCorrect='off'
+            autoCapitalize='none'
+            autoComplete='off'
           />
           <label htmlFor='password'>Password</label>
         </div>
@@ -112,6 +118,9 @@ function LoginForm() {
                 className='form-control'
                 value={confirmPassword}
                 onChange={onChange}
+                autoCorrect='off'
+                autoCapitalize='none'
+                autoComplete='off'
               />
               <label htmlFor='confirmPassword'>Confirm Password</label>
             </div>
@@ -125,6 +134,9 @@ function LoginForm() {
                 className='form-control'
                 value={name}
                 onChange={onChange}
+                autoCorrect='off'
+                autoCapitalize='none'
+                autoComplete='off'
               />
               <label htmlFor='name'>Name</label>
             </div>
@@ -138,6 +150,9 @@ function LoginForm() {
                 className='form-control'
                 value={email}
                 onChange={onChange}
+                autoCorrect='off'
+                autoCapitalize='none'
+                autoComplete='off'
               />
               <small id='emailHelp' className='text-muted'>
                 Email will only be used for password reset

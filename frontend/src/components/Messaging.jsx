@@ -110,6 +110,9 @@ const Messaging = () => {
             className='form-control form-control-sm'
             onKeyDown={(event) => event.key == "Enter" && send(event)}
             style={{ fontSize: "16px" }}
+            autoCorrect='off'
+            autoCapitalize='none'
+            autoComplete='off'
           />
         </div>
       </Wrappers.Modal>
