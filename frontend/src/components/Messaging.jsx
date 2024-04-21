@@ -131,8 +131,8 @@ const Messaging = () => {
               if (window.innerWidth < 560) {
                 setMsgBoxH(msgBoxH - 270);
                 setTimeout(() => {
-                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-                }, 100);
+                  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+                }, 50);
               }
             }}
             onBlur={() =>
