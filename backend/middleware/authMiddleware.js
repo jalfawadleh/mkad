@@ -37,11 +37,11 @@ const authSender = asyncHandler(async (socket, next) => {
       // find user
       const sender = await User.findById(decoded.id).select("name type");
 
-      // Load user details in message from
-      socket.message = { sender };
-
-      if (socket.message.sender) next();
-      else {
+      if (sender) {
+        // Load user details in message from
+        socket.message = { sender };
+        next();
+      } else {
         const err = new Error("Not authorized");
         err.data = { content: "token failed" };
         next(err);
