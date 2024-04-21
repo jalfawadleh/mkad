@@ -37,9 +37,10 @@ const Messaging = () => {
 
   // member join coversation when online
   useEffect(() => {
-    message.content = "join";
-    if (socket.id) socket.emit("joinConversation", message);
-    else navigate("/");
+    if (socket.id) {
+      message.content = "join";
+      socket.emit("joinConversation", message);
+    } else navigate("/");
     return () => {
       message.content = "leave";
       if (socket.id) socket.emit("leaveConversation", message);
@@ -61,8 +62,10 @@ const Messaging = () => {
         200
       );
     };
-    socket.on("conversation", onConversation);
-    return () => socket.off("conversation", onConversation);
+    if (socket.id) socket.on("conversation", onConversation);
+    return () => {
+      if (socket.id) socket.off("conversation", onConversation);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -84,11 +87,7 @@ const Messaging = () => {
           <CloseCircleLink />
         </Wrappers.Header>
 
-        <div
-          style={{
-            height: msgBoxH,
-          }}
-        >
+        <div className='overflow-auto' style={{ height: msgBoxH }}>
           {messages?.length > 0 &&
             messages.map((m, index) => (
               <div className='d-block m-0 p-0' id={m._id} key={index}>
@@ -128,11 +127,12 @@ const Messaging = () => {
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
-            onFocus={() =>
-              window.innerWidth < 560 ? setMsgBoxH(msgBoxH - 260) : null
-            }
+            onFocus={() => {
+              window.innerWidth < 560 && setMsgBoxH(msgBoxH - 270);
+              window.scrollTo(0, 0);
+            }}
             onBlur={() =>
-              window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 260) : null
+              window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 270) : null
             }
           />
         </div>
