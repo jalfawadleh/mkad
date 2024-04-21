@@ -87,7 +87,7 @@ const Messaging = () => {
           <CloseCircleLink />
         </Wrappers.Header>
 
-        <div className='overflow-auto' style={{ height: msgBoxH }}>
+        <div className='overflow-auto' style={{ height: msgBoxH + "px" }}>
           {messages?.length > 0 &&
             messages.map((m, index) => (
               <div className='d-block m-0 p-0' id={m._id} key={index}>
@@ -130,7 +130,9 @@ const Messaging = () => {
             onFocus={() => {
               if (window.innerWidth < 560) {
                 setMsgBoxH(msgBoxH - 270);
-                window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+                }, 300);
               }
             }}
             onBlur={() =>
