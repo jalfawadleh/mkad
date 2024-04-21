@@ -119,8 +119,15 @@ const Messaging = () => {
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
+            onFocus={(event) =>
+              (document.getElementById("keyboardBG").style.height = "240px")
+            }
+            onBlur={(event) =>
+              (document.getElementById("keyboardBG").style.height = 0)
+            }
           />
         </div>
+        <div id='keyboardBG'>Keyboard</div>
       </Wrappers.Modal>
     </>
   );
