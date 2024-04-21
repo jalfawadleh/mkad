@@ -328,7 +328,7 @@ export const Member = ({ color = "white" }) => {
 
 export const MemberCircle = ({ color = "white" }) => {
   return (
-    <Circle>
+    <Circle borderColor='light'>
       <Member color={color} />
     </Circle>
   );

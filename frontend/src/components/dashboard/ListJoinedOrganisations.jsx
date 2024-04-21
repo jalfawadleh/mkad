@@ -69,7 +69,15 @@ const ListJoinedOrganisations = () => {
         <span onClick={() => setFolded(!folded)}>
           <FoldCircle color={folded ? "white" : "gray"} />
         </span>
-        <div className='p-auto m-auto text-center'>Joined Organisatoins</div>
+        <div className='p-auto m-auto text-center'>
+          <span
+            role='button'
+            onClick={() => setFolded(!folded)}
+            className='text-primary'
+          >
+            Joined Organisatoins
+          </span>
+        </div>
         <Empty />
       </Bar>
 

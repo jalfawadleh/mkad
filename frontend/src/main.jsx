@@ -13,19 +13,26 @@ import App from "./App.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 
-import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 import ScreenSearch from "./screens/ScreenSearch.jsx";
-import ScreenHelp from "./screens/ScreenHelp.jsx";
-
 import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
 import Member from "./components/Member.jsx";
+
+import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 import ManageActivity from "./components/dashboard/ManageActivity.jsx";
 import ManageAccount from "./components/dashboard/ManageAccount.jsx";
 import ManageMember from "./components/dashboard/ManageMember.jsx";
 
 import Discussion from "./components/Discussion.jsx";
 import Messaging from "./components/Messaging.jsx";
+
+import ScreenHelp from "./screens/ScreenHelp.jsx";
+import HowTo from "./components/help/HowTo.jsx";
+
+import ScreenMKaDifference from "./screens/ScreenMKaDifference.jsx";
+import WhoWeAre from "./components/mkadifference/WhoWeAre.jsx";
+import ContactUs from "./components/mkadifference/ContactUs.jsx";
+import Updates from "./components/mkadifference/Updates.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,7 +53,15 @@ const router = createBrowserRouter(
         <Route path='discussion/:type/:id/:name' element={<Discussion />} />
         <Route path='messaging/:id/:name' element={<Messaging />} />
 
-        <Route path='help' element={<ScreenHelp />} />
+        <Route path='help' element={<ScreenHelp />}>
+          <Route path='howto' element={<HowTo />} />
+        </Route>
+
+        <Route path='mkadifference' element={<ScreenMKaDifference />}>
+          <Route path='whoweare' element={<WhoWeAre />} />
+          <Route path='contactus' element={<ContactUs />} />
+          <Route path='updates' element={<Updates />} />
+        </Route>
 
         <Route path='search' element={<ScreenSearch />}>
           <Route path='activity/:id' element={<Activity />} />

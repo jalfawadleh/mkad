@@ -1,52 +1,25 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Bar } from "../components/common/Wrappers";
-import {
-  UpdatesCircle,
-  Empty,
-  MemberCircle,
-  MKaDifferenceCircle,
-  OrganisationCircle,
-  ActivityCircle,
-} from "../components/common/Icons";
+import { Empty, HelpCircle } from "../components/common/Icons";
 
 const ScreenHelp = () => {
-  const [count, setCount] = useState(0);
-
-  const updateCount = async () => {
-    await axios.get("/members/count").then(({ data }) => setCount(data));
-    // setTimeout(() => updateCount(), 1000);
-  };
-
-  useEffect(() => {
-    updateCount();
-  }, []);
-
   return (
     <>
       <Bar>
-        <MKaDifferenceCircle />
-        <div className='p-auto m-auto text-center fw-bold'>MKaδifference</div>
+        <HelpCircle />
+        <div className='p-auto m-auto text-center fw-bold'>Help</div>
         <Empty />
       </Bar>
       <Bar>
-        <MemberCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
-        <OrganisationCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
-        <ActivityCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
-        <Empty />
-      </Bar>
-      <Bar>
-        <MemberCircle color='white' />
-        <div className='p-auto m-auto text-center'>For New Members</div>
-        <Empty />
-      </Bar>
-      <Bar>
-        <UpdatesCircle />
-        <div className='p-auto m-auto text-center'>Updates</div>
+        <Link to='howto'>
+          <HelpCircle />
+        </Link>
+        <Link
+          to='howto'
+          className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+        >
+          How To
+        </Link>
         <Empty />
       </Bar>
 

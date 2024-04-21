@@ -18,6 +18,7 @@ import {
   AvatarLink,
   ActivityCircleLink,
   OrganisationCircleLink,
+  MemberCircle,
 } from "../components/common/Icons";
 import { IconLinkCenterText } from "../components/common/LinkItems";
 
@@ -32,8 +33,8 @@ const ScreenSearch = () => {
 
   const [query, setQuery] = useState({
     text: "",
-    filter: true,
-    locations: false,
+    filter: false,
+    locations: true,
     organisations: true,
     members: true,
     activities: true,
@@ -197,7 +198,7 @@ const ScreenSearch = () => {
         <OrganisationCircle color={organisations ? "white" : "gray"} />
       </span>
       <span role='button' onClick={() => toggleItem({ members })}>
-        <MembersCircle color={members ? "white" : "gray"} />
+        <MemberCircle color={members ? "white" : "gray"} />
       </span>
     </Bar>
   );

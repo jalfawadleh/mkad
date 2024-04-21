@@ -8,15 +8,14 @@ import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
   AddActivityCircleLink,
-  AvatarCustomLink,
   ExclamationCircle,
   FoldCircle,
   LocationCircleLink,
+  Empty,
 } from "../common/Icons";
 
 const ListManagedActivities = () => {
   const location = useLocation();
-  const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
   const [folded, setFolded] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
@@ -45,9 +44,17 @@ const ListManagedActivities = () => {
         <span className='p-0 m-0' onClick={() => setFolded(!folded)}>
           <FoldCircle color={folded ? "white" : "gray"} />
         </span>
-        <AvatarCustomLink name={user.name} />
-        <div className='p-auto m-auto text-center'> Manage Activities</div>
-        {user.type === "organisation" && <AddActivityCircleLink />}
+        <div className='p-auto m-auto text-center'>
+          <span
+            role='button'
+            onClick={() => setFolded(!folded)}
+            className='text-primary'
+          >
+            Manage Activities
+          </span>
+        </div>
+        <Empty />
+        <AddActivityCircleLink />
       </Bar>
 
       {!folded &&

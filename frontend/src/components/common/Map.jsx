@@ -210,11 +210,11 @@ const Map = () => {
     <>
       <MapContext.Provider value={{ setFlyToLocation }}>
         <div
-          className='m-2 p-0 w-100'
+          className='m-0 p-2 position-absolute w-100'
           style={{
-            maxWidth: "320px",
+            width: "100%",
+            maxWidth: 380,
             maxHeight: window.innerHeight - 100,
-            position: "absolute",
           }}
         >
           <Outlet />
@@ -282,7 +282,7 @@ const Map = () => {
             </Popup>
           </Marker>
 
-          <ZoomControl position='topright' />
+          <ZoomControl position='bottomright' />
 
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

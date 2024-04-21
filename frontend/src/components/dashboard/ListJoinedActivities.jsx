@@ -51,10 +51,20 @@ const ListJoinedActivities = () => {
     <>
       <div className='my-2'></div>
       <Bar>
-        <span onClick={() => setFolded(!folded)}>
+        <span role='button' onClick={() => setFolded(!folded)}>
           <FoldCircle color={folded ? "white" : "gray"} />
         </span>
-        <div className='p-auto m-auto text-center'>Joined Activities </div>
+
+        <div className='p-auto m-auto text-center'>
+          <span
+            role='button'
+            onClick={() => setFolded(!folded)}
+            className='text-primary'
+          >
+            Joined Activities
+          </span>
+        </div>
+
         <Empty />
       </Bar>
 
