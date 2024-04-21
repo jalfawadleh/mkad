@@ -176,48 +176,36 @@ function LoginForm() {
   );
 
   const countersBox = (
-    <div className='d-flex justify-content-around' style={{ height: 300 }}>
-      <div className='d-flex flex-column'>
-        <div className='text-center h4 m-auto p-auto'>
-          <div
-            data-purecounter-start='0'
-            data-purecounter-end='65'
-            data-purecounter-duration='2'
-            className='purecounter'
-          ></div>
-          Members
-        </div>
-
-        <div className='text-center h4 m-auto p-auto'>
-          <div
-            data-purecounter-start='0'
-            data-purecounter-end='85'
-            data-purecounter-duration='2'
-            className='d-block purecounter'
-          ></div>
-          Activities
-        </div>
+    <div
+      className='d-flex justify-content-around h5'
+      style={{ minHeight: 200 }}
+    >
+      <div className='text-center m-auto p-auto'>
+        <div
+          data-purecounter-start='0'
+          data-purecounter-end='65'
+          data-purecounter-duration='2'
+          className='purecounter'
+        ></div>
+        Members
       </div>
-      <div className='d-flex flex-column'>
-        <div className='text-center h4 m-auto p-auto'>
-          <div
-            data-purecounter-start='0'
-            data-purecounter-end='30'
-            data-purecounter-duration='2'
-            className='purecounter h3'
-          ></div>
-          Organisations
-        </div>
-
-        <div className='text-center h4 m-auto p-auto'>
-          <div
-            data-purecounter-start='0'
-            data-purecounter-end='24'
-            data-purecounter-duration='2'
-            className='purecounter h3'
-          ></div>
-          Unions
-        </div>
+      <div className='text-center m-auto p-auto'>
+        <div
+          data-purecounter-start='0'
+          data-purecounter-end='85'
+          data-purecounter-duration='2'
+          className='d-block purecounter'
+        ></div>
+        Activities
+      </div>
+      <div className='text-center m-auto p-auto'>
+        <div
+          data-purecounter-start='0'
+          data-purecounter-end='30'
+          data-purecounter-duration='2'
+          className='purecounter'
+        ></div>
+        Organisations
       </div>
     </div>
   );
@@ -232,7 +220,7 @@ function LoginForm() {
           </div>
           <div className='d-none d-md-flex justify-content-between'>
             <div className='w-50'>{loginForm}</div>
-            <div className='w-50 m-auto'>{countersBox}</div>
+            <div className='w-50 m-auto p-3'>{countersBox}</div>
           </div>
         </div>
       </div>
