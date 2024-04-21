@@ -27,7 +27,7 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const authSender = asyncHandler(async (socket, next) => {
-  const token = socket.handshake.headers.authorization;
+  const token = socket.handshake.auth.token;
 
   if (token) {
     try {
@@ -35,12 +35,10 @@ const authSender = asyncHandler(async (socket, next) => {
       const decoded = await jwt.verify(token, process.env.JWT_SECRET);
 
       // find user
-      const user = await User.findById(decoded.id).select("-password");
+      const sender = await User.findById(decoded.id).select("name type");
 
       // Load user details in message from
-      socket.message = {
-        sender: { _id: user._id, type: user.type, name: user.name },
-      };
+      socket.message = { sender };
 
       if (socket.message.sender) next();
       else {

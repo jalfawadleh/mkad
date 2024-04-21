@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import io from "socket.io-client";
 import moment from "moment";
 
 import Wrappers from "./common/Wrappers";
@@ -21,75 +20,45 @@ import {
  */
 const Messaging = () => {
   const { id, name } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
-
-  const URL = import.meta.env.PROD
-    ? "https://demo.mkadifference.com/"
-    : "http://localhost:3011/";
-
-  const socket = io(URL, {
-    autoConnect: true,
-    extraHeaders: { authorization: user.token },
-  });
 
   const message = {
     recipient: { _id: id, name, type: "members" },
-    sender: { _id: user._id, name: user.name, type: "members" },
     content: "",
   };
 
+  // member join coversation when online
   useEffect(() => {
-    socket.connect();
+    message.content = "join";
+    socket.emit("joinConversation", message);
     return () => {
       message.content = "leave";
-      socket.emit("leaveConversation", {
-        ...message,
-        sender: { _id: user._id, type: user._type, name: user.name },
-      });
-
-      socket.disconnect();
+      socket.emit("leaveConversation", message);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // when member connect join
-  useEffect(() => {
-    const joinMessaging = () => {
-      message.content = "join";
-      socket.emit("joinConversation", message);
-    };
-    socket.on("connect", joinMessaging);
-    return () => socket.off("connect", joinMessaging);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // on receiving a message
   useEffect(() => {
-    const onMessage = (message) => {
+    const onConversation = (message) => {
       setMessages((previous) => [...previous, message]);
-      setTimeout(
-        () =>
-          document.getElementById("endoflist").scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end",
-          }),
-        200
-      );
+      document.getElementById("endoflist").scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "end",
+      });
     };
-    socket.on("message", onMessage);
-    return () => socket.off("message", onMessage);
+    socket.on("conversation", onConversation);
+    return () => socket.off("conversation", onConversation);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const send = () => {
-    const element = document.getElementById("content");
-    const content = element.value;
-    if (content) {
-      message.content = content;
-      socket.emit("message", message);
-      element.value = "";
+  const send = (event) => {
+    message.content = event.target.value;
+    if (message.content) {
+      socket.emit("conversation", message);
+      event.target.value = "";
     }
   };
 
@@ -136,7 +105,7 @@ const Messaging = () => {
             // value={content}
             type='text'
             className='form-control form-control-sm'
-            onKeyDown={(event) => event.key == "Enter" && send()}
+            onKeyDown={(event) => event.key == "Enter" && send(event)}
             style={{ fontSize: "16px" }}
           />
         </div>

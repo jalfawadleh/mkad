@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 
@@ -8,20 +8,35 @@ import "react-datetime/css/react-datetime.css";
 import "leaflet/dist/leaflet.css";
 
 import { UserContext } from "./store.js";
+import io from "socket.io-client";
 
 const App = () => {
   const [user, setUser] = useState([]);
+  const [socket, setSocket] = useState([]);
 
-  axios.defaults.baseURL = import.meta.env.PROD
-    ? "https://demo.mkadifference.com/api/"
-    : "http://localhost:3011/api/";
+  const URL = import.meta.env.PROD
+    ? "https://demo.mkadifference.com/"
+    : "http://localhost:3011/";
+
+  axios.defaults.baseURL = URL + "api/";
   axios.defaults.headers.common.Authorization = user.token;
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
 
+  const ioParams = {
+    autoConnect: true,
+    auth: { token: user.token },
+    secure: true,
+  };
+
+  useEffect(() => {
+    if (user.token) setSocket(io(URL, ioParams));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.token]);
+
   return (
     <>
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserContext.Provider value={{ user, setUser, socket }}>
         <Outlet />
         <ToastContainer
           position='top-right'

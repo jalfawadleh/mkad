@@ -25,7 +25,6 @@ import map from "./modules/moduleMap.js";
 
 import { joinDiscussion, leaveDiscussion } from "./modules/modulDiscussion.js";
 import { saveMessage } from "./modules/modulMessages.js";
-import { getConversationId } from "./modules/modulConversation.js";
 
 dotenv.config();
 
@@ -42,14 +41,14 @@ app.use(cors());
 app.use(compression());
 
 // setup the logger and create a rotating write stream
-app.use(
-  morgan("combined", {
-    stream: rfs.createStream("access.log", {
-      interval: "1d", // rotate daily
-      path: path.join(__dirname, "logs"),
-    }),
-  })
-);
+// app.use(
+//   morgan("combined", {
+//     stream: rfs.createStream("access.log", {
+//       interval: "1d", // rotate daily
+//       path: path.join(__dirname, "logs"),
+//     }),
+//   })
+// );
 
 // allow sources to openstreetmap
 app.use(
@@ -84,29 +83,14 @@ app.use(notFound);
 app.use(errorHandler);
 
 // socket code ############################################
+// https://socket.io/docs/v4/server-socket-instance/
 
 const server = createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "https://demo.mkadifference.com",
-    methods: ["GET", "POST"],
-    transports: ["websocket", "polling"],
-    allowedHeaders: ["authorization"],
-    credentials: true,
-  },
-  allowEIO3: true,
-});
-
-// setup the logger and create a rotating write stream
-io.engine.use(
-  morgan("combined", {
-    stream: rfs.createStream("access.log", {
-      interval: "1d", // rotate daily
-      path: path.join(__dirname, "logs"),
-    }),
-  })
-);
+const origin =
+  process.env.NODE_ENV === "production"
+    ? "https://demo.mkadifference.com"
+    : "http://localhost:3000";
+const io = new Server(server, { cors: { origin } });
 
 io.engine.use(helmet());
 
@@ -118,6 +102,15 @@ let conversationId = "";
 
 io.on("connection", async (socket) => {
   /* Messaging Code */
+  // Log only in production
+  process.env.NODE_ENV != "production" &&
+    console.log(
+      Date.now(),
+      "\tsocket.id:",
+      socket.id,
+      "connection\n",
+      socket.message
+    );
 
   // once a member has requested Messaging another member
   socket.on("joinConversation", async (m) => {
@@ -134,22 +127,42 @@ io.on("connection", async (socket) => {
     socket.join(conversationId);
 
     // announce the member has joined the messaging
-    io.sockets.in(conversationId).emit("message", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
+
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "joinConversation\n",
+        socket.message
+      );
   });
 
   // on receiving a message send a message to both members in the messaging
-  socket.on("message", async (m) => {
+  socket.on("conversation", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
     // announce the member has joined to discussion
-    io.sockets.in(conversationId).emit("message", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
+
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "conversation\n",
+        socket.message
+      );
   });
 
   // on member leave messaging
@@ -161,10 +174,20 @@ io.on("connection", async (socket) => {
     socket.leave(conversationId);
 
     // annnounce member leaving the messaging
-    io.sockets.in(conversationId).emit("message", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
+
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "leaveConversation\n",
+        socket.message
+      );
   });
 
   /* Discussion Code */
@@ -178,7 +201,7 @@ io.on("connection", async (socket) => {
     discussionId =
       socket.message.recipient.type +
       ":" +
-      socket.message.recipient._id.toString;
+      socket.message.recipient._id.toString();
 
     // Add member to the discussion
     socket.join(discussionId);
@@ -228,15 +251,24 @@ io.on("connection", async (socket) => {
 
   // on member disconnect
   socket.on("disconnect", async (reason) => {
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "disconnect\n",
+        "\n--------------------------"
+      );
     // set The member to be online
-    socket.message.content = "left";
-    // member leave the room
-    socket.leave(conversationId);
-    socket.leave(discussionId);
-    // annnounce member leaving the messaging
-    io.sockets.in(conversationId).emit("message", socket.message);
-    io.sockets.in(discussionId).emit("message", socket.message);
+    socket.disconnect();
   });
+
+  // // on member disconnecting
+  // socket.on("disconnecting", async (reason) => {
+  //   // set The member to be online
+  //   socket.disconnect();
+  // });
 });
 
 // starting the socket.io and express servers on the same port
