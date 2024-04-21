@@ -128,8 +128,12 @@ const Messaging = () => {
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
-            onFocus={() => setMsgBoxH(msgBoxH - 260)}
-            onBlur={() => setMsgBoxH(msgBoxH + 260)}
+            // onFocus={() =>
+            //   window.innerWidth < 560 ? setMsgBoxH(msgBoxH - 260) : null
+            // }
+            // onBlur={() =>
+            //   window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 260) : null
+            // }
           />
         </div>
       </Wrappers.Modal>
