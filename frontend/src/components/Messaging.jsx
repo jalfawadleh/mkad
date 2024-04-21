@@ -4,7 +4,7 @@ import moment from "moment";
 import Wrappers from "./common/Wrappers";
 
 import { UserContext } from "../store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   BoxCenterHeader,
   MessageCircle,
@@ -22,6 +22,7 @@ const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const navigate = useNavigate();
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "members" },
@@ -32,10 +33,11 @@ const Messaging = () => {
   // member join coversation when online
   useEffect(() => {
     message.content = "join";
-    socket.emit("joinConversation", message);
+    if (socket.id) socket.emit("joinConversation", message);
+    else navigate("/");
     return () => {
       message.content = "leave";
-      socket.emit("leaveConversation", message);
+      if (socket.id) socket.emit("leaveConversation", message);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
