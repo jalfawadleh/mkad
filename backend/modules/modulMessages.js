@@ -39,14 +39,8 @@ const getMessages = asyncHandler(async (req, res) => {
   try {
     const messages = await Messages.find({
       $or: [
-        {
-          "sender._id": req.user._id,
-          "recipient._id": req.body._id,
-        },
-        {
-          "sender._id": req.body._id,
-          "recipient._id": req.user._id,
-        },
+        { "sender._id": req.user._id, "recipient._id": req.body._id },
+        { "sender._id": req.body._id, "recipient._id": req.user._id },
       ],
     })
       .sort({ createdAt: 1 })

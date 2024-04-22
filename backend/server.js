@@ -125,14 +125,15 @@ io.on("connection", async (socket) => {
         ? socket.message.sender._id.toString()
         : socket.message.recipient._id.toString();
 
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
+
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
 
+    // cancelled bcause it is already loaded using get messages when page loads
     // announce the member has joined the messaging
-    io.sockets.in(conversationId).emit("conversation", socket.message);
-
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
+    // io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
     process.env.NODE_ENV != "production" &&
@@ -150,11 +151,11 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
-    // announce the member has joined to discussion
-    io.sockets.in(conversationId).emit("conversation", socket.message);
-
     // save message in DB
     socket.message = await saveMessage(socket.message);
+
+    // announce the member has joined to discussion
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
     process.env.NODE_ENV != "production" &&
@@ -172,14 +173,14 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
+
     // member leave the room
     socket.leave(conversationId);
 
     // annnounce member leaving the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
-
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
 
     // Log only in production
     process.env.NODE_ENV != "production" &&

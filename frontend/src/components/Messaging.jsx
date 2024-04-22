@@ -40,13 +40,26 @@ const Messaging = () => {
     content: "",
   };
 
+  const showLastMessage = () => {
+    setTimeout(
+      () =>
+        document.getElementById("endoflist").scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "end",
+        }),
+      200
+    );
+  };
+
   async function getMessages() {
     setIsLoading(true);
     await axios
       .post(`/messages`, { _id: id, name, type: "members", messagesNumber })
-      .then((res) => setMessages([...res.data, ...messages]))
-      .then(() => setMessagesNumber(messagesNumber + 15))
+      .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
+      .then(() => setMessagesNumber(messagesNumber + 15))
+      .then(() => !messagesNumber && showLastMessage())
       .catch(() => {
         toast.error("Something went wrong");
       });
@@ -74,15 +87,7 @@ const Messaging = () => {
   useEffect(() => {
     const onConversation = (message) => {
       setMessages((previous) => [...previous, message]);
-      setTimeout(
-        () =>
-          document.getElementById("endoflist").scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "end",
-          }),
-        200
-      );
+      showLastMessage();
     };
     if (socket.id) socket.on("conversation", onConversation);
     return () => {
@@ -123,7 +128,7 @@ const Messaging = () => {
                   </span>
                   <span className='w-100 m-0 lh-1 fw-lighter fs-6 text-end'>
                     {m.createdAt
-                      ? moment(message.createdAt).format("DD MMMM h:mm a")
+                      ? moment(m.createdAt).format("DD MMMM h:mm a")
                       : ""}
                   </span>
                 </div>
