@@ -105,7 +105,7 @@ const Messaging = () => {
           <BoxCenterHeader>{name}</BoxCenterHeader>
           <CloseCircleLink />
         </Wrappers.Header>
-        <div className='overflow-auto'>
+        <Wrappers.Body>
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
@@ -136,9 +136,8 @@ const Messaging = () => {
               </div>
             ))}
           <div id='endoflist' className='my-0' />
-        </div>
-
-        <div className='p-1' id='sendForm'>
+        </Wrappers.Body>
+        <div className='modal-footer p-1' id='sendForm'>
           <input
             id='content'
             placeholder='Enter Message'
