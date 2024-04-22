@@ -27,7 +27,7 @@ export const Modal = ({ children }) => {
       data-bs-backdrop='static'
     >
       <div
-        className='modal-dialog modal-dialog-centered modal-fullscreen-sm-down '
+        className='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-sm-down '
         role='document'
       >
         <div className='modal-content bg-black p-0 border-1 border-primary'>
@@ -40,17 +40,16 @@ export const Modal = ({ children }) => {
 
 export const Header = ({ children }) => {
   return (
-    <>
-      <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
-      <hr className='m-1' />
-    </>
+    <div className='modal-header d-flex justify-content-between m-1 p-1'>
+      {children}
+    </div>
   );
 };
 
 export const Body = ({ children }) => {
   return (
     <div
-      className='d-block overflow-y-auto p-1 m-1'
+      className='modal-body d-block overflow-y-auto p-1 m-1'
       style={{ maxHeight: window.innerHeight - 200 }}
     >
       {children}

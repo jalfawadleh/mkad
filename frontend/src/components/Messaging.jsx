@@ -40,8 +40,8 @@ const Messaging = () => {
       () =>
         document
           .getElementById("endoflist")
-          .scrollIntoView({ behavior: "smooth", block: "end" }),
-      200
+          .scrollIntoView({ behavior: "smooth", block: "nearest" }),
+      250
     );
 
   async function getMessages() {
@@ -100,8 +100,8 @@ const Messaging = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          <Avatar name={name} />
           <MessageCircle color='white' />
+          <Avatar name={name} />
           <BoxCenterHeader>{name}</BoxCenterHeader>
           <CloseCircleLink />
         </Wrappers.Header>
