@@ -40,7 +40,11 @@ export const Modal = ({ children }) => {
 
 export const Header = ({ children }) => {
   return (
-    <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
+    <>
+      <div className='d-flex justify-content-between m-1 p-1 border-bottom border-primary'>
+        {children}
+      </div>
+    </>
   );
 };
 

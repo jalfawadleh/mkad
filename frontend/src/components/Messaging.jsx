@@ -99,13 +99,13 @@ const Messaging = () => {
   return (
     <>
       <Wrappers.Modal>
+        <Wrappers.Header>
+          <MessageCircle color='white' />
+          <Avatar name={name} />
+          <BoxCenterHeader>{name}</BoxCenterHeader>
+          <CloseCircleLink />
+        </Wrappers.Header>
         <Wrappers.Body>
-          <Wrappers.Header>
-            <MessageCircle color='white' />
-            <Avatar name={name} />
-            <BoxCenterHeader>{name}</BoxCenterHeader>
-            <CloseCircleLink />
-          </Wrappers.Header>
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
