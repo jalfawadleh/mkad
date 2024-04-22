@@ -11,7 +11,10 @@ import {
   CloseCircleLink,
   Avatar,
   AvatarLink,
+  Spinner,
 } from "./common/Icons";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 /**
  * Discussion component.
@@ -22,6 +25,8 @@ const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
+  const [messagesNumber, setMessagesNumber] = useState(0);
   const [msgBoxH, setMsgBoxH] = useState(
     window.innerWidth < 560
       ? window.innerHeight - 100
@@ -34,6 +39,23 @@ const Messaging = () => {
     recipient: { _id: id, name, type: "members" },
     content: "",
   };
+
+  async function getMessages() {
+    setIsLoading(true);
+    await axios
+      .post(`/messages`, { _id: id, name, type: "members", messagesNumber })
+      .then((res) => setMessages([...res.data, ...messages]))
+      .then(() => setMessagesNumber(messagesNumber + 15))
+      .then(() => setIsLoading(false))
+      .catch(() => {
+        toast.error("Something went wrong");
+      });
+  }
+
+  useEffect(() => {
+    getMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // member join coversation when online
   useEffect(() => {
@@ -86,8 +108,12 @@ const Messaging = () => {
           <BoxCenterHeader>{name}</BoxCenterHeader>
           <CloseCircleLink />
         </Wrappers.Header>
-
         <div className='overflow-auto' style={{ height: msgBoxH + "px" }}>
+          {isLoading && (
+            <div className='d-block m-0 p-0'>
+              <Spinner />
+            </div>
+          )}
           {messages?.length > 0 &&
             messages.map((m, index) => (
               <div className='d-block m-0 p-0' id={m._id} key={index}>
