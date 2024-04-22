@@ -131,9 +131,8 @@ io.on("connection", async (socket) => {
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
 
-    // cancelled bcause it is already loaded using get messages when page loads
     // announce the member has joined the messaging
-    // io.sockets.in(conversationId).emit("conversation", socket.message);
+    socket.emit("conversation", socket.message);
 
     // Log only in production
     process.env.NODE_ENV != "production" &&
