@@ -35,17 +35,13 @@ const Messaging = () => {
     content: "",
   };
 
-  const showLastMessage = () =>
-    // setTimeout(
-    //   () =>
-    document.getElementById("endoflist").scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-      inline: "end",
-    });
-  //     ,
-  //   200
-  // );
+  const showLastMessage = setTimeout(
+    () =>
+      document
+        .getElementById("endoflist")
+        .scrollIntoView({ behavior: "smooth", block: "end" }),
+    200
+  );
 
   async function getMessages() {
     setIsLoading(true);
