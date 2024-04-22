@@ -27,11 +27,6 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
   const [messagesNumber, setMessagesNumber] = useState(0);
-  const [msgBoxH, setMsgBoxH] = useState(
-    window.innerWidth < 560
-      ? window.innerHeight - 100
-      : window.innerHeight - 200
-  );
   const navigate = useNavigate();
 
   const message = {
@@ -112,7 +107,15 @@ const Messaging = () => {
           <BoxCenterHeader>{name}</BoxCenterHeader>
           <CloseCircleLink />
         </Wrappers.Header>
-        <div className='overflow-auto' style={{ height: msgBoxH + "px" }}>
+        <div
+          className='overflow-auto'
+          style={{
+            height:
+              window.innerWidth < 560
+                ? window.innerHeight - 50
+                : window.innerHeight - 100 + "px",
+          }}
+        >
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
@@ -157,17 +160,6 @@ const Messaging = () => {
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
-            // onFocus={() => {
-            //   if (window.innerWidth < 560) {
-            //     setMsgBoxH(msgBoxH - 270);
-            //     setTimeout(() => {
-            //       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-            //     }, 50);
-            //   }
-            // }}
-            // onBlur={() =>
-            //   window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 270) : null
-            // }
           />
         </div>
       </Wrappers.Modal>
