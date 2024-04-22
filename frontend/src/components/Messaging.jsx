@@ -50,8 +50,8 @@ const Messaging = () => {
       .post(`/messages`, { _id: id, name, type: "members", messagesNumber })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
+      .then(() => messagesNumber > 0 && showLastMessage())
       .then(() => setMessagesNumber(messagesNumber + 15))
-      .then(() => !messagesNumber && showLastMessage())
       .catch(() => {
         toast.error("Something went wrong");
       });
