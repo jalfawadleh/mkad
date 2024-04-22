@@ -40,7 +40,7 @@ const Messaging = () => {
       () =>
         document
           .getElementById("endoflist")
-          .scrollIntoView({ behavior: "smooth", block: "nearest" }),
+          .scrollIntoView({ behavior: "smooth", block: "end" }),
       250
     );
 
@@ -137,20 +137,19 @@ const Messaging = () => {
             ))}
           <div id='endoflist' className='my-0' />
         </Wrappers.Body>
-        <div className='modal-footer p-1' id='sendForm'>
+        <Wrappers.Footer>
           <input
             id='content'
+            className='w-100'
             placeholder='Enter Message'
-            // value={content}
             type='text'
-            className='form-control form-control-sm'
             onKeyDown={(event) => send(event)}
             style={{ fontSize: "16px" }}
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
           />
-        </div>
+        </Wrappers.Footer>
       </Wrappers.Modal>
     </>
   );

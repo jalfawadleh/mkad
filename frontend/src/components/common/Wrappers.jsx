@@ -48,18 +48,15 @@ export const Header = ({ children }) => {
 
 export const Body = ({ children }) => {
   return (
-    <div
-      className='modal-body d-block overflow-y-auto p-1 m-1'
-      style={{ maxHeight: window.innerHeight - 200 }}
-    >
-      {children}
-    </div>
+    <div className='modal-body d-block overflow-y-auto p-1 m-1'>{children}</div>
   );
 };
 
 export const Footer = ({ children }) => {
   return (
-    <div className='d-flex justify-content-between m-1 p-1'>{children}</div>
+    <div className='modal-footer d-flex justify-content-between m-1 p-1'>
+      {children}
+    </div>
   );
 };
 
