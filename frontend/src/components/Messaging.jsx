@@ -40,7 +40,7 @@ const Messaging = () => {
     content: "",
   };
 
-  const showLastMessage = () => {
+  const showLastMessage = () =>
     setTimeout(
       () =>
         document.getElementById("endoflist").scrollIntoView({
@@ -50,7 +50,6 @@ const Messaging = () => {
         }),
       200
     );
-  };
 
   async function getMessages() {
     setIsLoading(true);
@@ -97,8 +96,8 @@ const Messaging = () => {
   }, []);
 
   const send = (event) => {
-    message.content = event.target.value;
-    if (message.content) {
+    if (event.key == "Enter" && event.target.value) {
+      message.content = event.target.value;
       socket.emit("conversation", message);
       event.target.value = "";
     }
@@ -153,22 +152,22 @@ const Messaging = () => {
             // value={content}
             type='text'
             className='form-control form-control-sm'
-            onKeyDown={(event) => event.key == "Enter" && send(event)}
+            onKeyDown={(event) => send(event)}
             style={{ fontSize: "16px" }}
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'
-            onFocus={() => {
-              if (window.innerWidth < 560) {
-                setMsgBoxH(msgBoxH - 270);
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-                }, 50);
-              }
-            }}
-            onBlur={() =>
-              window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 270) : null
-            }
+            // onFocus={() => {
+            //   if (window.innerWidth < 560) {
+            //     setMsgBoxH(msgBoxH - 270);
+            //     setTimeout(() => {
+            //       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+            //     }, 50);
+            //   }
+            // }}
+            // onBlur={() =>
+            //   window.innerWidth < 560 ? setMsgBoxH(msgBoxH + 270) : null
+            // }
           />
         </div>
       </Wrappers.Modal>
