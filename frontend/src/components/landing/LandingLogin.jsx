@@ -176,24 +176,21 @@ function LoginForm() {
   );
 
   const countersBox = (
-    <div
-      className='d-flex justify-content-around h5'
-      style={{ minHeight: 200 }}
-    >
+    <div className='d-flex justify-content-around h5 py-4'>
       <div className='text-center m-auto p-auto'>
         <div
           data-purecounter-start='0'
-          data-purecounter-end='65'
-          data-purecounter-duration='2'
+          data-purecounter-end='1'
+          data-purecounter-duration='1'
           className='purecounter'
         ></div>
-        Members
+        Organisation
       </div>
       <div className='text-center m-auto p-auto'>
         <div
           data-purecounter-start='0'
-          data-purecounter-end='85'
-          data-purecounter-duration='2'
+          data-purecounter-end='3'
+          data-purecounter-duration='1'
           className='d-block purecounter'
         ></div>
         Activities
@@ -201,11 +198,11 @@ function LoginForm() {
       <div className='text-center m-auto p-auto'>
         <div
           data-purecounter-start='0'
-          data-purecounter-end='30'
-          data-purecounter-duration='2'
+          data-purecounter-end='3'
+          data-purecounter-duration='1'
           className='purecounter'
         ></div>
-        Organisations
+        Members
       </div>
     </div>
   );
@@ -213,7 +210,7 @@ function LoginForm() {
   return (
     <>
       <div id='login' className='container'>
-        <div style={{ paddingTop: "90px" }}>
+        <div style={{ paddingTop: "60px" }}>
           <div className='d-sm-block d-md-none'>
             {loginForm}
             {countersBox}

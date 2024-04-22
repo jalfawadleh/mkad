@@ -4,7 +4,7 @@ import PureCounter from "@srexi/purecounterjs";
 import LandingLogin from "../components/landing/LandingLogin";
 import LandingHeader from "../components/landing/LandingHeader";
 import LandingAboutUs from "../components/landing/LandingAboutUs";
-import LandingFAQ from "../components/landing/LandingFAQ";
+// import LandingFAQ from "../components/landing/LandingFAQ";
 
 const ScreenLanding = () => {
   useEffect(() => {
@@ -16,7 +16,7 @@ const ScreenLanding = () => {
       <LandingHeader />
       <LandingLogin />
       <LandingAboutUs />
-      <LandingFAQ />
+      {/* <LandingFAQ /> */}
     </>
   );
 };

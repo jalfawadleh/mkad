@@ -5,43 +5,43 @@ const LandingAboutUs = () => {
       <section
         id='about'
         className='container bg-black'
-        style={{ paddingTop: "90px" }}
+        style={{ paddingTop: "60px" }}
       >
         <h2 className='text-center pb-4'>Who We Are</h2>
 
         <div className='row content'>
           <div className='col-lg-6'>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               MKaDifference is a platform for people to organise events in a
               healthy safe environment withought sacrificing there personal
               details.
             </p>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               Members can join events and keep up to date with their communities
               and unions.
             </p>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               Activities created by organisations to bring people together for a
               good cause.
             </p>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               Many social media platforms collect and merge personal data; to
               create a complete profile about each one of us.
             </p>
           </div>
           <div className='col-lg-6 pt-2 pt-lg-0'>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               MKaDifference will provide safe refuge, as there is no personal
               identification data collected from members (as you can see in the
               registration form).
             </p>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               No cookies stored on your browser, therefore trackers from other
               sites will find no trace and there is no way for other social
               media to link your profile to other profile they already
               collected.
             </p>
-            <p>
+            <p style={{ textAlign: "justify" }}>
               The moment you refresh the page or close the browser you are
               logged out and your data connection is elementated.
             </p>
