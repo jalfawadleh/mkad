@@ -107,15 +107,7 @@ const Messaging = () => {
           <BoxCenterHeader>{name}</BoxCenterHeader>
           <CloseCircleLink />
         </Wrappers.Header>
-        <div
-          className='overflow-auto'
-          style={{
-            height:
-              window.innerWidth < 560
-                ? window.innerHeight - 50
-                : window.innerHeight - 100 + "px",
-          }}
-        >
+        <div className='overflow-auto'>
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
