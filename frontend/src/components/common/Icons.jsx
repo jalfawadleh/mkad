@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import multiavatar from "@multiavatar/multiavatar/esm";
 import { MapContext } from "../../store";
-
+import { TbFlagStar } from "react-icons/tb";
 import {
   FaHandshakeSimple,
   FaLocationCrosshairs,
@@ -19,6 +19,7 @@ import {
   FaSearch,
   FaSun,
   FaUser,
+  FaHome,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiArrowUpDownFill } from "react-icons/ri";
@@ -26,7 +27,7 @@ import { BiSolidFlag } from "react-icons/bi";
 import { MdTune } from "react-icons/md";
 
 export const Empty = () => {
-  return <div className='p-1 m-1' style={{ width: 35, height: 24 }} />;
+  return <div className='p-1 m-1' style={{ width: 35, height: 35 }} />;
 };
 
 export const Circle = ({ children, borderColor = "primary" }) => {
@@ -42,12 +43,6 @@ export const Circle = ({ children, borderColor = "primary" }) => {
   );
 };
 
-export const Box = ({ children }) => {
-  return (
-    <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
-  );
-};
-
 export const Delete = () => {
   return (
     <>
@@ -58,7 +53,52 @@ export const Delete = () => {
   );
 };
 
-export const CircleMessage = ({ color = "gray" }) => {
+export const Box = ({ children }) => {
+  return (
+    <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
+  );
+};
+
+export const TextCenterBox = ({ text }) => {
+  return (
+    <div className='p-auto my-auto mx-1 badge border border-primary w-100'>
+      <div className='p-1 text-center fs-6 '>{text}</div>
+    </div>
+  );
+};
+
+export const TextCenterLink = ({ to, text }) => {
+  return (
+    <Link
+      to={to}
+      className='m-auto p-auto link-underline link-underline-opacity-0 text-center'
+    >
+      {text}
+    </Link>
+  );
+};
+
+export const Home = ({ color = "white" }) => {
+  return <FaHome color={color} size={24} />;
+};
+
+export const HomeCircle = ({ color = "white" }) => {
+  return (
+    <Circle>
+      <Home color={color} size={24} />
+    </Circle>
+  );
+};
+
+export const HomeCircleLink = ({ to = "/", color = "white" }) => {
+  return (
+    <Link to={to}>
+      <HomeCircle color={color} />
+    </Link>
+  );
+};
+
+export const CircleMessage = ({ color = "white" }) => {
   return (
     <Circle>
       <FaRegEnvelope size={24} className='m-0 p-0' color={color} />
@@ -66,37 +106,11 @@ export const CircleMessage = ({ color = "gray" }) => {
   );
 };
 
-export const CenterText = ({ children }) => {
-  return (
-    <span className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'>
-      {children}
-    </span>
-  );
-};
-
-export const TextCenterBox = ({ children }) => {
-  return (
-    <Box>
-      <CenterText> {children} </CenterText>
-    </Box>
-  );
-};
-
-export const BoxCenterHeader = ({ children }) => {
-  return (
-    <Box>
-      <CenterText>
-        <span className='h5 text-wrap'>{children} </span>
-      </CenterText>
-    </Box>
-  );
-};
-
-export const Fold = ({ color = "gray" }) => {
+export const Fold = ({ color = "white" }) => {
   return <RiArrowUpDownFill color={color} size={24} />;
 };
 
-export const FoldCircle = ({ color = "gray" }) => {
+export const FoldCircle = ({ color = "white" }) => {
   return (
     <Circle>
       <Fold color={color} size={24} />
@@ -262,9 +276,9 @@ export const OrganisationCircle = ({ color = "white" }) => {
   );
 };
 
-export const OrganisationCircleLink = ({ color = "white", id }) => {
+export const OrganisationCircleLink = ({ to, color = "white" }) => {
   return (
-    <Link to={"/organisation/" + id}>
+    <Link to={to}>
       <OrganisationCircle color={color} />
     </Link>
   );
@@ -282,10 +296,30 @@ export const ActivityCircle = ({ color = "white" }) => {
   );
 };
 
-export const ActivityCircleLink = ({ id, color = "white" }) => {
+export const ActivityCircleLink = ({ to, color = "white" }) => {
   return (
-    <Link to={"/activity/" + id}>
+    <Link to={to}>
       <ActivityCircle color={color} />
+    </Link>
+  );
+};
+
+export const Activities = ({ color = "white" }) => {
+  return <TbFlagStar color={color} size={24} />;
+};
+
+export const ActivitiesCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='success'>
+      <Activities color={color} />
+    </Circle>
+  );
+};
+
+export const ActivitiesCircleLink = ({ to, color = "white" }) => {
+  return (
+    <Link to={to}>
+      <ActivitiesCircle color={color} />
     </Link>
   );
 };
@@ -511,14 +545,18 @@ export const ExclamationCircle = ({ color = "white" }) => {
 const Icons = {
   Delete,
   CircleMessage,
-  CenterText,
   Empty,
+
+  TextCenterBox,
+  TextCenterLink,
+
+  Home,
+  HomeCircle,
+  HomeCircleLink,
 
   Close,
   CloseCircle,
   CloseCircleLink,
-
-  TextCenterBox,
 
   Filter,
   FilterCircle,
@@ -555,6 +593,10 @@ const Icons = {
   Activity,
   ActivityCircle,
   ActivityCircleLink,
+
+  Activities,
+  ActivitiesCircle,
+  ActivitiesCircleLink,
 
   Search,
   SearchCircle,

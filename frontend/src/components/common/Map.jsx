@@ -89,7 +89,14 @@ const Map = () => {
 
   const ItemPopup = ({ item }) => (
     <Popup>
-      <Link to={"/" + item.type + "/" + item._id}>
+      <Link
+        to={
+          "/" +
+          (item.type == "activity"
+            ? "activities/" + item._id
+            : item.type + "s/" + item._id)
+        }
+      >
         <span role='button' className='h6 p-0 m-0'>
           {item.name}
         </span>

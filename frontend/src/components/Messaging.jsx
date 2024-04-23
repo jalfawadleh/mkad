@@ -6,12 +6,12 @@ import Wrappers from "./common/Wrappers";
 import { UserContext } from "../store";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  BoxCenterHeader,
   MessageCircle,
   CloseCircleLink,
   Avatar,
   AvatarLink,
   Spinner,
+  TextCenterBox,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -102,7 +102,7 @@ const Messaging = () => {
         <Wrappers.Header>
           <MessageCircle color='white' />
           <Avatar name={name} />
-          <BoxCenterHeader>{name}</BoxCenterHeader>
+          <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
         <Wrappers.Body>
@@ -140,11 +140,12 @@ const Messaging = () => {
         <Wrappers.Footer>
           <input
             id='content'
-            className='w-100'
+            className='w-100 bg-black'
             placeholder='Enter Message'
             type='text'
             onKeyDown={(event) => send(event)}
             style={{ fontSize: "16px" }}
+            autoFocus
             autoCorrect='off'
             autoCapitalize='none'
             autoComplete='off'

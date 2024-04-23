@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { IconButton, TextCenterBox } from "./common/LinkItems.jsx";
+import { IconButton } from "./common/LinkItems.jsx";
 import Wrapper from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
@@ -20,6 +20,7 @@ import {
   Loader,
   OrganisationCircle,
   SpinnerCircle,
+  TextCenterBox,
 } from "./common/Icons.jsx";
 
 const Organization = () => {
@@ -113,7 +114,7 @@ const Organization = () => {
         <div className='d-inline m-auto p-1'>Activities</div>
         {organisation.activities.map((m) => (
           <span className='d-inline-block me-2' key={m._id}>
-            <ActivityCircleLink id={m._id} />
+            <ActivityCircleLink to={"/activity/" + m._id} />
             <div className='d-inline m-auto p-1 ps-0'>{m.name}</div>
           </span>
         ))}

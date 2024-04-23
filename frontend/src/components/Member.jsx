@@ -9,7 +9,6 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 
-import { TextCenterBox } from "./common/LinkItems.jsx";
 import Wrappers, { Section } from "./common/Wrappers.jsx";
 import {
   ActivityCircleLink,
@@ -18,6 +17,7 @@ import {
   Loader,
   MessageCircleLink,
   OrganisationCircleLink,
+  TextCenterBox,
 } from "./common/Icons.jsx";
 import { UserContext } from "../store.js";
 
@@ -31,7 +31,7 @@ const MemberOrganisations = ({ organisations = [] }) => {
           </div>
           {organisations.map((o) => (
             <span key={o._id}>
-              <OrganisationCircleLink id={o._id} />
+              <OrganisationCircleLink to={"/organisation/" + o._id} />
               <div className='d-inline me-2'>{o.name}</div>
             </span>
           ))}
@@ -52,7 +52,8 @@ const MemberActivities = ({ activities = [] }) => {
           </div>
           {activities.map((a) => (
             <span key={a._id}>
-              <ActivityCircleLink id={a._id} color='white' />
+              <ActivityCircleLink to={"/activity/" + a._id} />
+
               <div className='d-inline me-2'>{a.name}</div>
             </span>
           ))}

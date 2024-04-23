@@ -5,11 +5,7 @@ import axios from "axios";
 import { UserContext } from "../../store.js";
 import { useNavigate, useParams } from "react-router-dom";
 
-import {
-  TextCenterBox,
-  IconButton,
-  LinkButtoneBack,
-} from "../common/LinkItems.jsx";
+import { IconButton, LinkButtoneBack } from "../common/LinkItems.jsx";
 
 import ManageName from "../common/ManageName.jsx";
 import ManageDescription from "../common/ManageDescription.jsx";
@@ -26,6 +22,7 @@ import {
   CloseCircleLink,
   Loader,
   SpinnerCircle,
+  TextCenterBox,
 } from "../common/Icons.jsx";
 
 const ManageActivity = () => {

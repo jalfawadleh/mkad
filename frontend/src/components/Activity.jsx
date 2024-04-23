@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import { UserContext } from "../store.js";
 
-import { IconButton, TextCenterBox } from "./common/LinkItems.jsx";
+import { IconButton } from "./common/LinkItems.jsx";
 import Wrappers from "./common/Wrappers.jsx";
 
 import ManageDescription from "./common/ManageDescription.jsx";
@@ -16,6 +16,7 @@ import ManageHelp from "./common/ManageHelp.jsx";
 import ManageOnline from "./common/ManageOnline.jsx";
 
 import {
+  TextCenterBox,
   ActivityCircle,
   AvatarLink,
   CloseCircleLink,
@@ -82,7 +83,9 @@ const Activity = () => {
   const joinSection = (
     <>
       <div className='d-flex justify-content-wrap p-1 m-1'>
-        <OrganisationCircleLink id={activity.createdBy._id} />
+        <OrganisationCircleLink
+          to={"/organisation/" + activity.createdBy._id}
+        />
         <div className='d-inline-block mt-2 text-center'>
           {activity.createdBy.name}
         </div>

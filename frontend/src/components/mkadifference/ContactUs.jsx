@@ -1,6 +1,10 @@
-import { TextCenterBox, LinkButtoneBack } from "../common/LinkItems.jsx";
+import { LinkButtoneBack } from "../common/LinkItems.jsx";
 import Wrappers from "../common/Wrappers.jsx";
-import { CloseCircleLink, HelpCircle } from "../common/Icons.jsx";
+import {
+  TextCenterBox,
+  CloseCircleLink,
+  HelpCircle,
+} from "../common/Icons.jsx";
 
 function ContactUs() {
   return (

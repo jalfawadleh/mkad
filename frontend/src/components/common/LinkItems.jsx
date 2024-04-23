@@ -12,42 +12,6 @@ export const Section = ({ children }) => {
   );
 };
 
-export const Icon = ({ children }) => {
-  return (
-    <span
-      role='button'
-      className='p-1 m-1 bg-black rounded-pill border border-primary-settle'
-    >
-      {children}
-    </span>
-  );
-};
-
-export const Circle = ({ children }) => {
-  return (
-    <span
-      className='p-1 m-1 badge rounded-pill border border-primary'
-      role='button'
-    >
-      {children}
-    </span>
-  );
-};
-
-export const Box = ({ children }) => {
-  return (
-    <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
-  );
-};
-
-export const TextCenterBox = ({ text }) => {
-  return (
-    <Box>
-      <span className='h5 text-wrap'>{text}</span>
-    </Box>
-  );
-};
-
 export const IconButton = ({ children }) => {
   return (
     <div className='link-primary p-1 m-1 bg-black rounded-pill border border-primary'>

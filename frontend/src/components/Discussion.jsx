@@ -7,13 +7,13 @@ import Wrappers from "./common/Wrappers";
 import { UserContext } from "../store";
 import { useParams } from "react-router-dom";
 import {
-  BoxCenterHeader,
   ActivityCircle,
   DiscusstionCircle,
   OrganisationCircle,
   CloseCircleLink,
   Avatar,
   AvatarLink,
+  TextCenterBox,
 } from "./common/Icons";
 
 /**
@@ -120,7 +120,7 @@ const Discussion = () => {
         <Wrappers.Header>
           {iconType}
           <DiscusstionCircle color='white' />
-          <BoxCenterHeader>{name}</BoxCenterHeader>
+          <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
 

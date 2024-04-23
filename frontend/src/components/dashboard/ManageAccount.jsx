@@ -5,17 +5,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../store.js";
 
-import {
-  TextCenterBox,
-  IconButton,
-  LinkButtoneBack,
-} from "../common/LinkItems.jsx";
+import { IconButton, LinkButtoneBack } from "../common/LinkItems.jsx";
 import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
 import {
   CloseCircleLink,
   Loader,
   MemberCircle,
   SpinnerCircle,
+  TextCenterBox,
 } from "../common/Icons.jsx";
 
 function ManageAccount() {

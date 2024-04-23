@@ -6,7 +6,6 @@ import axios from "axios";
 import { MapContext, UserContext } from "../../store.js";
 
 import {
-  TextCenterBox,
   IconButton,
   LinkButton,
   LinkButtoneBack,
@@ -25,6 +24,7 @@ import {
   CloseCircleLink,
   Loader,
   SpinnerCircle,
+  TextCenterBox,
 } from "../common/Icons.jsx";
 
 function ManageMember() {
