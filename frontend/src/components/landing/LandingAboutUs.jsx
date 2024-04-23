@@ -4,10 +4,9 @@ const LandingAboutUs = () => {
       {/* <!-- ======= aboutUs Section ======= --> */}
       <section
         id='about'
-        className='container bg-black'
-        style={{ paddingTop: "60px" }}
+        className='container mt-3 pt-4 border-primary-subtle border-top bg-black'
       >
-        <h2 className='text-center pb-4'>Who We Are</h2>
+        <h2 className='text-center'>Who We Are</h2>
 
         <div className='row content'>
           <div className='col-lg-6'>

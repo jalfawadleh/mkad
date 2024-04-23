@@ -1,13 +1,11 @@
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
 import {
-  AvatarCustomLink,
   Empty,
   HelpCircleLink,
   HomeCircleLink,
   LocationCircleLink,
   MKaDifferenceCircleLink,
-  MemberCircle,
   SearchCircleLink,
 } from "./Icons.jsx";
 

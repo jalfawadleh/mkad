@@ -4,6 +4,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../../store";
 import { IconButton } from "../common/LinkItems";
+import {
+  OrganisationCircle,
+  MemberCircle,
+  ActivityCircle,
+} from "../common/Icons";
 
 function LoginForm() {
   // const navigate = useNavigate();
@@ -66,8 +71,8 @@ function LoginForm() {
 
   const loginForm = (
     <div className='p-2 needs-validation border border-primary-subtle container'>
-      <div className='d-flex justify-content-end m-1 p-1'>
-        <span className='h4 text-center m-auto'>
+      <div className='d-flex justify-content-end mb-1 pb-1'>
+        <span className='h5 text-center m-auto'>
           {!register ? "Welcome Back" : "Create Account"}
         </span>
         <span role='button' onClick={() => setRegister(!register)}>
@@ -75,13 +80,13 @@ function LoginForm() {
         </span>
       </div>
       <form onSubmit={onSubmit}>
-        <div className='mb-3 form-floating'>
+        <div className='mb-3 form-floating bg-black'>
           <input
             placeholder='Username'
             name='username'
             type='text'
             id='username'
-            className='form-control'
+            className='form-control bg-black'
             value={username}
             onChange={onChange}
             autoCorrect='off'
@@ -91,13 +96,13 @@ function LoginForm() {
           <label htmlFor='username'>Username</label>
         </div>
 
-        <div className='mb-3 form-floating'>
+        <div className='mb-3 form-floating bg-black'>
           <input
             placeholder='Password'
             name='password'
             type='password'
             id='password'
-            className='form-control'
+            className='form-control bg-black'
             value={password}
             onChange={onChange}
             autoCorrect='off'
@@ -109,13 +114,13 @@ function LoginForm() {
 
         {register && (
           <>
-            <div className='mb-3 form-floating'>
+            <div className='mb-3 form-floating bg-black'>
               <input
                 placeholder='Confirm Password'
                 name='confirmPassword'
                 type='password'
                 id='confirmPassword'
-                className='form-control'
+                className='form-control bg-black'
                 value={confirmPassword}
                 onChange={onChange}
                 autoCorrect='off'
@@ -125,13 +130,13 @@ function LoginForm() {
               <label htmlFor='confirmPassword'>Confirm Password</label>
             </div>
 
-            <div className='mb-3 form-floating'>
+            <div className='mb-3 form-floating bg-black'>
               <input
                 placeholder='Name'
                 name='name'
                 type='text'
                 id='name'
-                className='form-control'
+                className='form-control bg-black'
                 value={name}
                 onChange={onChange}
                 autoCorrect='off'
@@ -141,13 +146,13 @@ function LoginForm() {
               <label htmlFor='name'>Name</label>
             </div>
 
-            <div className='mb-3 form-floating'>
+            <div className='mb-3 form-floating bg-black'>
               <input
                 placeholder='name@example.com'
                 name='email'
                 type='email'
                 id='email'
-                className='form-control'
+                className='form-control bg-black'
                 value={email}
                 onChange={onChange}
                 autoCorrect='off'
@@ -162,13 +167,13 @@ function LoginForm() {
           </>
         )}
 
-        <div className='text-center container'>
+        <div className='text-center'>
           <button
             type='submit'
             role='button'
-            className='text-center bg-black w-50 btn btn-primary border-0'
+            className='bg-black w-50 btn btn-primary link-primary text-white'
           >
-            <IconButton>{register ? "Join " : "Login"}</IconButton>
+            {register ? "Join " : "Login"}
           </button>
         </div>
       </form>
@@ -176,49 +181,30 @@ function LoginForm() {
   );
 
   const countersBox = (
-    <div className='d-flex justify-content-around h5 py-4'>
+    <div className='d-flex justify-content-around h5 my-3 py-3 '>
       <div className='text-center m-auto p-auto'>
-        <div
-          data-purecounter-start='0'
-          data-purecounter-end='1'
-          data-purecounter-duration='1'
-          className='purecounter'
-        ></div>
-        Organisation
+        <OrganisationCircle /> 3 Organisation
       </div>
       <div className='text-center m-auto p-auto'>
-        <div
-          data-purecounter-start='0'
-          data-purecounter-end='3'
-          data-purecounter-duration='1'
-          className='d-block purecounter'
-        ></div>
-        Activities
+        <ActivityCircle /> 4 Activities
       </div>
       <div className='text-center m-auto p-auto'>
-        <div
-          data-purecounter-start='0'
-          data-purecounter-end='3'
-          data-purecounter-duration='1'
-          className='purecounter'
-        ></div>
-        Members
+        <MemberCircle />
+        12 Members
       </div>
     </div>
   );
 
   return (
     <>
-      <div id='login' className='container'>
-        <div style={{ paddingTop: "60px" }}>
-          <div className='d-sm-block d-md-none'>
-            {loginForm}
-            {countersBox}
-          </div>
-          <div className='d-none d-md-flex justify-content-between'>
-            <div className='w-50'>{loginForm}</div>
-            <div className='w-50 m-auto p-3'>{countersBox}</div>
-          </div>
+      <div id='login' className='container mt-3'>
+        <div className='d-sm-block d-md-none'>
+          {loginForm}
+          {countersBox}
+        </div>
+        <div className='d-none d-md-flex justify-content-between '>
+          <div className='w-50'>{loginForm}</div>
+          <div className='w-50 m-auto p-3'>{countersBox}</div>
         </div>
       </div>
     </>
