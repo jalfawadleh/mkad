@@ -122,8 +122,12 @@ io.on("connection", async (socket) => {
     conversationId =
       socket.message.sender._id.toString() >
       socket.message.recipient._id.toString()
-        ? socket.message.sender._id.toString()
-        : socket.message.recipient._id.toString();
+        ? socket.message.sender._id.toString() +
+          ":" +
+          socket.message.recipient._id.toString()
+        : socket.message.recipient._id.toString() +
+          ":" +
+          socket.message.sender._id.toString();
 
     // save message in DB
     socket.message = await saveMessage(socket.message);

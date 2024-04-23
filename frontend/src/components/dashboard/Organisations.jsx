@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Bar } from "../common/Wrappers";
