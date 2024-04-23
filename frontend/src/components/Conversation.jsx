@@ -12,17 +12,19 @@ import {
   AvatarLink,
   Spinner,
   TextCenterBox,
+  DiscusstionCircle,
+  OrganisationCircle,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 /**
- * Discussion component.
+ * Conversation component.
  *
  * @returns {React.ReactElement} languages element.
  */
-const Messaging = () => {
-  const { id, name } = useParams();
+const Conversation = () => {
+  const { type, id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
@@ -31,7 +33,7 @@ const Messaging = () => {
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "members" },
-    recipient: { _id: id, name, type: "members" },
+    recipient: { _id: id, name, type },
     content: "",
   };
 
@@ -100,8 +102,8 @@ const Messaging = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          <MessageCircle color='white' />
-          <Avatar name={name} />
+          {type == "member" ? <MessageCircle /> : <DiscusstionCircle />}
+          {type == "member" ? <Avatar name={name} /> : <OrganisationCircle />}
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
@@ -156,4 +158,4 @@ const Messaging = () => {
   );
 };
 
-export default Messaging;
+export default Conversation;

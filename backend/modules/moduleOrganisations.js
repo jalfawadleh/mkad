@@ -25,6 +25,7 @@ const getItem = asyncHandler(async (req, res) => {
 
   if (organisation) {
     res.json({
+      _id: organisation._id,
       name: organisation.name,
       type: organisation.type,
       description: organisation.description,

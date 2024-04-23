@@ -189,9 +189,14 @@ export const MessageCircle = ({ color = "white" }) => {
   );
 };
 
-export const MessageCircleLink = ({ id, name, color = "white" }) => {
+export const MessageCircleLink = ({
+  id,
+  type = "member",
+  name,
+  color = "white",
+}) => {
   return (
-    <Link to={`/messaging/${id}/${name}`}>
+    <Link to={`/conversation/${type}/${id}/${name}`}>
       <MessageCircle color={color} />
     </Link>
   );
@@ -211,7 +216,7 @@ export const DiscusstionCircle = ({ color = "white" }) => {
 
 export const DiscusstionCircleLink = ({ type, id, name, color = "white" }) => {
   return (
-    <Link to={`/discussion/${type}/${id}/${name}`}>
+    <Link to={`/conversation/${type}/${id}/${name}`}>
       <DiscusstionCircle color={color} />
     </Link>
   );

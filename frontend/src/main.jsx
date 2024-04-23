@@ -28,8 +28,7 @@ import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 import ManageActivity from "./components/dashboard/ManageActivity.jsx";
 import ManageActivities from "./components/dashboard/ManageActivities.jsx";
 
-import Discussion from "./components/Discussion.jsx";
-import Messaging from "./components/Messaging.jsx";
+import Conversation from "./components/Conversation.jsx";
 
 import ScreenHelp from "./screens/ScreenHelp.jsx";
 import HowTo from "./components/help/HowTo.jsx";
@@ -63,8 +62,7 @@ const router = createBrowserRouter(
           </Route>
         </Route>
 
-        <Route path='discussion/:type/:id/:name' element={<Discussion />} />
-        <Route path='messaging/:id/:name' element={<Messaging />} />
+        <Route path='conversation/:type/:id/:name' element={<Conversation />} />
 
         <Route path='help' element={<ScreenHelp />}>
           <Route path='howto' element={<HowTo />} />

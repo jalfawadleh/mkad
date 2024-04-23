@@ -31,6 +31,7 @@ const Organization = () => {
   const [isMember, setIsMembers] = useState(false);
 
   const [organisation, setOrganisation] = useState({
+    _id: id,
     name: "",
     description: "",
     notes: [],
@@ -46,7 +47,10 @@ const Organization = () => {
     try {
       await axios
         .get(`/organisations/${id}`)
-        .then((res) => setOrganisation(res.data))
+        .then((res) => {
+          setOrganisation(res.data);
+          console.log(res.data);
+        })
         .then(() => setIsLoading(false));
     } catch (error) {
       error?.response?.data?.message &&
@@ -137,10 +141,8 @@ const Organization = () => {
           />
           <CloseCircleLink />
         </Wrapper.Header>
-
         {organisation.activities && organisationActivities}
         {membersJoined}
-
         <Wrapper.Body>
           <ManageDescription description={organisation.description} />
           <ManageLanguages languages={organisation.languages} />

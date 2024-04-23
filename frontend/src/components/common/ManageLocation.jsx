@@ -37,7 +37,7 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
         `https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`
       )
       .then(({ data }) =>
-        setFlyToLocation({ lat: data[0].lat, lon: data[0].lon })
+        setFlyToLocation({ lat: data[0].lat, lng: data[0].lon })
       );
   };
 
@@ -54,6 +54,7 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
             Drag the map to change location
             <span className='ps-2 text-warning'>- not exact -</span>
           </div>
+          {JSON.stringify(location)}
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2 mt-2'>
               <label className='d-inline-block p-1 m-auto w-50'>
