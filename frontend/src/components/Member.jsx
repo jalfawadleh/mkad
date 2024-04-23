@@ -104,7 +104,9 @@ function Member() {
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
           {member._id != user._id ? (
-            <MessageCircleLink id={member._id} name={member.name} />
+            <MessageCircleLink
+              to={`/conversation/${member.type}/${member._id}/${member.name}`}
+            />
           ) : (
             ""
           )}

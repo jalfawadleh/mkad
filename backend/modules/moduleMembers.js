@@ -50,6 +50,7 @@ const getMember = asyncHandler(async (req, res) => {
     res.json({
       _id: member._id,
       name: member.name,
+      type: member.type,
       description: member.description,
       languages: member.languages,
       interests: member.interests,
