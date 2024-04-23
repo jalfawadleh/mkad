@@ -13,15 +13,9 @@ const LandingAboutUs = () => {
             <p style={{ textAlign: "justify" }}>
               MKaDifference is a platform for people to organise events in a
               healthy safe environment withought sacrificing there personal
-              details.
-            </p>
-            <p style={{ textAlign: "justify" }}>
-              Members can join events and keep up to date with their communities
-              and unions.
-            </p>
-            <p style={{ textAlign: "justify" }}>
-              Activities created by organisations to bring people together for a
-              good cause.
+              details. Members can join events and keep up to date with their
+              communities and unions. Activities created by organisations to
+              bring people together for a good cause.
             </p>
             <p style={{ textAlign: "justify" }}>
               Many social media platforms collect and merge personal data; to
@@ -38,11 +32,8 @@ const LandingAboutUs = () => {
               No cookies stored on your browser, therefore trackers from other
               sites will find no trace and there is no way for other social
               media to link your profile to other profile they already
-              collected.
-            </p>
-            <p style={{ textAlign: "justify" }}>
-              The moment you refresh the page or close the browser you are
-              logged out and your data connection is elementated.
+              collected. The moment you refresh the page or close the browser
+              you are logged out and your data connection is elementated.
             </p>
             <b>
               <i>Never share what you don&apos;t want strangers to know!</i>

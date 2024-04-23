@@ -72,6 +72,7 @@ function LoginForm() {
   const loginForm = (
     <div className='p-2 needs-validation border border-primary-subtle container'>
       <div className='d-flex justify-content-end mb-1 pb-1'>
+        <span role='button' style={{ width: 80 }} />
         <span className='h5 text-center m-auto'>
           {!register ? "Welcome Back" : "Create Account"}
         </span>

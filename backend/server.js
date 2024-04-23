@@ -136,7 +136,7 @@ io.on("connection", async (socket) => {
     socket.join(conversationId);
 
     // announce the member has joined the messaging
-    socket.emit("conversation", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
     process.env.NODE_ENV != "production" &&
