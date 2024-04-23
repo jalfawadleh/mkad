@@ -32,8 +32,8 @@ const ManageActivities = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/") getItems();
-  }, [location]);
+    getItems();
+  }, []);
 
   return (
     <>
