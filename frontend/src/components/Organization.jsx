@@ -87,7 +87,7 @@ const Organization = () => {
       <div className='d-inline-block p-0 m-0 ms-3'>
         <div className='d-inline m-auto p-1'>Members</div>
         <span
-          className='d-inline-block m-0 p-1'
+          className='d-inline-block m-0 p-0'
           onClick={() => joinOrganisation()}
         >
           {isJoining ? (

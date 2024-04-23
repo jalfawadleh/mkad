@@ -82,24 +82,26 @@ const Activity = () => {
 
   const joinSection = (
     <>
-      <div className='d-flex justify-content-wrap p-1 m-1'>
+      <div className='d-inline-block p-1 m-1 ms-2'>
         <OrganisationCircleLink
           to={"/organisation/" + activity.createdBy._id}
         />
-        <div className='d-inline-block mt-2 text-center'>
+        <div className='ms-1 d-inline-block mt-2 text-center'>
           {activity.createdBy.name}
         </div>
-
-        {isJoining ? (
-          <SpinnerCircle />
-        ) : (
-          <span onClick={() => onJoin()}>
-            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
-          </span>
-        )}
-
+        <div className='d-inline-block ms-1'>
+          {isJoining ? (
+            <SpinnerCircle />
+          ) : (
+            <span onClick={() => onJoin()}>
+              <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+            </span>
+          )}
+        </div>
         {activity.members.map((m) => (
-          <AvatarLink name={m.name} id={m._id} key={m._id} />
+          <div className='d-inline ms-1' key={m._id}>
+            <AvatarLink name={m.name} id={m._id} />
+          </div>
         ))}
       </div>
       <hr className='m-1' />
