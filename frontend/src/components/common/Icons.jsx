@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import multiavatar from "@multiavatar/multiavatar/esm";
 import { MapContext } from "../../store";
+
 import { TbFlagStar } from "react-icons/tb";
 import {
   FaHandshakeSimple,
@@ -95,14 +96,6 @@ export const HomeCircleLink = ({ to = "/", color = "white" }) => {
     <Link to={to}>
       <HomeCircle color={color} />
     </Link>
-  );
-};
-
-export const CircleMessage = ({ color = "white" }) => {
-  return (
-    <Circle>
-      <FaRegEnvelope size={24} className='m-0 p-0' color={color} />
-    </Circle>
   );
 };
 
@@ -543,12 +536,11 @@ export const ExclamationCircle = ({ color = "white" }) => {
 };
 
 const Icons = {
-  Delete,
-  CircleMessage,
   Empty,
+  Delete,
 
-  TextCenterBox,
   TextCenterLink,
+  TextCenterBox,
 
   Home,
   HomeCircle,
