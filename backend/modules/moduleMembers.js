@@ -59,6 +59,7 @@ const getMember = asyncHandler(async (req, res) => {
       hidden: member.hidden,
       contacts: member.contacts,
       help: member.help,
+      contacts: member.contacts,
       organisations,
       activities,
     });

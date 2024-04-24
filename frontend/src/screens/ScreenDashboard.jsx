@@ -1,14 +1,13 @@
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
-
 import { UserContext } from "../store";
-
 import { Bar } from "../components/common/Wrappers";
 import {
   ActivitiesCircleLink,
   ActivityCircleLink,
+  AvatarCustomLink,
   HomeCircleLink,
-  MessageCircle,
+  MemberCircleLink,
   OrganisationCircleLink,
   TextCenterLink,
 } from "../components/common/Icons";
@@ -19,15 +18,15 @@ const ScreenDashboard = () => {
   return (
     <>
       <Bar>
-        <HomeCircleLink to='/manage/member' />
+        <HomeCircleLink to='/' />
         <TextCenterLink text={user.name} to='/manage/member' />
+        <AvatarCustomLink name={user.name} />
         {user.type == "organisation" && (
           <ActivitiesCircleLink to={"/manage/activities"} />
         )}
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
-        {/* <MessageCircleLink to='/messages' /> */}
-        <MessageCircle />
+        <MemberCircleLink to='/members' />
       </Bar>
       <Outlet />
     </>

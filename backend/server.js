@@ -24,8 +24,8 @@ import search from "./modules/moduleSearch.js";
 import map from "./modules/moduleMap.js";
 import messages from "./modules/modulMessages.js";
 
-import { joinDiscussion, leaveDiscussion } from "./modules/modulDiscussion.js";
 import { saveMessage } from "./modules/modulMessages.js";
+import contacts from "./modules/moduleContacts.js";
 
 dotenv.config();
 
@@ -75,6 +75,7 @@ app.use("/api/organisations", organisations);
 app.use("/api/search", search);
 app.use("/api/map", map);
 app.use("/api/messages", messages);
+app.use("/api/contacts", contacts);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) =>

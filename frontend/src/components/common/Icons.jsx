@@ -26,6 +26,14 @@ import { AiOutlineClose } from "react-icons/ai";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { BiSolidFlag } from "react-icons/bi";
 import { MdTune } from "react-icons/md";
+import { IoPersonAddOutline, IoPersonRemoveOutline } from "react-icons/io5";
+import {
+  BsFillPersonPlusFill,
+  BsPerson,
+  BsPersonCheck,
+  BsPersonPlus,
+  BsPersonX,
+} from "react-icons/bs";
 
 export const Empty = () => {
   return <div className='p-1 m-1' style={{ width: 35, height: 35 }} />;
@@ -350,7 +358,7 @@ export const AvatarCustomLink = ({ name = "na", to = "/manage/member" }) => {
 };
 
 export const Member = ({ color = "white" }) => {
-  return <FaUser color={color} size={24} />;
+  return <BsPerson color={color} size={24} />;
 };
 
 export const MemberCircle = ({ color = "white" }) => {
@@ -361,12 +369,72 @@ export const MemberCircle = ({ color = "white" }) => {
   );
 };
 
-export const MemberCircleLink = ({ id, color = "white" }) => {
+export const MemberCircleLink = ({ to }) => {
   return (
-    <Link to={"member/" + id}>
+    <Link to={to}>
       <Circle>
-        <Member color={color} />
+        <Member color='white' />
       </Circle>
+    </Link>
+  );
+};
+
+export const MemberAdd = ({ color = "white" }) => {
+  return <BsPersonPlus color={color} size={24} />;
+};
+
+export const MemberAddCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='primary'>
+      <MemberAdd color={color} />
+    </Circle>
+  );
+};
+
+export const MemberAddCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <MemberAddCircle color='white' />
+    </Link>
+  );
+};
+
+export const MemberApprove = ({ color = "white" }) => {
+  return <BsPersonCheck color={color} size={24} />;
+};
+
+export const MemberApproveCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='primary'>
+      <MemberApprove color={color} />
+    </Circle>
+  );
+};
+
+export const MemberApproveCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <MemberApproveCircle color='white' />
+    </Link>
+  );
+};
+
+export const MemberDelete = ({ color = "white" }) => {
+  return <BsPersonX color={color} size={24} />;
+};
+
+export const MemberDeleteCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='primary'>
+      <MemberDelete color={color} />
+    </Circle>
+  );
+};
+
+export const MemberRemoveCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <MemberDeleteCircle color='white' />
     </Link>
   );
 };

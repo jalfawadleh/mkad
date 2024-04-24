@@ -14,13 +14,14 @@ import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 
-import JoinedActivities from "./components/dashboard/JoinedActivities.jsx";
+import MemberActivities from "./components/dashboard/MemberActivities.jsx";
+import MemberContacts from "./components/dashboard/MemberContacts.jsx";
+import MemberOrganisations from "./components/dashboard/MemberOrganisations.jsx";
+
 import Activity from "./components/Activity.jsx";
-
-import JoinedOrganisations from "./components/dashboard/joinedOrganisations.jsx";
 import Organisation from "./components/Organization.jsx";
-
 import Member from "./components/Member.jsx";
+
 import ManageMember from "./components/dashboard/ManageMember.jsx";
 import ManageAccount from "./components/dashboard/ManageAccount.jsx";
 
@@ -45,13 +46,13 @@ const router = createBrowserRouter(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
-          <Route path='activities' element={<JoinedActivities />} />
+          <Route path='activities' element={<MemberActivities />} />
+          <Route path='members' element={<MemberContacts />} />
+          <Route path='organisations' element={<MemberOrganisations />} />
+
           <Route path='activities/:id' element={<Activity />} />
-
-          <Route path='organisations' element={<JoinedOrganisations />} />
-          <Route path='organisations/:id' element={<Organisation />} />
-
           <Route path='members/:id' element={<Member />} />
+          <Route path='organisations/:id' element={<Organisation />} />
 
           <Route
             path='conversations/:type/:id/:name'

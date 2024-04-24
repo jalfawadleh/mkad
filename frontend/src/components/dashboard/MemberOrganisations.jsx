@@ -1,28 +1,26 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-
 import { Bar } from "../common/Wrappers";
 import {
-  ActivityCircleLink,
   DiscusstionCircleLink,
   Empty,
   ExclamationCircle,
   LocationCircleLink,
+  OrganisationCircle,
+  OrganisationCircleLink,
   TextCenterLink,
-  ActivityCircle,
 } from "../common/Icons";
 
-const Activities = () => {
+const MemberOrganisations = () => {
   const [items, setItems] = useState([]);
-  const [folded, setFolded] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
     // setIsLoading(true);
     await axios
-      .get("/activities")
+      .get("/organisations/join")
       .then((res) => setItems(res.data))
       // .then(() => setIsLoading(false))
       .catch((error) => {
@@ -40,21 +38,15 @@ const Activities = () => {
     <>
       <div className='my-2'></div>
       <Bar>
-        <ActivityCircle />
-        <div
-          role='button'
-          onClick={() => setFolded(!folded)}
-          className='p-auto m-auto text-center'
-        >
-          Joined Activities
-        </div>
+        <OrganisationCircle />
+        <div className='p-auto m-auto text-center'>Joined Organisatoins</div>
         <Empty />
       </Bar>
 
       {items.length ? (
         items.map((item) => (
           <Bar key={item._id}>
-            <ActivityCircleLink to={item._id} />
+            <OrganisationCircleLink to={"/organisation/" + item._id} />
             <TextCenterLink to={item._id} text={item.name} />
             <DiscusstionCircleLink
               type='organisation'
@@ -68,12 +60,13 @@ const Activities = () => {
       ) : (
         <Bar>
           <ExclamationCircle color='white' />
-          <span className='p-auto m-auto'>No Activities Joined</span>
+          <span className='p-auto m-auto'>No Organisations Joined</span>
         </Bar>
       )}
+
       <Outlet />
     </>
   );
 };
 
-export default Activities;
+export default MemberOrganisations;

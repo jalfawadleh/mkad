@@ -47,10 +47,7 @@ const Organization = () => {
     try {
       await axios
         .get(`/organisations/${id}`)
-        .then((res) => {
-          setOrganisation(res.data);
-          console.log(res.data);
-        })
+        .then((res) => setOrganisation(res.data))
         .then(() => setIsLoading(false));
     } catch (error) {
       error?.response?.data?.message &&

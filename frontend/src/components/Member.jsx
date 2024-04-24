@@ -15,8 +15,12 @@ import {
   Avatar,
   CloseCircleLink,
   Loader,
+  MemberAddCircle,
+  MemberApproveCircle,
+  MemberDeleteCircle,
   MessageCircleLink,
   OrganisationCircleLink,
+  Spinner,
   TextCenterBox,
 } from "./common/Icons.jsx";
 import { UserContext } from "../store.js";
@@ -68,6 +72,8 @@ function Member() {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isContact, setIsContact] = useState(false);
 
   const [member, setMember] = useState({
     _id: id,
@@ -80,22 +86,55 @@ function Member() {
     activities: [],
   });
 
-  useEffect(() => {
-    async function getMember() {
-      setIsLoading(true);
-      await axios
-        .get(`/members/${id}`)
-        .then((res) => setMember(res.data))
-        .then(() => setIsLoading(false))
-        .catch((error) => {
-          error?.response?.data?.message &&
-            toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
+  const getMember = async () => {
+    await axios
+      .get(`/members/${id}`)
+      .then((res) => {
+        setMember(res.data);
+        res.data.contacts.map((c) => {
+          if (c._id == user._id) {
+            setIsContact(c);
+          }
         });
-    }
+      })
+      .catch(() => toast.error("Something went wrong"));
+  };
 
+  useEffect(() => {
+    setIsLoading(true);
     getMember();
-  }, [id]);
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const postContact = async () => {
+    setIsUpdating(true);
+    const contact = { _id: member._id, name: member.name };
+    await axios
+      .post("/contacts", contact)
+      .then(() => getMember())
+      .then(() => setIsUpdating(false))
+      .catch(() => toast.error("Something went wrong"));
+  };
+
+  const memberContact =
+    member._id != user._id &&
+    (isUpdating ? (
+      <Spinner />
+    ) : !isContact ? (
+      <span onClick={() => postContact()}>
+        <MemberAddCircle />
+      </span>
+    ) : !isContact.approved ? (
+      <MemberApproveCircle />
+    ) : (
+      <>
+        <MemberDeleteCircle />
+        <MessageCircleLink
+          to={`/conversations/${member.type}/${member._id}/${member.name}`}
+        />
+      </>
+    ));
 
   return (
     <>
@@ -103,13 +142,8 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
-          {member._id != user._id ? (
-            <MessageCircleLink
-              to={`/conversations/${member.type}/${member._id}/${member.name}`}
-            />
-          ) : (
-            ""
-          )}
+          {memberContact}
+
           <CloseCircleLink />
         </Wrappers.Header>
 

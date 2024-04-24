@@ -57,6 +57,18 @@ const usersSchema = Schema(
     contacts: {
       type: [
         {
+          _id: { type: Schema.Types.ObjectId },
+          name: { type: String },
+          requested: { type: Boolean, default: false },
+          approved: { type: Boolean, default: false },
+        },
+      ],
+      default: [],
+    },
+
+    conversations: {
+      type: [
+        {
           id: { type: Schema.Types.ObjectId },
           name: { type: String },
           approved: { type: Boolean, default: false },
