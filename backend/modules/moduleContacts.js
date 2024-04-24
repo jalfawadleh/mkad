@@ -82,8 +82,7 @@ const approveContact = asyncHandler(async (req, res) => {
   }
 
   // Updating my contacts
-
-  // remove the requester
+  // remove the requester from my contacts
   recipient.contacts = recipient.contacts.filter(
     (c) => c._id.toString() != sender._id.toString()
   );

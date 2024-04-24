@@ -131,7 +131,7 @@ function Member() {
       <>
         <MemberDeleteCircle />
         <MessageCircleLink
-          to={`/conversations/${member.type}/${member._id}/${member.name}`}
+          to={`/conversations/member/${member._id}/${member.name}`}
         />
       </>
     ));
@@ -143,7 +143,6 @@ function Member() {
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
           {memberContact}
-
           <CloseCircleLink />
         </Wrappers.Header>
 
