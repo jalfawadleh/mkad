@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Bar } from "../common/Wrappers";
@@ -14,7 +14,6 @@ import {
 } from "../common/Icons";
 
 const Organisations = () => {
-  const location = useLocation();
   const [items, setItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
 
@@ -32,8 +31,8 @@ const Organisations = () => {
   };
 
   useEffect(() => {
-    if (location.pathname === "/") getItems();
-  }, [location]);
+    getItems();
+  }, []);
 
   return (
     <>

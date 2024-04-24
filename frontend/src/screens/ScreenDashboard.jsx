@@ -8,6 +8,7 @@ import {
   ActivitiesCircleLink,
   ActivityCircleLink,
   HomeCircleLink,
+  MessageCircle,
   OrganisationCircleLink,
   TextCenterLink,
 } from "../components/common/Icons";
@@ -25,6 +26,8 @@ const ScreenDashboard = () => {
         )}
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
+        {/* <MessageCircleLink to='/messages' /> */}
+        <MessageCircle />
       </Bar>
       <Outlet />
     </>

@@ -14,11 +14,11 @@ import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 
+import JoinedActivities from "./components/dashboard/JoinedActivities.jsx";
 import Activity from "./components/Activity.jsx";
-import Activities from "./components/dashboard/Activities.jsx";
 
+import JoinedOrganisations from "./components/dashboard/joinedOrganisations.jsx";
 import Organisation from "./components/Organization.jsx";
-import Organisations from "./components/dashboard/Organisations.jsx";
 
 import Member from "./components/Member.jsx";
 import ManageMember from "./components/dashboard/ManageMember.jsx";
@@ -45,24 +45,27 @@ const router = createBrowserRouter(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
-          <Route path='activities' element={<Activities />}>
-            <Route path=':id' element={<Activity />} />
-          </Route>
-          <Route path='organisations' element={<Organisations />}>
-            <Route path=':id' element={<Organisation />} />
-          </Route>
+          <Route path='activities' element={<JoinedActivities />} />
+          <Route path='activities/:id' element={<Activity />} />
+
+          <Route path='organisations' element={<JoinedOrganisations />} />
+          <Route path='organisations/:id' element={<Organisation />} />
+
           <Route path='members/:id' element={<Member />} />
+
+          <Route
+            path='conversations/:type/:id/:name'
+            element={<Conversation />}
+          />
+
           <Route path='manage/member' element={<ManageMember />} />
           <Route path='manage/account' element={<ManageAccount />} />
-
           <Route path='' element={<RouteOrganisation />}>
             <Route path='manage/activity/:id' element={<ManageActivity />} />
             <Route path='manage/activity/new' element={<ManageActivity />} />
             <Route path='manage/activities' element={<ManageActivities />} />
           </Route>
         </Route>
-
-        <Route path='conversation/:type/:id/:name' element={<Conversation />} />
 
         <Route path='help' element={<ScreenHelp />}>
           <Route path='howto' element={<HowTo />} />

@@ -105,7 +105,7 @@ function Member() {
           <TextCenterBox text={member.name} />
           {member._id != user._id ? (
             <MessageCircleLink
-              to={`/conversation/${member.type}/${member._id}/${member.name}`}
+              to={`/conversations/${member.type}/${member._id}/${member.name}`}
             />
           ) : (
             ""
