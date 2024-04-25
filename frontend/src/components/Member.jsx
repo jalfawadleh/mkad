@@ -16,11 +16,9 @@ import {
   CloseCircleLink,
   Loader,
   MemberAddCircle,
-  MemberApproveCircle,
-  MemberDeleteCircle,
   MessageCircleLink,
   OrganisationCircleLink,
-  Spinner,
+  SpinnerCircle,
   TextCenterBox,
 } from "./common/Icons.jsx";
 import { UserContext } from "../store.js";
@@ -92,9 +90,7 @@ function Member() {
       .then((res) => {
         setMember(res.data);
         res.data.contacts.map((c) => {
-          if (c._id == user._id) {
-            setIsContact(c);
-          }
+          if (c._id == user._id) setIsContact(c);
         });
       })
       .catch(() => toast.error("Something went wrong"));
@@ -120,20 +116,17 @@ function Member() {
   const memberContact =
     member._id != user._id &&
     (isUpdating ? (
-      <Spinner />
+      <SpinnerCircle />
     ) : !isContact ? (
       <span onClick={() => postContact()}>
         <MemberAddCircle />
       </span>
-    ) : !isContact.approved ? (
-      <MemberApproveCircle />
     ) : (
-      <>
-        <MemberDeleteCircle />
+      isContact.approved && (
         <MessageCircleLink
           to={`/conversations/member/${member._id}/${member.name}`}
         />
-      </>
+      )
     ));
 
   return (

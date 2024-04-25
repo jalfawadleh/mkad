@@ -82,14 +82,14 @@ const Activity = () => {
 
   const joinSection = (
     <>
-      <div className='d-inline-block p-1 m-1 ms-2'>
+      <div className='d-flex justify-content-start p-1 m-1 ms-2'>
         <OrganisationCircleLink
           to={"/organisations/" + activity.createdBy._id}
         />
-        <div className='ms-1 d-inline-block mt-2 text-center'>
+        <div className='ms-1 my-auto p-auto text-center'>
           {activity.createdBy.name}
         </div>
-        <div className='d-inline-block ms-1'>
+        <div className='ms-1'>
           {isJoining ? (
             <SpinnerCircle />
           ) : (
@@ -99,8 +99,8 @@ const Activity = () => {
           )}
         </div>
         {activity.members.map((m) => (
-          <div className='d-inline ms-1' key={m._id}>
-            <AvatarLink name={m.name} id={m._id} />
+          <div className='me-1' key={m._id}>
+            <AvatarLink to={"/members/" + m._id} name={m.name} />
           </div>
         ))}
       </div>

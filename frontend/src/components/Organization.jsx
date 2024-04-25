@@ -100,7 +100,7 @@ const Organization = () => {
 
         {organisation.members?.map((m) => (
           <span className='d-inline' key={m._id}>
-            <AvatarLink name={m.name} id={m._id} />
+            <AvatarLink name={m.name} to={"/member/" + m._id} />
           </span>
         ))}
       </div>

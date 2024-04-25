@@ -337,16 +337,12 @@ export const Avatar = ({ name = "na", size = 34 }) => {
       alt='Profile Photo'
       className='p-0 m-1'
     />
-  );
-};
+  };
+);
 
-export const AvatarLink = ({ name = "na", id, size = 34 }) => {
+export const AvatarLink = ({ name, to, size = 34 }) => {
   return (
-    <Link
-      to={"/member/" + id}
-      className=''
-      style={{ height: size, width: size }}
-    >
+    <Link to={to} style={{ height: size, width: size }}>
       <Avatar name={name} size={size} />
     </Link>
   );
@@ -563,7 +559,7 @@ export const MKaDifferenceCircleLink = ({ to = "/" }) => {
 export const Spinner = () => {
   return (
     <div
-      className='spinner-border text-primary m-0 p-0'
+      className='m-0 p-0 spinner-border text-primary'
       role='status'
       style={{ height: 24, width: 24 }}
     >

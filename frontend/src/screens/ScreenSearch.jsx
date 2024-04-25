@@ -134,7 +134,9 @@ const ScreenSearch = () => {
           {
             {
               location: <LocationCircleLink location={item.location} />,
-              member: <AvatarLink name={item.name} id={item._id} />,
+              member: (
+                <AvatarLink to={"/member/" + item._id} name={item.name} />
+              ),
               activity: <ActivityCircleLink to={"/activities/" + item._id} />,
               organisation: (
                 <OrganisationCircleLink to={"/organisations/" + item._id} />

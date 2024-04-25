@@ -136,8 +136,8 @@ const Conversation = () => {
                 <div className='d-inline m-0 me-1 p-0'>
                   <AvatarLink
                     size={24}
+                    to={"/member/" + m.sender._id}
                     name={m.sender.name}
-                    id={m.sender._id}
                   />
                 </div>
                 <div className='d-inline'>{m.content}</div>
