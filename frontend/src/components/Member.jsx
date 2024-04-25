@@ -56,7 +56,7 @@ const MemberActivities = ({ activities = [] }) => {
           </div>
           {activities.map((a) => (
             <span key={a._id}>
-              <ActivityCircleLink to={"/activity/" + a._id} />
+              <ActivityCircleLink to={"/activities/" + a._id} />
 
               <div className='d-inline me-2'>{a.name}</div>
             </span>

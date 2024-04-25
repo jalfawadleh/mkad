@@ -84,7 +84,7 @@ const Activity = () => {
     <>
       <div className='d-inline-block p-1 m-1 ms-2'>
         <OrganisationCircleLink
-          to={"/organisation/" + activity.createdBy._id}
+          to={"/organisations/" + activity.createdBy._id}
         />
         <div className='ms-1 d-inline-block mt-2 text-center'>
           {activity.createdBy.name}
