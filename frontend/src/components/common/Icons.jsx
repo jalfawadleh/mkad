@@ -19,16 +19,13 @@ import {
   FaQuestion,
   FaSearch,
   FaSun,
-  FaUser,
   FaHome,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiArrowUpDownFill } from "react-icons/ri";
 import { BiSolidFlag } from "react-icons/bi";
 import { MdTune } from "react-icons/md";
-import { IoPersonAddOutline, IoPersonRemoveOutline } from "react-icons/io5";
 import {
-  BsFillPersonPlusFill,
   BsPerson,
   BsPersonCheck,
   BsPersonPlus,
@@ -337,8 +334,8 @@ export const Avatar = ({ name = "na", size = 34 }) => {
       alt='Profile Photo'
       className='p-0 m-1'
     />
-  };
-);
+  );
+};
 
 export const AvatarLink = ({ name, to, size = 34 }) => {
   return (
