@@ -309,9 +309,12 @@ export const Activities = ({ color = "white" }) => {
   return <TbFlagStar color={color} size={24} />;
 };
 
-export const ActivitiesCircle = ({ color = "white" }) => {
+export const ActivitiesCircle = ({
+  borderColor = "light",
+  color = "white",
+}) => {
   return (
-    <Circle borderColor='success'>
+    <Circle borderColor={borderColor}>
       <Activities color={color} />
     </Circle>
   );
@@ -320,7 +323,7 @@ export const ActivitiesCircle = ({ color = "white" }) => {
 export const ActivitiesCircleLink = ({ to, color = "white" }) => {
   return (
     <Link to={to}>
-      <ActivitiesCircle color={color} />
+      <ActivitiesCircle borderColor='success' color={color} />
     </Link>
   );
 };
@@ -558,7 +561,7 @@ export const Spinner = () => {
     <div
       className='m-0 p-0 spinner-border text-primary'
       role='status'
-      style={{ height: 24, width: 24 }}
+      style={{ height: 20, width: 20 }}
     >
       <span className='visually-hidden w-100 h-100'>Loading...</span>
     </div>

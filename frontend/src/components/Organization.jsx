@@ -85,21 +85,21 @@ const Organization = () => {
   const membersJoined = (
     <>
       {/* Join members list */}
-      <div className='d-inline-block p-0 m-0 ms-3'>
-        <div className='d-inline m-auto p-1'>Members</div>
-        <span
-          className='d-inline-block m-0 p-0'
-          onClick={() => joinOrganisation()}
-        >
-          {isJoining ? (
-            <SpinnerCircle />
-          ) : (
+      <div className='d-flex justify-content-start ms-2'>
+        <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-primary rounded-pill rounded-end'>
+          Members
+        </div>
+
+        {isJoining ? (
+          <SpinnerCircle />
+        ) : (
+          <span onClick={() => joinOrganisation()}>
             <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
-          )}
-        </span>
+          </span>
+        )}
 
         {organisation.members?.map((m) => (
-          <span className='d-inline' key={m._id}>
+          <span className='me-1' key={m._id}>
             <AvatarLink name={m.name} to={"/member/" + m._id} />
           </span>
         ))}
@@ -111,12 +111,14 @@ const Organization = () => {
   const organisationActivities = (
     <>
       {/* Join members list */}
-      <div className='d-block p-0 m-1 ms-3'>
-        <div className='d-inline m-auto p-1'>Activities</div>
+      <div className='d-flex justify-content-start ms-2'>
+        <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-success rounded-pill rounded-end'>
+          Activities
+        </div>
         {organisation.activities.map((m) => (
-          <span className='d-inline-block me-2' key={m._id}>
+          <span className='me-1 p-0' key={m._id}>
             <ActivityCircleLink to={"/activities/" + m._id} />
-            <div className='d-inline m-auto p-1 ps-0'>{m.name}</div>
+            <div className='d-inline my-auto p-1'>{m.name}</div>
           </span>
         ))}
       </div>

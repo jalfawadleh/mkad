@@ -21,12 +21,13 @@ const ScreenDashboard = () => {
         <HomeCircleLink to='/' />
         <TextCenterLink text={user.name} to='/manage/member' />
         <AvatarCustomLink name={user.name} />
-        {user.type == "organisation" && (
-          <ActivitiesCircleLink to={"/manage/activities"} />
-        )}
+
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />
+        {user.type == "organisation" && (
+          <ActivitiesCircleLink to={"/manage/activities"} />
+        )}
       </Bar>
       <Outlet />
     </>
