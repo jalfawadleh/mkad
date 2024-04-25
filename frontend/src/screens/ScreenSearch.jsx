@@ -183,7 +183,7 @@ const ScreenSearch = () => {
           {isGettingPlaces || isGettingResults ? (
             <SpinnerCircle />
           ) : (
-            <SearchCircle color={text.length > 3 ? "white" : "gray"} />
+            <SearchCircle color={text.length > 2 ? "white" : "gray"} />
           )}
         </button>
       </Bar>
