@@ -638,6 +638,28 @@ export const ExclamationCircle = ({ color = "white" }) => {
   );
 };
 
+export const Share = () => {
+  return <FaShare color='white' size={24} />;
+};
+
+export const ShareCircle = () => {
+  return (
+    <Circle borderColor='info' bgColor='primary'>
+      <Share />
+    </Circle>
+  );
+};
+
+export const ShareCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <ShareCircle />
+    </Link>
+  );
+};
+
+import { FaShare } from "react-icons/fa";
+
 const Icons = {
   Empty,
   Delete,

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -19,6 +19,7 @@ import {
   DiscusstionCircleLink,
   Loader,
   OrganisationCircle,
+  ShareCircleLink,
   SpinnerCircle,
   TextCenterBox,
 } from "./common/Icons.jsx";
@@ -89,7 +90,6 @@ const Organization = () => {
         <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-primary rounded-pill rounded-end'>
           Members
         </div>
-
         {isJoining ? (
           <SpinnerCircle />
         ) : (
@@ -132,6 +132,9 @@ const Organization = () => {
         <Wrapper.Header>
           <OrganisationCircle />
           <TextCenterBox text={organisation.name} />
+          <ShareCircleLink
+            to={`/share/${organisation.type}/${organisation._id}/${organisation.name}`}
+          />
           <DiscusstionCircleLink
             type='organisation'
             id={organisation._id}

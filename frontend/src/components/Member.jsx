@@ -18,6 +18,7 @@ import {
   MemberAddCircle,
   MessageCircleLink,
   OrganisationCircleLink,
+  ShareCircleLink,
   SpinnerCircle,
   TextCenterBox,
 } from "./common/Icons.jsx";
@@ -135,6 +136,9 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
+          <ShareCircleLink
+            to={`/share/${member.type}/${member._id}/${member.name}`}
+          />
           {memberContact}
           <CloseCircleLink />
         </Wrappers.Header>

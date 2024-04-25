@@ -40,6 +40,7 @@ import ContactUs from "./components/mkadifference/ContactUs.jsx";
 import Updates from "./components/mkadifference/Updates.jsx";
 
 import ScreenSearch from "./screens/ScreenSearch.jsx";
+import Share from "./components/Share.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +59,8 @@ const router = createBrowserRouter(
             path='conversations/:type/:id/:name'
             element={<Conversation />}
           />
+
+          <Route path='share/:type/:id' element={<Share />} />
 
           <Route path='manage/member' element={<ManageMember />} />
           <Route path='manage/account' element={<ManageAccount />} />
