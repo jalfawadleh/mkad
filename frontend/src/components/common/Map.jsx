@@ -143,7 +143,7 @@ const Map = () => {
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(10, 35),
           popupAnchor: new L.Point(8, -35),
-          className: "border border-3 border-warning rounded-circle bg-black",
+          className: "border border-3 border-warning rounded-circle bg-warning",
         })
       }
     >
@@ -160,7 +160,7 @@ const Map = () => {
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(10, 35),
           popupAnchor: new L.Point(8, -35),
-          className: "border border-3 border-success rounded-circle bg-black",
+          className: "border border-3 border-success rounded-circle bg-success",
         })
       }
       position={item.location}

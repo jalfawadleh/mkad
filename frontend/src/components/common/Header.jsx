@@ -26,7 +26,7 @@ const Header = () => {
     <>
       <nav
         style={{ top: "75px", margin: "6px", borderRadius: "25px" }}
-        className='d-none d-sm-block position-absolute end-0 p-0 bg-black  navbar navbar-expand'
+        className='d-none d-sm-block position-absolute end-0 p-0 navbar navbar-expand'
       >
         <div className='d-flex flex-column navbar-nav'>{icons}</div>
       </nav>

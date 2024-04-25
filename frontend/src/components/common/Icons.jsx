@@ -25,22 +25,27 @@ import { RiArrowUpDownFill } from "react-icons/ri";
 import { BiSolidFlag } from "react-icons/bi";
 import { MdTune } from "react-icons/md";
 import {
-  BsPerson,
-  BsPersonCheck,
-  BsPersonPlus,
-  BsPersonX,
+  BsPersonFill,
+  BsPersonFillCheck,
+  BsPersonFillAdd,
+  BsPersonFillX,
 } from "react-icons/bs";
 
 export const Empty = () => {
   return <div className='p-1 m-1' style={{ width: 35, height: 35 }} />;
 };
 
-export const Circle = ({ children, borderColor = "primary" }) => {
+export const Circle = ({
+  children,
+  borderColor = "primary",
+  bgColor = "primary",
+}) => {
   return (
     <span
       className={
-        "p-1 m-1 badge rounded-pill border border-2 " +
-        (borderColor ? "border-" + borderColor : "")
+        "p-1 m-1 badge rounded-pill border border-2 text-dark" +
+        (borderColor ? " border-" + borderColor : "") +
+        (bgColor ? " bg-" + bgColor : "")
       }
       role='button'
     >
@@ -295,9 +300,12 @@ export const Organisation = () => {
   );
 };
 
-export const OrganisationCircle = ({ borderColor = "light" }) => {
+export const OrganisationCircle = ({
+  borderColor = "light",
+  bgColor = "warning",
+}) => {
   return (
-    <Circle borderColor={borderColor}>
+    <Circle borderColor={borderColor} bgColor={bgColor}>
       <Organisation />
     </Circle>
   );
@@ -315,9 +323,13 @@ export const Activity = ({ color = "white" }) => {
   return <BiSolidFlag color={color} size={24} />;
 };
 
-export const ActivityCircle = ({ borderColor = "light", color = "white" }) => {
+export const ActivityCircle = ({
+  borderColor = "light",
+  color = "white",
+  bgColor = "success",
+}) => {
   return (
-    <Circle borderColor={borderColor}>
+    <Circle borderColor={borderColor} bgColor={bgColor}>
       <Activity color={color} />
     </Circle>
   );
@@ -383,12 +395,12 @@ export const AvatarCustomLink = ({ name = "na", to = "/manage/member" }) => {
 };
 
 export const Member = ({ color = "white" }) => {
-  return <BsPerson color={color} size={24} />;
+  return <BsPersonFill color={color} size={24} />;
 };
 
 export const MemberCircle = ({ borderColor = "light", color = "white" }) => {
   return (
-    <Circle borderColor={borderColor}>
+    <Circle borderColor={borderColor} bgColor='primary'>
       <Member color={color} />
     </Circle>
   );
@@ -397,15 +409,13 @@ export const MemberCircle = ({ borderColor = "light", color = "white" }) => {
 export const MemberCircleLink = ({ to }) => {
   return (
     <Link to={to}>
-      <Circle borderColor='primary'>
-        <Member color='white' />
-      </Circle>
+      <MemberCircle borderColor='primary' />
     </Link>
   );
 };
 
 export const MemberAdd = ({ color = "white" }) => {
-  return <BsPersonPlus color={color} size={24} />;
+  return <BsPersonFillAdd color={color} size={24} />;
 };
 
 export const MemberAddCircle = ({ color = "white" }) => {
@@ -425,7 +435,7 @@ export const MemberAddCircleLink = ({ to }) => {
 };
 
 export const MemberApprove = ({ color = "white" }) => {
-  return <BsPersonCheck color={color} size={24} />;
+  return <BsPersonFillCheck color={color} size={24} />;
 };
 
 export const MemberApproveCircle = ({ color = "white" }) => {
@@ -445,7 +455,7 @@ export const MemberApproveCircleLink = ({ to }) => {
 };
 
 export const MemberDelete = ({ color = "white" }) => {
-  return <BsPersonX color={color} size={24} />;
+  return <BsPersonFillX color={color} size={24} />;
 };
 
 export const MemberDeleteCircle = ({ color = "white" }) => {
