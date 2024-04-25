@@ -300,7 +300,7 @@ const Map = () => {
               new L.divIcon({
                 html: iconMKaDifference,
                 iconSize: new L.Point(30, 30),
-                iconAnchor: new L.Point(0, 0),
+                iconAnchor: new L.Point(7, 35),
                 popupAnchor: new L.Point(8, -35),
                 className: "text-center",
               })
@@ -310,8 +310,13 @@ const Map = () => {
             <Popup closeButton={false}>
               <span
                 role='button'
-                className='h6 p-2 bg-black text-white'
-                style={{ marginLeft: -15, marginRight: -20, borderRadius: 10 }}
+                className='h6 p-2 bg-black text-white  border border-2 border-warning'
+                style={{
+                  marginLeft: -15,
+                  marginRight: -20,
+                  borderRadius: 10,
+                  boxShadow: "gold 0px 0px 5px 5px",
+                }}
               >
                 MkaDifference
               </span>
