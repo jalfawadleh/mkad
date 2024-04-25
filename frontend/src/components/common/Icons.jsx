@@ -360,9 +360,9 @@ export const Member = ({ color = "white" }) => {
   return <BsPerson color={color} size={24} />;
 };
 
-export const MemberCircle = ({ color = "white" }) => {
+export const MemberCircle = ({ borderColor = "light", color = "white" }) => {
   return (
-    <Circle borderColor='light'>
+    <Circle borderColor={borderColor}>
       <Member color={color} />
     </Circle>
   );
@@ -371,7 +371,7 @@ export const MemberCircle = ({ color = "white" }) => {
 export const MemberCircleLink = ({ to }) => {
   return (
     <Link to={to}>
-      <Circle>
+      <Circle borderColor='primary'>
         <Member color='white' />
       </Circle>
     </Link>

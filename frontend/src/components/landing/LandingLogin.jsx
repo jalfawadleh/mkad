@@ -184,14 +184,13 @@ function LoginForm() {
   const countersBox = (
     <div className='d-flex justify-content-around h5 my-3 py-3 '>
       <div className='text-center m-auto p-auto'>
-        <OrganisationCircle /> 3 Organisation
+        <OrganisationCircle borderColor='warning' /> 3 Organisation
       </div>
       <div className='text-center m-auto p-auto'>
-        <ActivityCircle /> 4 Activities
+        <ActivityCircle borderColor='success' /> 4 Activities
       </div>
       <div className='text-center m-auto p-auto'>
-        <MemberCircle />
-        12 Members
+        <MemberCircle borderColor='primary' /> 12 Members
       </div>
     </div>
   );
