@@ -352,7 +352,7 @@ export const ActivitiesCircle = ({
   color = "white",
 }) => {
   return (
-    <Circle borderColor={borderColor}>
+    <Circle borderColor={borderColor} bgColor='success'>
       <Activities color={color} />
     </Circle>
   );
