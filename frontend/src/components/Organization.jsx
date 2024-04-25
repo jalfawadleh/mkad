@@ -112,14 +112,16 @@ const Organization = () => {
   const organisationActivities = (
     <>
       {/* Join members list */}
-      <div className='d-flex justify-content-start ms-2'>
+      <div className='d-flex flex-wrap ms-2'>
         <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-success rounded-pill rounded-end'>
           Activities
         </div>
         {organisation.activities.map((m) => (
-          <span className='me-1 p-0' key={m._id}>
-            <ActivityCircleLink to={"/activities/" + m._id} />
-            <div className='d-inline my-auto p-1'>{m.name}</div>
+          <span className='d-inline-block me-1 p-0' key={m._id}>
+            <div className='d-inline my-auto p-1'>
+              <ActivityCircleLink to={"/activities/" + m._id} />
+            </div>
+            <div className='d-inline-block my-auto p-1'>{m.name}</div>
           </span>
         ))}
       </div>
