@@ -37,14 +37,19 @@ export const saveMessage = asyncHandler(async (m) => {
 // @access  Private
 const getMessages = asyncHandler(async (req, res) => {
   try {
-    const messages = await Messages.find({
-      $or: [
-        { "sender._id": req.user._id, "recipient._id": req.body._id },
-        { "sender._id": req.body._id, "recipient._id": req.user._id },
-      ],
-    })
+    const messages = await Messages.find(
+      req.body.type == "member"
+        ? {
+            $or: [
+              { "sender._id": req.user._id, "recipient._id": req.body._id },
+              { "sender._id": req.body._id, "recipient._id": req.user._id },
+            ],
+          }
+        : { "recipient._id": req.body._id, "recipient.type": req.body.type }
+    )
       .sort({ createdAt: 1 })
       .limit(15);
+
     res.json(messages);
   } catch (error) {
     console.log(error);

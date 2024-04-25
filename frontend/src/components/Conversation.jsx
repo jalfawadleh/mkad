@@ -14,6 +14,7 @@ import {
   TextCenterBox,
   DiscusstionCircle,
   OrganisationCircle,
+  ActivitiesCircle,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -49,7 +50,7 @@ const Conversation = () => {
   async function getMessages() {
     setIsLoading(true);
     await axios
-      .post(`/messages`, { _id: id, name, type: "members", messagesNumber })
+      .post(`/messages`, { _id: id, name, type, messagesNumber })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
       .then(() => messagesNumber > 0 && showLastMessage())
@@ -103,7 +104,13 @@ const Conversation = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           {type == "member" ? <MessageCircle /> : <DiscusstionCircle />}
-          {type == "member" ? <Avatar name={name} /> : <OrganisationCircle />}
+          {type == "member" ? (
+            <Avatar name={name} />
+          ) : type == "organisation" ? (
+            <OrganisationCircle />
+          ) : (
+            <ActivitiesCircle />
+          )}
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
