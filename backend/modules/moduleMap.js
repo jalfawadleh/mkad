@@ -18,7 +18,7 @@ const getItems = asyncHandler(async (req, res) => {
     fields
   );
   const activities = await Activities.find(
-    { hidden: false, "location.online": false },
+    { hidden: false, "location.online": false, startOn: { $gt: Date.now() } },
     fields
   );
 
@@ -65,6 +65,7 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
       type: "activity",
       "location.lng": { $gte: lngMin, $lt: lngMax },
       "location.lat": { $gte: latMin, $lt: latMax },
+      startOn: { $gt: Date.now() },
     },
     fields
   );

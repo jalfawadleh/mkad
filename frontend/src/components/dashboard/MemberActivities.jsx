@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -20,16 +20,10 @@ const MemberActivities = () => {
   // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
-    // setIsLoading(true);
     await axios
       .get("/activities")
       .then((res) => setItems(res.data))
-      // .then(() => setIsLoading(false))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
+      .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
