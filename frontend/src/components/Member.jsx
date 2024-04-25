@@ -15,6 +15,7 @@ import {
   Avatar,
   CloseCircleLink,
   Loader,
+  LocationCircleLink,
   MemberAddCircle,
   MessageCircleLink,
   OrganisationCircleLink,
@@ -136,6 +137,7 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
+          <LocationCircleLink location={member.location} />
           <ShareCircleLink to={`/share/${member.type}/${member._id}`} />
           {memberContact}
           <CloseCircleLink />

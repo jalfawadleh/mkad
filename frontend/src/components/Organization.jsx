@@ -18,6 +18,7 @@ import {
   CloseCircleLink,
   DiscusstionCircleLink,
   Loader,
+  LocationCircleLink,
   OrganisationCircle,
   ShareCircleLink,
   SpinnerCircle,
@@ -132,15 +133,17 @@ const Organization = () => {
         <Wrapper.Header>
           <OrganisationCircle />
           <TextCenterBox text={organisation.name} />
-          <ShareCircleLink
-            to={`/share/${organisation.type}/${organisation._id}`}
-          />
+          <LocationCircleLink location={organisation.location} />
           <DiscusstionCircleLink
             type='organisation'
             id={organisation._id}
             name={organisation.name}
             color='white'
           />
+          <ShareCircleLink
+            to={`/share/${organisation.type}/${organisation._id}`}
+          />
+
           <CloseCircleLink />
         </Wrapper.Header>
         {organisation.activities && organisationActivities}

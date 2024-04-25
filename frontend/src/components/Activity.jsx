@@ -25,6 +25,7 @@ import {
   OrganisationCircleLink,
   SpinnerCircle,
   ShareCircleLink,
+  LocationCircleLink,
 } from "./common/Icons.jsx";
 
 const Activity = () => {
@@ -115,13 +116,14 @@ const Activity = () => {
         <Wrappers.Header>
           <ActivityCircle />
           <TextCenterBox text={activity.name} />
-          <ShareCircleLink to={`/share/${activity.type}/${activity._id}`} />
+          <LocationCircleLink location={activity.location} />
           <DiscusstionCircleLink
             type='activity'
             id={activity._id}
             name={activity.name}
             color='white'
           />
+          <ShareCircleLink to={`/share/${activity.type}/${activity._id}`} />
           <CloseCircleLink />
         </Wrappers.Header>
         {joinSection}
