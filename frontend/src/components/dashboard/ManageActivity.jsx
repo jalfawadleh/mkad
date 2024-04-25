@@ -37,8 +37,8 @@ const ManageActivity = () => {
   const [activity, setActivity] = useState({
     _id: id ? id : "",
     name: "",
-    startOn: Date.now(),
-    endOn: Date.now(),
+    startOn: Date.now() + 6 * 3600000,
+    endOn: Date.now() + 7 * 3600000,
     description: "",
     notes: [],
     help: [],
@@ -119,7 +119,11 @@ const ManageActivity = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           <ActivityCircle />
-          <TextCenterBox text={activity.name} />
+          <TextCenterBox
+            text={
+              activity.name ? activity.name : !activity._id && "New Activity"
+            }
+          />
           <CloseCircleLink />
         </Wrappers.Header>
 
@@ -129,7 +133,6 @@ const ManageActivity = () => {
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageDescription
             description={activity.description}
             setParent={setActivity}
@@ -142,19 +145,16 @@ const ManageActivity = () => {
             setParent={setActivity}
             isEditing={isEditing}
           />
-
           <ManageLanguages
             languages={activity.languages}
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageInterests
             interests={activity.interests}
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageHelp
             help={activity.help}
             parentType={activity.type}
@@ -162,25 +162,21 @@ const ManageActivity = () => {
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageHidden
             hidden={activity.hidden}
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageOnline
             online={activity.online}
             setParent={setActivity}
             editing={isEditing}
           />
-
           <ManageLocation
             location={activity.location}
             setParent={setActivity}
             editing={isEditing}
           />
-
           {isLoading && <Loader />}
         </Wrappers.Body>
 

@@ -1,42 +1,49 @@
 import moment from "moment";
 import Datetime from "react-datetime";
-import { toast } from "react-toastify";
 
 const Period = ({ startOn, endOn, setParent, isEditing = false }) => {
-  const onChangeToStart = (date) => {
-    if (moment(date).isBefore(Date.now()))
-      toast.error("Please choose a start in the future");
-    else
-      setParent((prev) => ({ ...prev, startOn: moment(date).toISOString() }));
-  };
+  const onChangeToStart = (date) =>
+    setParent((prev) => ({ ...prev, startOn: moment(date).toISOString() }));
 
-  const onChangeToEnd = (date) => {
-    if (moment(date).isBefore(startOn))
-      toast.error("End should be after start");
-    else
-      setParent((prev) => ({ ...prev, endOn: new Date(date).toISOString() }));
-  };
+  const onChangeToEnd = (date) =>
+    setParent((prev) => ({ ...prev, endOn: new Date(date).toISOString() }));
 
   return isEditing ? (
     <>
-      <div className='d-flex justify-content-between m-2'>
-        <span className='p-2 my-auto text-bg-primary rounded-start'>Start</span>
+      <div className='d-flex justify-content-start ms-2 mb-2'>
+        <div
+          className='p-2 my-auto text-bg-primary rounded-start'
+          style={{ width: 50 }}
+        >
+          Start
+        </div>
         <Datetime
           input={true}
-          className='p-0 me-1'
+          className='p-0 my-auto mx-0 bg-dark'
           value={moment(startOn)}
           onChange={onChangeToStart}
+          isValidDate={(current) => {
+            return current.isAfter(moment(Date.now()));
+          }}
         />
-
-        <span className='p-2 ms-3 my-auto text-bg-primary rounded-start'>
+      </div>
+      <div className='d-flex justify-content-start ms-2'>
+        <span
+          className='p-2 my-auto text-bg-primary rounded-start'
+          style={{ width: 50 }}
+        >
           End
         </span>
         <Datetime
-          className='p-0 rounded-end'
+          className='p-0 my-auto mx-0 bg-dark'
           value={moment(endOn)}
           onChange={onChangeToEnd}
+          isValidDate={(current) => {
+            return current.isAfter(moment(startOn));
+          }}
         />
       </div>
+
       <hr className='my-2' />
     </>
   ) : (

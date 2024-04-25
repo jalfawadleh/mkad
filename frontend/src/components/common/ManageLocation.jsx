@@ -51,10 +51,9 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
       <>
         <SectionForm>
           <div className='d-block m-1 p-auto text-center'>
-            Drag the map to change location
+            Drag the map or marker to change location
             <span className='ps-2 text-warning'>- not exact -</span>
           </div>
-          {JSON.stringify(location)}
           <form onSubmit={onSubmit}>
             <div className='hstack gap-2 mt-2'>
               <label className='d-inline-block p-1 m-auto w-50'>

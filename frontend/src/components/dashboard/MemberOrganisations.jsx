@@ -46,7 +46,7 @@ const MemberOrganisations = () => {
       {items.length ? (
         items.map((item) => (
           <Bar key={item._id}>
-            <OrganisationCircleLink to={"/organisation/" + item._id} />
+            <OrganisationCircleLink to={"/organisations/" + item._id} />
             <TextCenterLink to={item._id} text={item.name} />
             <DiscusstionCircleLink
               type='organisation'

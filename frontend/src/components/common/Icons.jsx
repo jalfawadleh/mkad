@@ -91,9 +91,9 @@ export const Home = ({ color = "white" }) => {
   return <FaHome color={color} size={24} />;
 };
 
-export const HomeCircle = ({ color = "white" }) => {
+export const HomeCircle = ({ borderColor = "light", color = "white" }) => {
   return (
-    <Circle>
+    <Circle borderColor={borderColor}>
       <Home color={color} size={24} />
     </Circle>
   );
@@ -102,7 +102,7 @@ export const HomeCircle = ({ color = "white" }) => {
 export const HomeCircleLink = ({ to = "/", color = "white" }) => {
   return (
     <Link to={to}>
-      <HomeCircle color={color} />
+      <HomeCircle borderColor='primary' color={color} />
     </Link>
   );
 };
@@ -269,9 +269,12 @@ export const Organisation = ({ color = "white" }) => {
   return <FaHouseUser color={color} size={24} />;
 };
 
-export const OrganisationCircle = ({ color = "white" }) => {
+export const OrganisationCircle = ({
+  borderColor = "light",
+  color = "white",
+}) => {
   return (
-    <Circle borderColor='warning'>
+    <Circle borderColor={borderColor}>
       <Organisation color={color} />
     </Circle>
   );
@@ -280,7 +283,7 @@ export const OrganisationCircle = ({ color = "white" }) => {
 export const OrganisationCircleLink = ({ to, color = "white" }) => {
   return (
     <Link to={to}>
-      <OrganisationCircle color={color} />
+      <OrganisationCircle borderColor='warning' color={color} />
     </Link>
   );
 };
@@ -289,18 +292,18 @@ export const Activity = ({ color = "white" }) => {
   return <BiSolidFlag color={color} size={24} />;
 };
 
-export const ActivityCircle = ({ color = "white" }) => {
+export const ActivityCircle = ({ borderColor = "light", color = "white" }) => {
   return (
-    <Circle borderColor='success'>
+    <Circle borderColor={borderColor}>
       <Activity color={color} />
     </Circle>
   );
 };
 
-export const ActivityCircleLink = ({ to, color = "white" }) => {
+export const ActivityCircleLink = ({ to }) => {
   return (
     <Link to={to}>
-      <ActivityCircle color={color} />
+      <ActivityCircle borderColor='success' color={"white"} />
     </Link>
   );
 };
