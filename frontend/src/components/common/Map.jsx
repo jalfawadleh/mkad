@@ -95,7 +95,7 @@ const Map = () => {
   }, [mapCenter]);
 
   const ItemPopup = ({ item }) => (
-    <Popup>
+    <Popup closeButton={false}>
       <Link
         to={
           "/" +
@@ -103,10 +103,28 @@ const Map = () => {
             ? "activities/" + item._id
             : item.type + "s/" + item._id)
         }
+        className='m-0 p-0 text-center'
       >
-        <span role='button' className='h6 p-0 m-0'>
+        <div
+          role='button'
+          className={
+            "h6 p-2" +
+            (item.type == "activity"
+              ? " bg-success text-white"
+              : item.type == "member"
+              ? " bg-primary text-white"
+              : " bg-warning  text-black")
+          }
+          style={{
+            margin: -10,
+            marginLeft: -15,
+            marginRight: -18,
+            borderRadius: 10,
+            minWidth: 100,
+          }}
+        >
           {item.name}
-        </span>
+        </div>
       </Link>
     </Popup>
   );
@@ -289,8 +307,12 @@ const Map = () => {
             }
             title='MKaDifference'
           >
-            <Popup>
-              <span role='button' className='h6 p-0 m-0'>
+            <Popup closeButton={false}>
+              <span
+                role='button'
+                className='h6 p-2 bg-black text-white'
+                style={{ marginLeft: -15, marginRight: -20, borderRadius: 10 }}
+              >
                 MkaDifference
               </span>
             </Popup>
