@@ -54,7 +54,7 @@ const MemberContacts = () => {
       {contacts.length ? (
         contacts.map((contact) => (
           <Bar key={contact._id}>
-            <AvatarLink to={"/member/" + contact._id} name={contact.name} />
+            <AvatarLink to={"/members/" + contact._id} name={contact.name} />
             <TextCenterLink to={contact._id} text={contact.name} />
             <span onClick={() => deleteContact(contact._id)}>
               <MemberDeleteCircle />

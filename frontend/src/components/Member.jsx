@@ -136,9 +136,7 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
-          <ShareCircleLink
-            to={`/share/${member.type}/${member._id}/${member.name}`}
-          />
+          <ShareCircleLink to={`/share/${member.type}/${member._id}`} />
           {memberContact}
           <CloseCircleLink />
         </Wrappers.Header>

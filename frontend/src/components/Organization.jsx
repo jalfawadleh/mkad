@@ -133,7 +133,7 @@ const Organization = () => {
           <OrganisationCircle />
           <TextCenterBox text={organisation.name} />
           <ShareCircleLink
-            to={`/share/${organisation.type}/${organisation._id}/${organisation.name}`}
+            to={`/share/${organisation.type}/${organisation._id}`}
           />
           <DiscusstionCircleLink
             type='organisation'

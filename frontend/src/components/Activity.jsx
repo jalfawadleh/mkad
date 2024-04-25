@@ -115,9 +115,7 @@ const Activity = () => {
         <Wrappers.Header>
           <ActivityCircle />
           <TextCenterBox text={activity.name} />
-          <ShareCircleLink
-            to={`/share/${activity.type}/${activity._id}/${activity.name}`}
-          />
+          <ShareCircleLink to={`/share/${activity.type}/${activity._id}`} />
           <DiscusstionCircleLink
             type='activity'
             id={activity._id}
