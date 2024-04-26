@@ -34,10 +34,10 @@ const MemberOrganisations = ({ organisations = [] }) => {
             Member of
           </div>
           {organisations.map((o) => (
-            <span key={o._id}>
-              <OrganisationCircleLink to={"/organisation/" + o._id} />
+            <div className='d-inline-block' key={o._id}>
+              <OrganisationCircleLink to={"/organisations/" + o._id} />
               <div className='d-inline me-2'>{o.name}</div>
-            </span>
+            </div>
           ))}
         </Section>
         <hr className='my-2' />
