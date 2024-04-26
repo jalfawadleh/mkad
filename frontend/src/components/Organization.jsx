@@ -68,9 +68,7 @@ const Organization = () => {
         )
         .then(() => setIsJoining(false));
     } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 
@@ -101,7 +99,7 @@ const Organization = () => {
 
         {organisation.members?.map((m) => (
           <span className='me-1' key={m._id}>
-            <AvatarLink name={m.name} to={"/member/" + m._id} />
+            <AvatarLink name={m.name} to={"/members/" + m._id} />
           </span>
         ))}
       </div>
