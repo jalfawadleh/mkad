@@ -284,6 +284,34 @@ const Map = () => {
             {items.organisations.map((item) => (
               <MarkerOrganisation key={item._id} item={item} />
             ))}
+            <Marker
+              position={{ lng: -122.269, lat: 37.8248 }}
+              icon={
+                new L.divIcon({
+                  html: iconMKaDifference,
+                  iconSize: new L.Point(30, 30),
+                  iconAnchor: new L.Point(7, 35),
+                  popupAnchor: new L.Point(8, -35),
+                  className: "text-center",
+                })
+              }
+              title='MKaDifference'
+            >
+              <Popup closeButton={false}>
+                <span
+                  role='button'
+                  className='h6 p-2 bg-black text-white  border border-2 border-warning'
+                  style={{
+                    marginLeft: -15,
+                    marginRight: -20,
+                    borderRadius: 10,
+                    boxShadow: "gold 0px 0px 5px 5px",
+                  }}
+                >
+                  MkaDifference
+                </span>
+              </Popup>
+            </Marker>
           </MarkerClusterGroup>
           <MarkerClusterGroup
             iconCreateFunction={createClusterActivitiesIcon}
@@ -294,34 +322,6 @@ const Map = () => {
               <MarkerActivity key={item._id} item={item} />
             ))}
           </MarkerClusterGroup>
-          <Marker
-            position={{ lng: -122.269, lat: 37.8248 }}
-            icon={
-              new L.divIcon({
-                html: iconMKaDifference,
-                iconSize: new L.Point(30, 30),
-                iconAnchor: new L.Point(7, 35),
-                popupAnchor: new L.Point(8, -35),
-                className: "text-center",
-              })
-            }
-            title='MKaDifference'
-          >
-            <Popup closeButton={false}>
-              <span
-                role='button'
-                className='h6 p-2 bg-black text-white  border border-2 border-warning'
-                style={{
-                  marginLeft: -15,
-                  marginRight: -20,
-                  borderRadius: 10,
-                  boxShadow: "gold 0px 0px 5px 5px",
-                }}
-              >
-                MkaDifference
-              </span>
-            </Popup>
-          </Marker>
 
           <ZoomControl position='bottomright' />
 
