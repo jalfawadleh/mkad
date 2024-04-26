@@ -55,11 +55,11 @@ const MemberActivities = ({ activities = [] }) => {
             Attending
           </div>
           {activities.map((a) => (
-            <span key={a._id}>
+            <div className='d-inline-block' key={a._id}>
               <ActivityCircleLink to={"/activities/" + a._id} />
 
               <div className='d-inline me-2'>{a.name}</div>
-            </span>
+            </div>
           ))}
         </Section>
         <hr className='my-2' />
