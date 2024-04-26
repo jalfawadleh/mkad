@@ -108,7 +108,7 @@ const Map = () => {
         <div
           role='button'
           className={
-            "h6 p-2" +
+            "h6 p-2 btn" +
             (item.type == "activity"
               ? " bg-success text-white"
               : item.type == "member"
