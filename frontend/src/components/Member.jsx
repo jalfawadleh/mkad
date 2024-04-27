@@ -126,7 +126,7 @@ function Member() {
     ) : (
       isContact.approved && (
         <MessageCircleLink
-          to={`/conversations/member/${member._id}/${member.name}`}
+          to={`/conversations/members/${member._id}/${member.name}`}
         />
       )
     ));
