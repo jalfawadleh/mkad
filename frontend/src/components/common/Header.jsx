@@ -24,12 +24,14 @@ const Header = () => {
 
   return (
     <>
-      <nav
-        style={{ top: "75px", margin: "6px", borderRadius: "25px" }}
-        className='d-none d-sm-block position-absolute end-0 p-0 navbar navbar-expand'
+      <div
+        className='d-none d-sm-block position-absolute top-0 end-0 m-2 p-0'
+        style={{ height: 250 }}
       >
-        <div className='d-flex flex-column navbar-nav'>{icons}</div>
-      </nav>
+        <nav className='d-flex justify-content-between flex-column navbar-nav h-100'>
+          {icons}
+        </nav>
+      </div>
 
       <nav className='w-100 position-absolute bottom-0 d-sm-none navbar navbar-expand m-0 p-0'>
         <div className='w-100 p-0 m-0 justify-content-around navbar-nav'>

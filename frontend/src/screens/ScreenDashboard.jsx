@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { UserContext } from "../store";
-import { Bar } from "../components/common/Wrappers";
 import {
   ActivitiesCircleLink,
   ActivityCircleLink,
@@ -9,7 +8,6 @@ import {
   HomeCircleLink,
   MemberCircleLink,
   OrganisationCircleLink,
-  TextCenterLink,
 } from "../components/common/Icons";
 
 const ScreenDashboard = () => {
@@ -17,18 +15,16 @@ const ScreenDashboard = () => {
 
   return (
     <>
-      <Bar>
+      <div className='d-flex justify-content-between'>
         <HomeCircleLink to='/' />
-        <TextCenterLink text={user.name} to='/manage/member' />
         <AvatarCustomLink name={user.name} />
-
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />
         {user.type == "organisation" && (
           <ActivitiesCircleLink to={"/manage/activities"} />
         )}
-      </Bar>
+      </div>
       <Outlet />
     </>
   );

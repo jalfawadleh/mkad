@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import multiavatar from "@multiavatar/multiavatar/esm";
 import { MapContext } from "../../store";
 
-import { TbFlagStar } from "react-icons/tb";
+import { TbFlagStar, TbFlagPlus } from "react-icons/tb";
 import {
   FaHandshakeSimple,
   FaLocationCrosshairs,
-  FaPlus,
   FaRegEnvelope,
   FaUsers,
 } from "react-icons/fa6";
@@ -228,12 +227,12 @@ export const DiscusstionCircleLink = ({ type, id, name, color = "white" }) => {
 };
 
 export const AddActivity = ({ color = "white" }) => {
-  return <FaPlus color={color} size={24} />;
+  return <TbFlagPlus color={color} size={24} />;
 };
 
 export const AddActivityCircle = ({ color = "white" }) => {
   return (
-    <Circle borderColor='success'>
+    <Circle borderColor='success' bgColor='success'>
       <AddActivity color={color} />
     </Circle>
   );

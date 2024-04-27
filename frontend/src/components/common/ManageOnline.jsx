@@ -7,28 +7,32 @@ const ManageOnline = ({ online, setParent, editing = false }) => {
       {editing ? (
         <>
           <SectionForm>
-            <div className='hstack gap-2'>
-              <input
-                type='checkbox'
-                className='btn-check mb-3'
-                id='online'
-                autoComplete='off'
-                checked={online.value}
-                onChange={(e) =>
-                  setParent((prev) => ({
-                    ...prev,
-                    online: { value: e.target.checked, link: "" },
-                  }))
-                }
-              />
-              <label
-                className='btn btn-outline-success '
-                htmlFor='online'
-                style={{ width: 140 }}
-              >
-                Online
-              </label>
-              {online.value && <div className='m-auto'>Put the link below</div>}
+            <div className='d-flex justify-content-around"'>
+              <div className='w-50 m-auto p-auto text-center'>
+                <input
+                  type='checkbox'
+                  className='btn-check mb-3'
+                  id='online'
+                  autoComplete='off'
+                  checked={online.value}
+                  onChange={(e) =>
+                    setParent((prev) => ({
+                      ...prev,
+                      online: { value: e.target.checked, link: "" },
+                    }))
+                  }
+                />
+                <label
+                  className='btn btn-outline-success '
+                  htmlFor='online'
+                  style={{ width: 140 }}
+                >
+                  Online
+                </label>
+              </div>
+              <div className='w-50 m-auto p-auto text-center'>
+                {online.value ? <span>Put the link below</span> : ""}
+              </div>
             </div>
           </SectionForm>
           {online.value && (
