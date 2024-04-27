@@ -12,6 +12,7 @@ import {
   ActivityAddCircleLink,
   TextCenterBox,
 } from "../common/Icons";
+import { BsTextCenter } from "react-icons/bs";
 
 const ManageActivities = () => {
   const [items, setItems] = useState([]);
@@ -39,7 +40,7 @@ const ManageActivities = () => {
       <div className='my-2'></div>
       <Bar>
         <ActivityManageCircle />
-        <TextCenterBox text='Manage Activities' />
+        <div className='m-auto p-auto text-center'>Manage Activities</div>
         <ActivityAddCircleLink />
       </Bar>
 

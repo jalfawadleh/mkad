@@ -29,8 +29,7 @@ const Organization = () => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [isJoining, setIsJoining] = useState(false);
-  const [isMember, setIsMembers] = useState(false);
+  const [isMember, setIsMember] = useState(false);
 
   const [organisation, setOrganisation] = useState({
     _id: id,
@@ -44,43 +43,37 @@ const Organization = () => {
     activities: [],
   });
 
-  const getItem = async (id) => {
+  const getOrganisation = async () => {
     setIsLoading(true);
-    try {
-      await axios
-        .get(`/organisations/${id}`)
-        .then((res) => setOrganisation(res.data))
-        .then(() => setIsLoading(false));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
+    await axios
+      .get(`/organisations/${id}`)
+      .then((res) => {
+        setOrganisation(res.data);
+        res.data.members.map(
+          (member) => member._id == user._id && setIsMember(member)
+        );
+      })
+      .then(() => setIsLoading(false))
+      .catch(() => toast.error("Something went wrong"));
   };
 
   const joinOrganisation = async () => {
-    setIsJoining(true);
-    try {
-      await axios
-        .get(`/organisations/join/${id}`)
-        .then((res) =>
-          setOrganisation((prev) => ({ ...prev, members: res.data }))
-        )
-        .then(() => setIsJoining(false));
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
+    await axios
+      .post("/organisations/join", { id })
+      .then(() =>
+        setIsMember({
+          _id: "662c8211a67ce64e7e78c8b6",
+          name: "claire",
+          approved: false,
+        })
+      )
+      .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
-    getItem(id);
+    getOrganisation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
-  useEffect(() => {
-    setIsMembers(organisation.members.find((m) => m._id == user._id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [organisation.members]);
+  }, []);
 
   const membersJoined = (
     <>
@@ -89,19 +82,23 @@ const Organization = () => {
         <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-primary rounded-pill rounded-end'>
           Members
         </div>
-        {isJoining ? (
-          <SpinnerCircle />
-        ) : (
+
+        {!isMember ? (
           <span onClick={() => joinOrganisation()}>
-            <IconButton>{isMember ? "Leave" : "Join"}</IconButton>
+            <IconButton>Join</IconButton>
           </span>
+        ) : (
+          !isMember.approved && <IconButton>Pending Approval</IconButton>
         )}
 
-        {organisation.members?.map((m) => (
-          <span className='me-1' key={m._id}>
-            <AvatarLink name={m.name} to={"/members/" + m._id} />
-          </span>
-        ))}
+        {organisation.members?.map(
+          (m) =>
+            m.approved && (
+              <span className='me-1' key={m._id}>
+                <AvatarLink name={m.name} to={"/members/" + m._id} />
+              </span>
+            )
+        )}
       </div>
       <hr className='m-2' />
     </>

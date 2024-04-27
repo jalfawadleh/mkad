@@ -80,8 +80,8 @@ const usersSchema = Schema(
     members: {
       type: [
         {
-          _id: Schema.Types.ObjectId,
-          name: String,
+          _id: { type: Schema.Types.ObjectId },
+          name: { type: String },
           approved: { type: Boolean, default: false },
         },
       ],
@@ -91,8 +91,8 @@ const usersSchema = Schema(
     organisations: {
       type: [
         {
-          id: Schema.Types.ObjectId,
-          name: String,
+          _id: { type: Schema.Types.ObjectId },
+          name: { type: String },
           approved: { type: Boolean, default: false },
         },
       ],

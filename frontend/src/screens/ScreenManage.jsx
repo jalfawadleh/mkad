@@ -16,7 +16,7 @@ const ScreenManage = () => {
       <Bar>
         <HomeCircleLink to='/' />
         <TextCenterBox text={user.name} />
-        {/* <MemberManageCircleLink to='members' /> */}
+        <MemberManageCircleLink to='members' />
         <ActivityManageCircleLink to={"activities"} />
       </Bar>
       <Outlet />

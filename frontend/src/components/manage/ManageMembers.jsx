@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -7,76 +7,71 @@ import {
   AvatarLink,
   Empty,
   ExclamationCircle,
+  LocationCircleLink,
   MemberApproveCircle,
   MemberDeleteCircle,
   MemberManageCircle,
-  MessageCircleLink,
-  TextCenterBox,
   TextCenterLink,
 } from "../common/Icons";
+import { UserContext } from "../../store";
 
 const ManageMembers = () => {
-  const [contacts, setContacts] = useState([]);
+  const { user } = useContext(UserContext);
+  const [members, setMembers] = useState([]);
 
-  const approveContact = async (id) => {
+  const getMembers = async () => {
     await axios
-      .post("/contacts/approve", { id })
-      .then(() => getContacts())
-      .catch(() => toast.error("Something went wrong"));
-  };
-
-  const deleteContact = async (id) => {
-    await axios
-      .delete("/contacts/" + id)
-      .then(() => getContacts())
-      .catch(() => toast.error("Something went wrong"));
-  };
-
-  const getContacts = async () => {
-    await axios
-      .get("/contacts")
-      .then((res) => setContacts(res.data))
+      .get("/members/" + user._id)
+      .then((res) => setMembers(res.data.members))
       .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
-    getContacts();
+    getMembers();
   }, []);
+
+  const approveMember = async (id) => {
+    await axios
+      .post("/organisations/approve", { id })
+      .then(() => getMembers())
+      .catch(() => toast.error("Something went wrong"));
+  };
+
+  const deleteMember = async (id) => {
+    await axios
+      .delete("/organisations/" + id)
+      .then(() => getMembers())
+      .catch(() => toast.error("Something went wrong"));
+  };
 
   return (
     <>
       <div className='my-2' />
       <Bar>
         <MemberManageCircle />
-        <TextCenterBox text='Manage Members' />
+        <div className='m-auto p-auto text-center'>Manage Members</div>
         <Empty />
       </Bar>
 
-      {contacts.length ? (
-        contacts.map((contact) => (
-          <Bar key={contact._id}>
-            <AvatarLink to={"/members/" + contact._id} name={contact.name} />
-            <TextCenterLink to={contact._id} text={contact.name} />
-            <span onClick={() => deleteContact(contact._id)}>
+      {members.length ? (
+        members.map((m) => (
+          <Bar key={m._id}>
+            <AvatarLink to={"/members/" + m._id} name={m.name} />
+            <TextCenterLink to={"/members/" + m._id} text={m.name} />
+            <span onClick={() => deleteMember(m._id)}>
               <MemberDeleteCircle />
             </span>
-            {contact.approved ? (
-              <MessageCircleLink
-                to={`/conversations/member/${contact._id}/${contact.name}`}
-              />
-            ) : (
-              !contact.requested && (
-                <span onClick={() => approveContact(contact._id)}>
-                  <MemberApproveCircle />
-                </span>
-              )
+            {!m.approved && (
+              <span onClick={() => approveMember(m._id)}>
+                <MemberApproveCircle />
+              </span>
             )}
           </Bar>
         ))
       ) : (
         <Bar>
           <ExclamationCircle color='white' />
-          <span className='p-auto m-auto'>No Contacts Added</span>
+          <span className='p-auto m-auto'>No Members Joined</span>
         </Bar>
       )}
 

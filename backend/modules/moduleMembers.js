@@ -2,7 +2,6 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
-import Users from "../models/modelUsers.js";
 import Activities from "../models/modelActivities.js";
 
 // @desc    Update Member
@@ -39,9 +38,6 @@ const putMember = asyncHandler(async (req, res) => {
 // @access  Private
 const getMember = asyncHandler(async (req, res) => {
   const member = await Members.findById({ _id: req.params.id });
-  const organisations = await Users.find({
-    "members._id": req.params.id,
-  }).select("name");
   const activities = await Activities.find({
     "members._id": req.params.id,
   }).select("name");
@@ -60,7 +56,8 @@ const getMember = asyncHandler(async (req, res) => {
       contacts: member.contacts,
       help: member.help,
       contacts: member.contacts,
-      organisations,
+      organisations: member.organisations,
+      members: member.members,
       activities,
     });
   else {

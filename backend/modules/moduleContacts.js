@@ -7,35 +7,29 @@ import Members from "../models/modelUsers.js";
 // @route   POST /api/contacts
 // @access  Private
 const postContact = asyncHandler(async (req, res) => {
-  const sender = await Members.findOne({ _id: req.user._id });
-  sender.contacts = [
-    ...sender.contacts,
-    {
-      _id: req.body._id,
-      name: req.body.name,
-      requested: true,
-      approved: false,
-    },
-    ,
-  ];
-  sender.save();
-
   const recipient = await Members.findOne({ _id: req.body._id });
+  const sender = await Members.findOne({ _id: req.user._id });
+
   if (recipient) {
-    recipient.contacts = [
-      ...recipient.contacts,
-      {
-        _id: req.user._id,
-        name: req.user.name,
-        requested: false,
-        approved: false,
-      },
-    ];
+    recipient.contacts.push({
+      _id: sender._id,
+      name: sender.name,
+      requested: false,
+      approved: false,
+    });
     recipient.save();
   } else {
     res.status(404);
     throw new Error("Member not found");
   }
+
+  sender.contacts.push({
+    _id: recipient._id,
+    name: recipient.name,
+    requested: true,
+    approved: false,
+  });
+  sender.save();
 
   res.status(200).json(true);
 });
@@ -63,18 +57,15 @@ const approveContact = asyncHandler(async (req, res) => {
   if (sender) {
     // remove me from sender contacts
     sender.contacts = sender.contacts.filter(
-      (c) => c._id.toString() != recipient._id.toString()
+      (c) => !c._id.equals(recipient._id)
     );
     // Add me approved to sender
-    sender.contacts = [
-      ...sender.contacts,
-      {
-        _id: recipient._id,
-        name: recipient.name,
-        requested: true,
-        approved: true,
-      },
-    ];
+    sender.contacts.push({
+      _id: recipient._id,
+      name: recipient.name,
+      requested: true,
+      approved: true,
+    });
     sender.save();
   } else {
     res.status(404);
@@ -84,7 +75,7 @@ const approveContact = asyncHandler(async (req, res) => {
   // Updating my contacts
   // remove the requester from my contacts
   recipient.contacts = recipient.contacts.filter(
-    (c) => c._id.toString() != sender._id.toString()
+    (c) => !c._id.equals(sender._id)
   );
   recipient.contacts = [
     ...recipient.contacts,
@@ -99,20 +90,18 @@ const approveContact = asyncHandler(async (req, res) => {
 // @route   DELETE /api/contacts/:id
 // @access  Private
 const deleteContact = asyncHandler(async (req, res) => {
+  const sender = await Members.findOne({ _id: req.user.id });
   const recipient = await Members.findOne({ _id: req.params.id });
   if (recipient) {
     recipient.contacts = recipient.contacts.filter(
-      (c) => c._id.toString() != req.user._id.toString()
+      (c) => !c._id.equals(sender._id)
     );
     recipient.save();
   } else {
     res.status(404);
     throw new Error("member not found");
   }
-  const sender = await Members.findOne({ _id: req.user._id });
-  sender.contacts = sender.contacts.filter(
-    (c) => c._id.toString() != req.params.id.toString()
-  );
+  sender.contacts = sender.contacts.filter((c) => !c._id.equals(recipient._id));
   sender.save();
 
   res.status(200).json(true);

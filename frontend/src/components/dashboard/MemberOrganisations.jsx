@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -7,32 +7,34 @@ import {
   DiscusstionCircleLink,
   Empty,
   ExclamationCircle,
-  LocationCircleLink,
+  MemberDeleteCircle,
   OrganisationCircle,
   OrganisationCircleLink,
   TextCenterLink,
 } from "../common/Icons";
+import { UserContext } from "../../store";
 
 const MemberOrganisations = () => {
-  const [items, setItems] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext);
+  const [organisations, setOrganisations] = useState([]);
 
-  const getItems = async () => {
-    // setIsLoading(true);
+  const getOrganisations = async () => {
     await axios
-      .get("/organisations/join")
-      .then((res) => setItems(res.data))
-      // .then(() => setIsLoading(false))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
+      .get(`/members/${user._id}`)
+      .then((res) => setOrganisations(res.data.organisations))
+      .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
-    getItems();
+    getOrganisations();
   }, []);
+
+  const deleteOrganisation = async (id) => {
+    await axios
+      .delete("/organisations/" + id)
+      .then(() => getOrganisations())
+      .catch(() => toast.error("Something went wrong"));
+  };
 
   return (
     <>
@@ -43,18 +45,22 @@ const MemberOrganisations = () => {
         <Empty />
       </Bar>
 
-      {items.length ? (
-        items.map((item) => (
-          <Bar key={item._id}>
-            <OrganisationCircleLink to={"/organisations/" + item._id} />
-            <TextCenterLink to={item._id} text={item.name} />
-            <DiscusstionCircleLink
-              type='organisation'
-              id={item._id}
-              name={item.name}
-              color='white'
-            />
-            <LocationCircleLink location={item.location} />
+      {organisations.length ? (
+        organisations.map((o) => (
+          <Bar key={o._id}>
+            <OrganisationCircleLink to={"/organisations/" + o._id} />
+            <TextCenterLink to={o._id} text={o.name} />
+            <span onClick={() => deleteOrganisation(o._id)}>
+              <MemberDeleteCircle />
+            </span>
+            {o.approved && (
+              <DiscusstionCircleLink
+                type='organisation'
+                id={o._id}
+                name={o.name}
+                color='white'
+              />
+            )}
           </Bar>
         ))
       ) : (

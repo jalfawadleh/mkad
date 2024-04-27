@@ -105,14 +105,14 @@ let conversationId = "";
 io.on("connection", async (socket) => {
   /* Messaging Code */
   // Log only in production
-  process.env.NODE_ENV != "production" &&
-    console.log(
-      Date.now(),
-      "\tsocket.id:",
-      socket.id,
-      "connection\n",
-      socket.message
-    );
+  // process.env.NODE_ENV != "production" &&
+  //   console.log(
+  //     Date.now(),
+  //     "\tsocket.id:",
+  //     socket.id,
+  //     "connection\n",
+  //     socket.message
+  //   );
 
   // once a member has requested Messaging another member
   socket.on("joinConversation", async (m) => {
@@ -145,14 +145,14 @@ io.on("connection", async (socket) => {
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
-    process.env.NODE_ENV != "production" &&
-      console.log(
-        Date.now(),
-        "\tsocket.id:",
-        socket.id,
-        "joinConversation\n",
-        socket.message
-      );
+    // process.env.NODE_ENV != "production" &&
+    //   console.log(
+    //     Date.now(),
+    //     "\tsocket.id:",
+    //     socket.id,
+    //     "joinConversation\n",
+    //     socket.message
+    //   );
   });
 
   // on receiving a message send a message to both members in the messaging
@@ -167,14 +167,14 @@ io.on("connection", async (socket) => {
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
-    process.env.NODE_ENV != "production" &&
-      console.log(
-        Date.now(),
-        "\tsocket.id:",
-        socket.id,
-        "conversation\n",
-        socket.message
-      );
+    // process.env.NODE_ENV != "production" &&
+    //   console.log(
+    //     Date.now(),
+    //     "\tsocket.id:",
+    //     socket.id,
+    //     "conversation\n",
+    //     socket.message
+    //   );
   });
 
   // on member leave messaging
@@ -192,27 +192,27 @@ io.on("connection", async (socket) => {
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
-    process.env.NODE_ENV != "production" &&
-      console.log(
-        Date.now(),
-        "\tsocket.id:",
-        socket.id,
-        "leaveConversation\n",
-        socket.message
-      );
+    // process.env.NODE_ENV != "production" &&
+    //   console.log(
+    //     Date.now(),
+    //     "\tsocket.id:",
+    //     socket.id,
+    //     "leaveConversation\n",
+    //     socket.message
+    //   );
   });
 
   // on member disconnect
   socket.on("disconnect", async (reason) => {
     // Log only in production
-    process.env.NODE_ENV != "production" &&
-      console.log(
-        Date.now(),
-        "\tsocket.id:",
-        socket.id,
-        "disconnect\n",
-        "\n--------------------------"
-      );
+    // process.env.NODE_ENV != "production" &&
+    //   console.log(
+    //     Date.now(),
+    //     "\tsocket.id:",
+    //     socket.id,
+    //     "disconnect\n",
+    //     "\n--------------------------"
+    //   );
     // set The member to be online
     socket.disconnect();
   });
