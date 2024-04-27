@@ -14,7 +14,7 @@ import {
   TextCenterBox,
   DiscusstionCircle,
   OrganisationCircle,
-  ActivitiesCircle,
+  ActivityCircle,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -109,7 +109,7 @@ const Conversation = () => {
           ) : type == "organisation" ? (
             <OrganisationCircle />
           ) : (
-            <ActivitiesCircle />
+            <ActivityCircle />
           )}
           <TextCenterBox text={name} />
           <CloseCircleLink />

@@ -113,7 +113,6 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
             />
           </MapContainer>
         </SectionForm>
-        <hr className='my-2' />
       </>
     )
   );

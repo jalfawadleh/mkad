@@ -15,7 +15,7 @@ import {
   TextCenterBox,
 } from "../common/Icons.jsx";
 
-function ManageAccount() {
+function Account() {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const { user, setUser } = useContext(UserContext);
@@ -192,4 +192,4 @@ function ManageAccount() {
   );
 }
 
-export default ManageAccount;
+export default Account;

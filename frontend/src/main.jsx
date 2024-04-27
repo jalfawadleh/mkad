@@ -22,12 +22,14 @@ import Activity from "./components/Activity.jsx";
 import Organisation from "./components/Organization.jsx";
 import Member from "./components/Member.jsx";
 
-import ManageMember from "./components/dashboard/ManageMember.jsx";
-import ManageAccount from "./components/dashboard/ManageAccount.jsx";
+import Profile from "./components/Profile.jsx";
+import Account from "./components/dashboard/Account.jsx";
 
 import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
-import ManageActivity from "./components/dashboard/ManageActivity.jsx";
-import ManageActivities from "./components/dashboard/ManageActivities.jsx";
+
+import ScreenManage from "./screens/ScreenManage.jsx";
+import ManageActivity from "./components/manage/ManageActivity.jsx";
+import ManageActivities from "./components/manage/ManageActivities.jsx";
 
 import Conversation from "./components/Conversation.jsx";
 
@@ -41,33 +43,37 @@ import Updates from "./components/mkadifference/Updates.jsx";
 
 import ScreenSearch from "./screens/ScreenSearch.jsx";
 import Share from "./components/Share.jsx";
+import ManageMembers from "./components/manage/ManageMembers.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
-          <Route path='activities' element={<MemberActivities />} />
-          <Route path='members' element={<MemberContacts />} />
-          <Route path='organisations' element={<MemberOrganisations />} />
+          <Route path='profile' element={<Profile />} />
+          <Route path='account' element={<Account />} />
 
+          <Route path='activities' element={<MemberActivities />} />
           <Route path='activities/:id' element={<Activity />} />
+
+          <Route path='members' element={<MemberContacts />} />
           <Route path='members/:id' element={<Member />} />
+
+          <Route path='organisations' element={<MemberOrganisations />} />
           <Route path='organisations/:id' element={<Organisation />} />
 
           <Route
             path='conversations/:type/:id/:name'
             element={<Conversation />}
           />
-
           <Route path='share/:type/:id' element={<Share />} />
-
-          <Route path='manage/member' element={<ManageMember />} />
-          <Route path='manage/account' element={<ManageAccount />} />
-          <Route path='' element={<RouteOrganisation />}>
-            <Route path='manage/activity/:id' element={<ManageActivity />} />
-            <Route path='manage/activity/new' element={<ManageActivity />} />
-            <Route path='manage/activities' element={<ManageActivities />} />
+        </Route>
+        <Route path='' element={<RouteOrganisation />}>
+          <Route path='manage' element={<ScreenManage />}>
+            <Route path='activity/:id' element={<ManageActivity />} />
+            <Route path='activity/new' element={<ManageActivity />} />
+            <Route path='activities' element={<ManageActivities />} />
+            <Route path='members' element={<ManageMembers />} />
           </Route>
         </Route>
 

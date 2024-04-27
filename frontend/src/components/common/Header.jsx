@@ -6,6 +6,7 @@ import {
   HomeCircleLink,
   LocationCircleLink,
   MKaDifferenceCircleLink,
+  OrganisationCircleLink,
   SearchCircleLink,
 } from "./Icons.jsx";
 
@@ -18,6 +19,7 @@ const Header = () => {
       <HelpCircleLink />
       <SearchCircleLink />
       <HomeCircleLink to='/' />
+      {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
       <LocationCircleLink location={user.location} />
     </>
   );

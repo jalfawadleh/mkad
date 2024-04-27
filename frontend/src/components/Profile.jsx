@@ -3,31 +3,31 @@ import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-import { MapContext, UserContext } from "../../store.js";
+import { MapContext, UserContext } from "../store.js";
 
 import {
   IconButton,
   LinkButton,
   LinkButtoneBack,
-} from "../common/LinkItems.jsx";
-import Wrappers, { SectionForm } from "../common/Wrappers.jsx";
+} from "./common/LinkItems.jsx";
+import Wrappers, { SectionForm } from "./common/Wrappers.jsx";
 
-import ManageName from "../common/ManageName.jsx";
-import ManageDescription from "../common/ManageDescription.jsx";
-import ManageLanguages from "../common/ManageLanguages.jsx";
-import ManageInterests from "../common/ManageInterests.jsx";
-import ManageHelp from "../common/ManageHelp.jsx";
-import ManageHidden from "../common/ManageHidden.jsx";
-import ManageLocation from "../common/ManageLocation.jsx";
+import ManageName from "./common/ManageName.jsx";
+import ManageDescription from "./common/ManageDescription.jsx";
+import ManageLanguages from "./common/ManageLanguages.jsx";
+import ManageInterests from "./common/ManageInterests.jsx";
+import ManageHelp from "./common/ManageHelp.jsx";
+import ManageHidden from "./common/ManageHidden.jsx";
+import ManageLocation from "./common/ManageLocation.jsx";
 import {
   Avatar,
   CloseCircleLink,
   Loader,
   SpinnerCircle,
   TextCenterBox,
-} from "../common/Icons.jsx";
+} from "./common/Icons.jsx";
 
-function ManageMember() {
+function Profile() {
   const { user, setUser } = useContext(UserContext);
   const { setFlyToLocation } = useContext(MapContext);
 
@@ -168,10 +168,10 @@ function ManageMember() {
             <IconButton>Edit</IconButton>
           </span>
         )}
-        <LinkButton to={"/manage/account"}>Account</LinkButton>
+        <LinkButton to={"/account"}>Account</LinkButton>
       </Wrappers.Footer>
     </Wrappers.Modal>
   );
 }
 
-export default ManageMember;
+export default Profile;

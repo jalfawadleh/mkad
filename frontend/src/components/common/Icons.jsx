@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import multiavatar from "@multiavatar/multiavatar/esm";
 import { MapContext } from "../../store";
 
-import { TbFlagStar, TbFlagPlus } from "react-icons/tb";
+import { TbFlagCog, TbFlagPlus } from "react-icons/tb";
 import {
   FaHandshakeSimple,
   FaLocationCrosshairs,
@@ -28,10 +28,11 @@ import {
   BsPersonFillCheck,
   BsPersonFillAdd,
   BsPersonFillX,
+  BsPersonFillGear,
 } from "react-icons/bs";
 
 export const Empty = () => {
-  return <div className='p-1 m-1' style={{ width: 35, height: 35 }} />;
+  return <div className='p-1 m-1' style={{ width: "34px", height: "34px" }} />;
 };
 
 export const Circle = ({
@@ -226,22 +227,22 @@ export const DiscusstionCircleLink = ({ type, id, name, color = "white" }) => {
   );
 };
 
-export const AddActivity = ({ color = "white" }) => {
+export const ActivityAdd = ({ color = "white" }) => {
   return <TbFlagPlus color={color} size={24} />;
 };
 
-export const AddActivityCircle = ({ color = "white" }) => {
+export const ActivityAddCircle = ({ color = "white" }) => {
   return (
     <Circle borderColor='success' bgColor='success'>
-      <AddActivity color={color} />
+      <ActivityAdd color={color} />
     </Circle>
   );
 };
 
-export const AddActivityCircleLink = ({ color = "white" }) => {
+export const ActivityAddCircleLink = ({ color = "white" }) => {
   return (
     <Link to='/manage/activity/new'>
-      <AddActivityCircle color={color} />
+      <ActivityAddCircle color={color} />
     </Link>
   );
 };
@@ -342,25 +343,25 @@ export const ActivityCircleLink = ({ to }) => {
   );
 };
 
-export const Activities = ({ color = "white" }) => {
-  return <TbFlagStar color={color} size={24} />;
+export const ActivityManage = ({ color = "white" }) => {
+  return <TbFlagCog color={color} size={24} />;
 };
 
-export const ActivitiesCircle = ({
+export const ActivityManageCircle = ({
   borderColor = "light",
   color = "white",
 }) => {
   return (
     <Circle borderColor={borderColor} bgColor='success'>
-      <Activities color={color} />
+      <ActivityManage color={color} />
     </Circle>
   );
 };
 
-export const ActivitiesCircleLink = ({ to, color = "white" }) => {
+export const ActivityManageCircleLink = ({ to, color = "white" }) => {
   return (
     <Link to={to}>
-      <ActivitiesCircle borderColor='success' color={color} />
+      <ActivityManageCircle borderColor='success' color={color} />
     </Link>
   );
 };
@@ -385,7 +386,7 @@ export const AvatarLink = ({ name, to, size = 34 }) => {
   );
 };
 
-export const AvatarCustomLink = ({ name = "na", to = "/manage/member" }) => {
+export const AvatarCustomLink = ({ name = "na", to = "/profile" }) => {
   return (
     <Link to={to}>
       <Avatar name={name} />
@@ -409,6 +410,29 @@ export const MemberCircleLink = ({ to }) => {
   return (
     <Link to={to}>
       <MemberCircle borderColor='primary' />
+    </Link>
+  );
+};
+
+export const MemberManage = ({ color = "white" }) => {
+  return <BsPersonFillGear color={color} size={24} />;
+};
+
+export const MemberManageCircle = ({
+  borderColor = "light",
+  color = "white",
+}) => {
+  return (
+    <Circle borderColor={borderColor} bgColor='primary'>
+      <MemberManage color={color} />
+    </Circle>
+  );
+};
+
+export const MemberManageCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <MemberManageCircle borderColor='primary' />
     </Link>
   );
 };
@@ -465,7 +489,7 @@ export const MemberDeleteCircle = ({ color = "white" }) => {
   );
 };
 
-export const MemberRemoveCircleLink = ({ to }) => {
+export const MemberDeleteCircleLink = ({ to }) => {
   return (
     <Link to={to}>
       <MemberDeleteCircle color='white' />
@@ -710,9 +734,9 @@ const Icons = {
   ActivityCircle,
   ActivityCircleLink,
 
-  Activities,
-  ActivitiesCircle,
-  ActivitiesCircleLink,
+  ActivityManage,
+  ActivityManageCircle,
+  ActivityManageCircleLink,
 
   Search,
   SearchCircle,

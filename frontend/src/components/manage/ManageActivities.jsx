@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
-  AddActivityCircleLink,
   ExclamationCircle,
   LocationCircleLink,
   Empty,
   TextCenterLink,
-  ActivitiesCircle,
+  ActivityManageCircle,
+  ActivityAddCircleLink,
+  TextCenterBox,
 } from "../common/Icons";
 
 const ManageActivities = () => {
-  const location = useLocation();
   const [items, setItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
 
@@ -39,9 +38,9 @@ const ManageActivities = () => {
     <>
       <div className='my-2'></div>
       <Bar>
-        <ActivitiesCircle />
-        <div className='p-auto m-auto text-center'>Manage Activities</div>
-        <AddActivityCircleLink />
+        <ActivityManageCircle />
+        <TextCenterBox text='Manage Activities' />
+        <ActivityAddCircleLink />
       </Bar>
 
       {items.length ? (
