@@ -72,7 +72,7 @@ export const Box = ({ children }) => {
 
 export const TextCenterBox = ({ text }) => {
   return (
-    <div className='p-auto my-auto mx-1 badge border border-primary w-100'>
+    <div className='p-auto my-auto mx-1 badge border border-primary w-100 overflow-x-auto'>
       <div className='p-1 text-center fs-6'>{text}</div>
     </div>
   );
@@ -82,7 +82,7 @@ export const TextCenterLink = ({ to, text }) => {
   return (
     <Link
       to={to}
-      className='m-auto p-auto link-underline link-underline-opacity-0 text-center'
+      className='m-auto p-auto link-underline link-underline-opacity-0 text-center '
     >
       {text}
     </Link>
