@@ -23,6 +23,7 @@ import {
   ShareCircleLink,
   SpinnerCircle,
   TextCenterBox,
+  TextCenterLink,
 } from "./common/Icons.jsx";
 
 const Organization = () => {
@@ -112,12 +113,13 @@ const Organization = () => {
           Activities
         </div>
         {organisation.activities.map((m) => (
-          <span className='d-inline-block me-1 p-0' key={m._id}>
+          <div className='d-flex me-1 p-0' key={m._id}>
             <div className='d-inline my-auto p-1'>
               <ActivityCircleLink to={"/activities/" + m._id} />
             </div>
-            <div className='d-inline-block my-auto p-1'>{m.name}</div>
-          </span>
+
+            <TextCenterLink to={"/activities/" + m._id} text={m.name} />
+          </div>
         ))}
       </div>
       <hr className='m-2' />
