@@ -82,7 +82,7 @@ export const TextCenterLink = ({ to, text }) => {
   return (
     <Link
       to={to}
-      className='m-auto p-auto link-underline link-underline-opacity-0 text-center '
+      className='m-auto p-auto link-underline link-underline-opacity-0 text-center overflow-x-auto'
     >
       {text}
     </Link>
