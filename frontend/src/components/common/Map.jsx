@@ -94,10 +94,16 @@ const Map = () => {
     const initDarkmode = () => {
       const mClass = document.getElementsByClassName("leaflet-layer")[0];
       if (mClass)
-        if (user.darkmode) mClass.classList.add("map-darkmode");
+        if (user.darkmode) {
+          mClass.classList.add("map-darkmode");
+          mClass.classList.remove("map-lightmode");
+        }
         // mClass.style.filter =
         //   "invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)";
-        else mClass.classList.remove("map-darkmode");
+        else {
+          mClass.classList.add("map-lightmode");
+          mClass.classList.remove("map-darkmode");
+        }
       // mClass.style.filter = "";
     };
 
