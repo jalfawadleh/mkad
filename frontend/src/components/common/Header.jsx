@@ -27,8 +27,8 @@ const Header = () => {
 
       <MKaDifferenceCircleLink to='/MkAdifference' />
       <HelpCircleLink />
-      <SearchCircleLink />
       <HomeCircleLink to='/' />
+      <SearchCircleLink />
       {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
       <LocationCircleLink location={user.location} />
     </>
@@ -48,7 +48,6 @@ const Header = () => {
       <nav className='w-100 position-absolute bottom-0 d-sm-none navbar navbar-expand m-0 p-0'>
         <div className='w-100 p-0 m-0 justify-content-around navbar-nav'>
           {icons}
-          <Empty />
         </div>
       </nav>
     </>
