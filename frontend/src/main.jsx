@@ -23,7 +23,7 @@ import Organisation from "./components/Organization.jsx";
 import Member from "./components/Member.jsx";
 
 import Profile from "./components/Profile.jsx";
-import Account from "./components/dashboard/Account.jsx";
+import Account from "./components/Account.jsx";
 
 import RouteOrganisation from "./components/routes/RouteOrganisation.jsx";
 

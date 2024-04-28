@@ -18,10 +18,9 @@ const putMember = asyncHandler(async (req, res) => {
     member.interests = req.body.interests;
     member.location = req.body.location;
     member.darkmood = req.body.darkmood;
-    member.hidden = req.body.hidden;
     member.contacts = req.body.contacts;
-    member.helpOffered = req.body.helpOffered;
-    member.helpNeeded = req.body.helpNeeded;
+    member.hidden = req.body.hidden;
+    member.darkmode = req.body.darkmode;
     member.help = req.body.help;
 
     await member.save();
@@ -51,7 +50,7 @@ const getMember = asyncHandler(async (req, res) => {
       languages: member.languages,
       interests: member.interests,
       location: member.location,
-      darkmood: member.darkmood,
+      darkmode: member.darkmode,
       hidden: member.hidden,
       contacts: member.contacts,
       help: member.help,

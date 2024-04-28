@@ -91,6 +91,20 @@ const Map = () => {
   };
 
   useEffect(() => {
+    const initDarkmode = () => {
+      const mClass = document.getElementsByClassName("leaflet-layer")[0];
+      if (mClass)
+        if (user.darkmode) mClass.classList.add("map-darkmode");
+        // mClass.style.filter =
+        //   "invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%)";
+        else mClass.classList.remove("map-darkmode");
+      // mClass.style.filter = "";
+    };
+
+    setTimeout(() => initDarkmode(), 250);
+  }, [user.darkmode]);
+
+  useEffect(() => {
     getMapItems(mapCenter);
   }, [mapCenter]);
 
@@ -261,7 +275,7 @@ const Map = () => {
           minZoom={3}
           zoomControl={false}
           scrollWheelZoom={true}
-          className='position-absolute top-0 start-0 end-0 bottom-0'
+          className='position-absolute top-0 start-0 end-0 bottom-0 '
           style={{ zIndex: -1 }}
         >
           {/* <SetViewOnClick /> */}
@@ -323,7 +337,7 @@ const Map = () => {
             ))}
           </MarkerClusterGroup>
 
-          <ZoomControl position='bottomright' />
+          {/* <ZoomControl position='bottomright' /> */}
 
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

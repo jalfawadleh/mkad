@@ -18,6 +18,7 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       type: user.type,
       location: user.location,
+      darkmode: user.darkmode,
       token: await user.generateToken(user._id),
     });
   } else {

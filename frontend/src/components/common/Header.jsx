@@ -1,9 +1,11 @@
 import { UserContext } from "../../store.js";
 import { useContext } from "react";
 import {
+  DarkmodeCircle,
   Empty,
   HelpCircleLink,
   HomeCircleLink,
+  LightmodeCircle,
   LocationCircleLink,
   MKaDifferenceCircleLink,
   OrganisationCircleLink,
@@ -11,10 +13,18 @@ import {
 } from "./Icons.jsx";
 
 const Header = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const icons = (
     <>
+      <span
+        onClick={() =>
+          setUser((prev) => ({ ...prev, darkmode: !user.darkmode }))
+        }
+      >
+        {user.darkmode ? <LightmodeCircle /> : <DarkmodeCircle />}
+      </span>
+
       <MKaDifferenceCircleLink to='/MkAdifference' />
       <HelpCircleLink />
       <SearchCircleLink />

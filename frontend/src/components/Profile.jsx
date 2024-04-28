@@ -18,6 +18,7 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 import ManageHidden from "./common/ManageHidden.jsx";
+import ManageDarkmode from "./common/ManageDarkmode.jsx";
 import ManageLocation from "./common/ManageLocation.jsx";
 import {
   Avatar,
@@ -42,7 +43,7 @@ function Profile() {
     description: "",
     languages: [],
     interests: [],
-    darkmood: true,
+    darkmode: true,
     hidden: true,
     location: "",
     help: [],
@@ -132,6 +133,11 @@ function Profile() {
 
         <ManageHelp
           help={member.help}
+          setParent={setMember}
+          editing={editing}
+        />
+        <ManageDarkmode
+          darkmode={member.darkmode}
           setParent={setMember}
           editing={editing}
         />

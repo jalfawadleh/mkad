@@ -163,26 +163,24 @@ export const MembersCircle = ({ color = "white" }) => {
   );
 };
 
-export const Online = ({ color = "yellow" }) => {
+export const Lightmode = ({ color = "yellow" }) => {
   return <FaSun color={color} size={24} />;
 };
-
-export const OnlineCircle = ({ color = "yellow" }) => {
+export const LightmodeCircle = ({ color = "yellow" }) => {
   return (
     <Circle>
-      <Online color={color} />
+      <Lightmode color={color} />
     </Circle>
   );
 };
 
-export const Offline = ({ color = "white" }) => {
+export const Darkmode = ({ color = "black" }) => {
   return <FaMoon color={color} size={24} />;
 };
-
-export const OfflineCircle = ({ color = "white" }) => {
+export const DarkmodeCircle = ({ color = "black" }) => {
   return (
     <Circle>
-      <Offline color={color} />
+      <Darkmode color={color} />
     </Circle>
   );
 };

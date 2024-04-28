@@ -50,7 +50,7 @@ const usersSchema = Schema(
       default: { lng: -122.2683, lat: 37.8243 },
     },
 
-    darkmood: { type: Boolean, default: false },
+    darkmode: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
 
