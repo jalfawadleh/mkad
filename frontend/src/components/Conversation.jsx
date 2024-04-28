@@ -103,8 +103,8 @@ const Conversation = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {type == "member" ? <MessageCircle /> : <DiscusstionCircle />}
-          {type == "member" ? (
+          {type == "members" ? <MessageCircle /> : <DiscusstionCircle />}
+          {type == "members" ? (
             <Avatar name={name} />
           ) : type == "organisation" ? (
             <OrganisationCircle />
