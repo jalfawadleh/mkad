@@ -1,6 +1,6 @@
 import Wrappers from "./common/Wrappers";
 import { useParams } from "react-router-dom";
-import { CloseCircleLink, TextCenterBox } from "./common/Icons";
+import { Button, CloseCircleLink, TextCenterBox } from "./common/Icons";
 
 import {
   EmailIcon,
@@ -14,6 +14,7 @@ import {
   TwitterIcon,
   TwitterShareButton,
 } from "react-share";
+
 /**
  * Share component.
  *
@@ -43,7 +44,7 @@ const Share = () => {
             >
               <TwitterShareButton
                 url={shareUrl}
-                quote={"MKaDifference " + name}
+                quote={"MKaDifference "}
                 hashtag={"#MKaDifference"}
               >
                 <TwitterIcon size={40} round={true} />
@@ -53,7 +54,7 @@ const Share = () => {
             <div className='nav-item p-0 m-1 rounded-pill'>
               <RedditShareButton
                 url={shareUrl}
-                quote={"MKaDifference " + name}
+                quote={"MKaDifference "}
                 hashtag={"#MKaDifference"}
               >
                 <RedditIcon size={40} round={true} />
@@ -63,7 +64,7 @@ const Share = () => {
             <div className='nav-item p-0 m-1 rounded-pill'>
               <LinkedinShareButton
                 url={shareUrl}
-                quote={"MKaDifference " + name}
+                quote={"MKaDifference "}
                 hashtag={"#MKaDifference"}
               >
                 <LinkedinIcon size={40} round={true} />
@@ -73,7 +74,7 @@ const Share = () => {
             <div className='nav-item p-0 m-1 rounded-pill'>
               <FacebookShareButton
                 url={shareUrl}
-                quote={"MKaDifference " + name}
+                quote={"MKaDifference "}
                 hashtag={"#MKaDifference"}
               >
                 <FacebookIcon size={40} round={true} />
@@ -83,11 +84,16 @@ const Share = () => {
             <div className='nav-item p-0 m-1 rounded-pill'>
               <EmailShareButton
                 url={shareUrl}
-                quote={"MKaDifference " + name}
+                quote={"MKaDifference "}
                 hashtag={"#MKaDifference"}
               >
                 <EmailIcon size={40} round={true} />
               </EmailShareButton>
+            </div>
+            <div className='nav-item p-0 m-1 rounded-circle'>
+              <span onClick={() => navigator.clipboard.writeText(shareUrl)}>
+                <Button>Copy</Button>
+              </span>
             </div>
           </div>
         </Wrappers.Body>
