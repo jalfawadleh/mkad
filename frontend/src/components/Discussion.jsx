@@ -6,9 +6,7 @@ import Wrappers from "./common/Wrappers";
 import { UserContext } from "../store";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  MessageCircle,
   CloseCircleLink,
-  Avatar,
   AvatarLink,
   Spinner,
   TextCenterBox,
@@ -24,7 +22,7 @@ import { toast } from "react-toastify";
  *
  * @returns {React.ReactElement} languages element.
  */
-const Conversation = () => {
+const Discussion = () => {
   const { type, id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
@@ -69,11 +67,11 @@ const Conversation = () => {
   useEffect(() => {
     if (socket.id) {
       message.content = "join";
-      socket.emit("joinConversation", message);
+      socket.emit("joinDiscussion", message);
     } else navigate("/");
     return () => {
       message.content = "leave";
-      if (socket.id) socket.emit("leaveConversation", message);
+      if (socket.id) socket.emit("leaveDiscussion", message);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -103,14 +101,8 @@ const Conversation = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {type == "members" ? <MessageCircle /> : <DiscusstionCircle />}
-          {type == "members" ? (
-            <Avatar name={name} />
-          ) : type == "organisation" ? (
-            <OrganisationCircle />
-          ) : (
-            <ActivityCircle />
-          )}
+          <DiscusstionCircle />
+          {type == "organisation" ? <OrganisationCircle /> : <ActivityCircle />}
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
@@ -165,4 +157,4 @@ const Conversation = () => {
   );
 };
 
-export default Conversation;
+export default Discussion;

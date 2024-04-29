@@ -12,9 +12,6 @@ import {
   AvatarLink,
   Spinner,
   TextCenterBox,
-  DiscusstionCircle,
-  OrganisationCircle,
-  ActivityCircle,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -69,11 +66,11 @@ const Conversation = () => {
   useEffect(() => {
     if (socket.id) {
       message.content = "join";
-      socket.emit("joinConversation", message);
+      socket.emit("joinMessaging", message);
     } else navigate("/");
     return () => {
       message.content = "leave";
-      if (socket.id) socket.emit("leaveConversation", message);
+      if (socket.id) socket.emit("leaveMessaging", message);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -103,14 +100,8 @@ const Conversation = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          {type == "members" ? <MessageCircle /> : <DiscusstionCircle />}
-          {type == "members" ? (
-            <Avatar name={name} />
-          ) : type == "organisation" ? (
-            <OrganisationCircle />
-          ) : (
-            <ActivityCircle />
-          )}
+          <MessageCircle />
+          <Avatar name={name} />
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
