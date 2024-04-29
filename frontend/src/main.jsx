@@ -43,7 +43,7 @@ import ContactUs from "./components/mkadifference/ContactUs.jsx";
 import ScreenSearch from "./screens/ScreenSearch.jsx";
 import Share from "./components/Share.jsx";
 import ManageMembers from "./components/manage/ManageMembers.jsx";
-import Error from "./components/mkadifference/Error.jsx";
+import Error from "./components/Error.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
