@@ -39,7 +39,6 @@ import HowTo from "./components/help/HowTo.jsx";
 import ScreenMKaDifference from "./screens/ScreenMKaDifference.jsx";
 import WhoWeAre from "./components/mkadifference/WhoWeAre.jsx";
 import ContactUs from "./components/mkadifference/ContactUs.jsx";
-import Updates from "./components/mkadifference/Updates.jsx";
 
 import ScreenSearch from "./screens/ScreenSearch.jsx";
 import Share from "./components/Share.jsx";
