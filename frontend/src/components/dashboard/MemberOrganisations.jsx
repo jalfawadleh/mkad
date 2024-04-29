@@ -55,9 +55,7 @@ const MemberOrganisations = () => {
             </span>
             {o.approved && (
               <DiscusstionCircleLink
-                type='organisation'
-                id={o._id}
-                name={o.name}
+                to={`/discussion/organisation/${o._id}/${o.name}`}
                 color='white'
               />
             )}

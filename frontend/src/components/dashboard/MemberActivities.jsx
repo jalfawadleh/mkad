@@ -51,9 +51,7 @@ const MemberActivities = () => {
             <ActivityCircleLink to={item._id} />
             <TextCenterLink to={item._id} text={item.name} />
             <DiscusstionCircleLink
-              type='organisation'
-              id={item._id}
-              name={item.name}
+              to={`/discussion/activity/${item._id}/${item.name}`}
               color='white'
             />
             <LocationCircleLink location={item.location} />

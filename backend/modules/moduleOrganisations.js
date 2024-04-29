@@ -37,6 +37,7 @@ const getOrganisation = asyncHandler(async (req, res) => {
       interests: organisation.interests,
       help: organisation.help,
       members: organisation.members,
+      contacts: organisation.contacts,
       darkmood: organisation.darkmood,
       hidden: organisation.hidden,
       location: organisation.location,

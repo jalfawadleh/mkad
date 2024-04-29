@@ -19,6 +19,8 @@ import {
   DiscusstionCircleLink,
   Loader,
   LocationCircleLink,
+  MemberAddCircle,
+  MessageCircleLink,
   OrganisationCircle,
   ShareCircleLink,
   TextCenterBox,
@@ -30,6 +32,7 @@ const Organization = () => {
   const { user } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isMember, setIsMember] = useState(false);
+  const [isContact, setIsContact] = useState(false);
 
   const [organisation, setOrganisation] = useState({
     _id: id,
@@ -52,6 +55,9 @@ const Organization = () => {
         res.data.members.map(
           (member) => member._id == user._id && setIsMember(member)
         );
+        res.data.contacts.map((c) => {
+          if (c._id == user._id) setIsContact(c);
+        });
       })
       .then(() => setIsLoading(false))
       .catch(() => toast.error("Something went wrong"));
@@ -125,21 +131,42 @@ const Organization = () => {
     </>
   );
 
+  const postContact = async () => {
+    const contact = { _id: organisation._id, name: organisation.name };
+    await axios
+      .post("/contacts", contact)
+      .then(() => getOrganisation())
+      .then(() => toast("Contact request sent"))
+      .catch(() => toast.error("Something went wrong"));
+  };
+
+  const memberContact =
+    organisation._id != user._id &&
+    (!isContact ? (
+      <span onClick={() => postContact()}>
+        <MemberAddCircle />
+      </span>
+    ) : (
+      isContact.approved && (
+        <MessageCircleLink
+          to={`/messaging/${organisation._id}/${organisation.name}`}
+        />
+      )
+    ));
+
   return (
     <>
       <Wrapper.Modal>
         <Wrapper.Header>
           <OrganisationCircle />
           <TextCenterBox text={organisation.name} />
-          <LocationCircleLink location={organisation.location} />
+          {memberContact}
           <DiscusstionCircleLink
             to={`/discussion/organisation/${organisation._id}/${organisation.name}`}
             color='white'
           />
-          <ShareCircleLink
-            to={`/share/${organisation.type}/${organisation._id}`}
-          />
-
+          <LocationCircleLink location={organisation.location} />
+          <ShareCircleLink to={`/share/organisation/${organisation._id}`} />
           <CloseCircleLink />
         </Wrapper.Header>
         {organisation.activities && organisationActivities}

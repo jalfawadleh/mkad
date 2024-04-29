@@ -111,6 +111,7 @@ function Member() {
     await axios
       .post("/contacts", contact)
       .then(() => getMember())
+      .then(() => toast("Contact request sent"))
       .then(() => setIsUpdating(false))
       .catch(() => toast.error("Something went wrong"));
   };

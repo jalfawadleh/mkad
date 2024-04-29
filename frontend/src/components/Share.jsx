@@ -23,12 +23,9 @@ import {
 const Share = () => {
   const { type, id } = useParams();
 
-  const shareUrl =
-    "https://demo.mkadifference.com/" + type === "member"
-      ? "members"
-      : type === "organisation"
-      ? "organisations"
-      : "events" + id;
+  const shareUrl = `https://demo.mkadifference.com/${
+    type == "activity" ? "activities" : type + "s"
+  }/${id}`;
   return (
     <>
       <Wrappers.Modal>
