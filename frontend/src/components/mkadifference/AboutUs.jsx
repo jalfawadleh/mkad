@@ -13,7 +13,7 @@ const AboutUs = () => {
         Who We Are
         <hr />
       </h2>
-      <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
+      <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
           <MKaDifferenceCircle />
         </span>
@@ -21,7 +21,7 @@ const AboutUs = () => {
         engage with one another while safeguarding their personal information
         and privacy.
       </div>
-      <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
+      <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
           <OrganisationCircle />
         </span>
@@ -30,7 +30,7 @@ const AboutUs = () => {
         noble purposes. Simultaneously, they can promote the assistance they
         provide and express the help they require.
       </div>
-      <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
+      <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
           <ActivityCircle />
         </span>
@@ -39,7 +39,7 @@ const AboutUs = () => {
         can engage in discussions related to activities and organizations
         online.
       </div>
-      <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
+      <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
           <MemberCircle />
         </span>

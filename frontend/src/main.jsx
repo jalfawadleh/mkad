@@ -43,11 +43,11 @@ import ContactUs from "./components/mkadifference/ContactUs.jsx";
 import ScreenSearch from "./screens/ScreenSearch.jsx";
 import Share from "./components/Share.jsx";
 import ManageMembers from "./components/manage/ManageMembers.jsx";
-import ScreenLanding from "./screens/ScreenLanding.jsx";
+import Error from "./components/mkadifference/Error.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' errorElement={<ScreenLanding />} element={<App />}>
+    <Route path='/' errorElement={<Error />} element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
           <Route path='profile' element={<Profile />} />
