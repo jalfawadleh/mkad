@@ -21,8 +21,8 @@ import { toast } from "react-toastify";
  *
  * @returns {React.ReactElement} languages element.
  */
-const Conversation = () => {
-  const { type, id, name } = useParams();
+const Messaging = () => {
+  const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
@@ -31,7 +31,7 @@ const Conversation = () => {
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "member" },
-    recipient: { _id: id, name, type },
+    recipient: { _id: id, name, type: "member" },
     content: "",
   };
 
@@ -47,7 +47,7 @@ const Conversation = () => {
   async function getMessages() {
     setIsLoading(true);
     await axios
-      .post(`/messages`, { _id: id, name, type, messagesNumber })
+      .post(`/messages`, { _id: id, type: "member", messagesNumber })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
       .then(() => messagesNumber > 0 && showLastMessage())
@@ -156,4 +156,4 @@ const Conversation = () => {
   );
 };
 
-export default Conversation;
+export default Messaging;

@@ -217,9 +217,9 @@ export const DiscusstionCircle = ({ color = "white" }) => {
   );
 };
 
-export const DiscusstionCircleLink = ({ type, id, name, color = "white" }) => {
+export const DiscusstionCircleLink = ({ to, color = "white" }) => {
   return (
-    <Link to={`/conversations/${type}/${id}/${name}`}>
+    <Link to={to}>
       <DiscusstionCircle color={color} />
     </Link>
   );

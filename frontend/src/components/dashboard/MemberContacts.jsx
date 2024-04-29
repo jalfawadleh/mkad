@@ -61,7 +61,7 @@ const MemberContacts = () => {
             </span>
             {contact.approved ? (
               <MessageCircleLink
-                to={`/conversations/members/${contact._id}/${contact.name}`}
+                to={`/messaging/${contact._id}/${contact.name}`}
               />
             ) : (
               !contact.requested && (

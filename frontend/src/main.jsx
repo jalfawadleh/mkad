@@ -31,7 +31,8 @@ import ScreenManage from "./screens/ScreenManage.jsx";
 import ManageActivity from "./components/manage/ManageActivity.jsx";
 import ManageActivities from "./components/manage/ManageActivities.jsx";
 
-import Conversation from "./components/Conversation.jsx";
+import Messaging from "./components/Messaging.jsx";
+import Discussion from "./components/Discussion.jsx";
 
 import ScreenHelp from "./screens/ScreenHelp.jsx";
 import HowTo from "./components/help/HowTo.jsx";
@@ -62,10 +63,9 @@ const router = createBrowserRouter(
           <Route path='organisations' element={<MemberOrganisations />} />
           <Route path='organisations/:id' element={<Organisation />} />
 
-          <Route
-            path='conversations/:type/:id/:name'
-            element={<Conversation />}
-          />
+          <Route path='messaging/:id/:name' element={<Messaging />} />
+          <Route path='discussion/:type/:id/:name' element={<Discussion />} />
+
           <Route path='share/:type/:id' element={<Share />} />
         </Route>
         <Route path='' element={<RouteOrganisation />}>

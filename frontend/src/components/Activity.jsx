@@ -118,9 +118,7 @@ const Activity = () => {
           <TextCenterBox text={activity.name} />
           <LocationCircleLink location={activity.location} />
           <DiscusstionCircleLink
-            type='activity'
-            id={activity._id}
-            name={activity.name}
+            to={`/discussion/activity/${activity._id}/${activity.name}`}
             color='white'
           />
           <ShareCircleLink to={`/share/${activity.type}/${activity._id}`} />

@@ -103,7 +103,6 @@ io.use(authSender);
 let conversationId = "";
 
 io.on("connection", async (socket) => {
-  /* Messaging Code */
   // Log only in production
   // process.env.NODE_ENV != "production" &&
   //   console.log(
@@ -115,34 +114,28 @@ io.on("connection", async (socket) => {
   //   );
 
   // once a member has requested Messaging another member
-  socket.on("joinConversation", async (m) => {
+  socket.on("joinMessaging", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
-
-    if (socket.message.recipient.type === "member") {
-      conversationId =
-        socket.message.sender._id.toString() >
-        socket.message.recipient._id.toString()
-          ? socket.message.sender._id.toString() +
-            ":" +
-            socket.message.recipient._id.toString()
-          : socket.message.recipient._id.toString() +
-            ":" +
-            socket.message.sender._id.toString();
-    } else
-      conversationId =
-        socket.message.recipient.type +
-        ":" +
-        socket.message.recipient._id.toString();
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
 
-    // join member to 2 rooms one for the sender another for the recepient
-    socket.join(conversationId);
+    conversationId =
+      socket.message.sender._id.toString() >
+      socket.message.recipient._id.toString()
+        ? socket.message.sender._id.toString() +
+          ":" +
+          socket.message.recipient._id.toString()
+        : socket.message.recipient._id.toString() +
+          ":" +
+          socket.message.sender._id.toString();
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
+
+    // join member to 2 rooms one for the sender another for the recepient
+    socket.join(conversationId);
 
     // Log only in production
     // process.env.NODE_ENV != "production" &&
@@ -150,7 +143,37 @@ io.on("connection", async (socket) => {
     //     Date.now(),
     //     "\tsocket.id:",
     //     socket.id,
-    //     "joinConversation\n",
+    //     "joinMessaging\n",
+    //     socket.message
+    //   );
+  });
+
+  // once a member has requested Messaging another member
+  socket.on("joinDiscussion", async (m) => {
+    // add member details from socket authentication to the message
+    socket.message = { ...m, ...socket.message, content: "joined" };
+
+    conversationId =
+      socket.message.recipient.type.toString() +
+      ":" +
+      socket.message.recipient._id.toString();
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
+
+    // announce the member has joined the messaging
+    io.sockets.in(conversationId).emit("conversation", socket.message);
+
+    // join member to 2 rooms one for the sender another for the recepient
+    socket.join(conversationId);
+
+    // Log only in production
+    // process.env.NODE_ENV != "production" &&
+    //   console.log(
+    //     Date.now(),
+    //     "\tsocket.id:",
+    //     socket.id,
+    //     "joinDiscussion\n",
     //     socket.message
     //   );
   });
@@ -178,7 +201,31 @@ io.on("connection", async (socket) => {
   });
 
   // on member leave messaging
-  socket.on("leaveConversation", async (m) => {
+  socket.on("leaveMessaging", async (m) => {
+    // add member details from socket authentication to the message
+    socket.message = { ...m, ...socket.message, content: "left" };
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
+
+    // annnounce member leaving the messaging
+    io.sockets.in(conversationId).emit("conversation", socket.message);
+
+    // member leave the room
+    socket.leave(conversationId);
+
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "leaveConversation\n",
+        socket.message
+      );
+  });
+
+  socket.on("leaveDiscussion", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
@@ -205,23 +252,31 @@ io.on("connection", async (socket) => {
   // on member disconnect
   socket.on("disconnect", async (reason) => {
     // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "disconnect\n",
-    //     "\n--------------------------"
-    //   );
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "disconnect\n",
+        "\n--------------------------"
+      );
     // set The member to be online
     socket.disconnect();
   });
 
   // // on member disconnecting
-  // socket.on("disconnecting", async (reason) => {
-  //   // set The member to be online
-  //   socket.disconnect();
-  // });
+  socket.on("disconnecting", async (reason) => {
+    // set The member to be online
+    // Log only in production
+    process.env.NODE_ENV != "production" &&
+      console.log(
+        Date.now(),
+        "\tsocket.id:",
+        socket.id,
+        "disconnecting\n",
+        "\n--------------------------"
+      );
+  });
 });
 
 // starting the socket.io and express servers on the same port

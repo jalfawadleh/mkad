@@ -21,7 +21,6 @@ import {
   LocationCircleLink,
   OrganisationCircle,
   ShareCircleLink,
-  SpinnerCircle,
   TextCenterBox,
   TextCenterLink,
 } from "./common/Icons.jsx";
@@ -134,9 +133,7 @@ const Organization = () => {
           <TextCenterBox text={organisation.name} />
           <LocationCircleLink location={organisation.location} />
           <DiscusstionCircleLink
-            type='organisation'
-            id={organisation._id}
-            name={organisation.name}
+            to={`/discussion/organisation/${organisation._id}/${organisation.name}`}
             color='white'
           />
           <ShareCircleLink

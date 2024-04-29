@@ -32,7 +32,7 @@ const Discussion = () => {
 
   const message = {
     sender: { _id: user._id, name: user.name, type: "member" },
-    recipient: { _id: id, name, type },
+    recipient: { _id: id, type, name },
     content: "",
   };
 
