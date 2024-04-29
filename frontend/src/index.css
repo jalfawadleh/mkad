@@ -1,10 +1,10 @@
 
 .map-darkmode{
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-  transition-duration: 1s;
+  transition-duration: 500ms;
 }
 
 .map-lightmode{
   filter: invert(0%);
-  transition-duration: 1s;
+  transition-duration: 500ms;
 }
