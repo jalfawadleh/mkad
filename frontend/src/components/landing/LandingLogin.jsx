@@ -181,30 +181,37 @@ function LoginForm() {
     </div>
   );
 
-  const countersBox = (
-    <div className='d-flex justify-content-around h5 my-3 py-3 '>
-      <div className='text-center m-auto p-auto'>
-        <OrganisationCircle borderColor='warning' /> 3 Organisation
-      </div>
-      <div className='text-center m-auto p-auto'>
-        <ActivityCircle borderColor='success' /> 4 Activities
-      </div>
-      <div className='text-center m-auto p-auto'>
-        <MemberCircle borderColor='primary' /> 12 Members
-      </div>
-    </div>
-  );
-
   return (
     <>
       <div id='login' className='container mt-3'>
-        <div className='d-sm-block d-md-none'>
-          {loginForm}
-          {countersBox}
-        </div>
         <div className='d-none d-md-flex justify-content-between '>
           <div className='w-50'>{loginForm}</div>
-          <div className='w-50 m-auto p-3'>{countersBox}</div>
+          <div className='w-50 mx-3 px-3 d-flex flex-column justify-content-between h5'>
+            <div className='my-auto p-auto'>
+              <OrganisationCircle borderColor='warning' /> 3 Organisation
+            </div>
+            <div className='my-auto p-auto'>
+              <ActivityCircle borderColor='success' /> 4 Activities
+            </div>
+            <div className='my-auto p-auto'>
+              <MemberCircle borderColor='primary' /> 12 Members
+            </div>
+          </div>
+        </div>
+        <div className='d-sm-block d-md-none'>
+          {loginForm}
+
+          <div className='d-flex justify-content-between h5 my-3 py-auto '>
+            <div className='my-auto p-1'>
+              <OrganisationCircle borderColor='warning' /> 3 Organisation
+            </div>
+            <div className='my-auto p-1'>
+              <ActivityCircle borderColor='success' /> 4 Activities
+            </div>
+            <div className='my-auto p-1'>
+              <MemberCircle borderColor='primary' /> 12 Members
+            </div>
+          </div>
         </div>
       </div>
     </>

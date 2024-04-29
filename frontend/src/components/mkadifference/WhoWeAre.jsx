@@ -1,27 +1,23 @@
-import { LinkButtoneBack } from "../common/LinkItems.jsx";
 import Wrappers from "../common/Wrappers.jsx";
 import {
   TextCenterBox,
   CloseCircleLink,
   HelpCircle,
 } from "../common/Icons.jsx";
+import AboutUs from "./AboutUs.jsx";
 
 function WhoWeAre() {
   return (
     <Wrappers.Modal>
       <Wrappers.Header>
         <HelpCircle />
-        <TextCenterBox text='Help' />
+        <TextCenterBox text='MkADifference - Who We Are' />
         <CloseCircleLink />
       </Wrappers.Header>
 
       <Wrappers.Body>
-        <div className='m-1 p-1'>Contact us at mkadifference@proton.me</div>
+        <AboutUs />
       </Wrappers.Body>
-
-      <Wrappers.Footer>
-        <LinkButtoneBack />
-      </Wrappers.Footer>
     </Wrappers.Modal>
   );
 }

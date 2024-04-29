@@ -1,6 +1,5 @@
 import LandingLogin from "../components/landing/LandingLogin";
-import LandingAboutUs from "../components/landing/LandingAboutUs";
-// import LandingFAQ from "../components/landing/LandingFAQ";
+import AboutUs from "../components/mkadifference/AboutUs";
 
 const ScreenLanding = () => {
   return (
@@ -13,7 +12,7 @@ const ScreenLanding = () => {
         </nav>
       </header>
       <LandingLogin />
-      <LandingAboutUs />
+      <AboutUs />
     </>
   );
 };

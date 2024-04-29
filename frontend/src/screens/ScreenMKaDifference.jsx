@@ -33,11 +33,11 @@ const ScreenMKaDifference = () => {
       </Bar>
       <Bar>
         <MemberCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
+        <div className='py-auto my-auto pe-4 ps-0 h5'>{count}</div>
         <OrganisationCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
+        <div className='py-auto my-auto pe-4 ps-0 h5'>{count}</div>
         <ActivityCircle />
-        <div className='py-auto my-auto pe-4 ps-0'>{count}</div>
+        <div className='py-auto my-auto pe-4 ps-0 h5'>{count}</div>
       </Bar>
       <Bar>
         <Link to='whoweare'>
@@ -48,16 +48,6 @@ const ScreenMKaDifference = () => {
           className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
         >
           Who We Are
-        </Link>
-        <Empty />
-      </Bar>
-      <Bar>
-        <UpdatesCircleLink to='updates' />
-        <Link
-          to='updates'
-          className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
-        >
-          Updates
         </Link>
         <Empty />
       </Bar>

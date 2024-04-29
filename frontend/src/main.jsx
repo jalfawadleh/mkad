@@ -85,7 +85,7 @@ const router = createBrowserRouter(
         <Route path='mkadifference' element={<ScreenMKaDifference />}>
           <Route path='whoweare' element={<WhoWeAre />} />
           <Route path='contactus' element={<ContactUs />} />
-          <Route path='updates' element={<Updates />} />
+          {/* <Route path='updates' element={<Updates />} /> */}
         </Route>
 
         <Route path='search' element={<ScreenSearch />}>
