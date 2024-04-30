@@ -121,14 +121,14 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
     const senderId = socket.message.sender._id.toString();
     const recipientId = socket.message.recipient._id.toString();
 
-    if (senderId > recipientId) conversationId = senderId + ":" + recipientId;
-    else conversationId = recipientId + ":" + senderId;
+    if (senderId > recipientId) conversationId = `${senderId}:${recipientId}`;
+    else conversationId = `${recipientId}:${senderId}`;
+
+    // save message in DB
+    socket.message = await saveMessage(socket.message);
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -152,10 +152,9 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    conversationId =
-      socket.message.recipient.type.toString() +
-      ":" +
-      socket.message.recipient._id.toString();
+    const senderId = socket.message.sender._id.toString();
+    const recipientId = socket.message.recipient._id.toString();
+    conversationId = `${recipientId}:${senderId}`;
 
     // save message in DB
     socket.message = await saveMessage(socket.message);
