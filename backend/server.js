@@ -27,6 +27,7 @@ import messages from "./modules/modulMessages.js";
 import { saveMessage } from "./modules/modulMessages.js";
 import contacts from "./modules/moduleContacts.js";
 import updates from "./modules/moduleUpdates.js";
+import Messages from "./models/modelMessages.js";
 
 dotenv.config();
 
@@ -186,8 +187,13 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
+    try {
+      const message = await Messages.create(m);
+      if (message) socket.message = message;
+      else throw new Error("Invalid activity data");
+    } catch (error) {
+      console.log(error);
+    }
 
     // announce the member has joined to discussion
     io.sockets.in(conversationId).emit("conversation", socket.message);
