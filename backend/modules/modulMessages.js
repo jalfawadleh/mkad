@@ -52,16 +52,20 @@ const getMessages = asyncHandler(async (req, res) => {
       .limit(15)
       .skip(req.body.messagesNumber);
 
-    // adding update to the recipient
+    // sending update to the recipient
     const u = {
       sender: { _id: req.user._id, type: "member", name: req.user.name },
-      recipient: { _id: body._id },
+      recipient: { _id: req.body._id },
       type: "message",
       content: "Message Received",
     };
 
     try {
-      const found = await Updates.findOne(u);
+      const found = await Updates.findOne({
+        "sender._id": req.user._id,
+        "recipient._id": req.body._id,
+        type: "message",
+      });
       if (!found) await Updates.create(u);
     } catch (error) {
       console.log(error);
