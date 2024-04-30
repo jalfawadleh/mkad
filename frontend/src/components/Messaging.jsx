@@ -50,7 +50,7 @@ const Messaging = () => {
       .post(`/messages`, { _id: id, type: "member", messagesNumber })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
-      .then(() => messagesNumber > 0 && showLastMessage())
+      .then(() => messagesNumber == 0 && showLastMessage())
       .then(() => setMessagesNumber(messagesNumber + 15))
       .catch(() => {
         toast.error("Something went wrong");
@@ -96,6 +96,13 @@ const Messaging = () => {
     }
   };
 
+  const onScroll = (e) => {
+    if (e.target.scrollTop === 0) {
+      getMessages();
+      //fetch messages
+    }
+  };
+
   return (
     <>
       <Wrappers.Modal>
@@ -105,7 +112,10 @@ const Messaging = () => {
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
-        <Wrappers.Body>
+        <div
+          className='modal-body d-block overflow-y-auto p-1 m-1'
+          onScroll={onScroll}
+        >
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
@@ -136,7 +146,7 @@ const Messaging = () => {
               </div>
             ))}
           <div id='endoflist' className='my-0' />
-        </Wrappers.Body>
+        </div>
         <Wrappers.Footer>
           <input
             id='content'

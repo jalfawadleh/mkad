@@ -51,7 +51,7 @@ const Discussion = () => {
       .post(`/messages`, { _id: id, name, type, messagesNumber })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
       .then(() => setIsLoading(false))
-      .then(() => messagesNumber > 0 && showLastMessage())
+      .then(() => messagesNumber == 0 && showLastMessage())
       .then(() => setMessagesNumber(messagesNumber + 15))
       .catch(() => {
         toast.error("Something went wrong");
@@ -97,6 +97,13 @@ const Discussion = () => {
     }
   };
 
+  const onScroll = (e) => {
+    if (e.target.scrollTop === 0) {
+      getMessages();
+      //fetch messages
+    }
+  };
+
   return (
     <>
       <Wrappers.Modal>
@@ -106,7 +113,10 @@ const Discussion = () => {
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
-        <Wrappers.Body>
+        <div
+          className='modal-body d-block overflow-y-auto p-1 m-1'
+          onScroll={onScroll}
+        >
           {isLoading && (
             <div className='d-block m-0 p-0'>
               <Spinner />
@@ -137,7 +147,7 @@ const Discussion = () => {
               </div>
             ))}
           <div id='endoflist' className='my-0' />
-        </Wrappers.Body>
+        </div>
         <Wrappers.Footer>
           <input
             id='content'

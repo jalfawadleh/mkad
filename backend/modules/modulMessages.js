@@ -48,8 +48,8 @@ const getMessages = asyncHandler(async (req, res) => {
         : { "recipient._id": req.body._id, "recipient.type": req.body.type }
     )
       .sort({ createdAt: 1 })
-      .limit(15);
-
+      .limit(15)
+      .skip(req.body.messagesNumber);
     res.json(messages);
   } catch (error) {
     console.log(error);
