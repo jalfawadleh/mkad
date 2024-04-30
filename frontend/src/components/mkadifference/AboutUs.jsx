@@ -25,10 +25,12 @@ const AboutUs = () => {
         <span style={{ float: "left" }}>
           <OrganisationCircle />
         </span>
-        <b className='text-warning'>Organizations</b>, including communities,
-        nonprofits, charities, and unions, have the power to unite people for
-        noble purposes. Simultaneously, they can promote the assistance they
-        provide and express the help they require.
+        <i className='text-warning'>
+          Organizations, including communities, nonprofits, charities, and
+          unions
+        </i>
+        , have the power to unite people for noble purposes. Simultaneously,
+        they can ask for volunteers to help, and express the help they offer.
       </div>
       <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
