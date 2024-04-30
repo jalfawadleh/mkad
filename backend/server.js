@@ -121,14 +121,18 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    const senderId = socket.message.sender._id.toString();
-    const recipientId = socket.message.recipient._id.toString();
-
-    if (senderId > recipientId) conversationId = `${senderId}:${recipientId}`;
-    else conversationId = `${recipientId}:${senderId}`;
-
     // save message in DB
     socket.message = await saveMessage(socket.message);
+
+    conversationId =
+      socket.message.sender._id.toString() >
+      socket.message.recipient._id.toString()
+        ? socket.message.sender._id.toString() +
+          ":" +
+          socket.message.recipient._id.toString()
+        : socket.message.recipient._id.toString() +
+          ":" +
+          socket.message.sender._id.toString();
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -152,12 +156,13 @@ io.on("connection", async (socket) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "joined" };
 
-    const senderId = socket.message.sender._id.toString();
-    const recipientId = socket.message.recipient._id.toString();
-    conversationId = `${recipientId}:${senderId}`;
+    conversationId =
+      socket.message.recipient.type.toString() +
+      ":" +
+      socket.message.recipient._id.toString();
 
     // save message in DB
-    socket.message = saveMessage(socket.message);
+    socket.message = await saveMessage(socket.message);
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -177,12 +182,12 @@ io.on("connection", async (socket) => {
   });
 
   // on receiving a message send a message to both members in the messaging
-  socket.on("conversation", (m) => {
+  socket.on("conversation", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message };
 
     // save message in DB
-    socket.message = saveMessage(socket.message);
+    socket.message = await saveMessage(socket.message);
 
     // announce the member has joined to discussion
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -199,12 +204,12 @@ io.on("connection", async (socket) => {
   });
 
   // on member leave messaging
-  socket.on("leaveMessaging", (m) => {
+  socket.on("leaveMessaging", async (m) => {
     // add member details from socket authentication to the message
     socket.message = { ...m, ...socket.message, content: "left" };
 
     // save message in DB
-    socket.message = saveMessage(socket.message);
+    socket.message = await saveMessage(socket.message);
 
     // annnounce member leaving the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -249,7 +254,6 @@ io.on("connection", async (socket) => {
 
   // on member disconnect
   socket.on("disconnect", async (reason) => {
-    socket.leave(conversationId);
     // Log only in production
     // process.env.NODE_ENV != "production" &&
     //   console.log(
@@ -260,11 +264,11 @@ io.on("connection", async (socket) => {
     //     "\n--------------------------"
     //   );
     // set The member to be online
+    socket.disconnect();
   });
 
   // // on member disconnecting
   socket.on("disconnecting", async (reason) => {
-    socket.leave(conversationId);
     // set The member to be online
     // Log only in production
     // process.env.NODE_ENV != "production" &&
