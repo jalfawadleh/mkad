@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Messages from "../models/modelMessages.js";
+import Updates from "../models/modelUpdates.js";
 
 /**
 
@@ -50,6 +51,22 @@ const getMessages = asyncHandler(async (req, res) => {
       .sort({ createdAt: 1 })
       .limit(15)
       .skip(req.body.messagesNumber);
+
+    // adding update to the recipient
+    const u = {
+      sender: { _id: req.user._id, type: "member", name: req.user.name },
+      recipient: { _id: body._id },
+      type: "message",
+      content: "Message Received",
+    };
+
+    try {
+      const found = await Updates.findOne(u);
+      if (!found) await Updates.create(u);
+    } catch (error) {
+      console.log(error);
+    }
+
     res.json(messages);
   } catch (error) {
     console.log(error);

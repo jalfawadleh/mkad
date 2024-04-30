@@ -26,6 +26,7 @@ import messages from "./modules/modulMessages.js";
 
 import { saveMessage } from "./modules/modulMessages.js";
 import contacts from "./modules/moduleContacts.js";
+import updates from "./modules/moduleUpdates.js";
 
 dotenv.config();
 
@@ -76,6 +77,7 @@ app.use("/api/search", search);
 app.use("/api/map", map);
 app.use("/api/messages", messages);
 app.use("/api/contacts", contacts);
+app.use("/api/updates", updates);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) =>
@@ -93,6 +95,7 @@ const origin =
   process.env.NODE_ENV === "production"
     ? "https://demo.mkadifference.com"
     : "http://localhost:3000";
+
 const io = new Server(server, { cors: { origin } });
 
 io.engine.use(helmet());

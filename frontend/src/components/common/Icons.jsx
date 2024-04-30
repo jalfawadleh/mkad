@@ -64,6 +64,16 @@ export const Delete = () => {
   );
 };
 
+export const DeleteCircle = () => {
+  return (
+    <Circle bgColor='warning'>
+      <span role='button' className='bg-warning'>
+        <AiOutlineClose size={24} color='white' />
+      </span>
+    </Circle>
+  );
+};
+
 export const Box = ({ children }) => {
   return (
     <div className='p-1 m-1 badge border border-primary w-100'>{children}</div>
@@ -309,10 +319,10 @@ export const OrganisationCircle = ({
   );
 };
 
-export const OrganisationCircleLink = ({ to, color = "white" }) => {
+export const OrganisationCircleLink = ({ to = "/organisations" }) => {
   return (
     <Link to={to}>
-      <OrganisationCircle borderColor='warning' color={color} />
+      <OrganisationCircle borderColor='warning' />
     </Link>
   );
 };
@@ -527,13 +537,10 @@ export const UpdatesCircle = ({ color = "white" }) => {
   );
 };
 
-export const UpdatesCircleLink = ({
-  to = "/help/updates",
-  color = "white",
-}) => {
+export const UpdatesCircleLink = ({ to = "/updates" }) => {
   return (
     <Link to={to}>
-      <UpdatesCircle color={color} size={24} />
+      <UpdatesCircle color='white' size={24} />
     </Link>
   );
 };

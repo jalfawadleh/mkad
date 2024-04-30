@@ -2,6 +2,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
+import Updates from "../models/modelUpdates.js";
 
 // @desc    Post Contact
 // @route   POST /api/contacts
@@ -30,6 +31,21 @@ const postContact = asyncHandler(async (req, res) => {
     approved: false,
   });
   sender.save();
+
+  // adding update to the recipient
+  const u = {
+    sender: { _id: sender._id, type: sender.type, name: sender.name },
+    recipient: { _id: recipient._id },
+    type: "contact",
+    content: "Contact Request",
+  };
+
+  try {
+    const found = await Updates.findOne(u);
+    if (!found) await Updates.create(u);
+  } catch (error) {
+    console.log(error);
+  }
 
   res.status(200).json(true);
 });
@@ -67,6 +83,21 @@ const approveContact = asyncHandler(async (req, res) => {
       approved: true,
     });
     sender.save();
+
+    // adding update to the recipient
+    const u = {
+      sender: { _id: recipient._id, type: "member", name: recipient.name },
+      recipient: { _id: sender._id },
+      type: "contact",
+      content: "Contact Approved",
+    };
+
+    try {
+      const found = await Updates.findOne(u);
+      if (!found) await Updates.create(u);
+    } catch (error) {
+      console.log(error);
+    }
   } else {
     res.status(404);
     throw new Error("Member not found");

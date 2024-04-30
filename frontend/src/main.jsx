@@ -14,8 +14,9 @@ import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 
-import MemberActivities from "./components/dashboard/MemberActivities.jsx";
+import MemberUpdates from "./components/dashboard/MemberUpdates.jsx";
 import MemberContacts from "./components/dashboard/MemberContacts.jsx";
+import MemberActivities from "./components/dashboard/MemberActivities.jsx";
 import MemberOrganisations from "./components/dashboard/MemberOrganisations.jsx";
 
 import Activity from "./components/Activity.jsx";
@@ -54,11 +55,13 @@ const router = createBrowserRouter(
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />
 
-          <Route path='activities' element={<MemberActivities />} />
-          <Route path='activities/:id' element={<Activity />} />
+          <Route path='updates' element={<MemberUpdates />} />
 
           <Route path='members' element={<MemberContacts />} />
           <Route path='members/:id' element={<Member />} />
+
+          <Route path='activities' element={<MemberActivities />} />
+          <Route path='activities/:id' element={<Activity />} />
 
           <Route path='organisations' element={<MemberOrganisations />} />
           <Route path='organisations/:id' element={<Organisation />} />

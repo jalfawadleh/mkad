@@ -7,6 +7,7 @@ import {
   HomeCircleLink,
   MemberCircleLink,
   OrganisationCircleLink,
+  UpdatesCircleLink,
 } from "../components/common/Icons";
 import { Bar } from "../components/common/Wrappers";
 
@@ -16,11 +17,11 @@ const ScreenDashboard = () => {
   return (
     <>
       <Bar>
-        <HomeCircleLink to='/' />
         <AvatarCustomLink name={user.name} />
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />
+        <UpdatesCircleLink />
       </Bar>
       <Outlet />
     </>
