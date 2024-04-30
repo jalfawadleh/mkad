@@ -124,15 +124,11 @@ io.on("connection", async (socket) => {
     // save message in DB
     socket.message = await saveMessage(socket.message);
 
-    conversationId =
-      socket.message.sender._id.toString() >
-      socket.message.recipient._id.toString()
-        ? socket.message.sender._id.toString() +
-          ":" +
-          socket.message.recipient._id.toString()
-        : socket.message.recipient._id.toString() +
-          ":" +
-          socket.message.sender._id.toString();
+    const senderId = socket.message.sender._id.toString();
+    const recipientId = socket.message.recipient._id.toString();
+
+    if (senderId > recipientId) conversationId = senderId + ":" + recipientId;
+    else conversationId = recipientId + ":" + senderId;
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
