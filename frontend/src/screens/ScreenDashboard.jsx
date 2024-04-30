@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { UserContext } from "../store";
 import {
   ActivityCircleLink,
   AvatarCustomLink,
-  HomeCircleLink,
   MemberCircleLink,
   OrganisationCircleLink,
   UpdatesCircleLink,
@@ -21,7 +20,7 @@ const ScreenDashboard = () => {
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />
-        <UpdatesCircleLink />
+        <UpdatesCircleLink to='/' activated={user.updates} />
       </Bar>
       <Outlet />
     </>

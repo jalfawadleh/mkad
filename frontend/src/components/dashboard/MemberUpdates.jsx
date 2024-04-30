@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ import {
   TextCenterLink,
   UpdatesCircle,
 } from "../common/Icons";
+import { UserContext } from "../../store";
 
 // sender: {
 //   _id: { type: Schema.Types.ObjectId },
@@ -35,14 +36,25 @@ import {
 // Member Message Receieved
 
 const MemberUpdates = () => {
+  const { setUser } = useContext(UserContext);
   const [updates, setUpdates] = useState([]);
 
-  // const archinveUpdate = async (id) => {
-  //   await axios
-  //     .post("/updates/archive", { id })
-  //     .then(() => getUpdates())
-  //     .catch(() => toast.error("Something went wrong"));
-  // };
+  const getUpdates = async () => {
+    await axios
+      .get("/updates")
+      .then((res) => {
+        setUpdates(res.data);
+        setUser((prev) => ({
+          ...prev,
+          updates: res.data.length ? true : false,
+        }));
+      })
+      .catch(() => toast.error("Something went wrong"));
+  };
+
+  useEffect(() => {
+    getUpdates();
+  }, []);
 
   const deleteUpdate = async (id) => {
     await axios
@@ -50,17 +62,6 @@ const MemberUpdates = () => {
       .then(() => getUpdates())
       .catch(() => toast.error("Something went wrong"));
   };
-
-  const getUpdates = async () => {
-    await axios
-      .get("/updates")
-      .then((res) => setUpdates(res.data))
-      .catch(() => toast.error("Something went wrong"));
-  };
-
-  useEffect(() => {
-    getUpdates();
-  }, []);
 
   return (
     <>

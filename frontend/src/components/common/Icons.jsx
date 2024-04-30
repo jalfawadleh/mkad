@@ -537,10 +537,10 @@ export const UpdatesCircle = ({ color = "white" }) => {
   );
 };
 
-export const UpdatesCircleLink = ({ to = "/updates" }) => {
+export const UpdatesCircleLink = ({ to = "/updates", activated = false }) => {
   return (
     <Link to={to}>
-      <UpdatesCircle color='white' size={24} />
+      <UpdatesCircle color={activated ? "red" : "white"} size={24} />
     </Link>
   );
 };

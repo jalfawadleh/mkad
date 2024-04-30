@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-datetime/css/react-datetime.css";
 import "leaflet/dist/leaflet.css";
@@ -30,9 +30,29 @@ const App = () => {
   };
 
   useEffect(() => {
-    if (user.token) setSocket(io(URL, ioParams));
+    if (user.token) {
+      setSocket(io(URL, ioParams));
+      getUpdates();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token]);
+
+  const getUpdates = async () => {
+    await axios
+      .get("/updates")
+      .then((res) => {
+        setUser((prev) => ({
+          ...prev,
+          updates: res.data.length ? true : false,
+        }));
+        if (res.data.length) toast("You have updates");
+      })
+      .catch(() => toast.error("Something went wrong"));
+  };
+
+  useEffect(() => {
+    setInterval(() => getUpdates(), 30000);
+  }, []);
 
   return (
     <>

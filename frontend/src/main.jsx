@@ -52,10 +52,10 @@ const router = createBrowserRouter(
     <Route path='/' errorElement={<Error />} element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
+          <Route path='' element={<MemberUpdates />} />
+
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />
-
-          <Route path='updates' element={<MemberUpdates />} />
 
           <Route path='members' element={<MemberContacts />} />
           <Route path='members/:id' element={<Member />} />
