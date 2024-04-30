@@ -249,6 +249,7 @@ io.on("connection", async (socket) => {
 
   // on member disconnect
   socket.on("disconnect", async (reason) => {
+    socket.leave(conversationId);
     // Log only in production
     // process.env.NODE_ENV != "production" &&
     //   console.log(
@@ -259,11 +260,11 @@ io.on("connection", async (socket) => {
     //     "\n--------------------------"
     //   );
     // set The member to be online
-    socket.disconnect();
   });
 
   // // on member disconnecting
   socket.on("disconnecting", async (reason) => {
+    socket.leave(conversationId);
     // set The member to be online
     // Log only in production
     // process.env.NODE_ENV != "production" &&
