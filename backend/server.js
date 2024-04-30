@@ -160,7 +160,7 @@ io.on("connection", async (socket) => {
     socket.message = saveMessage(socket.message);
 
     // announce the member has joined the messaging
-    socket.in(conversationId).emit("conversation", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
@@ -185,7 +185,7 @@ io.on("connection", async (socket) => {
     socket.message = saveMessage(socket.message);
 
     // announce the member has joined to discussion
-    socket.in(conversationId).emit("conversation", socket.message);
+    io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // Log only in production
     // process.env.NODE_ENV != "production" &&
