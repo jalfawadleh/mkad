@@ -82,14 +82,34 @@ const Activity = () => {
     setIsMember(activity.members.find((m) => m._id == user._id));
   }, [activity.members, user._id]);
 
+  const createdBy = (
+    <>
+      <div className='d-flex flex-wrap mx-2'>
+        <div
+          className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 border-warning rounded-pill rounded-end'
+          style={{ width: 100 }}
+        >
+          Created By
+        </div>
+        <div className='d-inline-flex m-0 p-0'>
+          <OrganisationCircleLink
+            to={"/organisations/" + activity.createdBy._id}
+          />
+          <div className='d-inline-flex my-auto'>{activity.createdBy.name}</div>
+        </div>
+      </div>
+      <hr className='m-1' />
+    </>
+  );
+
   const joinSection = (
     <>
-      <div className='d-flex justify-content-start p-1 m-1 ms-2'>
-        <OrganisationCircleLink
-          to={"/organisations/" + activity.createdBy._id}
-        />
-        <div className='ms-1 my-auto p-auto text-center'>
-          {activity.createdBy.name}
+      <div className='d-flex flex-wrap mx-2'>
+        <div
+          className='d-inline-flex my-auto mx-1 p-1 ps-3 border border-2 border-primary rounded-pill rounded-end'
+          style={{ width: 100 }}
+        >
+          Attendees
         </div>
         <div className='ms-1'>
           {isJoining ? (
@@ -124,6 +144,7 @@ const Activity = () => {
           <ShareCircleLink to={`/share/${activity.type}/${activity._id}`} />
           <CloseCircleLink />
         </Wrappers.Header>
+        {createdBy}
         {joinSection}
         <Wrappers.Body>
           <ManagePeriod startOn={activity.startOn} endOn={activity.endOn} />

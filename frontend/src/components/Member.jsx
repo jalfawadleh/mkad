@@ -29,17 +29,20 @@ const MemberOrganisations = ({ organisations = [] }) => {
   return (
     organisations.length > 0 && (
       <>
-        <Section>
-          <div className='d-inline m-0 me-2 p-2 ps-2 text-bg-secondary rounded-pill rounded-end'>
+        <div className='d-flex flex-wrap'>
+          <div
+            className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 border-warning rounded-pill rounded-end'
+            style={{ width: 100 }}
+          >
             Member of
           </div>
           {organisations.map((o) => (
-            <div className='d-inline-block' key={o._id}>
+            <div className='d-inline-flex m-0 p-0' key={o._id}>
               <OrganisationCircleLink to={"/organisations/" + o._id} />
-              <div className='d-inline me-2'>{o.name}</div>
+              <div className='d-inline-flex my-auto'>{o.name}</div>
             </div>
           ))}
-        </Section>
+        </div>
         <hr className='my-2' />
       </>
     )
@@ -50,18 +53,20 @@ const MemberActivities = ({ activities = [] }) => {
   return (
     activities.length > 0 && (
       <>
-        <Section>
-          <div className='d-inline m-0 me-2 p-2 pe-3 text-bg-success rounded-pill rounded-end'>
+        <div className='d-flex flex-wrap'>
+          <div
+            className='d-inline-flex my-auto mx-1 p-1 ps-3 text-center border border-2 border-success rounded-pill rounded-end'
+            style={{ width: 100 }}
+          >
             Attending
           </div>
           {activities.map((a) => (
-            <div className='d-inline-block' key={a._id}>
+            <div className='d-inline-flex m-0 p-0' key={a._id}>
               <ActivityCircleLink to={"/activities/" + a._id} />
-
-              <div className='d-inline me-2'>{a.name}</div>
+              <div className='d-inline-flex my-auto'>{a.name}</div>
             </div>
           ))}
-        </Section>
+        </div>
         <hr className='my-2' />
       </>
     )

@@ -81,11 +81,34 @@ const Organization = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const organisationActivities = (
+    <>
+      <div className='d-flex flex-wrap mx-2'>
+        <div
+          className='d-inline-flex my-auto mx-1 p-1 ps-3 text-center border border-2 border-success rounded-pill rounded-end'
+          style={{ width: 100 }}
+        >
+          Activities
+        </div>
+
+        {organisation.activities.map((a) => (
+          <div className='d-inline-flex m-0 p-0' key={a._id}>
+            <ActivityCircleLink to={"/activities/" + a._id} />
+            <div className='d-inline-flex my-auto'>{a.name}</div>
+          </div>
+        ))}
+      </div>
+      <hr className='m-2' />
+    </>
+  );
+
   const membersJoined = (
     <>
-      {/* Join members list */}
-      <div className='d-flex justify-content-start ms-2'>
-        <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-primary rounded-pill rounded-end'>
+      <div className='d-flex flex-wrap mx-2'>
+        <div
+          className='d-inline-flex my-auto mx-1 p-1 ps-3 text-center border border-2 border-primary rounded-pill rounded-end'
+          style={{ width: 100 }}
+        >
           Members
         </div>
 
@@ -100,32 +123,11 @@ const Organization = () => {
         {organisation.members?.map(
           (m) =>
             m.approved && (
-              <span className='me-1' key={m._id}>
+              <div className='d-inline-flex m-0 p-0' key={m._id}>
                 <AvatarLink name={m.name} to={"/members/" + m._id} />
-              </span>
+              </div>
             )
         )}
-      </div>
-      <hr className='m-2' />
-    </>
-  );
-
-  const organisationActivities = (
-    <>
-      {/* Join members list */}
-      <div className='d-flex flex-wrap ms-2'>
-        <div className='d-inline m-0 my-auto me-2 p-1 px-2 text-bg-success rounded-pill rounded-end'>
-          Activities
-        </div>
-        {organisation.activities.map((m) => (
-          <div className='d-flex me-1 p-0' key={m._id}>
-            <div className='d-inline my-auto p-1'>
-              <ActivityCircleLink to={"/activities/" + m._id} />
-            </div>
-
-            <TextCenterLink to={"/activities/" + m._id} text={m.name} />
-          </div>
-        ))}
       </div>
       <hr className='m-2' />
     </>
