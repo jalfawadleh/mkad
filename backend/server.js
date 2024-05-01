@@ -28,6 +28,7 @@ import { saveMessage } from "./modules/modulMessages.js";
 import contacts from "./modules/moduleContacts.js";
 import updates from "./modules/moduleUpdates.js";
 import Messages from "./models/modelMessages.js";
+import { setUncaughtExceptionCaptureCallback } from "process";
 
 dotenv.config();
 
@@ -104,189 +105,113 @@ io.engine.use(helmet());
 // Authorization middleware to append the user as well
 io.use(authSender);
 
-let conversationId = "";
-
 io.on("connection", async (socket) => {
-  // Log only in production
-  // process.env.NODE_ENV != "production" &&
-  //   console.log(
-  //     Date.now(),
-  //     "\tsocket.id:",
-  //     socket.id,
-  //     "connection\n",
-  //     socket.message
-  //   );
-
   // once a member has requested Messaging another member
+
   socket.on("joinMessaging", async (m) => {
-    // add member details from socket authentication to the message
-    socket.message = { ...m, ...socket.message, content: "joined" };
+    // add sender details from authentication
+    // then save vomplete message to DB
+    socket.message = await saveMessage({
+      ...m,
+      ...socket.message,
+      content: "Joined",
+    });
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
-    conversationId =
-      socket.message.sender._id.toString() >
-      socket.message.recipient._id.toString()
-        ? socket.message.sender._id.toString() +
-          ":" +
-          socket.message.recipient._id.toString()
-        : socket.message.recipient._id.toString() +
-          ":" +
-          socket.message.sender._id.toString();
+    const conversationId = generateConversationId(socket.message);
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
-
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "joinMessaging\n",
-    //     socket.message
-    //   );
   });
 
-  // once a member has requested Messaging another member
   socket.on("joinDiscussion", async (m) => {
-    // add member details from socket authentication to the message
-    socket.message = { ...m, ...socket.message, content: "joined" };
+    // add sender details from authentication
+    // then save vomplete message to DB
+    socket.message = await saveMessage({
+      ...m,
+      ...socket.message,
+      content: "Joined",
+    });
 
-    conversationId =
-      socket.message.recipient.type.toString() +
-      ":" +
-      socket.message.recipient._id.toString();
-
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
+    const conversationId = generateConversationId(socket.message);
 
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // join member to 2 rooms one for the sender another for the recepient
     socket.join(conversationId);
-
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "joinDiscussion\n",
-    //     socket.message
-    //   );
   });
 
   // on receiving a message send a message to both members in the messaging
   socket.on("conversation", async (m) => {
-    // add member details from socket authentication to the message
-    socket.message = { ...m, ...socket.message };
-
-    try {
-      const message = await Messages.create(m);
-      if (message) socket.message = message;
-      else throw new Error("Invalid activity data");
-    } catch (error) {
-      console.log(error);
-    }
-
-    // announce the member has joined to discussion
+    // add sender details from authentication
+    // then save vomplete message to DB
+    socket.message = await saveMessage({
+      ...m,
+      ...socket.message,
+    });
+    const conversationId = generateConversationId(socket.message);
+    // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
-
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "conversation\n",
-    //     socket.message
-    //   );
   });
 
   // on member leave messaging
   socket.on("leaveMessaging", async (m) => {
-    // add member details from socket authentication to the message
-    socket.message = { ...m, ...socket.message, content: "left" };
+    // add sender details from authentication
+    // then save vomplete message to DB
+    socket.message = await saveMessage({
+      ...m,
+      ...socket.message,
+      content: "Left",
+    });
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
+    const conversationId = generateConversationId(socket.message);
 
     // annnounce member leaving the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
     // member leave the room
     socket.leave(conversationId);
-
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "leaveConversation\n",
-    //     socket.message
-    //   );
   });
 
   socket.on("leaveDiscussion", async (m) => {
-    // add member details from socket authentication to the message
-    socket.message = { ...m, ...socket.message, content: "left" };
+    // add sender details from authentication
+    // then save vomplete message to DB
+    socket.message = await saveMessage({
+      ...m,
+      ...socket.message,
+      content: "Left",
+    });
 
-    // save message in DB
-    socket.message = await saveMessage(socket.message);
-
-    // member leave the room
-    socket.leave(conversationId);
+    const conversationId = generateConversationId(socket.message);
 
     // annnounce member leaving the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
 
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "leaveConversation\n",
-    //     socket.message
-    //   );
+    // member leave the room
+    socket.leave(conversationId);
   });
 
   // on member disconnect
-  socket.on("disconnect", async (reason) => {
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "disconnect\n",
-    //     "\n--------------------------"
-    //   );
-    // set The member to be online
-    socket.disconnect();
-  });
+  socket.on("disconnect", async (reason) => {});
 
   // // on member disconnecting
-  socket.on("disconnecting", async (reason) => {
-    // set The member to be online
-    // Log only in production
-    // process.env.NODE_ENV != "production" &&
-    //   console.log(
-    //     Date.now(),
-    //     "\tsocket.id:",
-    //     socket.id,
-    //     "disconnecting\n",
-    //     "\n--------------------------"
-    //   );
-  });
+  socket.on("disconnecting", async (reason) => {});
 });
+
+const generateConversationId = (message) => {
+  const sender = message.sender._id.toString();
+  const recipient = message.recipient._id.toString();
+  const recipientType = message.recipient.type.toString();
+
+  if (message.recipient.type.toString() === "member")
+    return sender > recipient
+      ? `${sender}:${recipient}`
+      : `${recipient}:${sender}`;
+  else return `${recipientType}:${recipient}`;
+};
 
 // starting the socket.io and express servers on the same port
 server.listen(port, () => console.log(`Server started on port ${port}`));

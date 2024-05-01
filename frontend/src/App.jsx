@@ -40,13 +40,12 @@ const App = () => {
   const getUpdates = async () => {
     await axios
       .get("/updates")
-      .then((res) => {
+      .then((res) =>
         setUser((prev) => ({
           ...prev,
           updates: res.data.length ? true : false,
-        }));
-        if (res.data.length) toast("You have updates");
-      })
+        }))
+      )
       .catch(() => toast.error("Something went wrong"));
   };
 

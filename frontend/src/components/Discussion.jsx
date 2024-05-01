@@ -27,7 +27,6 @@ const Discussion = () => {
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
-  const [messagesNumber, setMessagesNumber] = useState(0);
   const navigate = useNavigate();
 
   const message = {
@@ -45,23 +44,28 @@ const Discussion = () => {
       250
     );
 
-  async function getMessages() {
+  async function getDiscussion() {
     setIsLoading(true);
     await axios
-      .post(`/messages`, { _id: id, name, type, messagesNumber })
+      .post(`/messages/discussion`, { _id: id, type, skip: messages.length })
       .then((res) => setMessages((previous) => [...res.data, ...previous]))
+      .then(() => {
+        if (messages.length < 10) showLastMessage();
+      })
       .then(() => setIsLoading(false))
-      .then(() => messagesNumber == 0 && showLastMessage())
-      .then(() => setMessagesNumber(messagesNumber + 15))
-      .catch(() => {
-        toast.error("Something went wrong");
-      });
+      .catch(() => toast.error("Something went wrong"));
   }
 
   useEffect(() => {
-    getMessages();
+    getDiscussion();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onScroll = (e) => {
+    if (e.target.scrollTop === 0) {
+      getDiscussion();
+    }
+  };
 
   // member join coversation when online
   useEffect(() => {
@@ -94,13 +98,6 @@ const Discussion = () => {
       message.content = event.target.value;
       socket.emit("conversation", message);
       event.target.value = "";
-    }
-  };
-
-  const onScroll = (e) => {
-    if (e.target.scrollTop === 0) {
-      getMessages();
-      //fetch messages
     }
   };
 

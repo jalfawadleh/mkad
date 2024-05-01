@@ -38,19 +38,15 @@ export const saveMessage = asyncHandler(async (m) => {
 // @access  Private
 const getMessages = asyncHandler(async (req, res) => {
   try {
-    const messages = await Messages.find(
-      req.body.type == "member"
-        ? {
-            $or: [
-              { "sender._id": req.user._id, "recipient._id": req.body._id },
-              { "sender._id": req.body._id, "recipient._id": req.user._id },
-            ],
-          }
-        : { "recipient._id": req.body._id, "recipient.type": req.body.type }
-    )
-      .sort({ createdAt: 1 })
-      .limit(15)
-      .skip(req.body.messagesNumber);
+    const messages = await Messages.find({
+      $or: [
+        { "sender._id": req.user._id, "recipient._id": req.body._id },
+        { "sender._id": req.body._id, "recipient._id": req.user._id },
+      ],
+    })
+      .sort({ _id: -1 })
+      .skip(req.body.skip)
+      .limit(20);
 
     // sending update to the recipient
     const u = {
@@ -71,7 +67,25 @@ const getMessages = asyncHandler(async (req, res) => {
       console.log(error);
     }
 
-    res.json(messages);
+    res.json(messages.reverse());
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+// @desc    Get Discussion
+// @route   GET /api/messages/discussion
+// @access  Private
+const getDiscussion = asyncHandler(async (req, res) => {
+  try {
+    const discussion = await Messages.find({
+      "recipient._id": req.body._id,
+      "recipient.type": req.body.type,
+    })
+      .sort({ _id: -1 })
+      .skip(req.body.skip)
+      .limit(20);
+    res.json(discussion.reverse());
   } catch (error) {
     console.log(error);
   }
@@ -79,4 +93,5 @@ const getMessages = asyncHandler(async (req, res) => {
 
 const messages = express.Router();
 messages.post("/", protect, getMessages);
+messages.post("/discussion", protect, getDiscussion);
 export default messages;
