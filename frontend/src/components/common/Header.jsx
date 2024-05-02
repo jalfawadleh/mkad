@@ -45,8 +45,8 @@ const Header = () => {
         </nav>
       </div>
 
-      <nav className='w-100 position-absolute bottom-0 d-sm-none navbar navbar-expand m-0 p-0'>
-        <div className='w-100 p-0 m-0 justify-content-around navbar-nav'>
+      <nav className='m-0 p-1 w-100 position-absolute bottom-0 d-sm-none navbar navbar-expand'>
+        <div className='w-100 p-0 m-0 justify-content-between navbar-nav'>
           {icons}
         </div>
       </nav>
