@@ -145,7 +145,7 @@ const Messaging = () => {
         <Wrappers.Footer>
           <input
             id='content'
-            className='w-100 bg-black'
+            className='w-100 bg-black text-break text-wrap'
             placeholder='Enter Message'
             type='text'
             onKeyDown={(event) => send(event)}
