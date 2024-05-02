@@ -31,7 +31,7 @@ const MemberOrganisations = ({ organisations = [] }) => {
       <>
         <div className='d-flex flex-wrap'>
           <div
-            className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 border-warning rounded-pill rounded-end'
+            className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 text-warning border-warning rounded-pill rounded-end'
             style={{ width: 100 }}
           >
             Member of
@@ -55,7 +55,7 @@ const MemberActivities = ({ activities = [] }) => {
       <>
         <div className='d-flex flex-wrap'>
           <div
-            className='d-inline-flex my-auto mx-1 p-1 ps-3 text-center border border-2 border-success rounded-pill rounded-end'
+            className='d-inline-flex my-auto mx-1 p-1 ps-3 text-center text-success border border-2 border-success rounded-pill rounded-end'
             style={{ width: 100 }}
           >
             Attending

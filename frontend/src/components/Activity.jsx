@@ -86,7 +86,7 @@ const Activity = () => {
     <>
       <div className='d-flex flex-wrap mx-2'>
         <div
-          className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 border-warning rounded-pill rounded-end'
+          className='d-inline-flex my-auto mx-1 p-1 ps-2 text-center border border-2 text-warning border-warning rounded-pill rounded-end'
           style={{ width: 100 }}
         >
           Created By
@@ -106,7 +106,7 @@ const Activity = () => {
     <>
       <div className='d-flex flex-wrap mx-2'>
         <div
-          className='d-inline-flex my-auto mx-1 p-1 ps-3 border border-2 border-primary rounded-pill rounded-end'
+          className='d-inline-flex my-auto mx-1 p-1 ps-3 border border-2 text-primary border-primary rounded-pill rounded-end'
           style={{ width: 100 }}
         >
           Attendees
