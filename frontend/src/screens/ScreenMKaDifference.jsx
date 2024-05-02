@@ -9,7 +9,6 @@ import {
   OrganisationCircle,
   ActivityCircle,
   HelpCircle,
-  UpdatesCircleLink,
 } from "../components/common/Icons";
 
 const ScreenMKaDifference = () => {
@@ -51,6 +50,19 @@ const ScreenMKaDifference = () => {
         </Link>
         <Empty />
       </Bar>
+      <Bar>
+        <Link to='howto'>
+          <HelpCircle />
+        </Link>
+        <Link
+          to='contactus'
+          className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+        >
+          How to
+        </Link>
+        <Empty />
+      </Bar>
+
       <Bar>
         <Link to='contactus'>
           <HelpCircle />

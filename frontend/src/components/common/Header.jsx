@@ -25,8 +25,7 @@ const Header = () => {
         {user.darkmode ? <LightmodeCircle /> : <DarkmodeCircle />}
       </span>
 
-      <MKaDifferenceCircleLink to='/MkAdifference' />
-      <HelpCircleLink />
+      <MKaDifferenceCircleLink to='/mkadifference' />
       <HomeCircleLink to='/' />
       <SearchCircleLink />
       {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
