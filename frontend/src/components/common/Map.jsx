@@ -284,6 +284,7 @@ const Map = () => {
           className='position-absolute top-0 start-0 end-0 bottom-0 '
           style={{ zIndex: -1 }}
           attributionControl={false}
+          worldCopyJump={true}
         >
           {/* <SetViewOnClick /> */}
           <Recenter />
