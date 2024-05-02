@@ -262,10 +262,10 @@ const Map = () => {
     <>
       <MapContext.Provider value={{ setFlyToLocation }}>
         <div
-          className='m-0 p-2 position-absolute w-100'
+          className='m-0 p-1 position-absolute w-100'
           style={{
             width: "100%",
-            maxWidth: 380,
+            maxWidth: 425,
             maxHeight: window.innerHeight - 100,
           }}
         >
