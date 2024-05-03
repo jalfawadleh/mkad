@@ -112,13 +112,13 @@ const Organization = () => {
           Members
         </div>
 
-        {!isMember ? (
-          <span onClick={() => joinOrganisation()}>
-            <IconButton>Join</IconButton>
-          </span>
-        ) : (
-          !isMember.approved && <IconButton>Pending Approval</IconButton>
-        )}
+        {!isMember
+          ? organisation._id != user._id && (
+              <span onClick={() => joinOrganisation()}>
+                <IconButton>Join</IconButton>
+              </span>
+            )
+          : !isMember.approved && <IconButton>Pending Approval</IconButton>}
 
         {organisation.members?.map(
           (m) =>
