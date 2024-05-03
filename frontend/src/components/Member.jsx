@@ -9,7 +9,7 @@ import ManageLanguages from "./common/ManageLanguages.jsx";
 import ManageInterests from "./common/ManageInterests.jsx";
 import ManageHelp from "./common/ManageHelp.jsx";
 
-import Wrappers, { Section } from "./common/Wrappers.jsx";
+import Wrappers from "./common/Wrappers.jsx";
 import {
   ActivityCircleLink,
   Avatar,

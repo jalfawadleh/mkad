@@ -12,6 +12,7 @@ import {
   AvatarLink,
   Spinner,
   TextCenterBox,
+  LocationCircleLink,
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -24,7 +25,9 @@ import { toast } from "react-toastify";
 const Messaging = () => {
   const { id, name } = useParams();
   const { user, socket } = useContext(UserContext);
+
   const [messages, setMessages] = useState([]);
+  const [member, setMember] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
   const navigate = useNavigate();
 
@@ -43,6 +46,19 @@ const Messaging = () => {
       250
     );
 
+  const getMember = async () => {
+    await axios
+      .get(`/members/${id}`)
+      .then((res) => {
+        setMember(res.data);
+        if (!res.data.contacts.find((c) => c._id == user._id)) {
+          toast.error("Not a contact");
+          navigate("/");
+        }
+      })
+      .catch(() => toast.error("Something went wrong"));
+  };
+
   async function getMessages() {
     setIsLoading(true);
     await axios
@@ -56,6 +72,7 @@ const Messaging = () => {
   }
 
   useEffect(() => {
+    getMember();
     getMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -103,8 +120,9 @@ const Messaging = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           <MessageCircle />
-          <Avatar name={name} />
-          <TextCenterBox text={name} />
+          <Avatar name={member.name} />
+          <TextCenterBox text={member.name} />
+          <LocationCircleLink location={member.location} />
           <CloseCircleLink />
         </Wrappers.Header>
         <div

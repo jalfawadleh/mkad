@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -8,7 +8,6 @@ import {
   ActivityCircle,
   FoldCircle,
   LocationCircle,
-  MembersCircle,
   OrganisationCircle,
   FilterCircle,
   SearchCircle,
@@ -20,7 +19,6 @@ import {
   OrganisationCircleLink,
   MemberCircle,
 } from "../components/common/Icons";
-import { IconLinkCenterText } from "../components/common/LinkItems";
 
 const ScreenSearch = () => {
   const [results, setResults] = useState([]);
@@ -124,6 +122,21 @@ const ScreenSearch = () => {
   const toggleFilter = () => {
     setFolded(false);
     setQuery((prev) => ({ ...prev, filter: !filter }));
+  };
+
+  const IconLinkCenterText = ({ item }) => {
+    return item.type == "location" ? (
+      <span className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'>
+        {item.name}
+      </span>
+    ) : (
+      <Link
+        to={item.type + "/" + item._id}
+        className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
+      >
+        {item.name}
+      </Link>
+    );
   };
 
   const ListLinks = ({ items }) => {

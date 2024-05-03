@@ -43,32 +43,3 @@ export const LinkButtoneBack = () => {
     </Link>
   );
 };
-
-export const IconLinkCenterText = ({ item }) => {
-  return item.type == "location" ? (
-    <span className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'>
-      {item.name}
-    </span>
-  ) : (
-    <Link
-      to={item.type + "/" + item._id}
-      className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
-    >
-      {item.name}
-    </Link>
-  );
-};
-
-export const IconLoading = () => {
-  return (
-    <div className='d-block p-4 m-auto text-center'>
-      <div
-        className='spinner-border text-primary'
-        role='status'
-        style={{ height: 100, width: 100 }}
-      >
-        <span className='visually-hidden w-100 h-100'>Loading...</span>
-      </div>
-    </div>
-  );
-};

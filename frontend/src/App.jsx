@@ -37,6 +37,11 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.token]);
 
+  useEffect(() => {
+    if (user.token) setInterval(() => getUpdates(), 30000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user.token]);
+
   const getUpdates = async () => {
     await axios
       .get("/updates")
@@ -48,10 +53,6 @@ const App = () => {
       )
       .catch(() => toast.error("Something went wrong"));
   };
-
-  useEffect(() => {
-    setInterval(() => getUpdates(), 30000);
-  }, []);
 
   return (
     <>
