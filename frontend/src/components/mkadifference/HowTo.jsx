@@ -6,6 +6,7 @@ import {
   HelpCircle,
   HomeCircle,
   HomeCircleLink,
+  LocationCircle,
   TextCenterBox,
 } from "../common/Icons.jsx";
 import { useContext } from "react";
@@ -23,20 +24,37 @@ function HowTo() {
 
       <Wrappers.Body>
         <SectionForm>
-          <h4>To Update Profile details</h4>
-          <div className='d-block'>
-            click on <HomeCircleLink to='/' /> then on
-            <AvatarCustomLink name={user.name} to='/profile' />
-            then on Edit
+          <div className='d-inline-block m-2 text-primary'>
+            Profile location is the map starting point
           </div>
           <hr />
-
-          <h4>To Update Account details</h4>
-          <div className='d-block'>
-            click on <HomeCircleLink to='/' /> then on
-            <AvatarCustomLink name={user.name} to='/profile' />
-            then on Account
+          <div className='d-inline-block m-2 text-primary'>
+            To Update profile details
           </div>
+          <div className='d-inline-block m-1'>
+            Name, Discription, Languages, Interests, Help Offered, help needed,
+            Darkmode, Hide profile, Location
+          </div>
+          <div className='d-inline-block m-2'>
+            <HomeCircleLink to='/' /> ={">"}
+            <AvatarCustomLink name={user.name} to='/profile' />={">"}
+            <div className='mx-1 p-2 d-inline border border-primary rounded-pill'>
+              Edit
+            </div>
+          </div>
+          <hr />
+          <div className='d-inline-block m-2 text-primary'>
+            To update Username, Password
+          </div>
+
+          <div className='d-inline-block'>
+            <HomeCircleLink to='/' /> ={">"}
+            <AvatarCustomLink name={user.name} to='/profile' />={">"}
+            <div className='mx-1 p-2 d-inline border border-primary rounded-pill'>
+              Account
+            </div>
+          </div>
+          <hr />
         </SectionForm>
       </Wrappers.Body>
 

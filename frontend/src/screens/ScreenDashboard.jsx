@@ -20,7 +20,7 @@ const ScreenDashboard = () => {
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />
-        <UpdatesCircleLink to='/' activated={user.updates} />
+        <UpdatesCircleLink to='/updates' activated={user.updates} />
       </Bar>
       <Outlet />
     </>

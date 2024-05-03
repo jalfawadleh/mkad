@@ -55,7 +55,7 @@ const ScreenMKaDifference = () => {
           <HelpCircle />
         </Link>
         <Link
-          to='contactus'
+          to='howto'
           className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'
         >
           How to
