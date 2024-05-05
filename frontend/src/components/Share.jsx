@@ -1,6 +1,12 @@
 import Wrappers from "./common/Wrappers";
 import { useParams } from "react-router-dom";
-import { Button, CloseCircleLink, TextCenterBox } from "./common/Icons";
+import QRCode from "qrcode.react";
+import {
+  Button,
+  CloseCircleLink,
+  ShareCircle,
+  TextCenterBox,
+} from "./common/Icons";
 
 import {
   EmailIcon,
@@ -30,11 +36,12 @@ const Share = () => {
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
-          <TextCenterBox text={"Share to invite people"} />
+          <ShareCircle />
+          <TextCenterBox text={"Share"} />
           <CloseCircleLink />
         </Wrappers.Header>
         <Wrappers.Body>
-          <div className='d-flex justify-content-around'>
+          <div className='d-flex justify-content-around p-2 mb-2 border-primary border-bottom'>
             <div
               className='nav-item p-0 m-1 rounded-pill'
               // style={{ boxShadow: "0 0 5px 5px aqua" }}
@@ -87,10 +94,19 @@ const Share = () => {
                 <EmailIcon size={40} round={true} />
               </EmailShareButton>
             </div>
-            <div className='nav-item p-0 m-1 rounded-circle'>
-              <span onClick={() => navigator.clipboard.writeText(shareUrl)}>
-                <Button>Copy</Button>
-              </span>
+          </div>
+          <div className='d-flex justify-content-between'>
+            <div
+              className='d-inline p-auto m-auto'
+              onClick={() => navigator.clipboard.writeText(shareUrl)}
+            >
+              <Button>Copy</Button>
+            </div>
+            <div className='d-inline p-auto m-auto'>
+              Or use the QR code directly
+            </div>
+            <div className='p-auto m-2'>
+              <QRCode value={shareUrl} renderAs='canvas' />
             </div>
           </div>
         </Wrappers.Body>
