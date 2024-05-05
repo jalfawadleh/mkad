@@ -1,29 +1,20 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../store";
 
-import {
-  OrganisationCircle,
-  MemberCircle,
-  ActivityCircle,
-} from "./common/Icons";
-
-import AboutUs from "./mkadifference/AboutUs";
-
 const ScreenLanding = () => {
   const { setUser } = useContext(UserContext);
-  const [userData, setUserData] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-    name: "",
-  });
-
-  const { username, password, confirmPassword, name, email } = userData;
+  const { code } = useParams();
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const userData = {};
+    const formData = new FormData(e.target);
+    formData.forEach((value, key) => (userData[key] = value));
+    userData["code"] = code;
+    const { username, password, confirmPassword, name } = userData;
 
     if (!username) toast.error("Please Enter a Username");
     else if (!password) toast.error("Please Enter Password");
@@ -36,13 +27,6 @@ const ScreenLanding = () => {
         .then((res) => setUser(res.data))
         .then(() => toast.error("Something went wrong"));
     }
-  };
-
-  const onChange = (e) => {
-    setUserData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
   };
 
   return (
@@ -60,8 +44,6 @@ const ScreenLanding = () => {
               type='text'
               id='username'
               className='form-control bg-black'
-              value={username}
-              onChange={onChange}
               autoCorrect='off'
               autoCapitalize='none'
               autoComplete='off'
@@ -75,8 +57,6 @@ const ScreenLanding = () => {
               type='password'
               id='password'
               className='form-control bg-black'
-              value={password}
-              onChange={onChange}
               autoCorrect='off'
               autoCapitalize='none'
               autoComplete='off'
@@ -90,8 +70,6 @@ const ScreenLanding = () => {
               type='password'
               id='confirmPassword'
               className='form-control bg-black'
-              value={confirmPassword}
-              onChange={onChange}
               autoCorrect='off'
               autoCapitalize='none'
               autoComplete='off'
@@ -105,8 +83,6 @@ const ScreenLanding = () => {
               type='text'
               id='name'
               className='form-control bg-black'
-              value={name}
-              onChange={onChange}
               autoCorrect='off'
               autoCapitalize='none'
               autoComplete='off'

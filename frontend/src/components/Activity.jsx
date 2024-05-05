@@ -47,16 +47,11 @@ const Activity = () => {
 
   const onJoin = async () => {
     setIsJoining(true);
-    try {
-      await axios
-        .get(`/activities/join/${id}`)
-        .then((res) => setActivity(res.data))
-        .then(() => setIsJoining(false));
-    } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
-    }
+    await axios
+      .get(`/activities/join/${id}`)
+      .then((res) => setActivity(res.data))
+      .then(() => setIsJoining(false))
+      .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
@@ -66,11 +61,7 @@ const Activity = () => {
         .get(`/activities/${id}`)
         .then((res) => setActivity(res.data))
         .then(() => setIsLoading(false))
-        .catch((error) => {
-          error?.response?.data?.message &&
-            toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
-        });
+        .catch(() => toast.error("Something went wrong"));
     };
 
     getActivity(id);
