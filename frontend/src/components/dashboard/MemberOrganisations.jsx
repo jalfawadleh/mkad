@@ -23,7 +23,7 @@ const MemberOrganisations = () => {
     await axios
       .get(`/members/${user._id}`)
       .then((res) => setOrganisations(res.data.organisations))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const MemberOrganisations = () => {
     await axios
       .delete("/organisations/" + id)
       .then(() => getOrganisations())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   return (

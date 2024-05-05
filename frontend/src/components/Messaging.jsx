@@ -56,7 +56,7 @@ const Messaging = () => {
           navigate("/");
         }
       })
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   async function getMessages() {
@@ -68,7 +68,7 @@ const Messaging = () => {
         if (messages.length < 10) showLastMessage();
       })
       .then(() => setIsLoading(false))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   }
 
   useEffect(() => {

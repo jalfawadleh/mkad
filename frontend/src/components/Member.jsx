@@ -100,7 +100,7 @@ function Member() {
           if (c._id == user._id) setIsContact(c);
         });
       })
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -118,7 +118,7 @@ function Member() {
       .then(() => getMember())
       .then(() => toast("Contact request sent"))
       .then(() => setIsUpdating(false))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const memberContact =

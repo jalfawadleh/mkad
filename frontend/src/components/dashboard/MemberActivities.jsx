@@ -23,7 +23,7 @@ const MemberActivities = () => {
     await axios
       .get("/activities")
       .then((res) => setItems(res.data))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {

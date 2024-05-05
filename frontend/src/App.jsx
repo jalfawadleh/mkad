@@ -63,7 +63,7 @@ const App = () => {
           updates: res.data.length ? true : false,
         }))
       )
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   return (

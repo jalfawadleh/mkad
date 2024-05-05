@@ -32,7 +32,7 @@ const PasswordLink = () => {
               : ""
           )
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error));
     };
     getInviteLink();
   }, [id]);

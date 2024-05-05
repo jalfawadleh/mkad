@@ -22,7 +22,7 @@ const Login = () => {
       await axios
         .post("/users/login", { username, password })
         .then((res) => setUser(res.data))
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error));
     }
   };
 

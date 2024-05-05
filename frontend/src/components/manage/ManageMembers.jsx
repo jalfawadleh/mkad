@@ -22,7 +22,7 @@ const ManageMembers = () => {
     await axios
       .get("/members/" + user._id)
       .then((res) => setMembers(res.data.members))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -33,14 +33,14 @@ const ManageMembers = () => {
     await axios
       .post("/organisations/approve", { id })
       .then(() => getMembers())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const deleteMember = async (id) => {
     await axios
       .delete("/organisations/" + id)
       .then(() => getMembers())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   return (

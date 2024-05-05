@@ -55,11 +55,7 @@ const Map = () => {
     await axios
       .post("/map", location)
       .then((res) => setItems(res.data))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
+      .catch((error) => toast.error(error));
   };
 
   // const SetViewOnClick = () => {

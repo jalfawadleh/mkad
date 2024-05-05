@@ -24,11 +24,7 @@ const ManageActivities = () => {
       .get("/activities/managed")
       .then((res) => setItems(res.data))
       // .then(() => setIsLoading(false))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {

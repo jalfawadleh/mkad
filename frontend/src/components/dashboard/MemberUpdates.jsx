@@ -49,7 +49,7 @@ const MemberUpdates = () => {
           updates: res.data.length ? true : false,
         }));
       })
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const MemberUpdates = () => {
     await axios
       .delete("/updates/" + id)
       .then(() => getUpdates())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   return (

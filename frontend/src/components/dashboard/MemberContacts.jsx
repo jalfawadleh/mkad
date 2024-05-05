@@ -22,21 +22,21 @@ const MemberContacts = () => {
     await axios
       .post("/contacts/approve", { id })
       .then(() => getContacts())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const deleteContact = async (id) => {
     await axios
       .delete("/contacts/" + id)
       .then(() => getContacts())
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const getContacts = async () => {
     await axios
       .get("/contacts")
       .then((res) => setContacts(res.data))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {

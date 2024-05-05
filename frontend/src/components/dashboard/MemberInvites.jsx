@@ -21,7 +21,7 @@ const MemberInvites = () => {
     await axios
       .get("/invites")
       .then((res) => setInvitees(res.data))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {

@@ -28,7 +28,7 @@ const InviteLink = () => {
             res.data ? "https://demo.mkadifference.com/join/" + res.data : ""
           )
         )
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error));
     };
     getLink();
   }, []);

@@ -60,7 +60,7 @@ const Organization = () => {
         });
       })
       .then(() => setIsLoading(false))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const joinOrganisation = async () => {
@@ -73,7 +73,7 @@ const Organization = () => {
           approved: false,
         })
       )
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const Organization = () => {
       .post("/contacts", contact)
       .then(() => getOrganisation())
       .then(() => toast("Contact request sent"))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   const memberContact =

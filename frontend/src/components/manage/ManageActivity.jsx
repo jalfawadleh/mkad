@@ -63,22 +63,14 @@ const ManageActivity = () => {
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
         .then(() => navigate("/"))
-        .catch((error) => {
-          error?.response?.data?.message &&
-            toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
-        });
+        .catch((error) => toast.error(error));
     else
       await axios
         .post("/activities/", activity)
         .then(() => toast("Created"))
         .then(() => setIsUpdating(false))
         .then(() => navigate("/"))
-        .catch((error) => {
-          error?.response?.data?.message &&
-            toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
-        });
+        .catch((error) => toast.error(error));
   };
 
   const onDelete = async () => {
@@ -89,11 +81,7 @@ const ManageActivity = () => {
         .delete(`/activities/${id}`)
         .then(() => setIsLoading(false))
         .then(() => navigate("/"))
-        .catch((error) => {
-          error?.response?.data?.message &&
-            toast.error(error?.response.data.message);
-          error?.response?.status > 499 && toast.error("Something went wrong");
-        });
+        .catch((error) => toast.error(error));
     }
   };
 
@@ -103,11 +91,7 @@ const ManageActivity = () => {
       .get(`/activities/${id}`)
       .then((res) => setActivity(res.data))
       .then(() => setIsLoading(false))
-      .catch((error) => {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
-      });
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {

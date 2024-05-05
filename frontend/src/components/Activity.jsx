@@ -51,7 +51,7 @@ const Activity = () => {
       .get(`/activities/join/${id}`)
       .then((res) => setActivity(res.data))
       .then(() => setIsJoining(false))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Activity = () => {
         .get(`/activities/${id}`)
         .then((res) => setActivity(res.data))
         .then(() => setIsLoading(false))
-        .catch(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error));
     };
 
     getActivity(id);

@@ -49,14 +49,7 @@ const ScreenSearch = () => {
         .then((res) => setResults(res.data))
         .then(() => setFolded(false))
         .then(() => setIsGettingResults(false))
-        .catch((error) => {
-          if (error?.response?.data?.message)
-            toast.error(error?.response.data.message);
-          if (error?.response?.status > 499) {
-            toast.error("Something went wrong!");
-            console.log("system down");
-          }
-        });
+        .catch((error) => toast.error(error));
     } else setResults([]);
   };
 

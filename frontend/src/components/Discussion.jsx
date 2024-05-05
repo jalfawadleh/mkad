@@ -53,7 +53,7 @@ const Discussion = () => {
         if (messages.length < 10) showLastMessage();
       })
       .then(() => setIsLoading(false))
-      .catch(() => toast.error("Something went wrong"));
+      .catch((error) => toast.error(error));
   }
 
   useEffect(() => {
