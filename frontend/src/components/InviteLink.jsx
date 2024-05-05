@@ -24,7 +24,9 @@ const InviteLink = () => {
       await axios
         .get("/invites/invitelink")
         .then((res) =>
-          setLink(res.data ? "https://mkadifference.com/join/" + res.data : "")
+          setLink(
+            res.data ? "https://demo.mkadifference.com/join/" + res.data : ""
+          )
         )
         .catch(() => toast.error("Something went wrong"));
     };
