@@ -41,71 +41,72 @@ const Share = () => {
           <CloseCircleLink />
         </Wrappers.Header>
         <Wrappers.Body>
-          <div className='d-flex justify-content-around p-2 mb-2 border-primary border-bottom'>
-            <div
-              className='nav-item p-0 m-1 rounded-pill'
-              // style={{ boxShadow: "0 0 5px 5px aqua" }}
-            >
-              <TwitterShareButton
-                url={shareUrl}
-                quote={"MKaDifference "}
-                hashtag={"#MKaDifference"}
-              >
-                <TwitterIcon size={40} round={true} />
-              </TwitterShareButton>
-            </div>
-
-            <div className='nav-item p-0 m-1 rounded-pill'>
-              <RedditShareButton
-                url={shareUrl}
-                quote={"MKaDifference "}
-                hashtag={"#MKaDifference"}
-              >
-                <RedditIcon size={40} round={true} />
-              </RedditShareButton>
-            </div>
-
-            <div className='nav-item p-0 m-1 rounded-pill'>
-              <LinkedinShareButton
-                url={shareUrl}
-                quote={"MKaDifference "}
-                hashtag={"#MKaDifference"}
-              >
-                <LinkedinIcon size={40} round={true} />
-              </LinkedinShareButton>
-            </div>
-
-            <div className='nav-item p-0 m-1 rounded-pill'>
-              <FacebookShareButton
-                url={shareUrl}
-                quote={"MKaDifference "}
-                hashtag={"#MKaDifference"}
-              >
-                <FacebookIcon size={40} round={true} />
-              </FacebookShareButton>
-            </div>
-
-            <div className='nav-item p-0 m-1 rounded-pill'>
-              <EmailShareButton
-                url={shareUrl}
-                quote={"MKaDifference "}
-                hashtag={"#MKaDifference"}
-              >
-                <EmailIcon size={40} round={true} />
-              </EmailShareButton>
-            </div>
-          </div>
           <div className='d-flex justify-content-between'>
-            <div
-              className='d-inline p-auto m-auto'
-              onClick={() => navigator.clipboard.writeText(shareUrl)}
-            >
-              <Button>Copy</Button>
+            <div className='w-100'>
+              <div className='d-flex justify-content-around pt-2 border-primary border-bottom h-50'>
+                <div className='nav-item p-0 m-1 rounded-pill'>
+                  <TwitterShareButton
+                    url={shareUrl}
+                    quote={"MKaDifference "}
+                    hashtag={"#MKaDifference"}
+                  >
+                    <TwitterIcon size={40} round={true} />
+                  </TwitterShareButton>
+                </div>
+
+                <div className='nav-item p-0 m-1 rounded-pill'>
+                  <RedditShareButton
+                    url={shareUrl}
+                    quote={"MKaDifference "}
+                    hashtag={"#MKaDifference"}
+                  >
+                    <RedditIcon size={40} round={true} />
+                  </RedditShareButton>
+                </div>
+
+                <div className='nav-item p-0 m-1 rounded-pill'>
+                  <LinkedinShareButton
+                    url={shareUrl}
+                    quote={"MKaDifference "}
+                    hashtag={"#MKaDifference"}
+                  >
+                    <LinkedinIcon size={40} round={true} />
+                  </LinkedinShareButton>
+                </div>
+
+                <div className='nav-item p-0 m-1 rounded-pill'>
+                  <FacebookShareButton
+                    url={shareUrl}
+                    quote={"MKaDifference "}
+                    hashtag={"#MKaDifference"}
+                  >
+                    <FacebookIcon size={40} round={true} />
+                  </FacebookShareButton>
+                </div>
+
+                <div className='nav-item p-0 m-1 rounded-pill'>
+                  <EmailShareButton
+                    url={shareUrl}
+                    quote={"MKaDifference "}
+                    hashtag={"#MKaDifference"}
+                  >
+                    <EmailIcon size={40} round={true} />
+                  </EmailShareButton>
+                </div>
+              </div>
+              <div className='d-flex justify-content-between h-50'>
+                <div
+                  className='d-inline p-auto m-auto'
+                  onClick={() => navigator.clipboard.writeText(shareUrl)}
+                >
+                  <Button>Copy</Button>
+                </div>
+                <div className='d-inline p-auto m-auto'>
+                  Or use the QR code directly
+                </div>
+              </div>
             </div>
-            <div className='d-inline p-auto m-auto'>
-              Or use the QR code directly
-            </div>
-            <div className='p-auto m-2'>
+            <div className='m-3'>
               <QRCode value={shareUrl} renderAs='canvas' />
             </div>
           </div>
