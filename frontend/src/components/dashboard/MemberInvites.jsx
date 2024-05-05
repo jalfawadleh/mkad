@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { Bar } from "../common/Wrappers";
 import {
   AvatarLink,
+  Empty,
+  ExclamationCircle,
   InviteCircle,
   MemberAddCircleLink,
   MemberPasswordCircleLink,
@@ -35,7 +37,7 @@ const MemberInvites = () => {
         <MemberAddCircleLink to='invite' />
       </Bar>
 
-      {invitees.length &&
+      {invitees.length ? (
         invitees.map((i) => (
           <Bar key={i._id}>
             <AvatarLink to={"/members/" + i._id} name={i.name} />
@@ -46,7 +48,16 @@ const MemberInvites = () => {
             />
             <MemberPasswordCircleLink to={"passwordlink/" + i._id} />
           </Bar>
-        ))}
+        ))
+      ) : (
+        <Bar>
+          <ExclamationCircle />
+          <div className='m-auto p-auto text-center'>
+            Invites has not been used yet
+          </div>
+          <Empty />
+        </Bar>
+      )}
 
       <Outlet />
     </>
