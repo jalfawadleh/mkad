@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { Bar } from "../common/Wrappers";
 import {
   AvatarLink,
-  Empty,
   InviteCircle,
   MemberAddCircleLink,
   MemberPasswordCircleLink,
@@ -18,11 +17,8 @@ const MemberInvites = () => {
 
   const getInvitees = async () => {
     await axios
-      .get("/invitees")
-      .then((res) => {
-        setInvitees(res.data);
-        console.log(res.data);
-      })
+      .get("/invites")
+      .then((res) => setInvitees(res.data))
       .catch(() => toast.error("Something went wrong"));
   };
 
@@ -36,7 +32,7 @@ const MemberInvites = () => {
       <Bar>
         <InviteCircle />
         <TextCenterBox text='Invites' />
-        <MemberAddCircleLink to='invitelink' />
+        <MemberAddCircleLink to='invite' />
       </Bar>
 
       {invitees.length &&

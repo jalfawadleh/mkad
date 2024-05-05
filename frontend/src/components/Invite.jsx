@@ -1,9 +1,8 @@
-import Wrappers from "./common/Wrappers";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import Wrappers from "./common/Wrappers";
 import {
   Button,
   CloseCircleLink,
@@ -16,20 +15,18 @@ import {
  *
  * @returns {React.ReactElement}
  */
-const PasswordLink = () => {
-  const { id } = useParams();
-
+const Invite = () => {
   const [link, setLink] = useState("");
 
-  const getInviteLink = async () => {
+  const getLink = async () => {
     await axios
-      .get("/invites/passwordlink")
+      .get("/invites/invitelink")
       .then((res) => setLink(res.data))
       .catch(() => toast.error("Something went wrong"));
   };
 
   useEffect(() => {
-    getInviteLink();
+    getLink();
   }, []);
 
   return (
@@ -37,23 +34,20 @@ const PasswordLink = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           <InviteCircle />
-          <TextCenterBox text={"Reset Password Link"} />
+          <TextCenterBox text={"Invite Link"} />
           <CloseCircleLink />
         </Wrappers.Header>
         <Wrappers.Body>
-          <div className='d-flex justify-content-around'>
-            <div className='nav-item p-0 m-1 rounded-circle'>
-              <span onClick={() => navigator.clipboard.writeText(link)}>
-                <Button>Copy</Button>
-              </span>
-
-              <TextCenterBox text={link} />
-            </div>
+          <div className='d-flex justify-content-start'>
+            <span onClick={() => navigator.clipboard.writeText(link)}>
+              <Button>Copy Link</Button>
+            </span>
           </div>
+          <div className='d-block m-1 p-1'>{link}</div>
         </Wrappers.Body>
       </Wrappers.Modal>
     </>
   );
 };
 
-export default PasswordLink;
+export default Invite;

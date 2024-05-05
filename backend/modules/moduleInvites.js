@@ -15,8 +15,36 @@ const getInvitees = asyncHandler(async (req, res) => {
   }
 });
 
-const invites = express.Router().get("/", protect, getInvitees);
-// .get("/invitelink", protect, getInviteLink);
-// .get("/passwordlink", protect, getPasswordLink)
+// @desc    Get Invite Link
+// @route   GET /api/invites/invitelink
+// @access  Private
+const getInviteLink = asyncHandler(async (req, res) => {
+  const member = await Members.findOne({ _id: req.user._id });
+  if (member) {
+    res.status(200).json(member._id);
+  } else {
+    res.status(404);
+    throw new Error("Inviter not found");
+  }
+});
+
+// @desc    Get Password Link
+// @route   GET /api/invites/passwordLink
+// @access  Private
+const getPasswordLink = asyncHandler(async (req, res) => {
+  const member = await Members.findOne({ _id: req.user._id });
+  if (member) {
+    res.status(200).json(member._id);
+  } else {
+    res.status(404);
+    throw new Error("Inviter not found");
+  }
+});
+
+const invites = express
+  .Router()
+  .get("/", protect, getInvitees)
+  .get("/invitelink", protect, getInviteLink)
+  .get("/passwordlink", protect, getPasswordLink);
 
 export default invites;

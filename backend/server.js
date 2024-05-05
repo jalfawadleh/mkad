@@ -81,7 +81,7 @@ app.use("/api/map", map);
 app.use("/api/messages", messages);
 app.use("/api/contacts", contacts);
 app.use("/api/updates", updates);
-app.use("/api/invitees", invites);
+app.use("/api/invites", invites);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) =>
