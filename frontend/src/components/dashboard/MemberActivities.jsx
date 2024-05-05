@@ -12,11 +12,11 @@ import {
   LocationCircleLink,
   TextCenterLink,
   ActivityCircle,
+  TextCenterBox,
 } from "../common/Icons";
 
 const MemberActivities = () => {
   const [items, setItems] = useState([]);
-  const [folded, setFolded] = useState(true);
   // const [isLoading, setIsLoading] = useState(false);
 
   const getItems = async () => {
@@ -35,13 +35,7 @@ const MemberActivities = () => {
       <div className='my-2'></div>
       <Bar>
         <ActivityCircle />
-        <div
-          role='button'
-          onClick={() => setFolded(!folded)}
-          className='p-auto m-auto text-center'
-        >
-          Attending Activities
-        </div>
+        <TextCenterBox text='Activities Joined' />
         <Empty />
       </Bar>
 

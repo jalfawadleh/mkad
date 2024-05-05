@@ -4,6 +4,7 @@ import { UserContext } from "../store";
 import {
   ActivityCircleLink,
   AvatarCustomLink,
+  InviteCircleLink,
   MemberCircleLink,
   OrganisationCircleLink,
   UpdatesCircleLink,
@@ -17,6 +18,7 @@ const ScreenDashboard = () => {
     <>
       <Bar>
         <AvatarCustomLink name={user.name} />
+        <InviteCircleLink to='/invites' />
         <OrganisationCircleLink to='/organisations' />
         <ActivityCircleLink to='/activities' />
         <MemberCircleLink to='/members' />

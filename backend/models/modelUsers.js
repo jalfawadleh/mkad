@@ -66,17 +66,6 @@ const usersSchema = Schema(
       default: [],
     },
 
-    conversations: {
-      type: [
-        {
-          id: { type: Schema.Types.ObjectId },
-          name: { type: String },
-          approved: { type: Boolean, default: false },
-        },
-      ],
-      default: [],
-    },
-
     members: {
       type: [
         {
@@ -98,6 +87,8 @@ const usersSchema = Schema(
       ],
       default: [],
     },
+
+    inviter: Schema.Types.ObjectId,
   },
   {
     timestamps: true,

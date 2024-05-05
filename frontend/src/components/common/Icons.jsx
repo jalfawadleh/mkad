@@ -18,6 +18,8 @@ import {
   FaSearch,
   FaSun,
   FaHome,
+  FaShare,
+  FaShareAlt,
 } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { RiArrowUpDownFill } from "react-icons/ri";
@@ -686,7 +688,25 @@ export const ShareCircleLink = ({ to }) => {
   );
 };
 
-import { FaShare } from "react-icons/fa";
+export const Invite = () => {
+  return <FaShareAlt color='white' size={24} />;
+};
+
+export const InviteCircle = () => {
+  return (
+    <Circle bgColor='info'>
+      <Invite />
+    </Circle>
+  );
+};
+
+export const InviteCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <InviteCircle />
+    </Link>
+  );
+};
 
 const Icons = {
   Empty,

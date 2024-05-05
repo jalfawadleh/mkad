@@ -44,6 +44,7 @@ import ScreenSearch from "./screens/ScreenSearch.jsx";
 import Share from "./components/Share.jsx";
 import ManageMembers from "./components/manage/ManageMembers.jsx";
 import Error from "./components/Error.jsx";
+import MemberInvites from "./components/dashboard/MemberInvites.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,6 +52,7 @@ const router = createBrowserRouter(
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
           <Route path='updates' element={<MemberUpdates />} />
+          <Route path='invites' element={<MemberInvites />} />
 
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />

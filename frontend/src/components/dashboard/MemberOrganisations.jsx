@@ -10,6 +10,7 @@ import {
   MemberDeleteCircle,
   OrganisationCircle,
   OrganisationCircleLink,
+  TextCenterBox,
   TextCenterLink,
 } from "../common/Icons";
 import { UserContext } from "../../store";
@@ -41,7 +42,7 @@ const MemberOrganisations = () => {
       <div className='my-2'></div>
       <Bar>
         <OrganisationCircle />
-        <div className='p-auto m-auto text-center'>Joined Organisatoins</div>
+        <TextCenterBox text='Organisatoins Joined' />
         <Empty />
       </Bar>
 

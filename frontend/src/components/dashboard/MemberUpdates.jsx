@@ -6,13 +6,13 @@ import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
   AvatarLink,
-  Delete,
   DeleteCircle,
   Empty,
   ExclamationCircle,
   MemberCircleLink,
   MessageCircleLink,
   OrganisationCircleLink,
+  TextCenterBox,
   TextCenterLink,
   UpdatesCircle,
 } from "../common/Icons";
@@ -68,7 +68,7 @@ const MemberUpdates = () => {
       <div className='my-2' />
       <Bar>
         <UpdatesCircle />
-        <div className='p-auto m-auto text-center'>Updates</div>
+        <TextCenterBox text='Updates' />
         <Empty />
       </Bar>
 

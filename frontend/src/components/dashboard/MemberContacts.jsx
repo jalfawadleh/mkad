@@ -11,6 +11,7 @@ import {
   MemberCircle,
   MemberDeleteCircle,
   MessageCircleLink,
+  TextCenterBox,
   TextCenterLink,
 } from "../common/Icons";
 
@@ -47,7 +48,7 @@ const MemberContacts = () => {
       <div className='my-2' />
       <Bar>
         <MemberCircle />
-        <div className='p-auto m-auto text-center'>Contacts</div>
+        <TextCenterBox text='Contacts' />
         <Empty />
       </Bar>
 

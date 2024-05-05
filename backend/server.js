@@ -29,6 +29,7 @@ import contacts from "./modules/moduleContacts.js";
 import updates from "./modules/moduleUpdates.js";
 import Messages from "./models/modelMessages.js";
 import { setUncaughtExceptionCaptureCallback } from "process";
+import invites from "./modules/moduleInvites.js";
 
 dotenv.config();
 
@@ -80,6 +81,7 @@ app.use("/api/map", map);
 app.use("/api/messages", messages);
 app.use("/api/contacts", contacts);
 app.use("/api/updates", updates);
+app.use("/api/invitees", invites);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 app.get("*", (req, res) =>
