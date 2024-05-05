@@ -8,6 +8,7 @@ import {
   Empty,
   InviteCircle,
   MemberAddCircleLink,
+  MemberPasswordCircleLink,
   TextCenterBox,
   TextCenterLink,
 } from "../common/Icons";
@@ -35,7 +36,7 @@ const MemberInvites = () => {
       <Bar>
         <InviteCircle />
         <TextCenterBox text='Invites' />
-        <MemberAddCircleLink to='/invitelink' />
+        <MemberAddCircleLink to='invitelink' />
       </Bar>
 
       {invitees.length &&
@@ -47,7 +48,7 @@ const MemberInvites = () => {
               to={"passwordlink/" + i._id}
               text='Reset Password Link'
             />
-            <Empty />
+            <MemberPasswordCircleLink to={"passwordlink/" + i._id} />
           </Bar>
         ))}
 

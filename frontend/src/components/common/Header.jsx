@@ -2,8 +2,6 @@ import { UserContext } from "../../store.js";
 import { useContext } from "react";
 import {
   DarkmodeCircle,
-  Empty,
-  HelpCircleLink,
   HomeCircleLink,
   LightmodeCircle,
   LocationCircleLink,
@@ -26,9 +24,9 @@ const Header = () => {
       </span>
 
       <MKaDifferenceCircleLink to='/mkadifference' />
+      {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
       <HomeCircleLink to='/' />
       <SearchCircleLink />
-      {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
       <LocationCircleLink location={user.location} />
     </>
   );

@@ -45,6 +45,8 @@ import Share from "./components/Share.jsx";
 import ManageMembers from "./components/manage/ManageMembers.jsx";
 import Error from "./components/Error.jsx";
 import MemberInvites from "./components/dashboard/MemberInvites.jsx";
+import PasswordLink from "./components/PasswordLink.jsx";
+import InvitesLink from "./components/InvitesLink.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -53,6 +55,8 @@ const router = createBrowserRouter(
         <Route path='' element={<ScreenDashboard />}>
           <Route path='updates' element={<MemberUpdates />} />
           <Route path='invites' element={<MemberInvites />} />
+          <Route path='invites/passwordlink/:id' element={<PasswordLink />} />
+          <Route path='invites/invitelink' element={<InvitesLink />} />
 
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />

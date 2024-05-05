@@ -31,6 +31,7 @@ import {
   BsPersonFillAdd,
   BsPersonFillX,
   BsPersonFillGear,
+  BsPersonFillLock,
 } from "react-icons/bs";
 
 export const Empty = () => {
@@ -503,6 +504,26 @@ export const MemberDeleteCircleLink = ({ to }) => {
   return (
     <Link to={to}>
       <MemberDeleteCircle color='white' />
+    </Link>
+  );
+};
+
+export const MemberPassword = ({ color = "white" }) => {
+  return <BsPersonFillLock color={color} size={24} />;
+};
+
+export const MemberPasswordCircle = ({ color = "white" }) => {
+  return (
+    <Circle borderColor='primary' bgColor='danger'>
+      <MemberPassword color={color} />
+    </Circle>
+  );
+};
+
+export const MemberPasswordCircleLink = ({ to }) => {
+  return (
+    <Link to={to}>
+      <MemberPasswordCircle color='white' />
     </Link>
   );
 };
