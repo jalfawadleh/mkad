@@ -25,7 +25,7 @@ const ScreenLanding = () => {
       await axios
         .post("/users/", userData)
         .then((res) => setUser(res.data))
-        .then(() => toast.error("Something went wrong"));
+        .catch((error) => toast.error(error));
     }
   };
 

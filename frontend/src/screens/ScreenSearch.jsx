@@ -78,14 +78,7 @@ const ScreenSearch = () => {
       )
       .then(() => setFolded(false))
       .then(() => setIsGettingPlaces(false))
-      .catch((error) => {
-        if (error?.response?.data?.message)
-          toast.error(error?.response.data.message);
-        if (error?.response?.status > 499) {
-          toast.error("Something went wrong!");
-          console.log("system down");
-        }
-      });
+      .catch((error) => toast.error(error));
   };
 
   const onSubmit = (e) => {

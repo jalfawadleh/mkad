@@ -23,6 +23,18 @@ const App = () => {
   axios.defaults.headers.post["Content-Type"] =
     "application/x-www-form-urlencoded";
 
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    function (error) {
+      // Do something with response error
+      if (error?.response?.data?.message) return error.response.data.message;
+      if (error?.response?.status > 499) return "Something went wrong!";
+      return Promise.reject(error);
+    }
+  );
+
   const ioParams = {
     autoConnect: true,
     auth: { token: user.token },
