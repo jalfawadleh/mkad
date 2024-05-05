@@ -12,6 +12,8 @@ import App from "./App.jsx";
 
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
+import ScreenJoin from "./screens/ScreenJoin.jsx";
+
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 
 import MemberUpdates from "./components/dashboard/MemberUpdates.jsx";
@@ -46,7 +48,7 @@ import ManageMembers from "./components/manage/ManageMembers.jsx";
 import Error from "./components/Error.jsx";
 import MemberInvites from "./components/dashboard/MemberInvites.jsx";
 import PasswordLink from "./components/PasswordLink.jsx";
-import Invite from "./components/Invite.jsx";
+import InviteLink from "./components/InviteLink.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -56,7 +58,7 @@ const router = createBrowserRouter(
           <Route path='updates' element={<MemberUpdates />} />
           <Route path='invites' element={<MemberInvites />} />
           <Route path='invites/passwordlink/:id' element={<PasswordLink />} />
-          <Route path='invites/invite' element={<Invite />} />
+          <Route path='invites/invite' element={<InviteLink />} />
 
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />
@@ -97,6 +99,7 @@ const router = createBrowserRouter(
           <Route path='member/:id' element={<Member />} />
         </Route>
       </Route>
+      <Route path='join/:code' element={<ScreenJoin />} />
     </Route>
   )
 );

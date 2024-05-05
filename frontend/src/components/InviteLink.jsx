@@ -1,10 +1,9 @@
-import Wrappers from "./common/Wrappers";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import QRCode from "qrcode.react";
 
+import Wrappers from "./common/Wrappers";
 import {
   Button,
   CloseCircleLink,
@@ -13,36 +12,31 @@ import {
 } from "./common/Icons";
 
 /**
- * Password reset component
+ * Invitation component.
  *
  * @returns {React.ReactElement}
  */
-const PasswordLink = () => {
-  const { id } = useParams();
+const InviteLink = () => {
   const [link, setLink] = useState("");
 
   useEffect(() => {
-    const getInviteLink = async () => {
+    const getLink = async () => {
       await axios
-        .get("/invites/passwordlink/" + id)
+        .get("/invites/invitelink")
         .then((res) =>
-          setLink(
-            res.data
-              ? "https://mkadifference.com/resetpassword/" + res.data
-              : ""
-          )
+          setLink(res.data ? "https://mkadifference.com/join/" + res.data : "")
         )
         .catch(() => toast.error("Something went wrong"));
     };
-    getInviteLink();
-  }, [id]);
+    getLink();
+  }, []);
 
   return (
     <>
       <Wrappers.Modal>
         <Wrappers.Header>
           <InviteCircle />
-          <TextCenterBox text={"Reset Password Link"} />
+          <TextCenterBox text={"Invite Link"} />
           <CloseCircleLink />
         </Wrappers.Header>
         <Wrappers.Body>
@@ -68,7 +62,7 @@ const PasswordLink = () => {
               </div>
             </>
           ) : (
-            "Something is wrong Please try again later."
+            ""
           )}
         </Wrappers.Body>
       </Wrappers.Modal>
@@ -76,4 +70,4 @@ const PasswordLink = () => {
   );
 };
 
-export default PasswordLink;
+export default InviteLink;

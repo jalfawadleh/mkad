@@ -7,11 +7,9 @@ import {
 
 const AboutUs = () => {
   return (
-    <div className='container mt-4'>
-      <h2 className='text-center text-primary'>
-        <hr />
+    <div className='container'>
+      <h2 className='text-center text-primary border-primary-subtle border-top border-bottom py-2 mb-3'>
         Who We Are
-        <hr />
       </h2>
       <div className='d-block p-1 ms-0 mb-3' style={{ textAlign: "justify" }}>
         <span style={{ float: "left" }}>
@@ -59,10 +57,8 @@ const AboutUs = () => {
       </div>
 
       <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
-        <h3 className='text-center text-primary'>
-          <hr />
+        <h3 className='text-center text-primary border-primary-subtle border-top border-bottom py-2 mb-3'>
           Why Join Us
-          <hr />
         </h3>
 
         <p style={{ textAlign: "justify" }}>
@@ -96,10 +92,8 @@ const AboutUs = () => {
       </div>
 
       <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
-        <h3 className='text-center text-primary'>
-          <hr />
+        <h3 className='text-center text-primary border-primary-subtle border-top border-bottom py-2 mb-3'>
           How are we different
-          <hr />
         </h3>
 
         <p style={{ textAlign: "justify" }}>
@@ -129,10 +123,8 @@ const AboutUs = () => {
       </div>
 
       <div className='align-justify mb-3' style={{ textAlign: "justify" }}>
-        <h3 className='text-center text-primary'>
-          <hr />
+        <h3 className='text-center text-primary border-primary-subtle border-top border-bottom py-2 mb-3'>
           Why no photos, videos or audio
-          <hr />
         </h3>
 
         <p style={{ textAlign: "justify" }}>
