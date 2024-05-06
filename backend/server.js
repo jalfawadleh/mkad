@@ -7,12 +7,8 @@ import helmet from "helmet";
 import compression from "compression";
 import RateLimit from "express-rate-limit";
 
-// import morgan from "morgan";
-
 import path from "path";
-// import rfs from "rotating-file-stream";
 import dotenv from "dotenv";
-
 import connectDB from "./config/db.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -46,16 +42,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
 app.use(RateLimit({ windowMs: 1 * 60 * 1000, max: 20 })); // max 20requests/m
-
-// setup the logger and create a rotating write stream
-// app.use(
-//   morgan("combined", {
-//     stream: rfs.createStream("access.log", {
-//       interval: "1d", // rotate daily
-//       path: path.join(__dirname, "logs"),
-//     }),
-//   })
-// );
 
 // allow sources to openstreetmap
 app.use(
@@ -108,6 +94,7 @@ io.engine.use(helmet());
 
 // Authorization middleware to append the user as well
 io.use(authSender);
+// io.engine.use(RateLimit({ windowMs: 1 * 60 * 1000, max: 10 }));
 
 io.on("connection", async (socket) => {
   // once a member has requested Messaging another member
