@@ -10,17 +10,20 @@ const ScreenLanding = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+
     const userData = {};
     const formData = new FormData(e.target);
     formData.forEach((value, key) => (userData[key] = value));
-    userData["code"] = code;
+    userData["code"] = code ? code : false;
+
     const { username, password, confirmPassword, name } = userData;
 
-    if (!username) toast.error("Please Enter a Username");
-    else if (!password) toast.error("Please Enter Password");
-    else if (password !== confirmPassword)
+    if (!username || username.lenth < 5) toast.error("Please Enter a Username");
+    else if (!password || password.lenth < 8)
+      toast.error("Please Enter Password");
+    else if (!code || password !== confirmPassword)
       toast.error("Passwords do not match");
-    else if (name === "") toast.error("Please Enter a Name");
+    else if (name === "" || name.lenth < 5) toast.error("Please Enter a Name");
     else {
       await axios
         .post("/users/", userData)

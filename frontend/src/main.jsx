@@ -99,6 +99,8 @@ const router = createBrowserRouter(
           <Route path='member/:id' element={<Member />} />
         </Route>
       </Route>
+
+      <Route path='join' element={<ScreenJoin />} />
       <Route path='join/:code' element={<ScreenJoin />} />
     </Route>
   )
