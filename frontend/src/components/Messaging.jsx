@@ -37,14 +37,13 @@ const Messaging = () => {
     content: "",
   };
 
-  const showLastMessage = () =>
-    setTimeout(
-      () =>
-        document
-          .getElementById("endoflist")
-          .scrollIntoView({ behavior: "smooth", block: "end" }),
-      250
-    );
+  const showLastMessage = () => {
+    const endoflist = document.getElementById("endoflist");
+    if (endoflist)
+      setTimeout(() => {
+        endoflist.scrollIntoView({ behavior: "smooth", block: "end" });
+      }, 250);
+  };
 
   const getMember = async () => {
     await axios
