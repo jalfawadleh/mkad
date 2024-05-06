@@ -5,10 +5,12 @@ import { Server } from "socket.io";
 import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
-import morgan from "morgan";
+import RateLimit from "express-rate-limit";
+
+// import morgan from "morgan";
 
 import path from "path";
-import rfs from "rotating-file-stream";
+// import rfs from "rotating-file-stream";
 import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
@@ -27,8 +29,7 @@ import messages from "./modules/modulMessages.js";
 import { saveMessage } from "./modules/modulMessages.js";
 import contacts from "./modules/moduleContacts.js";
 import updates from "./modules/moduleUpdates.js";
-import Messages from "./models/modelMessages.js";
-import { setUncaughtExceptionCaptureCallback } from "process";
+
 import invites from "./modules/moduleInvites.js";
 
 dotenv.config();
@@ -44,6 +45,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
+app.use(RateLimit({ windowMs: 1 * 60 * 1000, max: 20 })); // max 20requests/m
 
 // setup the logger and create a rotating write stream
 // app.use(

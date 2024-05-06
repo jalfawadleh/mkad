@@ -10,10 +10,7 @@ import Members from "../models/modelUsers.js";
 const getInvitees = asyncHandler(async (req, res) => {
   const members = await Members.find({ inviter: req.user._id }, "name");
   if (members) res.status(200).json(members);
-  else {
-    res.status(404);
-    throw new Error("Invitees not found");
-  }
+  else res.status(404).json("Not found");
 });
 
 // @desc    Get Invite Link

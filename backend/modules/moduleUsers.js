@@ -34,28 +34,34 @@ const postUser = asyncHandler(async (req, res) => {
   const { username, password, name, code } = req.body;
 
   const userExists = await Users.findOne({ username });
-
+  console.log(code);
   if (userExists) {
-    res.status(409).json({ message: "User already exists" });
+    res.status(409).send("Username taken! Try another");
+    return;
   }
-
-  const user = await Users.create({
-    username,
-    password,
-    name,
-  });
-
-  if (user) {
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      type: user.type,
-      location: user.location,
-      token: await user.generateToken(user._id),
+  try {
+    const user = await Users.create({
+      username,
+      password,
+      name,
+      inviter: "asdfads",
     });
-  } else {
-    res.status(400);
-    throw new Error("Invalid user data");
+
+    if (user) {
+      res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        type: user.type,
+        location: user.location,
+        token: await user.generateToken(user._id),
+      });
+    } else {
+      res.status(400).send("Invalid user data");
+      return;
+    }
+  } catch (error) {
+    console.log(error);
+    return;
   }
 });
 

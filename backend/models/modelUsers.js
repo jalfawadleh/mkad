@@ -16,17 +16,17 @@ const usersSchema = Schema(
       type: String,
       required: [true, "Please add a password"],
     },
-    email: {
-      type: String,
-      required: [true, "Please add an email"],
-      unique: true,
+    inviter: {
+      type: Schema.Types.ObjectId,
+      required: [true, "Something is terribly wrong!"],
     },
+
     online: {
       type: Boolean,
       default: false,
     },
 
-    type: { type: String, default: "member" }, //organisation union
+    type: { type: String, default: "member", enum: ["member", "organisation"] }, //organisation union
     name: { type: String, required: true },
     icon: { type: String, default: "" },
     description: { type: String, default: "" },
@@ -87,8 +87,6 @@ const usersSchema = Schema(
       ],
       default: [],
     },
-
-    inviter: Schema.Types.ObjectId,
   },
   {
     timestamps: true,
