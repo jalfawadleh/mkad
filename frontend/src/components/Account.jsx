@@ -24,12 +24,10 @@ function Account() {
     username: "",
     password: "",
     confirmPassword: "",
-    email: "",
     currentPassword: "",
   });
 
-  const { username, password, confirmPassword, email, currentPassword } =
-    newDetails;
+  const { username, password, confirmPassword, currentPassword } = newDetails;
 
   const onPut = async (e) => {
     e.preventDefault();
@@ -134,26 +132,6 @@ function Account() {
                 onChange={onChange}
               />
               <label htmlFor='confirmPassword'>Confirm Password</label>
-            </div>
-          </SectionForm>
-          <hr className='my-2' />
-          <SectionForm>
-            <div className='text-center'>
-              Email will only be used for password reset
-            </div>
-
-            <div className='form-floating m-1'>
-              <input
-                className='form-control'
-                id='email'
-                type='email'
-                placeholder='email@proton.me'
-                name='email'
-                value={email}
-                size='small'
-                onChange={onChange}
-              />
-              <label htmlFor='email'>Email</label>
             </div>
           </SectionForm>
           <hr className='my-2' />

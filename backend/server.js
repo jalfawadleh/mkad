@@ -41,7 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(compression());
-app.use(RateLimit({ windowMs: 1 * 60 * 1000, max: 20 })); // max 20requests/m
+app.use(RateLimit({ max: 30 })); // max 30requests/m
 
 // allow sources to openstreetmap
 app.use(
