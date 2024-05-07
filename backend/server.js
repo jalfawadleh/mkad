@@ -54,7 +54,7 @@ app.use(
       connectSrc: [
         "'self'",
         "https://nominatim.openstreetmap.org",
-        "https://demo.mkadifference.com",
+        "https://mkadifference.com",
       ],
     },
   })
@@ -85,7 +85,7 @@ app.use(errorHandler);
 const server = createServer(app);
 const origin =
   process.env.NODE_ENV === "production"
-    ? "https://demo.mkadifference.com"
+    ? "https://mkadifference.com"
     : "http://localhost:3000";
 
 const io = new Server(server, { cors: { origin } });
