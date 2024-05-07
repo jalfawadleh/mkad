@@ -15,7 +15,7 @@ const App = () => {
   const [socket, setSocket] = useState([]);
 
   const URL = import.meta.env.PROD
-    ? "https://demo.mkadifference.com/"
+    ? "https://mkadifference.com/"
     : "http://localhost:3011/";
 
   axios.defaults.baseURL = URL + "api/";

@@ -116,7 +116,7 @@ const ScreenLanding = () => {
               style={{ transform: "scale(1.6)" }}
             />
             <label className='m-0 ps-2 text-center' htmlFor='terms'>
-              accept terms and conditions below
+              accept terms and conditions
             </label>
           </div>
           <div className='mb-2 text-center'>
