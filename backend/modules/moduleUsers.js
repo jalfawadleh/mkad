@@ -22,8 +22,7 @@ const loginUser = asyncHandler(async (req, res) => {
       token: await user.generateToken(user._id),
     });
   } else {
-    res.status(401);
-    throw new Error("Invalid username or password");
+    res.status(401).send("Invalid username or password");
   }
 });
 
