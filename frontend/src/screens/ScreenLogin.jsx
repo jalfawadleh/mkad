@@ -27,7 +27,7 @@ const ScreenLogin = () => {
         </div>
         <div className='d-sm-block d-md-none'>
           <Login />
-          <div className='d-flex justify-content-between my-3 py-auto fw-bold'>
+          <div className='d-flex justify-content-between mt-3 px-auto py-2 fw-bold border-primary-subtle border-top'>
             <Counts />
           </div>
         </div>

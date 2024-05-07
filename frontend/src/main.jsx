@@ -101,7 +101,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path='join' element={<ScreenJoin />} />
-      <Route path='join/:code' element={<ScreenJoin />} />
+      <Route path='join/:c' element={<ScreenJoin />} />
     </Route>
   )
 );

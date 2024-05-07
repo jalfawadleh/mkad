@@ -1,7 +1,41 @@
 import Join from "../components/Join";
-import Counts from "../components/Counts";
 
 import AboutUs from "../components/mkadifference/AboutUs";
+
+const HelpJoin = () => {
+  return (
+    <>
+      <div className='d-block mb-3 p-1 h4 text-center border-primary-subtle border-bottom border-top'>
+        Terms and conditions
+      </div>
+      <div className='pb-2 overflow-auto' style={{ height: "430px" }}>
+        lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf
+        nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd
+        kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl
+        asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk
+        fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk
+        faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl
+        asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn
+        alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals
+        dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd
+        kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn
+        alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf
+        nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk
+        fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd
+        lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf
+        nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd
+        kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl
+        asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk
+        fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk
+        faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl
+        asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn
+        alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals
+        dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd
+        kfnalsd
+      </div>
+    </>
+  );
+};
 
 const ScreenJoin = () => {
   return (
@@ -21,14 +55,14 @@ const ScreenJoin = () => {
           <div className='w-50'>
             <Join />
           </div>
-          <div className='w-50 mx-3 px-3 d-flex flex-column justify-content-between fw-bold'>
-            <Counts />
+          <div className='w-50 mx-3 px-3'>
+            <HelpJoin />
           </div>
         </div>
         <div className='d-sm-block d-md-none'>
           <Join />
-          <div className='d-flex justify-content-between my-3 py-auto fw-bold'>
-            <Counts />
+          <div className='my-3'>
+            <HelpJoin />
           </div>
         </div>
       </div>

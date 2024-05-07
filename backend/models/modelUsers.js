@@ -6,34 +6,29 @@ const usersSchema = Schema(
   {
     username: {
       type: String,
-      minlength: 4,
+      minlength: 8,
       maxlength: 50,
-      trim: true,
       required: [true, "Please add a username"],
-      unique: "already exist",
+      unique: "Username already taken",
     },
-    password: {
-      type: String,
-      required: [true, "Please add a password"],
-    },
+    password: { type: String, required: [true, "Please add a password"] },
+    name: { type: String, required: true },
     inviter: {
       type: Schema.Types.ObjectId,
       required: [true, "Something is terribly wrong!"],
     },
-
-    online: {
-      type: Boolean,
-      default: false,
-    },
-
     type: { type: String, default: "member", enum: ["member", "organisation"] }, //organisation union
-    name: { type: String, required: true },
-    icon: { type: String, default: "" },
     description: { type: String, default: "" },
+
+    location: {
+      type: { lng: Number, lat: Number },
+      default: { lat: 0, lng: 0 },
+    },
+    online: { type: Boolean, default: false },
+    icon: { type: String, default: "" },
 
     languages: { type: [{ name: String }], default: [] },
     interests: { type: [{ name: String }], default: [] },
-
     help: {
       type: [
         {
@@ -45,12 +40,7 @@ const usersSchema = Schema(
       default: [],
     },
 
-    location: {
-      type: { lng: Number, lat: Number },
-      default: { lng: -122.2683, lat: 37.8243 },
-    },
-
-    darkmode: { type: Boolean, default: false },
+    darkmode: { type: Boolean, default: true },
     hidden: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
 
@@ -104,9 +94,7 @@ usersSchema.methods.generateToken = async function async(id) {
 
 // Encrypt password using bcrypt
 usersSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
-  }
+  if (!this.isModified("password")) next();
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);

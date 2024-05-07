@@ -37,7 +37,7 @@ const Login = () => {
     <>
       <div className='p-2 needs-validation border border-primary-subtle container'>
         <div className='text-center mt-2 mb-3 fw-bold'>
-          Welcome back to MKaDifference
+          Login to MKaDifference
         </div>
         <form onSubmit={onSubmit}>
           <div className='mb-3 form-floating bg-black'>

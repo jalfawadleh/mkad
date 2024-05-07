@@ -1,6 +1,6 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
-
+import jwt from "jsonwebtoken";
 import Users from "../models/modelUsers.js";
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -36,56 +36,45 @@ const postUser = asyncHandler(async (req, res) => {
   const userExists = await Users.findOne({ username });
 
   if (userExists) {
-    res.status(409).send("Username taken! Try another");
+    res.status(409).send("Username taken!");
     return;
   }
 
   const decoded = jwt.verify(code, process.env.JWT_SECRET);
 
   const inviter = await Users.findById(decoded.inviter);
+  const invitees = await Users.find({ inviter: decoded.inviter });
 
   if (decoded.type === "invitation" && inviter)
-    try {
-      const user = await Users.create({
-        username,
-        password,
-        name,
-        inviter: inviter._id,
-      });
-
-      if (user) {
-        res.status(201).json({
-          _id: user._id,
-          name: user.name,
-          type: user.type,
-          location: user.location,
-          token: await user.generateToken(user._id),
+    if (
+      invitees.length < 3 ||
+      (invitees.length < 6 && inviter.type == "organisation")
+    )
+      try {
+        const user = await Users.create({
+          username,
+          password,
+          name,
+          inviter: inviter._id,
+          location: {
+            lat: inviter.location.lat + Math.random() - Math.random(),
+            lng: inviter.location.lng + Math.random() - Math.random(),
+          },
+          type: inviter.name == "MKaDifference" ? "organisation" : "member",
         });
-      } else {
-        res.status(400).send("Invalid user data");
+
+        if (user) {
+          res.status(201).send(true);
+          return;
+        } else {
+          res.status(400).send("Something went wrong!");
+          return;
+        }
+      } catch (error) {
+        res.status(400).send("Something went wrong!");
+        console.log(error);
         return;
       }
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-});
-
-// @desc    Get user
-// @route   GET /api/users
-// @access  Private
-const getUser = asyncHandler(async (req, res) => {
-  const user = await Users.findById(req.user._id);
-
-  if (user) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
 });
 
 // @desc    Update user
@@ -134,7 +123,6 @@ const users = express.Router();
 
 users
   .route("/")
-  .get(protect, getUser)
   .post(postUser)
   .put(protect, putUser)
   .delete(protect, deleteUser);
