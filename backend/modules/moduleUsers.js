@@ -56,8 +56,8 @@ const postUser = asyncHandler(async (req, res) => {
           name,
           inviter: inviter._id,
           location: {
-            lat: inviter.location.lat + Math.random() - Math.random(),
-            lng: inviter.location.lng + Math.random() - Math.random(),
+            lat: inviter.location.lat + (Math.random() - Math.random()) * 0.1,
+            lng: inviter.location.lng + (Math.random() - Math.random()) * 0.1,
           },
           type: inviter.name == "MKaDifference" ? "organisation" : "member",
         });
