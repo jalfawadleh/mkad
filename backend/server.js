@@ -46,7 +46,10 @@ app.use(RateLimit({ max: 30 })); // max 30requests/m
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
+      defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "mkadifference.com"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
       connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
     },
   })
