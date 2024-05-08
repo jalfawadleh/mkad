@@ -48,7 +48,7 @@ app.use(
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       connectSrc: [
         "'self'",
@@ -83,12 +83,7 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-const origin =
-  process.env.NODE_ENV === "production"
-    ? "https://mkadifference.com"
-    : "http://localhost:3000";
-
-const io = new Server(server, { cors: { origin } });
+const io = new Server(server);
 
 io.engine.use(helmet());
 
