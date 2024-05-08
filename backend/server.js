@@ -83,7 +83,12 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-const io = new Server(server);
+const origin =
+  process.env.NODE_ENV === "production"
+    ? "https://mkadifference.com"
+    : "http://localhost:3000";
+
+const io = new Server(server, { cors: { origin } });
 
 io.engine.use(helmet());
 
