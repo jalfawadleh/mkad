@@ -48,7 +48,7 @@ app.use(
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "https://mkadifference.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
     },
