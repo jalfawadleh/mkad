@@ -16,7 +16,7 @@ const App = () => {
 
   const URL = import.meta.env.PROD
     ? "https://mkadifference.com/"
-    : "http://localhost:3011/";
+    : "http://localhost:3000/";
 
   axios.defaults.baseURL = URL + "api/";
   axios.defaults.headers.common.Authorization = user.token;

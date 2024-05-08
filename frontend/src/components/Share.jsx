@@ -29,7 +29,7 @@ import {
 const Share = () => {
   const { type, id } = useParams();
 
-  const shareUrl = `https://demo.mkadifference.com/${
+  const shareUrl = `https://mkadifference.com/${
     type == "activity" ? "activities" : type + "s"
   }/${id}`;
   return (

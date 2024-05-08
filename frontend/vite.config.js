@@ -6,12 +6,7 @@ export default defineConfig({
   plugins: [react()],
   build: { chunkSizeWarningLimit: 1600 },
   server: {
-    port: 3000,
-    proxy: {
-      "/api": {
-        target: "http://localhost:3001",
-        changeOrigin: true,
-      },
-    },
+    // eslint-disable-next-line no-undef
+    port: process.env.PORT,
   },
 });

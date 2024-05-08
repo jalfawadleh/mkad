@@ -30,7 +30,6 @@ import invites from "./modules/moduleInvites.js";
 
 dotenv.config();
 
-const port = process.env.PORT || 3011;
 const __dirname = path.resolve();
 
 connectDB();
@@ -47,32 +46,25 @@ app.use(RateLimit({ max: 30 })); // max 30requests/m
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      connectSrc: [
-        "'self'",
-        "https://nominatim.openstreetmap.org",
-        "https://mkadifference.com",
-      ],
+      connectSrc: ["'self'", "https://nominatim.openstreetmap.org"],
     },
   })
 );
 
-app.use("/api/users", users);
+app.use("/api/users", RateLimit({ max: 3 }), users);
+app.use("/api/search", search);
+app.use("/api/map", map);
 app.use("/api/members", members);
 app.use("/api/activities", activities);
 app.use("/api/organisations", organisations);
-app.use("/api/search", search);
-app.use("/api/map", map);
 app.use("/api/messages", messages);
 app.use("/api/contacts", contacts);
 app.use("/api/updates", updates);
 app.use("/api/invites", invites);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
-app.get("*", (req, res) =>
+app.get("/", (req, res) =>
   res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
 );
 
@@ -83,12 +75,8 @@ app.use(errorHandler);
 // https://socket.io/docs/v4/server-socket-instance/
 
 const server = createServer(app);
-const origin =
-  process.env.NODE_ENV === "production"
-    ? "https://mkadifference.com"
-    : "http://localhost:3000";
 
-const io = new Server(server, { cors: { origin } });
+const io = new Server(server);
 
 io.engine.use(helmet());
 
@@ -205,4 +193,6 @@ const generateConversationId = (message) => {
 };
 
 // starting the socket.io and express servers on the same port
-server.listen(port, () => console.log(`Server started on port ${port}`));
+server.listen(process.env.PORT, () =>
+  console.log(`Server started on port ${process.env.PORT}`)
+);
