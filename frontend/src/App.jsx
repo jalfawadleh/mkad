@@ -27,6 +27,7 @@ const App = () => {
     autoConnect: true,
     auth: { token: user.token },
     secure: true,
+    transports: ["websocket"],
   };
 
   useEffect(() => {
