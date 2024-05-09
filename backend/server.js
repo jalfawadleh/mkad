@@ -59,7 +59,12 @@ app.use(
   })
 );
 
-app.use("/api/users", RateLimit({ max: 3 }), users);
+app.use(
+  "/api/users",
+  RateLimit({ message: "Many failed attempts, Try in 1 minute" }),
+  users
+);
+
 app.use("/api/search", search);
 app.use("/api/map", map);
 app.use("/api/members", members);

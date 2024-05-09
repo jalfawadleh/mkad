@@ -9,29 +9,49 @@ const HelpJoin = () => {
         Terms and conditions
       </div>
       <div className='pb-2 overflow-auto' style={{ height: "430px" }}>
-        lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf
-        nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd
-        kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl
-        asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk
-        fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk
-        faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl
-        asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn
-        alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals
-        dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd
-        kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn
-        alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf
-        nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk
-        fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd
-        lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf
-        nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd
-        kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl
-        asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk
-        fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk
-        faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn alsdkf nalsd kfasl
-        asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals dkfna lsdk fasl asdkfn
-        alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd kfnalsd lasdk fnals
-        dkfna lsdk fasl asdkfn alsdkf nalsd kfasl asdkfn alsdkf nalsdk faslasd
-        kfnalsd
+        <p>
+          <b>1. Acceptance of Terms </b> By accessing or using MKaDifference,
+          you agree to be bound by these terms and conditions. If you do not
+          agree to these Terms, please do not use our services.
+        </p>
+        <p>
+          <b>2. Changes to Terms </b> We reserve the right to modify these Terms
+          at any time. Your continued use of the platform after such changes
+          indicates your acceptance of the new Terms.
+        </p>
+        <p>
+          <b>3. User Conduct </b> Users are expected to behave respectfully and
+          responsibly. Harassment, bullying, and posting offensive content are
+          strictly prohibited.
+        </p>
+        <p>
+          <b>4. Content Ownership </b> Users retain ownership of the content
+          they post but grant MKaDifference license to use in extream
+          circumstances.
+        </p>
+        <p>
+          <b>5. Intellectual Property </b> All intellectual property rights in
+          the platform and its original content, features, and functionality are
+          owned by MKaDifference.
+        </p>
+        <p>
+          <b>6. Privacy Policy </b> Your privacy is important to us. Our Privacy
+          Policy explains how we collect, use, and protect your personal
+          information.
+        </p>
+        <p>
+          <b>7. Account Termination </b> We may terminate or suspend access to
+          our platform immediately, without prior notice, for any breach of
+          these Terms.
+        </p>
+        <p>
+          <b>8. Governing Law </b> These Terms shall be governed by the laws of
+          Palestine, without regard to its conflict of law provisions.
+        </p>
+        <p>
+          <b>9. Contact Us</b> If you have any questions about these Terms,
+          please contact us at mkadifference@proton.me.
+        </p>
       </div>
     </>
   );
