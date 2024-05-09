@@ -12,7 +12,7 @@ const usersSchema = Schema(
       unique: "Username already taken",
     },
     password: { type: String, required: [true, "Please add a password"] },
-    name: { type: String, required: true },
+    name: { type: String, index: true, required: true },
     inviter: {
       type: Schema.Types.ObjectId,
       required: [true, "Something is terribly wrong!"],
@@ -23,6 +23,7 @@ const usersSchema = Schema(
     location: {
       type: { lng: Number, lat: Number },
       default: { lat: 0, lng: 0 },
+      index: true,
     },
     online: { type: Boolean, default: false },
     icon: { type: String, default: "" },

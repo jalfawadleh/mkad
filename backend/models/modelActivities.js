@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const schema = Schema(
   {
     type: { type: String, default: "activity" },
-    name: { type: String, required: true },
+    name: { type: String, index: true, required: true },
     icon: { type: String, default: "" },
 
     description: { type: String, default: "" },
@@ -32,6 +32,7 @@ const schema = Schema(
     location: {
       type: { lng: Number, lat: Number },
       default: { lng: -122.2683, lat: 37.8243 },
+      index: true,
     },
 
     hidden: { type: Boolean, default: false },

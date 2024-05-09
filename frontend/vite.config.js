@@ -6,7 +6,6 @@ export default defineConfig({
   plugins: [react()],
   build: { chunkSizeWarningLimit: 1600 },
   server: {
-    // eslint-disable-next-line no-undef
-    port: process.env.PORT,
+    port: 3001,
   },
 });
