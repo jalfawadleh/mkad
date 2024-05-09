@@ -88,7 +88,7 @@ app.use(errorHandler);
 
 const server = createServer(app);
 
-const io = new Server(server, { transports: ["websocket"] });
+const io = new Server(server);
 
 io.engine.use(helmet());
 
