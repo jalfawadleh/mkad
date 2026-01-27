@@ -56,13 +56,13 @@ app.use(
         "https://mkadifference.com",
       ],
     },
-  })
+  }),
 );
 
 app.use(
   "/api/users",
   RateLimit({ message: "Many failed attempts, Try in 1 minute" }),
-  users
+  users,
 );
 
 app.use("/api/search", search);
@@ -76,8 +76,8 @@ app.use("/api/updates", updates);
 app.use("/api/invites", invites);
 
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
-app.get("*", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html"))
+app.get("/", (req, res) =>
+  res.sendFile(path.resolve(__dirname, "../frontend/dist/index.html")),
 );
 
 app.use(notFound);
@@ -206,5 +206,5 @@ const generateConversationId = (message) => {
 
 // starting the socket.io and express servers on the same port
 server.listen(process.env.PORT, () =>
-  console.log(`Server started on port ${process.env.PORT}`)
+  console.log(`Server started on port ${process.env.PORT}`),
 );
