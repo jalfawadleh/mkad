@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import QRCode from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 
 import Wrappers from "./common/Wrappers";
 import {
@@ -24,7 +24,7 @@ const InviteLink = () => {
       await axios
         .get("/invites/invitelink")
         .then((res) =>
-          setLink(res.data ? "https://mkadifference.com/join/" + res.data : "")
+          setLink(res.data ? "https://mkadifference.com/join/" + res.data : ""),
         )
         .catch((error) => toast.error(error));
     };
@@ -53,7 +53,7 @@ const InviteLink = () => {
                   Use the QR code directly is better.
                 </div>
 
-                <QRCode
+                <QRCodeSVG
                   height='300px'
                   width='300px'
                   value={link}

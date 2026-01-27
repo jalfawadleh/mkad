@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import QRCode from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 
 import {
   Button,
@@ -29,8 +29,8 @@ const PasswordLink = () => {
           setLink(
             res.data
               ? "https://mkadifference.com/resetpassword/" + res.data
-              : ""
-          )
+              : "",
+          ),
         )
         .catch((error) => toast.error(error));
     };
@@ -59,7 +59,7 @@ const PasswordLink = () => {
                   Use the QR code directly is better.
                 </div>
 
-                <QRCode
+                <QRCodeSVG
                   height='300px'
                   width='300px'
                   value={link}

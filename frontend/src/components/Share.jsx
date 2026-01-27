@@ -1,6 +1,6 @@
 import Wrappers from "./common/Wrappers";
 import { useParams } from "react-router-dom";
-import QRCode from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 import {
   Button,
   CloseCircleLink,
@@ -107,7 +107,7 @@ const Share = () => {
               </div>
             </div>
             <div className='m-3'>
-              <QRCode value={shareUrl} renderAs='canvas' />
+              <QRCodeSVG value={shareUrl} renderAs='canvas' />
             </div>
           </div>
         </Wrappers.Body>
