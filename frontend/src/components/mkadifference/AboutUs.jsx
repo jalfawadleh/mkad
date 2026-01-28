@@ -43,9 +43,9 @@ const AboutUs = () => {
         <span style={{ float: "left" }}>
           <MemberCircle />
         </span>
-        <b className='text-primary'>Members</b> can exchange assistance, both
-        offering and requesting help, through their profiles. Additionally, they
-        can engage with one another based on shared interests and hobbies.
+        <b className='text-primary'>Members</b> can give and receive support
+        through their profiles, as well as connect with others who share similar
+        interests and hobbies.
       </div>
       <div
         className='align-justify mb-3 text-info'

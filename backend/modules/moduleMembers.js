@@ -9,7 +9,7 @@ import Activities from "../models/modelActivities.js";
 // @access  Private
 const putMember = asyncHandler(async (req, res) => {
   const member = await Members.findById(req.body._id);
-
+  console.log(req.body.location);
   if (member) {
     // Update profile
     member.name = req.body.name;
@@ -20,9 +20,9 @@ const putMember = asyncHandler(async (req, res) => {
     member.darkmood = req.body.darkmood;
     member.contacts = req.body.contacts;
     member.hidden = req.body.hidden;
-    member.darkmode = req.body.darkmode;
+    member.darkmood = req.body.darkmood;
     member.help = req.body.help;
-
+    //    console.log(member);
     await member.save();
 
     res.json(true);
