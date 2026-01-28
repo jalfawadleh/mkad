@@ -20,6 +20,7 @@ const addme = async () => {
     description: "mkadifference",
     name: "MKaDifference",
     type: "organisation",
+    inviter: "6561f8c7a6f0d92a1b123456",
   });
 
   console.log("MKaDifference Added");
