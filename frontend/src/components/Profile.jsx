@@ -64,7 +64,7 @@ function Profile() {
             ...prevState,
             name: member.name,
             location: member.location,
-          }))
+          })),
         );
     } catch (error) {
       error?.response?.data?.message &&
