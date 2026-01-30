@@ -55,11 +55,6 @@ const router = createBrowserRouter(
     <Route path='/' errorElement={<Error />} element={<App />}>
       <Route path='' element={<RoutePrivate />}>
         <Route path='' element={<ScreenDashboard />}>
-          <Route path='updates' element={<MemberUpdates />} />
-          <Route path='invites' element={<MemberInvites />} />
-          <Route path='invites/passwordlink/:id' element={<PasswordLink />} />
-          <Route path='invites/invite' element={<InviteLink />} />
-
           <Route path='profile' element={<Profile />} />
           <Route path='account' element={<Account />} />
 
@@ -75,7 +70,13 @@ const router = createBrowserRouter(
           <Route path='messaging/:id/:name' element={<Messaging />} />
           <Route path='discussion/:type/:id/:name' element={<Discussion />} />
 
+          <Route path='updates' element={<MemberUpdates />} />
+
           <Route path='share/:type/:id' element={<Share />} />
+
+          <Route path='invites' element={<MemberInvites />} />
+          <Route path='invites/passwordlink/:id' element={<PasswordLink />} />
+          <Route path='invites/invite' element={<InviteLink />} />
         </Route>
         <Route path='' element={<RouteOrganisation />}>
           <Route path='manage' element={<ScreenManage />}>
@@ -102,10 +103,10 @@ const router = createBrowserRouter(
 
       <Route path='join' element={<ScreenJoin />} />
       <Route path='join/:c' element={<ScreenJoin />} />
-    </Route>
-  )
+    </Route>,
+  ),
 );
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
+  <RouterProvider router={router} />,
 );
