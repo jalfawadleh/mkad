@@ -9,7 +9,7 @@ import Activities from "../models/modelActivities.js";
 const getActivitiesManaged = asyncHandler(async (req, res) => {
   const activities = await Activities.find({
     "createdBy._id": req.user._id,
-  }).select("name location type");
+  }).select("name type lat lng");
 
   res.status(200).json(activities);
 });
@@ -20,7 +20,7 @@ const getActivitiesManaged = asyncHandler(async (req, res) => {
 const getActivitiesJoined = asyncHandler(async (req, res) => {
   const activities = await Activities.find({
     "members._id": req.user._id,
-  }).select("name location type");
+  }).select("name type lat lng");
   res.status(200).json(activities);
 });
 
@@ -52,7 +52,8 @@ const postActivity = asyncHandler(async (req, res) => {
     helpNeeded: req.body.helpNeeded,
     interests: req.body.interests,
     hidden: req.body.hidden,
-    location: req.body.location,
+    lng: req.body.lng,
+    lat: req.body.lat,
     online: req.body.online,
     help: req.body.help,
     createdBy: { _id: req.user._id, name: req.user.name },
@@ -81,7 +82,8 @@ const putActivity = asyncHandler(async (req, res) => {
     activity.helpNeeded = req.body.helpNeeded;
     activity.interests = req.body.interests;
     activity.hidden = req.body.hidden;
-    activity.location = req.body.location;
+    activity.lng = req.body.lng;
+    activity.lat = req.body.lat;
     activity.online = req.body.online;
     activity.help = req.body.help;
 
@@ -120,7 +122,7 @@ const joinActivity = asyncHandler(async (req, res) => {
         activity.members.find((m) => m._id.equals(req.user._id))
       )
         activity.members = activity.members.filter(
-          (m) => !m._id.equals(req.user._id)
+          (m) => !m._id.equals(req.user._id),
         );
       else activity.members.push({ _id: req.user._id, name: req.user.name });
 

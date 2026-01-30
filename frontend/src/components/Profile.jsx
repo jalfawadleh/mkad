@@ -45,17 +45,19 @@ function Profile() {
     interests: [],
     darkmode: true,
     hidden: true,
-    location: "",
+    lat: 0,
+    lng: 0,
     help: [],
   });
 
   const onPut = async (e) => {
     e.preventDefault();
     setIsUpdating(true);
+    console.log("updating member:", member);
     try {
       await axios
         .put("/members", member)
-        .then(() => setFlyToLocation(member.location))
+        .then(() => setFlyToLocation({ lat: member.lat, lng: member.lng }))
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
         // in case name or location changed
@@ -63,7 +65,8 @@ function Profile() {
           setUser((prevState) => ({
             ...prevState,
             name: member.name,
-            location: member.location,
+            lat: member.lat,
+            lng: member.lng,
           })),
         );
     } catch (error) {
@@ -142,8 +145,10 @@ function Profile() {
           setParent={setMember}
           editing={editing}
         />
+
         <ManageLocation
-          location={member.location}
+          lat={member.lat}
+          lng={member.lng}
           setParent={setMember}
           editing={editing}
         />

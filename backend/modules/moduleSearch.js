@@ -17,7 +17,7 @@ const getResults = asyncHandler(async (req, res) => {
           name: { $regex: ".*" + req.body.text + ".*", $options: "i" },
           hidden: false,
         },
-        "name type location"
+        "name type lat lng",
       ).limit(10);
       results.push(...activities);
     }
@@ -28,7 +28,7 @@ const getResults = asyncHandler(async (req, res) => {
           type: "member",
           hidden: false,
         },
-        "name type location"
+        "name type lat lng",
       ).limit(15);
       results.push(...members);
     }
@@ -40,7 +40,7 @@ const getResults = asyncHandler(async (req, res) => {
           type: "organisation",
           hidden: false,
         },
-        "name type location"
+        "name type lat lng",
       ).limit(15);
       results.push(...members);
     }

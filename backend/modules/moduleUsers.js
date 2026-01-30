@@ -17,7 +17,8 @@ const loginUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       type: user.type,
-      location: user.location,
+      lng: user.lng,
+      lat: user.lat,
       darkmode: user.darkmode,
       token: await user.generateToken(user._id),
     });
@@ -39,41 +40,34 @@ const postUser = asyncHandler(async (req, res) => {
     return;
   }
 
-  const decoded = jwt.verify(code, process.env.JWT_SECRET);
+  const inviter = await Users.findById(code);
 
-  const inviter = await Users.findById(decoded.inviter);
-  const invitees = await Users.find({ inviter: decoded.inviter });
+  if (inviter)
+    try {
+      const user = await Users.create({
+        username,
+        password,
+        name,
+        inviter: inviter._id,
 
-  if (decoded.type === "invitation" && inviter)
-    if (
-      invitees.length < 3 ||
-      (invitees.length < 6 && inviter.type == "organisation")
-    )
-      try {
-        const user = await Users.create({
-          username,
-          password,
-          name,
-          inviter: inviter._id,
-          location: {
-            lat: inviter.location.lat + (Math.random() - Math.random()) * 0.1,
-            lng: inviter.location.lng + (Math.random() - Math.random()) * 0.1,
-          },
-          type: inviter.name == "MKaDifference" ? "organisation" : "member",
-        });
+        lat: inviter.lat + (Math.random() - Math.random()) * 0.1,
+        lng: inviter.lng + (Math.random() - Math.random()) * 0.1,
 
-        if (user) {
-          res.status(201).send(true);
-          return;
-        } else {
-          res.status(400).send("Something went wrong!");
-          return;
-        }
-      } catch (error) {
+        type: inviter.name == "MKaDifference" ? "organisation" : "member",
+      });
+
+      if (user) {
+        res.status(201).send(true);
+        return;
+      } else {
         res.status(400).send("Something went wrong!");
-        console.log(error);
         return;
       }
+    } catch (error) {
+      res.status(400).send("Something went wrong!");
+      console.log(error);
+      return;
+    }
 });
 
 // @desc    Update user

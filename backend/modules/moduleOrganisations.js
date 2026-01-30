@@ -24,7 +24,7 @@ const getOrganisation = asyncHandler(async (req, res) => {
   const organisation = await Organisations.findOne({ _id: req.params.id });
   const activities = await Activities.find({
     "createdBy._id": req.params.id,
-  }).select("name location type");
+  }).select("name type lat lng");
 
   if (organisation) {
     res.json({
@@ -40,7 +40,8 @@ const getOrganisation = asyncHandler(async (req, res) => {
       contacts: organisation.contacts,
       darkmood: organisation.darkmood,
       hidden: organisation.hidden,
-      location: organisation.location,
+      lat: organisation.lat,
+      lng: organisation.lng,
       activities: activities,
     });
   } else {
@@ -58,16 +59,16 @@ const del = asyncHandler(async (req, res) => {
 
   if (recipient) {
     recipient.members = recipient.members.filter(
-      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id))
+      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id)),
     );
     recipient.organisations = recipient.organisations.filter(
-      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id))
+      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id)),
     );
     sender.members = sender.members.filter(
-      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id))
+      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id)),
     );
     sender.organisations = sender.organisations.filter(
-      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id))
+      (m) => !(m._id.equals(sender._id) || m._id.equals(recipient._id)),
     );
     await sender.save();
     await recipient.save();
@@ -90,7 +91,7 @@ const approve = asyncHandler(async (req, res) => {
   if (member) {
     // remove organisation from sender contacts
     member.organisations = member.organisations.filter(
-      (o) => !o._id.equals(organisation._id)
+      (o) => !o._id.equals(organisation._id),
     );
     // Add me approved to sender
     member.organisations.push({
@@ -107,7 +108,7 @@ const approve = asyncHandler(async (req, res) => {
   // Updating organisation members
   // remove the member from organisation members
   organisation.members = organisation.members.filter(
-    (o) => !o._id.equals(member._id)
+    (o) => !o._id.equals(member._id),
   );
   organisation.members.push({
     _id: member._id,

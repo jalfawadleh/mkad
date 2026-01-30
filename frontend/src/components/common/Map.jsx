@@ -42,7 +42,7 @@ const Map = () => {
   </div>
   `;
 
-  const [mapCenter, setMapCenter] = useState(user.location);
+  const [mapCenter, setMapCenter] = useState([user.lat, user.lng]);
   const [flyToLocation, setFlyToLocation] = useState(null);
 
   const [items, setItems] = useState({
@@ -52,10 +52,17 @@ const Map = () => {
   });
 
   const getMapItems = async (location) => {
-    await axios
-      .post("/map", location)
-      .then((res) => setItems(res.data))
-      .catch((error) => toast.error(error));
+    if (!location) return;
+    const lat = Array.isArray(location) ? location[0] : location.lat;
+    const lng = Array.isArray(location) ? location[1] : location.lng;
+    if (lat == null || lng == null) return;
+
+    try {
+      const res = await axios.post("/map", { lat, lng });
+      setItems(res.data);
+    } catch (error) {
+      toast.error(error);
+    }
   };
 
   // const SetViewOnClick = () => {
@@ -70,9 +77,9 @@ const Map = () => {
   // };
 
   const Recenter = () => {
-    const map = useMapEvent("dragend", () => setMapCenter(map.getCenter()));
-
-    // map.on("moveend", (e) => { getMapItems(map.getCenter()); });
+    const map = useMapEvent("dragend", () =>
+      setMapCenter([map.getCenter().lat, map.getCenter().lng]),
+    );
 
     useEffect(() => {
       if (flyToLocation) {
@@ -128,8 +135,8 @@ const Map = () => {
             (item.type == "activity"
               ? " bg-success text-white"
               : item.type == "member"
-              ? " bg-primary text-white"
-              : " bg-warning  text-black")
+                ? " bg-primary text-white"
+                : " bg-warning  text-black")
           }
           style={{
             margin: -10,
@@ -148,12 +155,12 @@ const Map = () => {
   const MarkerMember = ({ item }) => (
     <Marker
       key={item._id}
-      position={item.location}
+      position={[item.lat, item.lng]}
       title={item.name}
       icon={
         new L.icon({
           iconUrl: `data:image/svg+xml;utf8,${encodeURIComponent(
-            multiavatar(item.name)
+            multiavatar(item.name),
           )}`,
           iconSize: new L.Point(35, 35),
           iconAnchor: new L.Point(18, 18),
@@ -169,7 +176,7 @@ const Map = () => {
   const MarkerOrganisation = ({ item }) => (
     <Marker
       key={item._id}
-      position={item.location}
+      position={[item.lat, item.lng]}
       title={item.name}
       icon={
         new L.divIcon({
@@ -197,7 +204,7 @@ const Map = () => {
           className: "border border-3 border-success rounded-circle bg-success",
         })
       }
-      position={item.location}
+      position={[item.lat, item.lng]}
       title={item.name}
     >
       <ItemPopup item={item} />
@@ -215,7 +222,7 @@ const Map = () => {
       </div>`,
       iconSize: L.point(
         cluster.getChildCount() / 3 + 35,
-        cluster.getChildCount() / 3 + 35
+        cluster.getChildCount() / 3 + 35,
       ),
       iconAnchor: L.point(0, 0),
       className: "",
@@ -231,7 +238,7 @@ const Map = () => {
       </div>`,
       iconSize: L.point(
         cluster.getChildCount() / 3 + 35,
-        cluster.getChildCount() / 3 + 35
+        cluster.getChildCount() / 3 + 35,
       ),
       iconAnchor: L.point(0, 0),
       className: "",
@@ -247,7 +254,7 @@ const Map = () => {
       </div>`,
       iconSize: L.point(
         cluster.getChildCount() / 3 + 35,
-        cluster.getChildCount() / 3 + 35
+        cluster.getChildCount() / 3 + 35,
       ),
       iconAnchor: L.point(0, 0),
       className: "",
@@ -284,6 +291,7 @@ const Map = () => {
         >
           {/* <SetViewOnClick /> */}
           <Recenter />
+
           <MarkerClusterGroup
             iconCreateFunction={createClusterMembersIcon}
             chunkedLoading
@@ -341,7 +349,7 @@ const Map = () => {
             ))}
           </MarkerClusterGroup>
 
-          {/* <ZoomControl position='bottomright' /> */}
+          <ZoomControl position='bottomright' />
 
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

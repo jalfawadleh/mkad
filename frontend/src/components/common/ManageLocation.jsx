@@ -11,18 +11,23 @@ import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const ManageLocation = ({ location, setParent, editing = false }) => {
+const ManageLocation = ({ lat, lng, setParent, editing = false }) => {
   const [flyToLocation, setFlyToLocation] = useState(null);
 
   const FlytoCity = () => {
     const map = useMapEvent("dragend", () => {
-      setParent((prev) => ({ ...prev, location: map.getCenter() }));
+      setParent((prev) => ({
+        ...prev,
+        lat: map.getCenter().lat,
+        lng: map.getCenter().lng,
+      }));
     });
 
     useEffect(() => {
       if (flyToLocation?.lat) {
         map.flyTo(flyToLocation);
-        setParent((prev) => ({ ...prev, location: { ...flyToLocation } }));
+        setParent((prev) => ({ ...prev, lat: { ...flyToLocation.lat } }));
+        setParent((prev) => ({ ...prev, lng: { ...flyToLocation.lng } }));
         setFlyToLocation(null);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -34,10 +39,10 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
   const getCity = async (city) => {
     await axios
       .get(
-        `https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`
+        `https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`,
       )
       .then(({ data }) =>
-        setFlyToLocation({ lat: data[0].lat, lng: data[0].lon })
+        setFlyToLocation({ lat: data[0].lat, lng: data[0].lng }),
       );
   };
 
@@ -78,7 +83,7 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
 
         <SectionForm>
           <MapContainer
-            center={location}
+            center={[lat, lng]}
             zoom={13}
             maxZoom={18}
             minZoom={1}
@@ -92,7 +97,7 @@ const ManageLocation = ({ location, setParent, editing = false }) => {
 
             <Marker
               draggable={editing}
-              position={location}
+              position={[lat, lng]}
               eventHandlers={{
                 dragend: (e) => {
                   setFlyToLocation({

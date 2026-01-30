@@ -29,11 +29,8 @@ const schema = Schema(
       default: { value: false, link: "" },
     },
 
-    location: {
-      type: { lng: Number, lat: Number },
-      default: { lng: -122.2683, lat: 37.8243 },
-      index: true,
-    },
+    lng: { type: Number, default: 0, index: true },
+    lat: { type: Number, default: 0, index: true },
 
     hidden: { type: Boolean, default: false },
     archived: { type: Boolean, default: false },
@@ -59,7 +56,7 @@ const schema = Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const activities = mongoose.model("Activities", schema);

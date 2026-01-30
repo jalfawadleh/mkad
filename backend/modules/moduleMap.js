@@ -11,17 +11,17 @@ dotenv.config();
 // @route   GET /api/map/
 // @access  Private
 const getItems = asyncHandler(async (req, res) => {
-  const fields = "name type location";
+  const fields = "name type lat lng";
   const members = await Members.find({ hidden, type: "member" }, fields);
   const organisations = await Members.find(
     { hidden: false, type: "organisation" },
-    fields
+    fields,
   );
   const activities = await Activities.find(
-    { hidden: false, "location.online": false, startOn: { $gt: Date.now() } },
-    fields
+    { hidden: false, online: false, startOn: { $gt: Date.now() } },
+    fields,
   );
-
+  console.log(members, activities, organisations);
   res.json({ members, activities, organisations });
   // res.json([...members]);
 });
@@ -30,7 +30,7 @@ const getItems = asyncHandler(async (req, res) => {
 // @route   GET /api/map/
 // @access  Private
 const getItemsByLocation = asyncHandler(async (req, res) => {
-  const fields = "name type location";
+  const fields = "name type lat lng";
   const hidden = false;
 
   const coverage = parseInt(process.env.MAPCOVERAGE);
@@ -44,30 +44,30 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
     {
       hidden,
       type: "member",
-      "location.lng": { $gte: lngMin, $lt: lngMax },
-      "location.lat": { $gte: latMin, $lt: latMax },
+      lng: { $gte: lngMin, $lt: lngMax },
+      lat: { $gte: latMin, $lt: latMax },
     },
-    fields
+    fields,
   );
 
   const organisations = await Members.find(
     {
       hidden,
       type: "organisation",
-      "location.lng": { $gte: lngMin, $lt: lngMax },
-      "location.lat": { $gte: latMin, $lt: latMax },
+      lng: { $gte: lngMin, $lt: lngMax },
+      lat: { $gte: latMin, $lt: latMax },
     },
-    fields
+    fields,
   );
   const activities = await Activities.find(
     {
       hidden,
       type: "activity",
-      "location.lng": { $gte: lngMin, $lt: lngMax },
-      "location.lat": { $gte: latMin, $lt: latMax },
+      lng: { $gte: lngMin, $lt: lngMax },
+      lat: { $gte: latMin, $lt: latMax },
       startOn: { $gt: Date.now() },
     },
-    fields
+    fields,
   );
 
   res.json({ members, activities, organisations });

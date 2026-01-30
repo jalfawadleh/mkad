@@ -9,14 +9,15 @@ import Activities from "../models/modelActivities.js";
 // @access  Private
 const putMember = asyncHandler(async (req, res) => {
   const member = await Members.findById(req.body._id);
-  console.log(req.body.location);
+
   if (member) {
     // Update profile
     member.name = req.body.name;
     member.description = req.body.description;
     member.languages = req.body.languages;
     member.interests = req.body.interests;
-    member.location = req.body.location;
+    member.lat = req.body.lat;
+    member.lng = req.body.lng;
     member.darkmood = req.body.darkmood;
     member.contacts = req.body.contacts;
     member.hidden = req.body.hidden;
@@ -49,7 +50,8 @@ const getMember = asyncHandler(async (req, res) => {
       description: member.description,
       languages: member.languages,
       interests: member.interests,
-      location: member.location,
+      lat: member.lat,
+      lng: member.lng,
       darkmode: member.darkmode,
       hidden: member.hidden,
       contacts: member.contacts,

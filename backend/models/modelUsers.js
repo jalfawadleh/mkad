@@ -20,11 +20,9 @@ const usersSchema = Schema(
     type: { type: String, default: "member", enum: ["member", "organisation"] }, //organisation union
     description: { type: String, default: "" },
 
-    location: {
-      type: { lng: Number, lat: Number },
-      default: { lat: 0, lng: 0 },
-      index: true,
-    },
+    lng: { type: Number, default: 0, index: true },
+    lat: { type: Number, default: 0, index: true },
+
     online: { type: Boolean, default: false },
     icon: { type: String, default: "" },
 
@@ -81,7 +79,7 @@ const usersSchema = Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Match user entered password to hashed password in database
@@ -94,11 +92,11 @@ usersSchema.methods.generateToken = async function async(id) {
 };
 
 // Encrypt password using bcrypt
-usersSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) next();
-
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+usersSchema.pre("save", async function () {
+  if (this.isModified("password")) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
 });
 
 const Users = mongoose.model("Users", usersSchema);
