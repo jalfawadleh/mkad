@@ -10,11 +10,15 @@ import { SectionForm } from "./Wrappers";
 import { FaPlus } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { getErrorMessage } from "../../utils/http.js";
 
 const ManageLocation = ({ lat, lng, setParent, editing = false }) => {
   const [flyToLocation, setFlyToLocation] = useState(null);
 
-  const FlytoCity = () => {
+  const clearFlyToLocation = () => setFlyToLocation(null);
+
+  const FlytoCity = ({ flyToLocation, clearFlyToLocation }) => {
     const map = useMapEvent("dragend", () => {
       setParent((prev) => ({
         ...prev,
@@ -26,12 +30,14 @@ const ManageLocation = ({ lat, lng, setParent, editing = false }) => {
     useEffect(() => {
       if (flyToLocation?.lat) {
         map.flyTo(flyToLocation);
-        setParent((prev) => ({ ...prev, lat: { ...flyToLocation.lat } }));
-        setParent((prev) => ({ ...prev, lng: { ...flyToLocation.lng } }));
-        setFlyToLocation(null);
+        setParent((prev) => ({
+          ...prev,
+          lat: Number(flyToLocation.lat),
+          lng: Number(flyToLocation.lng),
+        }));
+        clearFlyToLocation();
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [flyToLocation]);
+    }, [clearFlyToLocation, flyToLocation, map]);
 
     return null;
   };
@@ -41,9 +47,14 @@ const ManageLocation = ({ lat, lng, setParent, editing = false }) => {
       .get(
         `https://nominatim.openstreetmap.org/search?q=${city}&format=json&addressdetails=1&limit=1`,
       )
-      .then(({ data }) =>
-        setFlyToLocation({ lat: data[0].lat, lng: data[0].lng }),
-      );
+      .then(({ data }) => {
+        if (!data?.length) {
+          toast.error("City not found");
+          return;
+        }
+        setFlyToLocation({ lat: Number(data[0].lat), lng: Number(data[0].lng) });
+      })
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const onSubmit = (e) => {
@@ -92,7 +103,10 @@ const ManageLocation = ({ lat, lng, setParent, editing = false }) => {
             style={{ height: "300px" }}
             dragging={editing}
           >
-            <FlytoCity />
+            <FlytoCity
+              flyToLocation={flyToLocation}
+              clearFlyToLocation={clearFlyToLocation}
+            />
             <ZoomControl position='topright' />
 
             <Marker

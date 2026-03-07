@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getErrorMessage } from "../../utils/http.js";
 import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
@@ -10,9 +11,7 @@ import {
   TextCenterLink,
   ActivityManageCircle,
   ActivityAddCircleLink,
-  TextCenterBox,
 } from "../common/Icons";
-import { BsTextCenter } from "react-icons/bs";
 
 const ManageActivities = () => {
   const [items, setItems] = useState([]);
@@ -24,7 +23,7 @@ const ManageActivities = () => {
       .get("/activities/managed")
       .then((res) => setItems(res.data))
       // .then(() => setIsLoading(false))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const ManageActivities = () => {
               to={"/manage/activity/" + item._id}
               text={item.name}
             />
-            <LocationCircleLink color={"white"} location={item.location} />
+            <LocationCircleLink color={"white"} lat={item.lat} lng={item.lng} />
           </Bar>
         ))
       ) : (

@@ -82,6 +82,10 @@ const usersSchema = Schema(
   },
 );
 
+usersSchema.index({ inviter: 1, createdAt: -1 });
+usersSchema.index({ type: 1, hidden: 1, name: 1 });
+usersSchema.index({ type: 1, hidden: 1, lat: 1, lng: 1 });
+
 // Match user entered password to hashed password in database
 usersSchema.methods.matchPassword = function (enteredPassword) {
   return bcrypt.compare(enteredPassword, this.password);

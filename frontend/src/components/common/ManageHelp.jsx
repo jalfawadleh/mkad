@@ -12,7 +12,7 @@ import { Delete } from "./Icons";
  *
  * @returns {React.ReactElement} Help element.
  */
-const ManageHelp = ({ help, setParent, editing = false }) => {
+const ManageHelp = ({ help = [], setParent, editing = false }) => {
   const [item, setItem] = useState({ text: "", offer: true });
   const { text, offer } = item;
 
@@ -26,17 +26,16 @@ const ManageHelp = ({ help, setParent, editing = false }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    help.push({ ...item });
-    setParent((prev) => ({ ...prev, help }));
-    item.text = "";
+    setParent((prev) => ({ ...prev, help: [...help, { ...item }] }));
+    setItem((prev) => ({ ...prev, text: "" }));
   };
 
   return (
     <>
       {help?.length > 0 && (
         <Section>
-          {help.map((h, index) => (
-            <HelpItem key={index} offer={h.offer}>
+          {help.map((h) => (
+            <HelpItem key={h.text} offer={h.offer}>
               {h.text}
               {editing && (
                 <span onClick={() => delItem(h)}>

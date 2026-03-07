@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import moment from "moment";
 
 import Wrappers from "./common/Wrappers";
@@ -16,6 +16,7 @@ import {
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 /**
  * Conversation component.
@@ -29,36 +30,37 @@ const Messaging = () => {
   const [messages, setMessages] = useState([]);
   const [member, setMember] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
+  const [conversationBlockedUntil, setConversationBlockedUntil] = useState(0);
   const navigate = useNavigate();
 
-  const message = {
+  const message = useMemo(() => ({
     sender: { _id: user._id, name: user.name, type: "member" },
     recipient: { _id: id, name, type: "member" },
     content: "",
-  };
+  }), [id, name, user._id, user.name]);
 
-  const showLastMessage = () => {
+  const showLastMessage = useCallback(() => {
     const endoflist = document.getElementById("endoflist");
     if (endoflist)
       setTimeout(() => {
         endoflist.scrollIntoView({ behavior: "smooth", block: "end" });
       }, 250);
-  };
+  }, []);
 
-  const getMember = async () => {
+  const getMember = useCallback(async () => {
     await axios
       .get(`/members/${id}`)
       .then((res) => {
         setMember(res.data);
-        if (!res.data.contacts.find((c) => c._id == user._id)) {
+        if (!res.data.contacts.find((c) => c._id === user._id)) {
           toast.error("Not a contact");
           navigate("/");
         }
       })
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [id, navigate, user._id]);
 
-  async function getMessages() {
+  const getMessages = useCallback(async () => {
     setIsLoading(true);
     await axios
       .post(`/messages`, { _id: id, skip: messages.length })
@@ -67,14 +69,13 @@ const Messaging = () => {
         if (messages.length < 10) showLastMessage();
       })
       .then(() => setIsLoading(false))
-      .catch((error) => toast.error(error));
-  }
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [id, messages.length, showLastMessage]);
 
   useEffect(() => {
     getMember();
     getMessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getMember, getMessages]);
 
   const onScroll = (e) => {
     if (e.target.scrollTop === 0) getMessages();
@@ -83,15 +84,16 @@ const Messaging = () => {
   // member join coversation when online
   useEffect(() => {
     if (socket.id) {
-      message.content = "join";
-      socket.emit("joinMessaging", message);
+      socket.emit("joinMessaging", { ...message, content: "join" }, (ack) => {
+        if (!ack?.ok && ack?.error) toast.error(`Join failed: ${ack.error}`);
+      });
     } else navigate("/");
     return () => {
-      message.content = "leave";
-      if (socket.id) socket.emit("leaveMessaging", message);
+      if (socket.id) {
+        socket.emit("leaveMessaging", { ...message, content: "leave" });
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [message, navigate, socket]);
 
   // on receiving a message
   useEffect(() => {
@@ -99,17 +101,35 @@ const Messaging = () => {
       setMessages((previous) => [...previous, message]);
       showLastMessage();
     };
+    const onRateLimit = (payload) => {
+      if (payload?.event === "conversation" && payload?.retryAfterMs) {
+        setConversationBlockedUntil(Date.now() + payload.retryAfterMs);
+        toast.error(`Messaging limited. Retry in ${Math.ceil(payload.retryAfterMs / 1000)}s`);
+      }
+    };
     if (socket.id) socket.on("conversation", onConversation);
+    if (socket.id) socket.on("rate_limit", onRateLimit);
     return () => {
       if (socket.id) socket.off("conversation", onConversation);
+      if (socket.id) socket.off("rate_limit", onRateLimit);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [showLastMessage, socket]);
 
   const send = (event) => {
-    if (event.key == "Enter" && event.target.value) {
-      message.content = event.target.value;
-      socket.emit("conversation", message);
+    if (Date.now() < conversationBlockedUntil) return;
+    if (event.key === "Enter" && event.target.value) {
+      socket.emit(
+        "conversation",
+        { ...message, content: event.target.value },
+        (ack) => {
+          if (!ack?.ok) {
+            if (ack?.retryAfterMs) {
+              setConversationBlockedUntil(Date.now() + ack.retryAfterMs);
+            }
+            toast.error(`Message failed: ${ack?.error || "unknown error"}`);
+          }
+        },
+      );
       event.target.value = "";
     }
   };
@@ -121,7 +141,7 @@ const Messaging = () => {
           <MessageCircle />
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
-          <LocationCircleLink location={member.location} />
+          <LocationCircleLink lat={member.lat} lng={member.lng} />
           <CloseCircleLink />
         </Wrappers.Header>
         <div
@@ -135,7 +155,11 @@ const Messaging = () => {
           )}
           {messages?.length > 0 &&
             messages.map((m, index) => (
-              <div className='d-block m-0 p-0' id={m._id} key={index}>
+              <div
+                className='d-block m-0 p-0'
+                id={m._id}
+                key={m._id ?? `${m.sender?._id}-${m.createdAt}-${index}`}
+              >
                 <div className='d-flex justify-content-between w-100'>
                   <span className='w-100 m-0 ms-1 lh-1 fw-lighter fs-6 text-start'>
                     {m.sender.name ? m.sender.name : ""}

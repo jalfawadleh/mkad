@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 import { UserContext } from "../store.js";
+import { getErrorMessage } from "../utils/http.js";
 
 import { IconButton, LinkButtoneBack } from "./common/LinkItems.jsx";
 import Wrappers, { SectionForm } from "./common/Wrappers.jsx";
@@ -32,7 +33,7 @@ function Account() {
   const onPut = async (e) => {
     e.preventDefault();
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
@@ -47,23 +48,19 @@ function Account() {
         res.data && toast("Updated");
       });
     } catch (error) {
-      setIsLoading(false);
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
+      setIsUpdating(false);
+      toast.error(getErrorMessage(error));
     }
   };
 
   const onDelete = async () => {
-    var result = confirm("Are you sure?");
+    const result = confirm("Are you sure?");
     if (result) {
       setIsLoading(true);
       try {
         await axios.delete(`/users`).then(() => setUser([]));
       } catch (error) {
-        error?.response?.data?.message &&
-          toast.error(error?.response.data.message);
-        error?.response?.status > 499 && toast.error("Something went wrong");
+        toast.error(getErrorMessage(error));
       }
     }
   };

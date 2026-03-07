@@ -20,6 +20,9 @@ const updates = Schema(
   }
 );
 
+updates.index({ "recipient._id": 1, archived: 1, createdAt: -1 });
+updates.index({ "sender._id": 1, "recipient._id": 1, type: 1 });
+
 const Updates = mongoose.model("updates", updates);
 
 export default Updates;

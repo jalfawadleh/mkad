@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const ScreenLanding = () => {
   const { c } = useParams();
+  const navigate = useNavigate();
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -12,25 +13,24 @@ const ScreenLanding = () => {
     const formData = new FormData(e.target);
     formData.forEach((value, key) => (userData[key] = value));
     userData["code"] = c ? c : false;
-    console.log(userData);
     const { username, password, confirmPassword, name, terms } = userData;
 
-    if (!username || username.lenth < 8)
+    if (!username || username.length < 8)
       toast("Username min 8 characters required!");
-    else if (username != username.trim()) toast("Remove space from Username");
-    else if (password != password.trim()) toast("Remove space from Password");
-    else if (!password || password.lenth < 8)
+    else if (username !== username.trim()) toast("Remove space from Username");
+    else if (password !== password.trim()) toast("Remove space from Password");
+    else if (!password || password.length < 8)
       toast("Password min 8 characterss required!");
     else if (!c || password !== confirmPassword)
       toast("Passwords do not match");
-    else if (name === "" || name.lenth < 5) toast.error("Please Enter a Name");
-    else if (!terms || terms != "on")
+    else if (name === "" || name.length < 5) toast.error("Please Enter a Name");
+    else if (!terms || terms !== "on")
       toast("Please accept terms and conditions");
     else {
       await axios
         .post("/users/", userData)
         .then((res) => {
-          if (res.data) window.location.href = "/";
+          if (res.data) navigate("/");
           else toast.error("Something is wrong!");
         })
         .catch((error) => toast.error(error.response.data));
@@ -49,7 +49,7 @@ const ScreenLanding = () => {
             <input
               placeholder='Username'
               name='username'
-              type='text'
+              type='password'
               id='username'
               className='form-control bg-black'
               autoCorrect='off'
@@ -62,7 +62,7 @@ const ScreenLanding = () => {
             <input
               placeholder='Password'
               name='password'
-              type='text'
+              type='password'
               id='password'
               className='form-control bg-black'
               autoCorrect='off'
@@ -85,7 +85,7 @@ const ScreenLanding = () => {
             <input
               placeholder='Confirm Password'
               name='confirmPassword'
-              type='text'
+              type='password'
               id='confirmPassword'
               className='form-control bg-black'
               autoCorrect='off'

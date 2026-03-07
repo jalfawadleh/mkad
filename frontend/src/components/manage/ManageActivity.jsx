@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../../store.js";
 import { useNavigate, useParams } from "react-router-dom";
+import { getErrorMessage } from "../../utils/http.js";
 
 import { IconButton, LinkButtoneBack } from "../common/LinkItems.jsx";
 
@@ -34,20 +35,24 @@ const ManageActivity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const [activity, setActivity] = useState({
-    _id: id ? id : "",
-    name: "",
-    startOn: Date.now() + 6 * 3600000,
-    endOn: Date.now() + 7 * 3600000,
-    description: "",
-    notes: [],
-    help: [],
-    languages: [],
-    interests: [],
-    createdBy: [],
-    hidden: false,
-    online: { value: false, link: "" },
-    location: { lng: -122.2683, lat: 37.8243 },
+  const [activity, setActivity] = useState(() => {
+    const now = Date.now();
+    return {
+      _id: id ? id : "",
+      name: "",
+      startOn: new Date(now + 6 * 3600000).toISOString(),
+      endOn: new Date(now + 7 * 3600000).toISOString(),
+      description: "",
+      notes: [],
+      help: [],
+      languages: [],
+      interests: [],
+      createdBy: [],
+      hidden: false,
+      online: { value: false, link: "" },
+      lat: 37.8243,
+      lng: -122.2683,
+    };
   });
 
   const isOwner = activity.createdBy?._id === user._id;
@@ -63,40 +68,42 @@ const ManageActivity = () => {
         .then(() => toast("Updated"))
         .then(() => setIsUpdating(false))
         .then(() => navigate("/"))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
     else
       await axios
         .post("/activities/", activity)
         .then(() => toast("Created"))
         .then(() => setIsUpdating(false))
         .then(() => navigate("/"))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const onDelete = async () => {
-    var result = confirm("Are you sure?");
+    const result = confirm("Are you sure?");
     if (result) {
       setIsLoading(true);
       await axios
         .delete(`/activities/${id}`)
         .then(() => setIsLoading(false))
         .then(() => navigate("/"))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
     }
   };
 
-  const getActivity = async (id) => {
-    setIsLoading(true);
-    await axios
-      .get(`/activities/${id}`)
-      .then((res) => setActivity(res.data))
-      .then(() => setIsLoading(false))
-      .catch((error) => toast.error(error));
-  };
-
   useEffect(() => {
-    activity._id && getActivity(activity._id);
-  }, [activity._id]);
+    const getActivity = async (activityId) => {
+      setIsLoading(true);
+      await axios
+        .get(`/activities/${activityId}`)
+        .then((res) => setActivity(res.data))
+        .then(() => setIsLoading(false))
+        .catch((error) => toast.error(getErrorMessage(error)));
+    };
+
+    if (id) {
+      getActivity(id);
+    }
+  }, [id]);
 
   return (
     <>
@@ -157,7 +164,8 @@ const ManageActivity = () => {
             editing={isEditing}
           />
           <ManageLocation
-            location={activity.location}
+            lat={activity.lat}
+            lng={activity.lng}
             setParent={setActivity}
             editing={isEditing}
           />

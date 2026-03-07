@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../../utils/http.js";
 import { Bar } from "../common/Wrappers";
 import {
   AvatarLink,
@@ -21,7 +22,7 @@ const MemberInvites = () => {
     await axios
       .get("/invites")
       .then((res) => setInvitees(res.data))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {

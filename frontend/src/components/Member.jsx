@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 import ManageDescription from "./common/ManageDescription.jsx";
 import ManageLanguages from "./common/ManageLanguages.jsx";
@@ -91,24 +92,26 @@ function Member() {
     activities: [],
   });
 
-  const getMember = async () => {
+  const getMember = useCallback(async () => {
     await axios
       .get(`/members/${id}`)
       .then((res) => {
         setMember(res.data);
         res.data.contacts.map((c) => {
-          if (c._id == user._id) setIsContact(c);
+          if (c._id === user._id) setIsContact(c);
         });
       })
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [id, user._id]);
 
   useEffect(() => {
-    setIsLoading(true);
-    getMember();
-    setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const load = async () => {
+      setIsLoading(true);
+      await getMember();
+      setIsLoading(false);
+    };
+    load();
+  }, [getMember]);
 
   const postContact = async () => {
     setIsUpdating(true);
@@ -118,11 +121,11 @@ function Member() {
       .then(() => getMember())
       .then(() => toast("Contact request sent"))
       .then(() => setIsUpdating(false))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const memberContact =
-    member._id != user._id &&
+    member._id !== user._id &&
     (isUpdating ? (
       <SpinnerCircle />
     ) : !isContact ? (
@@ -141,7 +144,7 @@ function Member() {
         <Wrappers.Header>
           <Avatar name={member.name} />
           <TextCenterBox text={member.name} />
-          <LocationCircleLink location={member.location} />
+          <LocationCircleLink lat={member.lat} lng={member.lng} />
           <ShareCircleLink to={`/share/${member.type}/${member._id}`} />
           {memberContact}
           <CloseCircleLink />

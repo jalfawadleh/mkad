@@ -580,10 +580,11 @@ export const LocationCircle = ({ color = "white" }) => {
   );
 };
 
-export const LocationCircleLink = ({ color = "white", location }) => {
+export const LocationCircleLink = ({ color = "white", location, lat, lng }) => {
   const { setFlyToLocation } = useContext(MapContext);
+  const nextLocation = location ?? (lat != null && lng != null ? { lat, lng } : null);
   return (
-    <span role='button' onClick={() => setFlyToLocation(location)}>
+    <span role='button' onClick={() => nextLocation && setFlyToLocation(nextLocation)}>
       <LocationCircle color={color} />
     </span>
   );

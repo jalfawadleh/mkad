@@ -59,6 +59,10 @@ const schema = Schema(
   },
 );
 
+schema.index({ "createdBy._id": 1, hidden: 1, archived: 1, startOn: 1 });
+schema.index({ "members._id": 1, startOn: 1 });
+schema.index({ type: 1, hidden: 1, lat: 1, lng: 1, startOn: 1 });
+
 const activities = mongoose.model("Activities", schema);
 
 export default activities;

@@ -1,4 +1,4 @@
-import { Section, SectionForm } from "./Wrappers";
+import { SectionForm } from "./Wrappers";
 
 /**
  * Help component.

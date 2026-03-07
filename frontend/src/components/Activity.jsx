@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 import { UserContext } from "../store.js";
 
@@ -51,7 +52,7 @@ const Activity = () => {
       .get(`/activities/join/${id}`)
       .then((res) => setActivity(res.data))
       .then(() => setIsJoining(false))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {
@@ -61,16 +62,14 @@ const Activity = () => {
         .get(`/activities/${id}`)
         .then((res) => setActivity(res.data))
         .then(() => setIsLoading(false))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
     };
 
     getActivity(id);
-    setIsMember(activity.members.find((m) => m._id == user._id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
-    setIsMember(activity.members.find((m) => m._id == user._id));
+    setIsMember(activity.members.find((m) => m._id === user._id));
   }, [activity.members, user._id]);
 
   const createdBy = (
@@ -127,7 +126,7 @@ const Activity = () => {
         <Wrappers.Header>
           <ActivityCircle />
           <TextCenterBox text={activity.name} />
-          <LocationCircleLink location={activity.location} />
+          <LocationCircleLink lat={activity.lat} lng={activity.lng} />
           <DiscusstionCircleLink
             to={`/discussion/activity/${activity._id}/${activity.name}`}
             color='white'

@@ -4,9 +4,7 @@ import {
   AvatarCustomLink,
   CloseCircleLink,
   HelpCircle,
-  HomeCircle,
   HomeCircleLink,
-  LocationCircle,
   TextCenterBox,
 } from "../common/Icons.jsx";
 import { useContext } from "react";

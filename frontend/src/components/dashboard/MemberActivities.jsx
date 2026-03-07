@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getErrorMessage } from "../../utils/http.js";
 
 import { Bar } from "../common/Wrappers";
 import {
@@ -23,7 +24,7 @@ const MemberActivities = () => {
     await axios
       .get("/activities")
       .then((res) => setItems(res.data))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const MemberActivities = () => {
               to={`/discussion/activity/${item._id}/${item.name}`}
               color='white'
             />
-            <LocationCircleLink location={item.location} />
+            <LocationCircleLink lat={item.lat} lng={item.lng} />
           </Bar>
         ))
       ) : (

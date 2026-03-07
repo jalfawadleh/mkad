@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import jwt from "jsonwebtoken";
 import Members from "../models/modelUsers.js";
+import { isValidId } from "../utils/validators.js";
+import { validateParams, validators } from "../middleware/requestSchemaMiddleware.js";
 
 // @desc    Get Invitees
 // @route   GET /api/invitees
@@ -38,6 +40,10 @@ const getInviteLink = asyncHandler(async (req, res) => {
 // @route   GET /api/invites/passwordLink
 // @access  Private
 const getPasswordLink = asyncHandler(async (req, res) => {
+  if (!isValidId(req.params.id)) {
+    res.status(400);
+    throw new Error("Invalid member id");
+  }
   const member = await Members.findOne({
     _id: req.params.id,
     inviter: req.user._id,
@@ -65,6 +71,11 @@ const invites = express
   .Router()
   .get("/", protect, getInvitees)
   .get("/invitelink", protect, getInviteLink)
-  .get("/passwordlink", protect, getPasswordLink);
+  .get(
+    "/passwordlink/:id",
+    protect,
+    validateParams({ id: validators.objectId }),
+    getPasswordLink,
+  );
 
 export default invites;

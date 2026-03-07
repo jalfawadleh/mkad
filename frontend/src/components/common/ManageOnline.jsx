@@ -60,12 +60,12 @@ const ManageOnline = ({ online, setParent, editing = false }) => {
       ) : (
         online.value && (
           <SectionForm>
-            <div className='p-0 m-1 w-100 d-flex justofy-contents-between'>
+            <div className='p-0 m-1 w-100 d-flex justify-content-between'>
               <div className='p-1 ps-2 my-auto text-start rounded-start-pill bg-primary'>
                 Join Online
               </div>
               <Link
-                to={location.link}
+                to={online.link}
                 target='_blank'
                 className='p-1 m-auto link-underline link-underline-opacity-0 border border-1 border-primary text-light'
               >

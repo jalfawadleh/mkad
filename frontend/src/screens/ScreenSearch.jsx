@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 import { Bar } from "../components/common/Wrappers";
 import {
@@ -49,7 +50,7 @@ const ScreenSearch = () => {
         .then((res) => setResults(res.data))
         .then(() => setFolded(false))
         .then(() => setIsGettingResults(false))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
     } else setResults([]);
   };
 
@@ -71,7 +72,7 @@ const ScreenSearch = () => {
       )
       .then(() => setFolded(false))
       .then(() => setIsGettingPlaces(false))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const onSubmit = (e) => {
@@ -88,14 +89,12 @@ const ScreenSearch = () => {
   //   setPlaces([]);
   //   getResults();
   //   setFolded(false);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [organisations, members, activities, messages, updates]);
 
   // useEffect(() => {
   //   setPlaces([]);
   //   getPlaces();
   //   setFolded(false);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [locations]);
 
   const toggleItem = (item) => {
@@ -111,7 +110,7 @@ const ScreenSearch = () => {
   };
 
   const IconLinkCenterText = ({ item }) => {
-    return item.type == "location" ? (
+    return item.type === "location" ? (
       <span className='p-auto m-auto w-100 fw-bold text-center link-underline link-underline-opacity-0'>
         {item.name}
       </span>
@@ -144,7 +143,11 @@ const ScreenSearch = () => {
           }
 
           <IconLinkCenterText item={item} />
-          <LocationCircleLink location={item.location} />
+          <LocationCircleLink
+            location={item.location}
+            lat={item.lat}
+            lng={item.lng}
+          />
         </Bar>
       ))
     );
@@ -212,7 +215,7 @@ const ScreenSearch = () => {
       {!folded && filter && filtersBar}
       <div
         className='overflow-auto'
-        style={{ maxHeight: window.innerHeight - 150 }}
+        style={{ maxHeight: "calc(100vh - 150px)" }}
       >
         {!folded && places.length ? <ListLinks items={places} /> : ""}
         {!folded && results.length ? <ListLinks items={results} /> : ""}

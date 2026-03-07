@@ -12,7 +12,7 @@ import { Delete } from "./Icons";
  *
  * @returns {React.ReactElement} Interests element.
  */
-const ManageInterests = ({ interests, setParent, editing = false }) => {
+const ManageInterests = ({ interests = [], setParent, editing = false }) => {
   const [interest, setInterest] = useState({ name: "" });
 
   const delItem = (i) => {
@@ -25,8 +25,7 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    interests.push({ ...interest });
-    setParent((prev) => ({ ...prev, interests }));
+    setParent((prev) => ({ ...prev, interests: [...interests, { ...interest }] }));
     setInterest({ name: "" });
   };
 
@@ -34,8 +33,8 @@ const ManageInterests = ({ interests, setParent, editing = false }) => {
     <>
       {interests?.length > 0 && (
         <Section>
-          {interests.map((i, index) => (
-            <Interest key={index}>
+          {interests.map((i) => (
+            <Interest key={i.name}>
               {i.name}
               {editing && (
                 <span onClick={() => delItem(i)}>

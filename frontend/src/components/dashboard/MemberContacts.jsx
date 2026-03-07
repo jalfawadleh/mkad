@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../../utils/http.js";
 import { Bar } from "../common/Wrappers";
 import {
   AvatarLink,
@@ -22,21 +23,21 @@ const MemberContacts = () => {
     await axios
       .post("/contacts/approve", { id })
       .then(() => getContacts())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const deleteContact = async (id) => {
     await axios
       .delete("/contacts/" + id)
       .then(() => getContacts())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const getContacts = async () => {
     await axios
       .get("/contacts")
       .then((res) => setContacts(res.data))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {

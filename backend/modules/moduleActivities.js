@@ -2,6 +2,13 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Activities from "../models/modelActivities.js";
+import { isValidId } from "../utils/validators.js";
+import {
+  enforceAllowedBodyKeys,
+  validateBody,
+  validateParams,
+  validators,
+} from "../middleware/requestSchemaMiddleware.js";
 
 // @desc    Get All Activities Managed
 // @route   GET /api/activities/managed
@@ -69,7 +76,10 @@ const postActivity = asyncHandler(async (req, res) => {
 // @route   PUT /api/activities
 // @access  Private
 const putActivity = asyncHandler(async (req, res) => {
-  const activity = await Activities.findById(req.body._id);
+  const activity = await Activities.findOne({
+    _id: req.body._id,
+    "createdBy._id": req.user._id,
+  });
 
   if (activity) {
     activity.name = req.body.name;
@@ -91,7 +101,7 @@ const putActivity = asyncHandler(async (req, res) => {
     res.status(200).json({ activity });
   } else {
     res.status(404);
-    throw new Error("Activity not found");
+    throw new Error("Activity not found or you are not allowed to edit it");
   }
 });
 
@@ -99,13 +109,16 @@ const putActivity = asyncHandler(async (req, res) => {
 // @route   Delete /api/activities/:id
 // @access  Private
 const deleteActivity = asyncHandler(async (req, res) => {
-  const activity = await Activities.deleteOne({ _id: req.params.id });
+  const activity = await Activities.deleteOne({
+    _id: req.params.id,
+    "createdBy._id": req.user._id,
+  });
 
-  if (activity) {
-    res.res.status(204);
+  if (activity.deletedCount > 0) {
+    res.status(204).send();
   } else {
     res.status(404);
-    throw new Error("Activity not found");
+    throw new Error("Activity not found or you are not allowed to delete it");
   }
 });
 
@@ -113,6 +126,10 @@ const deleteActivity = asyncHandler(async (req, res) => {
 // @route   PUT /api/activities
 // @access  Private
 const joinActivity = asyncHandler(async (req, res) => {
+  if (!isValidId(req.params.id)) {
+    res.status(400);
+    throw new Error("Invalid activity id");
+  }
   const activity = await Activities.findOne({ _id: req.params.id });
 
   if (activity) {
@@ -144,14 +161,78 @@ const activities = express.Router();
 activities
   .route("/")
   .get(protect, getActivitiesJoined)
-  .post(protect, postActivity)
-  .put(protect, putActivity);
+  .post(
+    protect,
+    enforceAllowedBodyKeys([
+      "name",
+      "startOn",
+      "endOn",
+      "description",
+      "notes",
+      "languages",
+      "helpOffered",
+      "helpNeeded",
+      "interests",
+      "hidden",
+      "lng",
+      "lat",
+      "online",
+      "help",
+    ]),
+    validateBody({
+      name: validators.requiredString,
+      startOn: validators.optionalString,
+      endOn: validators.optionalString,
+      description: validators.optionalString,
+      hidden: validators.optionalBooleanish,
+      lng: validators.optionalNumber,
+      lat: validators.optionalNumber,
+    }),
+    postActivity,
+  )
+  .put(
+    protect,
+    enforceAllowedBodyKeys([
+      "_id",
+      "name",
+      "startOn",
+      "endOn",
+      "description",
+      "notes",
+      "languages",
+      "helpOffered",
+      "helpNeeded",
+      "interests",
+      "hidden",
+      "lng",
+      "lat",
+      "online",
+      "help",
+      "createdBy",
+      "members",
+      "organisations",
+      "archived",
+      "type",
+      "icon",
+    ]),
+    validateBody({
+      _id: validators.objectId,
+      name: validators.optionalString,
+      startOn: validators.optionalString,
+      endOn: validators.optionalString,
+      description: validators.optionalString,
+      hidden: validators.optionalBooleanish,
+      lng: validators.optionalNumber,
+      lat: validators.optionalNumber,
+    }),
+    putActivity,
+  );
 activities
   .get("/managed", protect, getActivitiesManaged)
-  .get("/join/:id", protect, joinActivity);
+  .get("/join/:id", protect, validateParams({ id: validators.objectId }), joinActivity);
 activities
   .route("/:id")
-  .get(protect, getActivity)
-  .delete(protect, deleteActivity);
+  .get(protect, validateParams({ id: validators.objectId }), getActivity)
+  .delete(protect, validateParams({ id: validators.objectId }), deleteActivity);
 
 export default activities;

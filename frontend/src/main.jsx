@@ -13,6 +13,7 @@ import App from "./App.jsx";
 import RoutePrivate from "./components/routes/RoutePrivate.jsx";
 
 import ScreenJoin from "./screens/ScreenJoin.jsx";
+import ScreenResetPassword from "./screens/ScreenResetPassword.jsx";
 
 import ScreenDashboard from "./screens/ScreenDashboard.jsx";
 
@@ -103,6 +104,7 @@ const router = createBrowserRouter(
 
       <Route path='join' element={<ScreenJoin />} />
       <Route path='join/:c' element={<ScreenJoin />} />
+      <Route path='resetpassword/:c' element={<ScreenResetPassword />} />
     </Route>,
   ),
 );

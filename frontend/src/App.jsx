@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 
@@ -9,41 +9,25 @@ import "leaflet/dist/leaflet.css";
 
 import { UserContext } from "./store.js";
 import io from "socket.io-client";
+import { getErrorMessage } from "./utils/http.js";
 
 const App = () => {
-  const [user, setUser] = useState([]);
-  const [socket, setSocket] = useState([]);
+  const [user, setUser] = useState({});
+  const [socket, setSocket] = useState({});
 
   const URL = import.meta.env.PROD
     ? "https://mkadifference.com/"
     : "http://localhost:3000/";
 
-  axios.defaults.baseURL = URL + "api/";
-  axios.defaults.headers.common.Authorization = user.token;
-  axios.defaults.headers.post["Content-Type"] =
-    "application/x-www-form-urlencoded";
-
-  const ioParams = {
-    autoConnect: true,
-    auth: { token: user.token },
-    secure: true,
-    transports: ["websocket"],
-  };
-
   useEffect(() => {
-    if (user.token) {
-      setSocket(io(URL, ioParams));
-      getUpdates();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token]);
+    axios.defaults.baseURL = URL + "api/";
+    if (user.token) axios.defaults.headers.common.Authorization = user.token;
+    else delete axios.defaults.headers.common.Authorization;
+    axios.defaults.headers.post["Content-Type"] =
+      "application/x-www-form-urlencoded";
+  }, [URL, user.token]);
 
-  useEffect(() => {
-    if (user.token) setInterval(() => getUpdates(), 30000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.token]);
-
-  const getUpdates = async () => {
+  const getUpdates = useCallback(async () => {
     await axios
       .get("/updates")
       .then((res) =>
@@ -52,8 +36,34 @@ const App = () => {
           updates: res.data.length ? true : false,
         }))
       )
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, []);
+
+  useEffect(() => {
+    if (!user.token) {
+      setSocket({});
+      return;
+    }
+
+    const nextSocket = io(URL, {
+      autoConnect: true,
+      auth: { token: user.token },
+      secure: true,
+      transports: ["websocket"],
+    });
+    setSocket(nextSocket);
+    getUpdates();
+
+    const intervalId = setInterval(() => {
+      getUpdates();
+    }, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+      nextSocket.disconnect();
+      setSocket({});
+    };
+  }, [URL, getUpdates, user.token]);
 
   return (
     <>

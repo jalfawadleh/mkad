@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useCallback, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 import { UserContext } from "../store.js";
 
@@ -24,7 +25,6 @@ import {
   OrganisationCircle,
   ShareCircleLink,
   TextCenterBox,
-  TextCenterLink,
 } from "./common/Icons.jsx";
 
 const Organization = () => {
@@ -46,22 +46,22 @@ const Organization = () => {
     activities: [],
   });
 
-  const getOrganisation = async () => {
+  const getOrganisation = useCallback(async () => {
     setIsLoading(true);
     await axios
       .get(`/organisations/${id}`)
       .then((res) => {
         setOrganisation(res.data);
         res.data.members.map(
-          (member) => member._id == user._id && setIsMember(member)
+          (member) => member._id === user._id && setIsMember(member)
         );
         res.data.contacts.map((c) => {
-          if (c._id == user._id) setIsContact(c);
+          if (c._id === user._id) setIsContact(c);
         });
       })
       .then(() => setIsLoading(false))
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [id, user._id]);
 
   const joinOrganisation = async () => {
     await axios
@@ -73,13 +73,12 @@ const Organization = () => {
           approved: false,
         })
       )
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   useEffect(() => {
     getOrganisation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getOrganisation]);
 
   const organisationActivities = (
     <>
@@ -113,7 +112,7 @@ const Organization = () => {
         </div>
 
         {!isMember
-          ? organisation._id != user._id && (
+          ? organisation._id !== user._id && (
               <span onClick={() => joinOrganisation()}>
                 <IconButton>Join</IconButton>
               </span>
@@ -139,11 +138,11 @@ const Organization = () => {
       .post("/contacts", contact)
       .then(() => getOrganisation())
       .then(() => toast("Contact request sent"))
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const memberContact =
-    organisation._id != user._id &&
+    organisation._id !== user._id &&
     (!isContact ? (
       <span onClick={() => postContact()}>
         <MemberAddCircle />
@@ -167,7 +166,7 @@ const Organization = () => {
             to={`/discussion/organisation/${organisation._id}/${organisation.name}`}
             color='white'
           />
-          <LocationCircleLink location={organisation.location} />
+          <LocationCircleLink lat={organisation.lat} lng={organisation.lng} />
           <ShareCircleLink to={`/share/organisation/${organisation._id}`} />
           <CloseCircleLink />
         </Wrapper.Header>

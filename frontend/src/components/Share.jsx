@@ -30,7 +30,7 @@ const Share = () => {
   const { type, id } = useParams();
 
   const shareUrl = `https://mkadifference.com/${
-    type == "activity" ? "activities" : type + "s"
+    type === "activity" ? "activities" : type + "s"
   }/${id}`;
   return (
     <>

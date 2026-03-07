@@ -26,8 +26,7 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    languages.push({ ...language });
-    setParent((prev) => ({ ...prev, languages }));
+    setParent((prev) => ({ ...prev, languages: [...languages, { ...language }] }));
     setLanguage({ name: "" });
   };
 
@@ -35,8 +34,8 @@ const ManageLanguages = ({ languages = [], setParent, editing = false }) => {
     <>
       {languages?.length > 0 && (
         <Section>
-          {languages.map((l, index) => (
-            <Language key={index}>
+          {languages.map((l) => (
+            <Language key={`${l.name}`}>
               {l.name}
               {editing && (
                 <span onClick={() => delItem(l)}>

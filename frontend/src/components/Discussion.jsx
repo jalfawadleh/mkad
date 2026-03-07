@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import moment from "moment";
 
 import Wrappers from "./common/Wrappers";
@@ -16,6 +16,7 @@ import {
 } from "./common/Icons";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 /**
  * Conversation component.
@@ -27,24 +28,25 @@ const Discussion = () => {
   const { user, socket } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
+  const [conversationBlockedUntil, setConversationBlockedUntil] = useState(0);
   const navigate = useNavigate();
 
-  const message = {
+  const message = useMemo(() => ({
     sender: { _id: user._id, name: user.name, type: "member" },
     recipient: { _id: id, type, name },
     content: "",
-  };
+  }), [id, name, type, user._id, user.name]);
 
-  const showLastMessage = () =>
+  const showLastMessage = useCallback(() =>
     setTimeout(
       () =>
         document
           .getElementById("endoflist")
           .scrollIntoView({ behavior: "smooth", block: "end" }),
       250
-    );
+    ), []);
 
-  async function getDiscussion() {
+  const getDiscussion = useCallback(async () => {
     setIsLoading(true);
     await axios
       .post(`/messages/discussion`, { _id: id, type, skip: messages.length })
@@ -53,13 +55,12 @@ const Discussion = () => {
         if (messages.length < 10) showLastMessage();
       })
       .then(() => setIsLoading(false))
-      .catch((error) => toast.error(error));
-  }
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [id, messages.length, showLastMessage, type]);
 
   useEffect(() => {
     getDiscussion();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getDiscussion]);
 
   const onScroll = (e) => {
     if (e.target.scrollTop === 0) {
@@ -70,15 +71,16 @@ const Discussion = () => {
   // member join coversation when online
   useEffect(() => {
     if (socket.id) {
-      message.content = "join";
-      socket.emit("joinDiscussion", message);
+      socket.emit("joinDiscussion", { ...message, content: "join" }, (ack) => {
+        if (!ack?.ok && ack?.error) toast.error(`Join failed: ${ack.error}`);
+      });
     } else navigate("/");
     return () => {
-      message.content = "leave";
-      if (socket.id) socket.emit("leaveDiscussion", message);
+      if (socket.id) {
+        socket.emit("leaveDiscussion", { ...message, content: "leave" });
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [message, navigate, socket]);
 
   // on receiving a message
   useEffect(() => {
@@ -86,17 +88,35 @@ const Discussion = () => {
       setMessages((previous) => [...previous, message]);
       showLastMessage();
     };
+    const onRateLimit = (payload) => {
+      if (payload?.event === "conversation" && payload?.retryAfterMs) {
+        setConversationBlockedUntil(Date.now() + payload.retryAfterMs);
+        toast.error(`Messaging limited. Retry in ${Math.ceil(payload.retryAfterMs / 1000)}s`);
+      }
+    };
     if (socket.id) socket.on("conversation", onConversation);
+    if (socket.id) socket.on("rate_limit", onRateLimit);
     return () => {
       if (socket.id) socket.off("conversation", onConversation);
+      if (socket.id) socket.off("rate_limit", onRateLimit);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [showLastMessage, socket]);
 
   const send = (event) => {
-    if (event.key == "Enter" && event.target.value) {
-      message.content = event.target.value;
-      socket.emit("conversation", message);
+    if (Date.now() < conversationBlockedUntil) return;
+    if (event.key === "Enter" && event.target.value) {
+      socket.emit(
+        "conversation",
+        { ...message, content: event.target.value },
+        (ack) => {
+          if (!ack?.ok) {
+            if (ack?.retryAfterMs) {
+              setConversationBlockedUntil(Date.now() + ack.retryAfterMs);
+            }
+            toast.error(`Message failed: ${ack?.error || "unknown error"}`);
+          }
+        },
+      );
       event.target.value = "";
     }
   };
@@ -106,7 +126,7 @@ const Discussion = () => {
       <Wrappers.Modal>
         <Wrappers.Header>
           <DiscusstionCircle />
-          {type == "organisation" ? <OrganisationCircle /> : <ActivityCircle />}
+          {type === "organisation" ? <OrganisationCircle /> : <ActivityCircle />}
           <TextCenterBox text={name} />
           <CloseCircleLink />
         </Wrappers.Header>
@@ -121,7 +141,11 @@ const Discussion = () => {
           )}
           {messages?.length > 0 &&
             messages.map((m, index) => (
-              <div className='d-block m-0 p-0' id={m._id} key={index}>
+              <div
+                className='d-block m-0 p-0'
+                id={m._id}
+                key={m._id ?? `${m.sender?._id}-${m.createdAt}-${index}`}
+              >
                 <div className='d-flex justify-content-between w-100'>
                   <span className='w-100 m-0 ms-1 lh-1 fw-lighter fs-6 text-start'>
                     {m.sender.name ? m.sender.name : ""}

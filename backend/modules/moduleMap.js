@@ -3,6 +3,11 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
 import Activities from "../models/modelActivities.js";
+import {
+  enforceAllowedBodyKeys,
+  validateBody,
+  validators,
+} from "../middleware/requestSchemaMiddleware.js";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -12,18 +17,17 @@ dotenv.config();
 // @access  Private
 const getItems = asyncHandler(async (req, res) => {
   const fields = "name type lat lng";
+  const hidden = false;
   const members = await Members.find({ hidden, type: "member" }, fields);
   const organisations = await Members.find(
     { hidden: false, type: "organisation" },
     fields,
   );
   const activities = await Activities.find(
-    { hidden: false, online: false, startOn: { $gt: Date.now() } },
+    { hidden: false, "online.value": false, startOn: { $gt: Date.now() } },
     fields,
   );
-  console.log(members, activities, organisations);
   res.json({ members, activities, organisations });
-  // res.json([...members]);
 });
 
 // @desc    Get Items
@@ -75,6 +79,17 @@ const getItemsByLocation = asyncHandler(async (req, res) => {
 
 const search = express.Router();
 
-search.get("/", protect, getItems).post("/", protect, getItemsByLocation);
+search
+  .get("/", protect, getItems)
+  .post(
+    "/",
+    protect,
+    enforceAllowedBodyKeys(["lat", "lng"]),
+    validateBody({
+      lat: validators.requiredNumber,
+      lng: validators.requiredNumber,
+    }),
+    getItemsByLocation,
+  );
 
 export default search;

@@ -1,8 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Bar } from "../common/Wrappers";
+import { getErrorMessage } from "../../utils/http.js";
 import {
   AvatarLink,
   Empty,
@@ -18,29 +19,29 @@ const ManageMembers = () => {
   const { user } = useContext(UserContext);
   const [members, setMembers] = useState([]);
 
-  const getMembers = async () => {
+  const getMembers = useCallback(async () => {
     await axios
       .get("/members/" + user._id)
       .then((res) => setMembers(res.data.members))
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [user._id]);
 
   useEffect(() => {
     getMembers();
-  }, []);
+  }, [getMembers]);
 
   const approveMember = async (id) => {
     await axios
       .post("/organisations/approve", { id })
       .then(() => getMembers())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   const deleteMember = async (id) => {
     await axios
       .delete("/organisations/" + id)
       .then(() => getMembers())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   return (

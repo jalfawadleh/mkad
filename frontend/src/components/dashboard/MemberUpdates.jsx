@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../../utils/http.js";
 import { Bar } from "../common/Wrappers";
 import {
   ActivityCircleLink,
@@ -39,7 +40,7 @@ const MemberUpdates = () => {
   const { setUser } = useContext(UserContext);
   const [updates, setUpdates] = useState([]);
 
-  const getUpdates = async () => {
+  const getUpdates = useCallback(async () => {
     await axios
       .get("/updates")
       .then((res) => {
@@ -49,18 +50,18 @@ const MemberUpdates = () => {
           updates: res.data.length ? true : false,
         }));
       })
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [setUser]);
 
   useEffect(() => {
     getUpdates();
-  }, []);
+  }, [getUpdates]);
 
   const deleteUpdate = async (id) => {
     await axios
       .delete("/updates/" + id)
       .then(() => getUpdates())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   return (

@@ -24,10 +24,10 @@ const Header = () => {
       </span>
 
       <MKaDifferenceCircleLink to='/mkadifference' />
-      {user.type == "organisation" && <OrganisationCircleLink to='manage' />}
+      {user.type === "organisation" && <OrganisationCircleLink to='manage' />}
       <HomeCircleLink to='/' />
       <SearchCircleLink />
-      <LocationCircleLink location={user.location} />
+      <LocationCircleLink lat={user.lat} lng={user.lng} />
     </>
   );
 

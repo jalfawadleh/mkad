@@ -3,6 +3,12 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Messages from "../models/modelMessages.js";
 import Updates from "../models/modelUpdates.js";
+import { hasText, isValidId, toSafeSkip } from "../utils/validators.js";
+import {
+  enforceAllowedBodyKeys,
+  validateBody,
+  validators,
+} from "../middleware/requestSchemaMiddleware.js";
 
 /**
 
@@ -37,6 +43,10 @@ export const saveMessage = asyncHandler(async (m) => {
 // @route   GET /api/messages/
 // @access  Private
 const getMessages = asyncHandler(async (req, res) => {
+  if (!isValidId(req.body._id)) {
+    res.status(400);
+    throw new Error("Invalid recipient id");
+  }
   try {
     const messages = await Messages.find({
       $or: [
@@ -45,7 +55,7 @@ const getMessages = asyncHandler(async (req, res) => {
       ],
     })
       .sort({ _id: -1 })
-      .skip(req.body.skip)
+      .skip(toSafeSkip(req.body.skip))
       .limit(20);
 
     // sending update to the recipient
@@ -67,9 +77,10 @@ const getMessages = asyncHandler(async (req, res) => {
       console.log(error);
     }
 
-    res.json(messages.reverse());
+    res.status(200).json(messages.reverse());
   } catch (error) {
-    console.log(error);
+    res.status(500);
+    throw new Error("Unable to fetch messages");
   }
 });
 
@@ -77,21 +88,49 @@ const getMessages = asyncHandler(async (req, res) => {
 // @route   GET /api/messages/discussion
 // @access  Private
 const getDiscussion = asyncHandler(async (req, res) => {
+  if (!isValidId(req.body._id)) {
+    res.status(400);
+    throw new Error("Invalid recipient id");
+  }
+  if (!hasText(req.body.type)) {
+    res.status(400);
+    throw new Error("Invalid discussion type");
+  }
   try {
     const discussion = await Messages.find({
       "recipient._id": req.body._id,
       "recipient.type": req.body.type,
     })
       .sort({ _id: -1 })
-      .skip(req.body.skip)
+      .skip(toSafeSkip(req.body.skip))
       .limit(20);
-    res.json(discussion.reverse());
+    res.status(200).json(discussion.reverse());
   } catch (error) {
-    console.log(error);
+    res.status(500);
+    throw new Error("Unable to fetch discussion");
   }
 });
 
 const messages = express.Router();
-messages.post("/", protect, getMessages);
-messages.post("/discussion", protect, getDiscussion);
+messages.post(
+  "/",
+  protect,
+  enforceAllowedBodyKeys(["_id", "skip"]),
+  validateBody({
+    _id: validators.objectId,
+    skip: validators.optionalNonNegativeInteger,
+  }),
+  getMessages,
+);
+messages.post(
+  "/discussion",
+  protect,
+  enforceAllowedBodyKeys(["_id", "type", "skip"]),
+  validateBody({
+    _id: validators.objectId,
+    type: validators.requiredString,
+    skip: validators.optionalNonNegativeInteger,
+  }),
+  getDiscussion,
+);
 export default messages;

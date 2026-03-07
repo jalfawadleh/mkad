@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getErrorMessage } from "../utils/http.js";
 
 import { MapContext, UserContext } from "../store.js";
 
@@ -53,7 +54,6 @@ function Profile() {
   const onPut = async (e) => {
     e.preventDefault();
     setIsUpdating(true);
-    console.log("updating member:", member);
     try {
       await axios
         .put("/members", member)
@@ -70,9 +70,8 @@ function Profile() {
           })),
         );
     } catch (error) {
-      error?.response?.data?.message &&
-        toast.error(error?.response.data.message);
-      error?.response?.status > 499 && toast.error("Something went wrong");
+      setIsUpdating(false);
+      toast.error(getErrorMessage(error));
     }
   };
 
@@ -83,7 +82,7 @@ function Profile() {
         .get(`/members/${user._id}`)
         .then((res) => setMember(res.data))
         .then(() => setIsLoading(false))
-        .catch((error) => toast.error(error));
+        .catch((error) => toast.error(getErrorMessage(error)));
     };
 
     getProfile();

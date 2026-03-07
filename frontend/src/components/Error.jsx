@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Error = () => {
   return (
     <>
@@ -16,7 +18,7 @@ const Error = () => {
         </h1>
         <h2 className='m-auto p-auto text-center text-primary '>
           <span role='button' className=' p-2 border border-2 border-primary'>
-            <a href='/'>go back to home page</a>
+            <Link to='/'>go back to home page</Link>
           </span>
         </h2>
       </div>

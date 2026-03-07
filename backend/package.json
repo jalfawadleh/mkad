@@ -10,7 +10,9 @@
     "node": ">=21.5.0"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js",
+    "test": "node --test tests/*.test.js",
+    "test:watch": "node --test --watch tests/*.test.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

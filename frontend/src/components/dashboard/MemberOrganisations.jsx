@@ -1,7 +1,8 @@
-import { useState, useEffect, useContext } from "react";
+import { useCallback, useState, useEffect, useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { getErrorMessage } from "../../utils/http.js";
 import { Bar } from "../common/Wrappers";
 import {
   DiscusstionCircleLink,
@@ -19,22 +20,22 @@ const MemberOrganisations = () => {
   const { user } = useContext(UserContext);
   const [organisations, setOrganisations] = useState([]);
 
-  const getOrganisations = async () => {
+  const getOrganisations = useCallback(async () => {
     await axios
       .get(`/members/${user._id}`)
       .then((res) => setOrganisations(res.data.organisations))
-      .catch((error) => toast.error(error));
-  };
+      .catch((error) => toast.error(getErrorMessage(error)));
+  }, [user._id]);
 
   useEffect(() => {
     getOrganisations();
-  }, []);
+  }, [getOrganisations]);
 
   const deleteOrganisation = async (id) => {
     await axios
       .delete("/organisations/" + id)
       .then(() => getOrganisations())
-      .catch((error) => toast.error(error));
+      .catch((error) => toast.error(getErrorMessage(error)));
   };
 
   return (

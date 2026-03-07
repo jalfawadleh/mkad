@@ -3,12 +3,18 @@ import asyncHandler from "express-async-handler";
 import { protect } from "../middleware/authMiddleware.js";
 import Members from "../models/modelUsers.js";
 import Activities from "../models/modelActivities.js";
+import {
+  enforceAllowedBodyKeys,
+  validateBody,
+  validateParams,
+  validators,
+} from "../middleware/requestSchemaMiddleware.js";
 
 // @desc    Update Member
 // @route   PUT /api/members
 // @access  Private
 const putMember = asyncHandler(async (req, res) => {
-  const member = await Members.findById(req.body._id);
+  const member = await Members.findById(req.user._id);
 
   if (member) {
     // Update profile
@@ -18,10 +24,10 @@ const putMember = asyncHandler(async (req, res) => {
     member.interests = req.body.interests;
     member.lat = req.body.lat;
     member.lng = req.body.lng;
-    member.darkmood = req.body.darkmood;
+    member.darkmode = req.body.darkmode;
     member.contacts = req.body.contacts;
     member.hidden = req.body.hidden;
-    member.darkmood = req.body.darkmood;
+    member.darkmode = req.body.darkmode;
     member.help = req.body.help;
     //    console.log(member);
     await member.save();
@@ -82,8 +88,35 @@ const getMembersCount = asyncHandler(async (req, res) => {
 const members = express.Router();
 
 members
-  .put("/", protect, putMember)
+  .put(
+    "/",
+    protect,
+    enforceAllowedBodyKeys([
+      "_id",
+      "name",
+      "description",
+      "languages",
+      "interests",
+      "lat",
+      "lng",
+      "darkmode",
+      "contacts",
+      "hidden",
+      "help",
+      "organisations",
+      "members",
+    ]),
+    validateBody({
+      name: validators.optionalString,
+      description: validators.optionalString,
+      lat: validators.optionalNumber,
+      lng: validators.optionalNumber,
+      darkmode: validators.optionalBooleanish,
+      hidden: validators.optionalBooleanish,
+    }),
+    putMember,
+  )
   .get("/count", getMembersCount)
-  .get("/:id", protect, getMember);
+  .get("/:id", protect, validateParams({ id: validators.objectId }), getMember);
 
 export default members;
