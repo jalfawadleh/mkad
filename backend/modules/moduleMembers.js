@@ -94,6 +94,7 @@ members
     enforceAllowedBodyKeys([
       "_id",
       "name",
+      "type",      
       "description",
       "languages",
       "interests",
@@ -104,6 +105,7 @@ members
       "hidden",
       "help",
       "organisations",
+      "activities",
       "members",
     ]),
     validateBody({
