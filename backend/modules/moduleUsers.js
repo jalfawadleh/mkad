@@ -134,7 +134,7 @@ const users = express.Router();
 users
   .route("/")
   .post(
-    enforceAllowedBodyKeys(["username", "password", "name", "code"]),
+    enforceAllowedBodyKeys(["username", "password", "name", "code", "confirmPassword", "terms"]),
     validateBody({
       username: validators.requiredString,
       password: validators.requiredString,
