@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "../store";
+import { getErrorMessage } from "../utils/http.js";
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -22,7 +23,7 @@ const Login = () => {
       await axios
         .post("/users/login", { username, password })
         .then((res) => setUser(res.data))
-        .catch((error) => toast.error(error.response.data));
+        .catch((error) => toast.error(getErrorMessage(error)));
     }
   };
 

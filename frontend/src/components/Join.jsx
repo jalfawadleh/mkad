@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "../utils/http.js";
 
 const ScreenLanding = () => {
   const { c } = useParams();
@@ -33,7 +34,7 @@ const ScreenLanding = () => {
           if (res.data) navigate("/");
           else toast.error("Something is wrong!");
         })
-        .catch((error) => toast.error(error.response.data));
+        .catch((error) => toast.error(getErrorMessage(error)));
     }
   };
 
