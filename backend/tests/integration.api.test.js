@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 
 import usersRouter from "../modules/moduleUsers.js";
 import membersRouter from "../modules/moduleMembers.js";
+import contactsRouter from "../modules/moduleContacts.js";
+import messagesRouter from "../modules/modulMessages.js";
 import Users from "../models/modelUsers.js";
 import { errorHandler, notFound } from "../middleware/errorMiddleware.js";
 
@@ -28,6 +30,8 @@ const buildApp = () => {
   app.use(express.urlencoded({ extended: true }));
   app.use("/api/users", usersRouter);
   app.use("/api/members", membersRouter);
+  app.use("/api/contacts", contactsRouter);
+  app.use("/api/messages", messagesRouter);
   app.use(notFound);
   app.use(errorHandler);
   return app;
@@ -114,6 +118,81 @@ test(
 
       assert.equal(getRes.status, 200);
       assert.equal(getRes.body.name, "Updated Member");
+    } finally {
+      await mongoose.connection.dropDatabase();
+      await mongoose.disconnect();
+      await mongod.stop();
+    }
+  },
+);
+
+test(
+  "integration: contact approve flow enables member messaging contract",
+  { skip: !hasIntegrationDeps && !requireIntegrationDeps },
+  async () => {
+    if (!hasIntegrationDeps && requireIntegrationDeps) {
+      throw new Error(
+        "Integration dependencies are missing. Install supertest and mongodb-memory-server.",
+      );
+    }
+    if (!process.env.JWT_SECRET) process.env.JWT_SECRET = "test-secret";
+
+    const mongod = await MongoMemoryServer.create();
+    await mongoose.connect(mongod.getUri(), { dbName: "mkad_test_contacts" });
+
+    try {
+      const app = buildApp();
+      const request = supertest(app);
+
+      const inviter = await Users.create({
+        username: "inviter01",
+        password: "password123",
+        name: "MKaDifference",
+        inviter: new mongoose.Types.ObjectId(),
+        type: "organisation",
+      });
+
+      const invitationCode = jwt.sign(
+        { inviter: inviter._id.toString(), type: "invitation" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" },
+      );
+
+      const createMember = async (username, name) => {
+        await request.post("/api/users").send({
+          username,
+          password: "password123",
+          name,
+          code: invitationCode,
+        });
+        const loginRes = await request.post("/api/users/login").send({
+          username,
+          password: "password123",
+        });
+        return { token: loginRes.body.token, id: loginRes.body._id };
+      };
+
+      const alice = await createMember("aliceuser", "Alice User");
+      const bob = await createMember("bobbbuser", "Bob User");
+
+      const reqRes = await request
+        .post("/api/contacts")
+        .set("Authorization", alice.token)
+        .send({ _id: bob.id });
+      assert.equal(reqRes.status, 200);
+
+      const approveRes = await request
+        .post("/api/contacts/approve")
+        .set("Authorization", bob.token)
+        .send({ id: alice.id });
+      assert.equal(approveRes.status, 200);
+
+      const msgsRes = await request
+        .post("/api/messages")
+        .set("Authorization", alice.token)
+        .send({ _id: bob.id, skip: 0 });
+      assert.equal(msgsRes.status, 200);
+      assert.equal(Array.isArray(msgsRes.body), true);
     } finally {
       await mongoose.connection.dropDatabase();
       await mongoose.disconnect();

@@ -2,8 +2,16 @@ import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import User from "../models/modelUsers.js";
 
+const parseAuthToken = (value) => {
+  if (!value || typeof value !== "string") return null;
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  if (/^Bearer\s+/i.test(trimmed)) return trimmed.replace(/^Bearer\s+/i, "");
+  return trimmed;
+};
+
 const protect = asyncHandler(async (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = parseAuthToken(req.headers.authorization);
 
   if (token) {
     try {
@@ -27,7 +35,7 @@ const protect = asyncHandler(async (req, res, next) => {
 });
 
 const authSender = asyncHandler(async (socket, next) => {
-  const token = socket.handshake.auth.token;
+  const token = parseAuthToken(socket.handshake.auth.token);
 
   if (token) {
     try {
@@ -58,4 +66,4 @@ const authSender = asyncHandler(async (socket, next) => {
   }
 });
 
-export { protect, authSender };
+export { authSender, parseAuthToken, protect };

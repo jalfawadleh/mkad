@@ -9,6 +9,7 @@ import compression from "compression";
 
 import path from "path";
 import dotenv from "dotenv";
+import { corsOptions } from "./config/cors.js";
 import connectDB from "./config/db.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
@@ -62,7 +63,7 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(compression());
 app.use(globalLimiter);
 app.use(loggerMiddleware);

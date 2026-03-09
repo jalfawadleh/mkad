@@ -10,22 +10,22 @@ import "leaflet/dist/leaflet.css";
 import { UserContext } from "./store.js";
 import io from "socket.io-client";
 import { getErrorMessage } from "./utils/http.js";
+import { getApiBaseUrl } from "./utils/apiConfig.js";
 
 const App = () => {
   const [user, setUser] = useState({});
   const [socket, setSocket] = useState({});
 
-  const URL = import.meta.env.PROD
-    ? "https://mkadifference.com/"
-    : "http://localhost:3000/";
+  const API_BASE = getApiBaseUrl(import.meta.env.PROD);
+  const URL = API_BASE.replace(/api\/$/, "");
 
   useEffect(() => {
-    axios.defaults.baseURL = URL + "api/";
+    axios.defaults.baseURL = API_BASE;
     if (user.token) axios.defaults.headers.common.Authorization = user.token;
     else delete axios.defaults.headers.common.Authorization;
     axios.defaults.headers.post["Content-Type"] =
       "application/x-www-form-urlencoded";
-  }, [URL, user.token]);
+  }, [API_BASE, user.token]);
 
   const getUpdates = useCallback(async () => {
     await axios

@@ -107,6 +107,9 @@ members
       "organisations",
       "activities",
       "members",
+      "createdAt",
+      "updatedAt",
+      "__v",
     ]),
     validateBody({
       name: validators.optionalString,

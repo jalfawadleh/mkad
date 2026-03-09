@@ -95,3 +95,17 @@ test("enforceAllowedBodyKeys accepts known keys and rejects extras", () => {
   assert.equal(invalidRes.statusCode, 400);
   assert.match(String(invalidErr?.message), /Unexpected body fields: role/);
 });
+
+test("validators enforce numeric and booleanish contracts", () => {
+  assert.equal(validators.requiredNumber("12.5"), null);
+  assert.match(
+    String(validators.requiredNumber("abc")),
+    /must be numeric/,
+  );
+  assert.equal(validators.optionalBooleanish(true), null);
+  assert.equal(validators.optionalBooleanish("false"), null);
+  assert.match(
+    String(validators.optionalBooleanish("maybe")),
+    /must be boolean/,
+  );
+});

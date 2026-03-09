@@ -164,6 +164,8 @@ activities
   .post(
     protect,
     enforceAllowedBodyKeys([
+      "_id",
+      "type",
       "name",
       "startOn",
       "endOn",
@@ -178,6 +180,11 @@ activities
       "lat",
       "online",
       "help",
+      "createdBy",
+      "members",
+      "organisations",
+      "archived",
+      "icon",
     ]),
     validateBody({
       name: validators.requiredString,
@@ -214,6 +221,9 @@ activities
       "archived",
       "type",
       "icon",
+      "createdAt",
+      "updatedAt",
+      "__v",
     ]),
     validateBody({
       _id: validators.objectId,
