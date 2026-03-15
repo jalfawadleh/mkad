@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Members from "../models/modelUsers.js";
+import Activities from "../models/modelActivities.js";
 import { incrementMetric } from "./metricsMiddleware.js";
 
 const ALLOWED_DISCUSSION_TYPES = new Set(["organisation", "activity"]);
@@ -49,6 +50,50 @@ const canMessageMember = async (senderId, recipientId) => {
   return Boolean(found);
 };
 
+// Only allow member-to-member access for self or approved contacts.
+const ensureMemberAccess = async ({ senderId, recipientId }) => {
+  if (!isValidId(senderId) || !isValidId(recipientId)) return false;
+  if (senderId.toString() === recipientId.toString()) return true;
+  return await canMessageMember(senderId, recipientId);
+};
+
+const ensureDiscussionAccess = async ({
+  senderId,
+  recipientId,
+  recipientType,
+}) => {
+  if (!isValidId(senderId) || !isValidId(recipientId)) return false;
+
+  if (recipientType === "member") {
+    return await ensureMemberAccess({ senderId, recipientId });
+  }
+
+  // For organisations, only the org itself or approved members can participate.
+  if (recipientType === "organisation") {
+    if (senderId.toString() === recipientId.toString()) return true;
+    const member = await Members.findById(senderId).select("organisations");
+    if (!member) return false;
+    return (
+      member.organisations?.some(
+        (o) => o._id.equals(recipientId) && o.approved,
+      ) ?? false
+    );
+  }
+
+  // For activities, require membership or ownership/management.
+  if (recipientType === "activity") {
+    const activity = await Activities.findById(recipientId).select(
+      "members createdBy managedBy",
+    );
+    if (!activity) return false;
+    if (activity.createdBy?._id?.equals?.(senderId)) return true;
+    if (activity.managedBy?.some((m) => m._id.equals(senderId))) return true;
+    return activity.members?.some((m) => m._id.equals(senderId)) ?? false;
+  }
+
+  return false;
+};
+
 const validateMessagingEvent = async (socket, payload) => {
   incrementMetric("socketEvents");
   const normalized = normalizeSocketMessage(socket, payload, { requireContent: false });
@@ -58,16 +103,17 @@ const validateMessagingEvent = async (socket, payload) => {
     return { ok: false, reason: "invalid_recipient_type" };
   }
 
-  const allowed = await canMessageMember(
-    normalized.message.sender._id,
-    normalized.message.recipient._id,
-  );
+  const allowed = await ensureDiscussionAccess({
+    senderId: normalized.message.sender._id,
+    recipientId: normalized.message.recipient._id,
+    recipientType: "member",
+  });
   if (!allowed) return { ok: false, reason: "forbidden" };
 
   return normalized;
 };
 
-const validateDiscussionEvent = (socket, payload) => {
+const validateDiscussionEvent = async (socket, payload) => {
   incrementMetric("socketEvents");
   const normalized = normalizeSocketMessage(socket, payload, { requireContent: false });
   if (!normalized.ok) return normalized;
@@ -75,6 +121,13 @@ const validateDiscussionEvent = (socket, payload) => {
   if (!ALLOWED_DISCUSSION_TYPES.has(normalized.message.recipient.type)) {
     return { ok: false, reason: "invalid_recipient_type" };
   }
+
+  const allowed = await ensureDiscussionAccess({
+    senderId: normalized.message.sender._id,
+    recipientId: normalized.message.recipient._id,
+    recipientType: normalized.message.recipient.type,
+  });
+  if (!allowed) return { ok: false, reason: "forbidden" };
 
   return normalized;
 };
@@ -84,18 +137,19 @@ const validateConversationEvent = async (socket, payload) => {
   const normalized = normalizeSocketMessage(socket, payload, { requireContent: true });
   if (!normalized.ok) return normalized;
 
-  if (normalized.message.recipient.type === "member") {
-    const allowed = await canMessageMember(
-      normalized.message.sender._id,
-      normalized.message.recipient._id,
-    );
-    if (!allowed) return { ok: false, reason: "forbidden" };
-    return normalized;
-  }
-
-  if (!ALLOWED_DISCUSSION_TYPES.has(normalized.message.recipient.type)) {
+  if (
+    !ALLOWED_DISCUSSION_TYPES.has(normalized.message.recipient.type) &&
+    normalized.message.recipient.type !== "member"
+  ) {
     return { ok: false, reason: "invalid_recipient_type" };
   }
+
+  const allowed = await ensureDiscussionAccess({
+    senderId: normalized.message.sender._id,
+    recipientId: normalized.message.recipient._id,
+    recipientType: normalized.message.recipient.type,
+  });
+  if (!allowed) return { ok: false, reason: "forbidden" };
 
   return normalized;
 };
@@ -106,6 +160,8 @@ const socketErrorPayload = (reason) => ({
 });
 
 export {
+  ensureDiscussionAccess,
+  ensureMemberAccess,
   socketErrorPayload,
   validateConversationEvent,
   validateDiscussionEvent,

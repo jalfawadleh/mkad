@@ -37,9 +37,19 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const postUser = asyncHandler(async (req, res) => {
-  const { username, password, name, code } = req.body;
-  if (!hasText(username) || !hasText(password) || !hasText(name) || !hasText(code)) {
+  const { username, password, confirmPassword, name, code } = req.body;
+  if (
+    !hasText(username) ||
+    !hasText(password) ||
+    !hasText(confirmPassword) ||
+    !hasText(name) ||
+    !hasText(code)
+  ) {
     res.status(400).send("Invalid user data");
+    return;
+  }
+  if (password !== confirmPassword) {
+    res.status(400).send("Passwords do not match");
     return;
   }
 
@@ -94,6 +104,11 @@ const putUser = asyncHandler(async (req, res) => {
   const user = await Users.findById(req.user._id);
 
   if (user) {
+    const nextPassword = hasText(req.body.password) ? req.body.password : null;
+    if (nextPassword && nextPassword !== req.body.confirmPassword) {
+      res.status(400);
+      throw new Error("Passwords do not match");
+    }
     if (
       // if old password is valid
       req.body.currentPassword !== "" &&
@@ -101,7 +116,7 @@ const putUser = asyncHandler(async (req, res) => {
     ) {
       user.username = req.body.username || user.username;
       // password will be hashed as pre function in the users model
-      if (req.body.password) user.password = req.body.password;
+      if (nextPassword) user.password = nextPassword;
       user.email = req.body.email || user.email;
     } else {
       res.status(400);

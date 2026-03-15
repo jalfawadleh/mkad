@@ -3,7 +3,11 @@ import assert from "node:assert/strict";
 import jwt from "jsonwebtoken";
 
 import User from "../models/modelUsers.js";
-import { parseAuthToken, protect } from "../middleware/authMiddleware.js";
+import {
+  parseAuthToken,
+  protect,
+  requireBearerToken,
+} from "../middleware/authMiddleware.js";
 
 const createRes = () => {
   const res = {
@@ -96,4 +100,36 @@ test("parseAuthToken parses raw and Bearer formats", () => {
   assert.equal(parseAuthToken(" bearer xyz "), "xyz");
   assert.equal(parseAuthToken(""), null);
   assert.equal(parseAuthToken(null), null);
+});
+
+test("requireBearerToken accepts configured metrics token", () => {
+  process.env.METRICS_TOKEN = "metrics-secret";
+  const req = { headers: { authorization: "Bearer metrics-secret" } };
+  const res = createRes();
+  let nextErr = null;
+
+  requireBearerToken(req, res, (err) => {
+    nextErr = err ?? null;
+  });
+
+  assert.equal(nextErr, null);
+  assert.equal(res.statusCode, 200);
+});
+
+test("requireBearerToken rejects missing or invalid token", () => {
+  process.env.METRICS_TOKEN = "metrics-secret";
+  const req = { headers: {} };
+  const res = createRes();
+  let nextErr = null;
+
+  try {
+    requireBearerToken(req, res, (err) => {
+      nextErr = err ?? null;
+    });
+  } catch (error) {
+    nextErr = error;
+  }
+
+  assert.equal(res.statusCode, 401);
+  assert.ok(nextErr instanceof Error);
 });

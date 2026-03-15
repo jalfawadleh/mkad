@@ -25,7 +25,6 @@ const putMember = asyncHandler(async (req, res) => {
     member.lat = req.body.lat;
     member.lng = req.body.lng;
     member.darkmode = req.body.darkmode;
-    member.contacts = req.body.contacts;
     member.hidden = req.body.hidden;
     member.darkmode = req.body.darkmode;
     member.help = req.body.help;
@@ -48,7 +47,22 @@ const getMember = asyncHandler(async (req, res) => {
     "members._id": req.params.id,
   }).select("name");
 
-  if (member)
+  if (member) {
+    const isSelf = req.user._id.equals(member._id);
+    const isContact = member.contacts?.some(
+      (contact) => contact._id.equals(req.user._id) && contact.approved,
+    );
+    const hasOrganisationLink = member.organisations?.some(
+      (o) => o._id.equals(req.user._id) && o.approved,
+    );
+    const canViewSensitive =
+      isSelf || Boolean(isContact) || Boolean(hasOrganisationLink);
+    // Treat hidden profiles as not found unless there is an approved relationship.
+    if (member.hidden && !canViewSensitive) {
+      res.status(404);
+      throw new Error("Member not found");
+    }
+
     res.json({
       _id: member._id,
       name: member.name,
@@ -60,14 +74,14 @@ const getMember = asyncHandler(async (req, res) => {
       lng: member.lng,
       darkmode: member.darkmode,
       hidden: member.hidden,
-      contacts: member.contacts,
+      // Hide contacts unless the requester can view sensitive fields.
+      contacts: canViewSensitive ? member.contacts : [],
       help: member.help,
-      contacts: member.contacts,
       organisations: member.organisations,
       members: member.members,
       activities,
     });
-  else {
+  } else {
     res.status(404);
     throw new Error("Member not found");
   }
@@ -101,7 +115,6 @@ members
       "lat",
       "lng",
       "darkmode",
-      "contacts",
       "hidden",
       "help",
       "organisations",

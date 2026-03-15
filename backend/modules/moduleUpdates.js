@@ -14,17 +14,23 @@ import {
 // @route   POST /api/updates
 // @access  Private
 const postUpdate = asyncHandler(async (req, res) => {
-  if (!req.body?.recipient?._id || !isValidId(req.body.recipient._id)) {
+  const recipientId = req.body?.recipient?._id;
+  if (!recipientId || !isValidId(recipientId)) {
     res.status(400);
     throw new Error("Invalid recipient id");
   }
-  const update = await Updates.create(req.body);
+  const update = await Updates.create({
+    sender: {
+      _id: req.user._id,
+      type: req.user.type,
+      name: req.user.name,
+    },
+    recipient: { _id: recipientId },
+    type: typeof req.body.type === "string" ? req.body.type : "",
+    content: typeof req.body.content === "string" ? req.body.content : "",
+  });
 
-  if (update) res.status(200).json(update);
-  else {
-    await Updates.create(req.body);
-    res.status(200).json(true);
-  }
+  res.status(200).json(update);
 });
 
 // @desc    Get Updates
@@ -83,12 +89,9 @@ const updates = express
     "/",
     protect,
     enforceAllowedBodyKeys([
-      "sender",
       "recipient",
       "type",
       "content",
-      "read",
-      "archived",
     ]),
     validateBody({ "recipient._id": validators.objectId }),
     postUpdate,

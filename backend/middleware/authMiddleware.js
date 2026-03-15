@@ -10,6 +10,17 @@ const parseAuthToken = (value) => {
   return trimmed;
 };
 
+// Simple shared-secret guard for operational endpoints (e.g. /metrics).
+const requireBearerToken = (req, res, next) => {
+  const token = parseAuthToken(req.headers.authorization);
+  if (token === process.env.METRICS_TOKEN) {
+    next();
+    return;
+  }
+  res.status(401);
+  throw new Error("Not authorized");
+};
+
 const protect = asyncHandler(async (req, res, next) => {
   const token = parseAuthToken(req.headers.authorization);
 
@@ -66,4 +77,4 @@ const authSender = asyncHandler(async (socket, next) => {
   }
 });
 
-export { authSender, parseAuthToken, protect };
+export { authSender, parseAuthToken, protect, requireBearerToken };

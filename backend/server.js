@@ -16,6 +16,7 @@ import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import { authSender } from "./middleware/authMiddleware.js";
 import { requireDbReady } from "./middleware/dbReadyMiddleware.js";
 import { loggerMiddleware } from "./middleware/loggerMiddleware.js";
+import { requireBearerToken } from "./middleware/authMiddleware.js";
 import {
   getMetricsSnapshot,
   incrementMetric,
@@ -80,23 +81,32 @@ app.get("/readyz", (req, res) => {
   else res.status(503).json({ status: "not-ready" });
 });
 
-app.get("/metrics", (req, res) => {
+// Protect metrics so internal stats are not publicly exposed.
+app.get("/metrics", requireBearerToken, (req, res) => {
   res.status(200).json(getMetricsSnapshot());
 });
 
-// allow sources to openstreetmap
+// Disable default CSP to supply a custom policy that permits OpenStreetMap assets.
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+);
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https://*.openstreetmap.org"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       connectSrc: [
         "'self'",
         "https://nominatim.openstreetmap.org",
         "https://mkadifference.com",
       ],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+      objectSrc: ["'none'"],
     },
   }),
 );
@@ -178,6 +188,18 @@ io.on("connection", async (socket) => {
     return true;
   };
 
+  // Centralized persistence with consistent socket error handling.
+  const persistMessage = async (payload, ack) => {
+    try {
+      return await saveMessage(payload);
+    } catch (error) {
+      console.error(error);
+      socket.emit("socket_error", socketErrorPayload("server_error"));
+      replyAck(ack, { ok: false, error: "server_error" });
+      return null;
+    }
+  };
+
   // once a member has requested Messaging another member
 
   socket.on("joinMessaging", async (m, ack) => {
@@ -190,10 +212,15 @@ io.on("connection", async (socket) => {
     }
     // add sender details from authentication
     // then save vomplete message to DB
-    socket.message = await saveMessage({
-      ...validation.message,
-      content: "Joined",
-    });
+    const saved = await persistMessage(
+      {
+        ...validation.message,
+        content: "Joined",
+      },
+      ack,
+    );
+    if (!saved) return;
+    socket.message = saved;
 
     const conversationId = generateConversationId(socket.message);
 
@@ -207,7 +234,7 @@ io.on("connection", async (socket) => {
 
   socket.on("joinDiscussion", async (m, ack) => {
     if (!enforceSocketRate("join", ack)) return;
-    const validation = validateDiscussionEvent(socket, m);
+    const validation = await validateDiscussionEvent(socket, m);
     if (!validation.ok) {
       socket.emit("socket_error", socketErrorPayload(validation.reason));
       replyAck(ack, { ok: false, error: validation.reason });
@@ -215,10 +242,15 @@ io.on("connection", async (socket) => {
     }
     // add sender details from authentication
     // then save vomplete message to DB
-    socket.message = await saveMessage({
-      ...validation.message,
-      content: "Joined",
-    });
+    const saved = await persistMessage(
+      {
+        ...validation.message,
+        content: "Joined",
+      },
+      ack,
+    );
+    if (!saved) return;
+    socket.message = saved;
 
     const conversationId = generateConversationId(socket.message);
 
@@ -241,9 +273,9 @@ io.on("connection", async (socket) => {
     }
     // add sender details from authentication
     // then save vomplete message to DB
-    socket.message = await saveMessage({
-      ...validation.message,
-    });
+    const saved = await persistMessage({ ...validation.message }, ack);
+    if (!saved) return;
+    socket.message = saved;
     const conversationId = generateConversationId(socket.message);
     // announce the member has joined the messaging
     io.sockets.in(conversationId).emit("conversation", socket.message);
@@ -261,10 +293,15 @@ io.on("connection", async (socket) => {
     }
     // add sender details from authentication
     // then save vomplete message to DB
-    socket.message = await saveMessage({
-      ...validation.message,
-      content: "Left",
-    });
+    const saved = await persistMessage(
+      {
+        ...validation.message,
+        content: "Left",
+      },
+      ack,
+    );
+    if (!saved) return;
+    socket.message = saved;
 
     const conversationId = generateConversationId(socket.message);
 
@@ -278,7 +315,7 @@ io.on("connection", async (socket) => {
 
   socket.on("leaveDiscussion", async (m, ack) => {
     if (!enforceSocketRate("leave", ack)) return;
-    const validation = validateDiscussionEvent(socket, m);
+    const validation = await validateDiscussionEvent(socket, m);
     if (!validation.ok) {
       socket.emit("socket_error", socketErrorPayload(validation.reason));
       replyAck(ack, { ok: false, error: validation.reason });
@@ -286,10 +323,15 @@ io.on("connection", async (socket) => {
     }
     // add sender details from authentication
     // then save vomplete message to DB
-    socket.message = await saveMessage({
-      ...validation.message,
-      content: "Left",
-    });
+    const saved = await persistMessage(
+      {
+        ...validation.message,
+        content: "Left",
+      },
+      ack,
+    );
+    if (!saved) return;
+    socket.message = saved;
 
     const conversationId = generateConversationId(socket.message);
 

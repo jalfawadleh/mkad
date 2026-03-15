@@ -5,6 +5,10 @@ import Messages from "../models/modelMessages.js";
 import Updates from "../models/modelUpdates.js";
 import { hasText, isValidId, toSafeSkip } from "../utils/validators.js";
 import {
+  ensureDiscussionAccess,
+  ensureMemberAccess,
+} from "../middleware/socketMessagePolicy.js";
+import {
   enforceAllowedBodyKeys,
   validateBody,
   validators,
@@ -29,15 +33,11 @@ import {
 
  */
 
-export const saveMessage = asyncHandler(async (m) => {
-  try {
-    const message = await Messages.create(m);
-    if (message) return message;
-    else throw new Error("Invalid activity data");
-  } catch (error) {
-    console.log(error);
-  }
-});
+export const saveMessage = async (m) => {
+  const message = await Messages.create(m);
+  if (message) return message;
+  throw new Error("Invalid message data");
+};
 
 // @desc    Get Messages
 // @route   GET /api/messages/
@@ -46,6 +46,15 @@ const getMessages = asyncHandler(async (req, res) => {
   if (!isValidId(req.body._id)) {
     res.status(400);
     throw new Error("Invalid recipient id");
+  }
+  // Enforce relationship access before returning private messages.
+  const canAccess = await ensureMemberAccess({
+    senderId: req.user._id,
+    recipientId: req.body._id,
+  });
+  if (!canAccess) {
+    res.status(403);
+    throw new Error("Forbidden");
   }
   try {
     const messages = await Messages.find({
@@ -95,6 +104,16 @@ const getDiscussion = asyncHandler(async (req, res) => {
   if (!hasText(req.body.type)) {
     res.status(400);
     throw new Error("Invalid discussion type");
+  }
+  // Enforce org/activity membership before returning discussion history.
+  const canAccess = await ensureDiscussionAccess({
+    senderId: req.user._id,
+    recipientId: req.body._id,
+    recipientType: req.body.type,
+  });
+  if (!canAccess) {
+    res.status(403);
+    throw new Error("Forbidden");
   }
   try {
     const discussion = await Messages.find({
