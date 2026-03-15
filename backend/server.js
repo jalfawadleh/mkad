@@ -103,6 +103,9 @@ app.use(
 
 app.use("/api", requireDbReady);
 
+// trust proxy so express-rate-limit can use X-Forwarded-For safely
+app.set('trust proxy', 1); // or `true` / `'loopback'`
+
 app.use(
   "/api/users",
   authLimiter,
